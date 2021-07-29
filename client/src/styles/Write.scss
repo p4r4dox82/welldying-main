@@ -1,0 +1,146 @@
+@import 'Consts.scss';
+
+.ql-toolbar {
+    margin-top: -30px;
+    left: -1px;
+    width: calc(100% + 2px);
+    z-index: 1;
+}
+
+div.write {
+    width: 100%;
+    min-height: 100%;
+    height: fit-content;
+    box-sizing: border-box;
+    font-size: 15.7px;
+    line-height: 33.3px;
+    color: #606060;
+    
+    border-left: rgba($main-background, 0.85) 250px solid;
+    border-right: rgba($main-background, 0.85) 250px solid;
+    padding: 50px;
+
+
+    div.left {
+        width: 200px;
+        position: absolute;
+        left: -250px;
+        padding-top: 40px;
+        padding-left: 50px;
+        &.fixed {
+            @media (min-width: $min-desktop-width) {
+                position: fixed;
+                left: 0;
+                top: 60px;
+            }
+        }
+
+        h1 {
+            font-size: 17.7px;
+            line-height: 36.3px;
+
+            &.active {
+                font-weight: bold;
+            }
+
+            &.inactive {
+                color: #60606099;
+            }
+
+            &::before {
+                content: '> ';
+            }
+        }
+    }
+
+    div.right {
+        width: 250px;
+        position: absolute;
+        right: -250px;
+        padding: 50px;
+
+        &.fixed {
+            @media (min-width: $min-desktop-width) {
+                position: fixed;
+                right: 0;
+                top: 60px;
+            }
+        }
+
+        button {
+            border: 1px #606060 solid;
+            border-radius: 10.7px;
+            width: 100%;
+            padding: 6.6px 0spx;
+            font-size: 16.7px;
+            font-weight: bold;
+            margin: 5px 0px;
+            background: none;
+            color: #606060;
+        }
+    }
+
+    div.row {
+        margin-bottom: 60px;
+        margin-top: 20px;
+        
+        h1 {
+            margin-top: 30px;
+            font-size: 23.3px;
+            line-height: 58.3px;
+            font-weight: bold;
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-size: 16.7px;
+            line-height: 24px;
+            font-weight: 600;
+        }
+        
+        > p {
+            font-size: 16.7px;
+            line-height: 16.7px;
+            font-weight: bold;
+        }
+        
+        ul {
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+        ul > li {
+            margin-left: 64px;
+            color: #606060;
+        }
+
+
+    }
+
+    
+    .message {
+        font-size: 10.7px;
+        line-height: 16px;
+        font-weight: 400;
+        margin: 0px 6.6px;
+    }
+}
+
+
+.ql-editor {
+    min-height: 200px;
+
+    li {
+        margin-left: 0;
+        color: inherit;
+    }
+
+    ul {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.ql-editor:focus {
+    background-color: rgba($main-background, 0.5);
+    border-color: blue
+}

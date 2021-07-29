@@ -1,0 +1,188 @@
+@import 'Consts.scss';
+
+
+.aboutusMain {
+    padding: 12px;
+    text-align: center;
+    
+    h1 {
+        font-size: 40px;
+        line-height: 50px;
+        font-weight: bold;
+        margin: auto;
+        width: fit-content;
+        max-width: calc(100% - 120px);
+
+        @media (max-width: $max-mobile-width) {
+            font-size: 30px;
+            line-height: 35px;
+        }
+    }
+
+    
+    
+    div, span, li {
+        font-size: 16.7px;
+        line-height: 33.3px;
+        font-weight: 300;
+        color: #606060;
+    }
+
+
+    img.teamImage {
+        width: 100%;
+        max-width: 1000px;
+        box-sizing: border-box;
+    }
+
+
+    .moveButton {
+        position: absolute;
+        top: -45px;
+        font-size: 40px;
+        font-weight: bold;
+        color: #D0D0D0;
+        background: none;
+        border: none;
+        padding: 50px 20px;
+        z-index: 1;
+
+        &.leftButton {
+            left: -90px;
+        }
+
+        &.rightButton {
+            right: -90px;
+        }
+
+        @media (max-width: $max-mobile-width) {
+
+        }
+    }
+}
+
+.content.aboutus {
+    @media (max-width: $max-tablet-width) {
+        padding-left: 0;
+    }
+    padding-right: 0;
+}
+
+.content.aboutus .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .introduceContainer {
+        flex-grow: 1;
+        flex-basis: 254px;
+        margin-top: 100px;
+        padding: 40px;
+
+        li {
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: $max-tablet-width) {
+            margin-top: 0;
+        }
+    }
+    
+    .indexPointContainer {
+        position: absolute;
+        right: 30px;
+        top: -10px;
+
+        .indexPoint {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #60606050;
+            border-radius: 50%;
+    
+            &.active {
+                background-color: #606060;
+            }
+        }
+    }
+
+    .cardContainer {
+        width: 100vw;
+        max-width: 387px;
+        height: 585px;
+        background-size: 100% 100%;
+        flex-grow: 0;
+        flex-shrink: 0;
+        margin: auto;
+        box-sizing: border-box;
+
+
+        .card {
+            width: 100%;
+            top: 64%;
+            padding: 0px 50px;
+            box-sizing: border-box;
+
+            .memberInfo {
+                .memberName {
+                    font-size: 30px;
+                    line-height: 48px;
+                    font-weight: normal;
+                }
+
+                .memberEmail {
+                    font-size: 12px;
+                    line-height: 18px;
+                    font-weight: 500;
+                }
+    
+                .memberSchool {
+                    margin-top: 5px;
+                    font-size: 12px;
+                    line-height: 28px;
+                    font-weight: 300;
+                }
+
+                .memberSpec {
+                    margin-top: 10px;
+                    font-size: 10.7px;
+                    line-height: 18px;
+                    font-weight: 300;
+                }
+            }
+        }
+
+        .moveButton {
+            position: absolute;
+            top: -22px;
+            font-size: 40px;
+            font-weight: bold;
+            color: #D0D0D0;
+            background: none;
+            border: none;
+            padding: 50px 20px;
+            z-index: 1;
+
+            &.leftButton {
+                left: -80px;
+            }
+
+            &.rightButton {
+                right: -80px;
+            }
+
+            @media (max-width: $max-tablet-width) {
+                top: -175px;
+
+                &.leftButton {
+                    left: 30px;
+                }
+
+                &.rightButton {
+                    right: 15px;
+                }
+            }
+        }
+    }
+}

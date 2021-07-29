@@ -1,0 +1,205 @@
+@import 'Consts.scss';
+
+.mainLogo {
+    top: 22px;
+    z-index: 100;
+    width: 100%;
+    height: 127px;
+    padding: 0px 50px;
+    left: 0;
+
+    .mainLogoSvg {
+        transform: scale(0.67);
+        fill: #606060;
+    }
+
+    @media (max-width: $max-mobile-width) {
+        padding: 0;
+    }
+}
+
+
+header {
+    > * {
+        position: absolute;
+    }
+    z-index: 100;
+    @media (min-width: $min-tablet-width) {
+    width: 100%;
+    height: 127px;
+    padding: 0px 50px;
+    margin-bottom: 40px;
+    box-sizing: border-box;
+
+        &.white {
+            color: #FFFFFF;
+    
+            div.boxContainer {
+                border: 1px solid white;
+            }
+            .mainLogoSvg {
+                fill: #ffffff;
+            }
+        }
+        &.grey {
+            color: #606060;
+    
+            div.boxContainer {
+                border: 1px solid #606060;
+            }
+            .mainLogoSvg {
+                fill: #606060;
+            }
+        }
+    }
+
+    .mainLogoSvg {
+        transform: scale(0.67);
+    }
+
+    &.borderBottom {
+        border-bottom: 2px #60606033 solid;
+    }
+
+    div.mainLogo {
+        position: absolute;
+        top: 22px;
+    }
+    
+    @media (min-width: $min-tablet-width) {
+        div.topbar {
+            position: absolute;
+            right: 55.5px;
+            top: 43.3px;
+            z-index: inherit;
+    
+            div.boxContainer {
+                border-radius: 22.1px;
+                width: fit-content;
+                padding: 7px 23.3px 6px 26.7px;
+                margin: 3.3px;
+                margin-bottom: 13.3px;
+                margin-left: auto;
+                font-size: 13.3px;
+                line-height: 13.3px;
+                font-weight: normal;
+                text-align: right;
+            }
+        
+            div.menuContainer {
+                height: 6.4px;
+                margin: 3.3px;
+                font-size: 15.7px;
+                font-style: normal;
+                font-weight: normal;
+                line-height: 16.7px;
+                text-align: right;
+                
+                display: flex;
+    
+                >div {
+                    height: fit-content;
+                    padding: 2px;
+                    &:not(:last-child)::after {
+                        content: '|';
+                        padding: 0px 15px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: $max-mobile-width) {
+        background-color: white;
+        color: #606060;
+
+        margin: 0;
+        width: 100%;
+        height: 60px;
+
+        div.mainLogo {
+            position: absolute;
+            color: black;
+            top: -20px;
+            left: calc(50% - 115px);
+            width: 230px;
+
+            .mainLogoSvg {
+                fill: #606060;
+                transform: scale(0.4);
+            }
+        }        
+
+        div.topbar {
+            display: none;
+            margin: 0;
+            left: 0;
+            top: 60px;
+            width: 100%;
+            height: fit-content;
+
+            .boxContainer {
+                display: none;
+            }
+
+            &.expanded {
+                display: block;
+                background: white;
+                
+                .menuContainer {
+                    width: 100%;
+
+                    div {
+                        left: 0;
+                        width: 100%;
+                        padding: 16px;
+                        color: #606060;
+                    }
+                }
+            }
+        }
+    }
+}
+
+footer {
+    width: 100%;
+    background-color: #DDCCC460;
+    box-sizing: border-box;
+    margin-top: 50px;
+
+    div {
+        flex: left;
+    }
+
+    .footerLogo {
+        padding-left: 40px;
+        padding-top: 20px;
+
+        .mainLogoSvg {
+            fill: #60606060;
+            transform: scale(0.5);
+        }
+
+        @media (max-width: $max-mobile-width) {
+            padding-left: 0px;
+            margin-left: -30px;
+
+            .mainLogoSvg {
+                transform: scale(0.5);
+            }
+        }
+
+    }
+
+    .copyright {
+        color: #929AA0;
+        font-size: 12px;
+        position: absolute;
+        right: 60px;
+        bottom: 30px;
+
+        @media (max-width: $max-mobile-width) {
+            right: 20px;
+        }
+    }
+}

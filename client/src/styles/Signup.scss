@@ -1,0 +1,173 @@
+@import 'Consts.scss';
+
+.signupLogo {
+    width: 100%;
+    margin: 180px 0px 50px 0px;
+
+    img {
+        left: 50%;
+        margin-right: -50%;
+        transform: translateX(-50%);
+    }
+}
+
+.signupForm {
+    width: calc(100% - 20px);
+    max-width: 786px;
+    margin: auto;
+
+    .message {
+        margin: 15px 12px;
+    }
+
+    div.row {
+        width: 100%;
+        margin: 20px 0px;
+
+        
+        .checkForm {
+            width: calc(100% - 40px);
+            margin: 60px 20px;
+            margin-bottom: 0;
+            padding: 14px;
+            padding-right: 46px;
+            box-sizing: border-box;
+            display: flex;
+
+            .checkBox {
+                margin: 3px;
+                height: 28px;
+                width: 28px;
+                border: 3px #D9D9D9 solid;
+                border-radius: 50%;
+                flex: 28px 0 0;
+                transform: translateY(-2px);
+
+                .checkSign {
+                    margin: -3px;
+                    height: 28px;
+                    width: 28px;
+                    opacity: 0;
+                    transition: 0.25s ease-in-out;
+            
+                    &.active {
+                        opacity: 1;
+                        transition: 0.25s ease-in-out;
+                    }
+                }
+
+                &.big {
+                    width: 40px;
+                    height: 40px;
+                    flex: 40px 0 0;
+                    transform: translateY(5px);
+
+                    .checkSign {
+                        height: 40px;
+                        width: 40px;
+                    }
+                }
+            }
+            .checkLabel {
+                flex: 0px 1 0;
+                font-weight: bold;
+                font-size: 20px;
+                line-height: 28px;
+                margin-left: 16px;
+            }
+        }
+
+        div.textbox {
+            width: 100%;
+            height: fit-content;
+            max-height: 200px;
+            box-sizing: border-box;
+
+            padding: 0px 50px;
+            border-top: 20px solid #00000000;
+            border-bottom: 20px solid #00000000;
+            overflow-y: scroll;
+
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            box-shadow: 0px 5px 10px #00000029;
+
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: light;
+
+        }
+
+        .label {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 20px 12px;
+        }
+
+
+        input, textarea, select {
+            padding: 15px;
+            width: calc(100% - 24px);
+            box-shadow: 0px 3px 6px #00000029;
+            border: none;
+            border-radius: 9px;
+            box-sizing: border-box;
+
+            ::placeholder, ::-moz-placeholder {
+                color: #60606050;
+            }
+
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        input, textarea, select, button {
+            margin: 0px 12px;
+        }
+
+        .dropzone {
+            padding: 40px 15px;
+            width: calc(100% - 30px);
+            border: 1px solid #C5C5C5;
+            border-radius: 21px;
+
+            font-size: 16px;
+            font-weight: bold;
+            
+            p {
+                text-align: center;
+                margin: 0 auto;
+            }
+        }
+
+        textarea {
+            height: 200px;
+        }
+
+        button.selectButton {
+            padding: 13.3px;
+            background: none;
+            border: none;
+            font-size: 15.7px;
+            font-weight: bold;
+            color: #606060;
+            margin-right: 0px;
+            right: 0px;
+            flex-direction: right;
+
+            &.inactive {
+                color: #60606050;
+            }
+        }
+
+    }
+
+    button.signupButton {
+        margin: 15px 0px;
+        width: 100%;
+        font-weight: bold;
+        padding: 12px 0px;
+        border: none;
+        border-radius: 12px;
+        margin-bottom: 100px;
+    }
+}

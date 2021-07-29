@@ -1,0 +1,429 @@
+@import 'Consts.scss';
+
+$content-padding: 300px;
+
+div.content {
+    padding: 0px $content-padding;
+    width: 100%;
+    min-height: calc(100vh - 324px);
+    box-sizing: border-box;
+    font-size: 15px;
+    line-height: 39px;
+    font-weight: 300;
+    color: #606060;
+
+    @media (max-width: $max-tablet-width) {
+        padding: 0px 30px;
+    }
+
+    div.subsection {
+        width: 260px;
+        position: absolute;
+        left: 60px;
+    }
+
+    .message {
+        font-size: 10.7px;
+        line-height: 16px;
+        font-weight: 400;
+        margin: 0px 6.6px;
+    }
+
+    div.row {
+        margin: 40px 0px 120px 0px;
+        
+        h1 {
+            font-size: 23.3px;
+            line-height: 38.3px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 16.7px;
+            line-height: 24px;
+            font-weight: 600;
+        }
+        
+        h6 {
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: normal;
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-size: 15px;
+            line-height: 22.5px;
+            font-weight: 600;
+
+            &.postTitle {
+                margin-left: 60px;
+
+                &::before {
+                    content: '> ';
+                }
+
+                &::after {
+                    content: "읽기 자료";
+                    margin-left: 20px;
+                    font-size: 12px;
+                    font-weight: normal;
+                }
+            }
+        }
+        
+        ul {
+            margin: 20px 0px;
+
+            &.postBody {
+                background-color: #B1B1B126;
+                margin: 20px 50px;
+                padding: 11px 19px;
+            }
+
+            > li {
+                @media (min-width: $min-desktop-width) {
+                    padding-left: 60px;
+                }
+
+                &.dialogBox {
+                    width: calc(100% - 40px);
+                    margin: 50px 20px;
+                    padding: 14px;
+                    padding-right: 46px;
+                    border-top: 1px #606060 solid;
+                    border-bottom: 1px #606060 solid;
+                    box-sizing: border-box;
+
+                    .dialogCheckBox {
+                        position: absolute;
+                        right: 19px;
+                        top: 21px;
+                        height: 18px;
+                        width: 18px;
+                        border: 1px #606060 solid;
+                    }
+
+                    .dialogCheckSign {
+                        position: absolute;
+                        right: 16px;
+                        top: 18px;
+                        height: 22px;
+                        width: 22px;
+                        opacity: 0;
+                        transition: 0.25s ease-in-out;
+                    }
+
+                    &:hover {
+                        .dialogCheckSign {
+                            opacity: 1;
+                            transition: 0.25s ease-in-out;
+                        }
+                    }
+                }
+            }
+    
+            &.timeline {
+                li {
+                    padding-bottom: 45px;
+
+                    @media (min-width: $min-desktop-width) {
+                        padding-left: 80px;
+                        h2, h6 {
+                            margin-left: -55px;
+                        }
+                    }
+
+                    @media (max-width: $max-tablet-width) {
+                        padding-left: 25px;
+                    }
+
+                    &:not(:last-child) {
+                        border-left: 1px #B1B1B1 solid;
+                    }
+
+                    h2 {
+                        transform: translateY(-3px);
+                    }
+
+                    h6 {
+                        margin-bottom: 15px;
+                    }
+                }
+                li::before {
+                    content: "";
+                    position: absolute;
+                    left: -10px;
+                    width: 20px;
+                    height: 20px;
+                    background-color: #B1B1B1;
+                    border-radius: 50%;
+                }
+            }
+        }
+
+        .leftArea {
+            position: absolute;
+            left: -$content-padding;
+            width: $content-padding;
+            box-sizing: border-box;
+            padding: 0px 40px;
+
+            &.fixed {
+                @media (min-width: $min-desktop-width) {
+                    position: fixed;
+                    left: 0;
+                    top: 30px;
+                }
+            }
+
+            @media (max-width: $max-tablet-width) {
+                position: relative;
+                width: 100%;
+                left: 0;
+                padding: 0;
+                margin: 30px 0px;
+
+                h1, h2, h6 {
+                    text-align: center;
+                }
+            }
+
+            h1 {
+                font-size: 23.3px;
+                line-height: 28px;
+                font-weight: 600;
+            }
+    
+            h6 {
+                font-size: 10.7px;
+                line-height: 24px;
+                font-weight: 500;
+            }
+
+            .submenuContainer {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .navigationMenu {
+                margin: 40px 0px;
+                div {
+                    font-size: 17.7px;
+                    line-height: 33px;
+        
+                    &.active {
+                        font-weight: bold;
+                    }
+        
+                    &.inactive {
+                        color: #60606099;
+                    }
+                }
+            }
+        }
+        
+        .rightArea {
+            position: absolute;
+            top: 0px;
+            right: -$content-padding;
+            width: $content-padding;
+            box-sizing: border-box;
+            padding: 0px;
+            padding-right: 20px;
+
+            font-size: 14px;
+            line-height: 26px;
+            font-weight: normal;
+            text-align: center;
+
+            @media (max-width: $max-tablet-width) {
+                position: relative;
+                width: 100%;
+                right: 0;
+                padding: 0;
+                margin: 30px 0px;
+            }
+
+            &.quoteRightArea {
+                @media (min-width: $min-desktop-width) {
+                    padding-top: 190px;
+                }
+                @media (max-width: $max-tablet-width) {
+                    width: 260px;
+                    margin: auto;
+                }
+                div.quoteImage {
+                    width: 260px;
+                    min-height: 150px;
+                    width: 100%;
+                    padding: 32px 20px;
+                    background-size: 100%;
+                    box-sizing: border-box;
+                    background-repeat: no-repeat;
+                    transition: 0.25s ease-in-out;
+                    opacity: 1;
+
+                    &.inactive {
+                        opacity: 0;
+                        height: 0;
+                        transition: 0.25s ease-in-out;
+                    }
+                }    
+            }
+
+
+            button {
+                border: 1px #606060 solid;
+                border-radius: 10.7px;
+                width: 140px;
+                padding: 6.6px 0px;
+                font-size: 16.7px;
+                font-weight: bold;
+                margin: 5px 0px auto;
+                background: none;
+                color: #606060;
+
+                &.mainButton {
+                    width: 100%;
+                    font-weight: normal;
+                    border-radius: 16px;
+                    border: 1px #60606060 solid;
+                    padding: 3px 0px;
+                    margin: 8px 0px;
+                    margin-top: -10px;
+                }
+            }
+        }
+    }
+
+    .checklistContainer {
+        display: flex;
+        width: 100%;
+
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-content: space-around;
+        padding: 20px 5%;
+        box-sizing: border-box;
+
+        .checklistItem {
+            flex: 1 0 22.49%;
+            width: fit-content;
+            > * {
+                padding: 5px 10px;
+                margin: auto;
+                text-align: center;
+            }
+            img.main {
+                width: 150px;
+                height: 150px;
+            }
+            div.checklistDescription {
+                transform: translateY(-20px);
+            }
+        }
+    }
+    
+    .reviewContainer {
+        display: flex;
+        width: 100%;
+    
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-content: flex-start;
+
+        .reviewItem {
+            margin: 20px;
+            margin-bottom: 72px;
+            flex-basis: 380px;
+
+            input {
+                margin: 12px;
+            }
+            h2 {
+                margin-bottom: 4px;
+            }
+            h2 > label {
+                font-weight: bold;
+                font-size: 20px;
+            }
+            div {
+                margin-left: 20px;
+            }
+        }
+    }
+
+    img.teamImage {
+        width: 100%;
+        max-width: 1000px;
+        box-sizing: border-box;
+    }
+}
+
+.dialogCheckBox {
+    position: absolute;
+    margin-left: 30px;
+    margin-top: 3px;
+    height: 18px;
+    width: 18px;
+    border: 1px #606060 solid;
+    
+    .dialogCheckSign {
+        margin: -2px;
+        height: 23px;
+        width: 23px;
+        opacity: 0;
+        transition: 0.25s ease-in-out;
+
+        /*&:hover {
+            &.checkable {
+                opacity: 0.33;
+                transition: 0.25s ease-in-out;
+            }
+        }*/
+
+        &.active {
+            opacity: 1;
+            transition: 0.25s ease-in-out;
+        }
+    }
+}
+
+
+.progressCircleContainer {
+    width: fit-content;
+    margin: 0;
+
+    .progressCircleMessage {
+        position: absolute;
+        width: 100%;
+        transform: translateY(-11px);
+    }
+
+    .progressCircleOverlay {
+        position: absolute;
+        left: 9px;
+        top: 14px;
+        width: 142px;
+        height: 138px;
+    }
+
+    .progressCircleOuter {
+        transform: rotate(-67deg);
+    }
+
+    .progressCircleInner {
+        position: absolute;
+        left: 13px;
+        top: 15px;
+        width: 135px;
+        height: 135px;
+    }
+
+    .progressCircleTitle {
+        margin: auto;
+        transform: translateY(-20px);
+        font-weight: bold;
+    }
+}
