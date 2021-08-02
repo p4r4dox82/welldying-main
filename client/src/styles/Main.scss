@@ -119,6 +119,217 @@ div.checklistButton {
     left: calc(50% - 90px);
     width: 179px;
 }
+
+@font-face {
+    font-family: 'GyeonggiBatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+div.main_content {
+  padding: 0px;
+  width: 100%;
+  min-height: calc(100vh - 324px);
+  font-size: 15px;
+  line-height: 39px;
+  font-weight: 300;
+  color: #606060;
+  div.block {
+    div.main_testament {
+      width: 100%;
+      height:700px;
+      div.mementoLogo_center {
+        position: absolute;
+        width: 466.65px;
+        height: 336.88px;
+        left: calc(50% - 466.65px/2);
+        top: 50px;
+
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+      }
+      div.text {
+        position: absolute;
+        width: 622px;
+        height: 90px;
+        left: calc(50% - 622px/2);
+        top: 410px;
+
+        font-family: Noto Sans;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 30px;
+        /* or 187% */
+
+        text-align: center;
+
+        color: #000000;
+      }
+      div.testament_button {
+        position: absolute;
+        width: 380px;
+        height: 71px;
+        left: calc(50% - 380px/2);
+        top: 550px;
+        display: table;
+
+        div.button_text {
+          text-align: center;
+          font-family: Noto Sans;
+          font-style: normal;
+          font-weight: 300;
+          font-size: 30px;
+          line-height: 30px;
+          color: #FFFFFF;
+          display:table-cell;
+          vertical-align: middle;
+        }
+
+        background: #283A30;
+        border-radius: 40px;
+      }
+    }
+    div.main_explain {
+      height:700px;
+      div.background {
+        position: absolute;
+        width: 1987px;
+        height: 536px;
+        left: -34px;
+
+        background: #27392F;
+      }
+      div.category_vector {
+        position: absolute;
+        width:2px;
+        height:305px;
+        left:524px;
+        top:124px;
+        background: #A6A6A6;
+      }
+      div.category {
+        display: inline-flex;
+        flex-direction: column;
+        width:400px;
+        margin-left:150px;
+        top:100px;
+        .item {
+          flex-basis:50px;
+          display: inline-flex;
+          justify-content: space-between;
+          font-family: GyeonggiBatang;
+          font-style: normal;
+          font-size: 18px;
+          line-height: 50px;
+          /* identical to box height */
+
+          letter-spacing: 0.05em;
+
+          color: rgba(255, 255, 255, 0.7);
+          &.active {
+            color: rgba(255, 255, 255, 1);
+          }
+          .tag {
+            height:50px;
+          }
+          .image {
+            &.active {
+              margin-right:13px;
+              margin-top:10px;
+              height:30px;
+              overflow: hidden;
+            }
+            width:30px;
+            overflow: hidden;
+          }
+        }
+      }
+      div.category_select_image {
+        display: inline-flex;
+        flex-direction: column;
+        margin-left:80px;
+        top:120px;
+        .item {
+          flex-basis:50px;
+          &.active {
+            margin-left:-11px;
+          }
+          .image {
+              width: 40px;
+              height: 50px;
+          }
+        }
+      }
+      div.category_detail {
+        display: inline-flex;
+        top:100px;
+        margin-left: 200px;
+        width:500px;
+        div.detail {
+          .title {
+            font-family: Noto Sans;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 17px;
+            line-height: 23px;
+            letter-spacing: 0.05em;
+
+            color: #FFFFFF;
+          }
+          .name {
+            margin-top: 120px;
+            font-family: Noto Sans;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 23px;
+            line-height: 31px;
+            letter-spacing: 0.05em;
+
+            color: #FFFFFF;
+          }
+          .text {
+            margin-top: 30px;
+            font-family: Noto Sans;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 25px;
+            /* or 179% */
+
+            letter-spacing: 0.05em;
+
+            color: #FFFFFF;
+          }
+          .more {
+            margin-top: 80px;
+            font-family: Noto Sans;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 16px;
+            line-height: 22px;
+            /* identical to box height */
+
+            letter-spacing: 0.05em;
+
+            color: #FFFFFF;
+          }
+          transition: 0.25s ease-in-out;
+          opacity: 1;
+
+          &.inactive {
+              opacity: 0;
+              height: 0;
+              transition: 0.25s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
 div.non_phone {
   display: none;
 }
