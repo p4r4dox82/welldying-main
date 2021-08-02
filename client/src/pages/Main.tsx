@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import MainA from '../components/MainA';
 import MainB from '../components/MainB';
+import Maincontent from '../components/Maincontent';
 import useScroll, { useDeltaScroll } from '../etc/useScroll';
 import { RootReducer } from '../store';
 
@@ -38,24 +39,8 @@ function Main() {
         <>
             <Header additionalClass='absolute white' />
             <MainA/>
-            <MainB/>
+            <Maincontent/>
             <Footer/>
-
-            <div className='absolute loginButtonForm'>
-                { user.loggedIn ? (
-                    <>
-                        <div><Link to='/checklist'> {`${user.user!.name}님의 웰다잉 공간`} </Link></div>
-                        <div><Link to='/logout'> 로그아웃 </Link></div>
-                        { user.user?.username === 'admin' && <div><Link to='/admin'> 컨텐츠 관리</Link></div>}
-                    </>
-                ) : (
-                    <>
-                        <div><Link to='/console'> 유가족 열람요청 </Link></div>
-                        <div><Link to='/login'> 본인 로그인 </Link></div>
-                    </>
-                )}
-            </div>
-
         </>
     );
 }
