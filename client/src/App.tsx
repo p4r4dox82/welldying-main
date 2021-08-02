@@ -20,6 +20,7 @@ import SignupDone from './pages/SignupDone';
 import Write from './pages/Write';
 import Survey from './pages/Survey';
 import Practice from './pages/Practice';
+import MementoContent from './pages/MementoContent';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -49,6 +50,7 @@ function App() {
         <Route path='/aboutus' component={Aboutus} />
         <Route path='/survey' component={Survey} />
         <Route path='/practice' component={Practice} />
+        <Route path='/content' component={MementoContent} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>
