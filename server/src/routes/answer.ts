@@ -12,13 +12,13 @@ export default (Answer: Model<AnswerDocument>) => {
 
     router.put('/check', onlyAuthUser, async (req, res) => {
         let user = req.user!;
-        let contentId = req.body.contentId;
+        let questionId = req.body.questionId;
         let check = req.body.check;
 
-        if (await Answer.findOneAndUpdate({ username: user.username, contentId }, 
+        if (await Answer.findOneAndUpdate({ username: user.username, questionId }, 
                                           { isChecked: check }))
             res.sendStatus(200);
-        
+
         if (check) res.sendStatus(400);
         else res.sendStatus(200);
     });
@@ -29,7 +29,7 @@ export default (Answer: Model<AnswerDocument>) => {
 
         let data: AnswerType = {
             username: user.username,
-            contentId: Number.parseInt(req.body.contentId),
+            questionId: Number.parseInt(req.body.questionId),
             message: req.body.message,
             length: req.body.length,
             updatedAt: new Date().getTime(),
@@ -37,13 +37,13 @@ export default (Answer: Model<AnswerDocument>) => {
         console.log(data.message, data.length);
 
         if (data.message.length === 0) {
-            await Answer.deleteOne({ username: data.username, contentId: data.contentId });
-            
+            await Answer.deleteOne({ username: data.username, questionId: data.questionId });
+
             res.sendStatus(202);
             return;
         }
 
-        if (!await Answer.findOneAndUpdate({ username: data.username, contentId: data.contentId }, 
+        if (!await Answer.findOneAndUpdate({ username: data.username, questionId: data.questionId }, 
                                            { message: data.message, length: data.length, updatedAt: data.updatedAt })) {
             const answer = new Answer(data);
             await answer.save();
@@ -66,17 +66,17 @@ export default (Answer: Model<AnswerDocument>) => {
     router.get('/time', onlyAuthUser, async (req, res) => {
         let user = req.user!;
 
-        let result = await Answer.find({username: user.username }, { contentId: true, updatedAt: true, isChecked: true });
+        let result = await Answer.find({username: user.username }, { questionId: true, updatedAt: true, isChecked: true });
         res.json(result);
     })
 
     router.get('/pdf', onlyAuthUser, async (req, res) => {
         let user = req.user!;
-        let content = req.body.content;
+        let question = req.body.question;
 
         res.sendStatus(500);
 
-        //const pdf = await mdToPdf({ content: md });
+        //const pdf = await mdToPdf({ question: md });
 
         //let response = await axios.post('/aws/pdf', formData);
         //res.json(response.data);

@@ -24,16 +24,17 @@ export default (Content: Model<ContentDocument>) => {
             id: Number.parseInt(req.body.id),
             type: req.body.type,
             title: req.body.title,
-            message: req.body.message,
-            placeholder: req.body.placeholder,
+            category: Number.parseInt(req.body.category),
+            likes: Number.parseInt(req.body.likes),
+            tag: req.body.tag,
         };
 
-        if (!await Content.findOneAndUpdate({ id: data.id }, 
-                { type: data.type, title: data.title, message: data.message, placeholder: data.placeholder })) {
+        if (!await Content.findOneAndUpdate({ id: data.id },
+                { type: data.type, title: data.title, category: data.category, likes: data.likes, tag: data.tag})) {
             const content = new Content(data);
             content.save();
         }
-        
+
         res.sendStatus(200);
         return;
     });

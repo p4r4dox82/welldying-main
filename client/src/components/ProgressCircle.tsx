@@ -9,10 +9,6 @@ interface Props {
     color: string;
 }
 
-interface State {
-
-}
-
 function ProgressCircle({ image, progress, title, message, color } : Props) {
     let [realProgress, setRealProgress] = React.useState<number>(0);
 
@@ -54,10 +50,12 @@ function ProgressCircle({ image, progress, title, message, color } : Props) {
             <img
                 src={imageUrl('checklists/overlay.png')}
                 className='progressCircleOverlay'
+                alt = "progile"
             />
-            <img 
-                src={imageUrl(image)} 
-                className='link progressCircleInner' 
+            <img
+                src={imageUrl(image)}
+                className='link progressCircleInner'
+                alt = "progile"
             />
             <div className='progressCircleTitle'> { title } </div>
         </div>

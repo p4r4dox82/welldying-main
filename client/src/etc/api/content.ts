@@ -4,10 +4,11 @@ import { apiAddress } from "../config";
 
 export interface Content {
     id: number,
-    type: 'question' | 'post',
     title: string,
-    message: string,
-    placeholder: string,
+    type: string,
+    category: number,
+    likes: number,
+    tag: string,
 }
 
 export const getContents = async () => {
@@ -24,9 +25,9 @@ export const getContent = async (id: number) => {
     return data;
 }
 
-export const writeContent = async (id: number, type: 'question' | 'post', title: string, message: string, placeholder: string) => {
+export const writeContent = async (id: number, title: string, type: string, category: number, likes: number, tag: string) => {
     let response = await Axios.post(`${apiAddress}/content`, {
-        id, type, title, message, placeholder,
+        id, title, type, category, likes, tag
     }, { withCredentials: true });
 
     return response.status === 200;

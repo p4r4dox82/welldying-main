@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import MainA from '../components/MainA';
-import MainB from '../components/MainB';
 import Maincontent from '../components/Maincontent';
 import useScroll, { useDeltaScroll } from '../etc/useScroll';
 import { RootReducer } from '../store';
@@ -37,10 +35,17 @@ function Main() {
 
     return (
         <>
-            <Header additionalClass='absolute white' />
-            <MainA/>
+            <Header additionalClass='absolute ' />
+            {(user.loggedIn && user.user!.username === "admin") ? (
+              <>
+              <div className = 'admin_button'><Link to = '/admin'>admin</Link></div>
+              </>
+            ) : (
+              <>
+              </>
+            )}
             <Maincontent/>
-            <Footer/>
+            <Footer additionalClass=' '/>
         </>
     );
 }

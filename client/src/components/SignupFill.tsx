@@ -1,8 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import MainLogo from '../components/MainLogo';
 import { register, checkUsernameDuplicate, verifyPhone, verifyPhoneCheck, checkCellphoneDuplicate } from '../etc/api/user';
-import { imageUrl } from '../etc/config';
 import { SignupInfo1, SignupInfo2 } from '../pages/Signup';
 
 interface EntryType {
@@ -34,14 +31,14 @@ function SignupFill({ givenInfo, proceed } : Props) {
         const regex1 = /^[ -~]{5,100}$/;
 
         if (!regex1.test(username)) {
-            setUsernameMessage('아이디는 영문, 숫자, 특수문자만을 이용해 5글자 이상으로 설정해주세요.');
+            setUsernameMessage('아이디는 5글자 이상으로 설정해주세요.');
             return false;
         }
 
         let duplicate = await checkUsernameDuplicate(username);
 
         if (duplicate) {
-            setUsernameMessage('이미 사용하고 있는 아이디입니다.');
+            setUsernameMessage('중복된 아이디가 존재합니다.');
             return false;
         }
 
@@ -49,7 +46,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
         setUsernameMessage('');
         return true;
     }
-    
+
     let [password, setPassword] = React.useState('');
     let [passwordMessage, setPasswordMessage] = React.useState('');
     let validatePassword = () => {
@@ -71,7 +68,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
         let result = password === passwordConfirm;
 
         if (!result) {
-            setPasswordConfirmMessage('비밀번호와 비밀번호 확인 란이 다릅니다.');
+            setPasswordConfirmMessage('위의 비밀번호와 일치하지 않습니다.');
             return false;
         }
         setPasswordConfirmMessage('');
@@ -82,11 +79,11 @@ function SignupFill({ givenInfo, proceed } : Props) {
     let [nameMessage, setNameMessage] = React.useState('');
     let validateName = () => {
         if (name.length < 1) {
-            setNameMessage('이름을 적어주세요.');
+            setNameMessage('성명을 입력해주세요.');
             return false;
         }
         if (name.length > 100) {
-            setNameMessage('이름은 100글자 이내로 해 주세요.');
+            setNameMessage('성명은 100글자 이내로 해 주세요.');
             return false;
         }
         setNameMessage('');
@@ -110,12 +107,12 @@ function SignupFill({ givenInfo, proceed } : Props) {
         return true;
     }
 
-    let [sex, setSex] = React.useState<'female' | 'male'>(Math.random() < 0.5 ? 'female' : 'male');
+    let [sex, setSex] = React.useState<'female' | 'male'>('male');
     let [sexMessage, ] = React.useState('');
     let validateSex = () => {
         return true;
     }
-    
+
     let [email, setEmail] = React.useState('');
     let [emailMessage, setEmailMessage] = React.useState('');
     let validateEmail = () => {
@@ -134,6 +131,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
     }
 
     let [cellPhoneFront, ] = React.useState('010');
+    let [cellPhoneNumber, setCellPhoneNumber] = React.useState('');
     let [cellPhoneMiddle, setCellPhoneMiddle] = React.useState('');
     let [cellPhoneRear, setCellPhoneRear] = React.useState('');
     let [cellPhoneMessage, setCellPhoneMessage] = React.useState('');
@@ -208,15 +206,15 @@ function SignupFill({ givenInfo, proceed } : Props) {
     })
 
     let entries = React.useMemo<EntryType[]>(() => {
-        let result: EntryType[] = []; 
-         
-        result.push({ 
+        let result: EntryType[] = [];
+
+        result.push({
             name: '아이디',
             body: (
                 <div style={{display: 'flex'}}>
-                    <input autoComplete='username' onChange={(e) => { setUsernameValidated(false); setUsername(e.target.value) } } value={username} />
-                    <button style={{flex: '0 0 150px'}} className={usernameValidated ? 'inactive' : undefined} onClick={(e) => { e.preventDefault(); validateUsername(); } }> 
-                        { usernameValidated ? '중복 확인 완료' : '중복 확인' } 
+                    <input className = {usernameMessage ? 'error' : ''} autoComplete='username' onChange={(e) => { setUsernameValidated(false); setUsername(e.target.value) } } value={(usernameMessage ? usernameMessage : username)} placeholder = '아이디를 입력해주세요.' onClick = {() => {setUsernameMessage('');}}/>
+                    <button style={{flex: '0 0 150px', margin:'0px 0px 0px 30px'}} className={usernameValidated ? 'inactive' : undefined} onClick={(e) => { e.preventDefault(); validateUsername(); } }>
+                        { usernameValidated ? '중복 확인 완료' : '중복 확인' }
                     </button>
                 </div>
             ),
@@ -228,100 +226,110 @@ function SignupFill({ givenInfo, proceed } : Props) {
             name: '비밀번호',
             body: (
                 <>
-                    <input type='password' autoComplete='new-password' onChange={(e) => setPassword(e.target.value) } value={password}/>
+                    <input type={passwordMessage ? 'text' : 'password'} className = {passwordMessage ? 'error' : ''} autoComplete='new-password' onChange={(e) => setPassword(e.target.value) } value={(passwordMessage ? passwordMessage : password)} onClick = {() => {setPasswordMessage('');}} placeholder = '숫자, 영문자 조합으로 8~20자리 비밀번호를 입력해주세요.'/>
                 </>
             ),
             message: passwordMessage,
             validate: validatePassword,
         });
-        
+
         result.push({
             name: '비밀번호 확인',
             body: (
                 <>
-                    <input type='password' autoComplete='new-password' onChange={(e) => { setPasswordConfirm(e.target.value); }} value={passwordConfirm}/>
+                    <input type={passwordConfirmMessage ? 'text' : 'password'} className = {passwordConfirmMessage ? 'error' : ''} autoComplete='new-password' onChange={(e) => { setPasswordConfirm(e.target.value); }} value={(passwordConfirmMessage ? passwordConfirmMessage : passwordConfirm)} onClick = {() => {setPasswordConfirmMessage('');}} placeholder = '위와 동일한 비밀번호를 다시 한 번 입력해주세요.' />
                 </>
             ),
             message: passwordConfirmMessage,
             validate: validatePasswordConfirm,
         });
-        
+
         result.push({
-            name: '이름',
+            name: '성명',
             body: (
                 <>
-                    <input autoComplete='name' onChange={(e) => setName(e.target.value)} value={name}/>
+                    <input className = {nameMessage ? 'error' : ''} autoComplete='name' onChange={(e) => setName(e.target.value)} value={(nameMessage ? nameMessage : name)} onClick = {() => {setNameMessage('');}} placeholder = '성명을 입력해주세요.'/>
                 </>
             ),
             message: nameMessage,
             validate: validateName,
         });
-        
+
+        result.push({
+          name: '성별',
+          body: (
+            <>
+            <div className = 'sex_container'>
+                <span className='checkForm span'>
+                    <div className='checkBox' onClick={(e) => {e.preventDefault(); setSex('male')}}>
+                        <div className={'checkSign' + (sex === 'male' ? ' active' : '')} />
+                    </div>
+                    <div className='label' style={{margin: '0px 0px 0px 10px'}}>
+                        남성
+                    </div>
+                </span>
+                <span className='checkForm span'>
+                    <div className='checkBox' onClick={(e) => {e.preventDefault(); setSex('female')}}>
+                        <div className={'checkSign' + (sex === 'female' ? ' active' : '')} />
+                    </div>
+                    <div className='label' style={{margin: '0px 0px 0px 10px'}}>
+                        여성
+                    </div>
+                </span>
+            </div>
+            </>
+          ),
+          message: sexMessage,
+          validate: validateSex,
+        });
+
         result.push({
            name: '생년월일',
            body: (
                 <>
-                    <input style={{width: '100px', textAlign: 'right'}} type='number' autoComplete='bday-year' onChange={(e) => setBirthYear(Math.min((new Date()).getFullYear(), Number.parseInt(e.target.value)))} value={birthYear}/>
-                    <span> 년 </span>
-                    <input style={{width: '70px', textAlign: 'right'}} type='number' autoComplete='bday-month' onChange={(e) => setBirthMonth(Math.min(12, Math.max(1, Number.parseInt(e.target.value))))} value={birthMonth}/>
-                    <span> 월 </span>
-                    <input style={{width: '70px', textAlign: 'right'}} type='number' autoComplete='bday-day' onChange={(e) => setBirthDate(Math.min(31, Math.max(1, Number.parseInt(e.target.value))))} value={birthDate}/>
-                    <span> 일 </span>
+                    <input style={{width: '176px', textAlign: 'left', margin: '0px 31px 0px 0px'}} type='number' autoComplete='bday-year' onChange={(e) => setBirthYear(Math.min((new Date()).getFullYear(), Number.parseInt(e.target.value)))} value={birthYear} placeholder = '출생년도(4자)'/>
+                    <input style={{width: '156px', textAlign: 'left', margin: '0px 31px 0px 0px'}} type='number' autoComplete='bday-month' onChange={(e) => setBirthMonth(Math.min(12, Math.max(1, Number.parseInt(e.target.value))))} value={birthMonth} placeholder = '월'/>
+                    <input style={{width: '147px', textAlign: 'left'}} type='number' autoComplete='bday-day' onChange={(e) => setBirthDate(Math.min(31, Math.max(1, Number.parseInt(e.target.value))))} value={birthDate} placeholder = '일'/>
                 </>
            ),
            message: birthMessage,
            validate: validateBirth,
         });
-        
-        result.push({
-            name: '성별',
-            body: (
-                <>
-                    <button className={'selectButton' + (sex === 'male' ? '' : ' inactive')} onClick={(e) => {e.preventDefault(); setSex('male')}}> 남 </button>
-                    <span> / </span>
-                    <button className={'selectButton' + (sex === 'female' ? '' : ' inactive')} onClick={(e) => {e.preventDefault(); setSex('female')}}> 여 </button>
-                </>
-            ),
-            message: sexMessage,
-            validate: validateSex,
-        });
-        
+
         result.push({
             name: '이메일 (선택)',
             body: (
                 <>
-                    <input type='email' autoComplete='email' onChange={(e) => setEmail(e.target.value)} value={email} />
+                    <input type='email' className = {emailMessage ? 'error' : ''} autoComplete='email' onChange={(e) => setEmail(e.target.value)} value={emailMessage ? emailMessage : email} onClick = {() => {setEmailMessage('');}} placeholder = '이메일을 입력해주세요.'/>
                 </>
             ),
             message: emailMessage,
             validate: validateEmail,
         });
-        
+
         result.push({
             name: '휴대전화번호',
             body: (
+              <>
                 <div style={{display: 'flex'}}>
-                    <input style={{flex: '5 0 0'}} value={cellPhoneFront} readOnly/>
-                    <span style={{lineHeight: '42px'}}> - </span>
-                    <input style={{flex: '5 0 0'}} type='number' autoComplete='tel-local-prefix' onChange={(e) => { setCellPhoneMiddle(e.target.value.slice(0, 4)); setPhoneVerifyStarted(false); }} value={cellPhoneMiddle} />
-                    <span style={{lineHeight: '42px'}}> - </span>
-                    <input style={{flex: '5 0 0'}} type='number' autoComplete='tel-local-suffix' onChange={(e) => { setCellPhoneRear(e.target.value.slice(0, 4)); setPhoneVerifyStarted(false); }} value={cellPhoneRear} />
-                    <button style={{flex: '0 0 150px'}} onClick={(e) => { e.preventDefault(); startPhoneVerify(); } }> 
-                        { phoneVerifyStarted ? (phoneVerified ? '인증 완료' : '인증 중...') : '인증번호 받기' }
+                    <input className = {cellPhoneMessage ? 'error' : ''} onChange={(e) => { setPhoneVerifyStarted(false); setCellPhoneNumber(e.target.value); setCellPhoneMiddle(e.target.value.slice(3, 7)); setCellPhoneRear(e.target.value.slice(7, 11));} } value={(cellPhoneMessage ? cellPhoneMessage : cellPhoneNumber)} placeholder = '- 없이 번호만 입락해주세요.' onClick = {() => {setCellPhoneMessage('');}}/>
+                    <button style={{flex: '0 0 150px', margin:'0px 0px 0px 30px'}} onClick={(e) => { e.preventDefault(); startPhoneVerify(); } }>
+                        { phoneVerifyStarted ? '전송 완료' : '인증번호전송' }
                     </button>
                 </div>
+              </>
             ),
             message: cellPhoneMessage,
             validate: validateCellPhone,
         });
-        
-        if (phoneVerifyStarted) result.push({
-            name: '휴대전화 인증번호',
+
+        result.push({
+            name: '인증번호 입력',
             body: (
                 <div style={{display: 'flex'}}>
-                    <input type='number' onChange={(e) => setPhoneCode(Number.parseInt(e.target.value))} value={phoneCode} />
-                    <button style={{flex: '0 0 150px'}} className={(phoneVerified ? 'inactive' : '')} onClick={(e) => { e.preventDefault(); endPhoneVerify(); } }> 
-                        { phoneVerified ? '인증 완료' : '인증' } 
+                    <input type='text' className = {phoneCodeMessage ? 'error' : ''} onChange={(e) => setPhoneCode(Number.parseInt(e.target.value))} value={phoneCodeMessage ? phoneCodeMessage : phoneCode} placeholder = '전송된 인증번호를 입력해주세요.' onClick = {() => {setPhoneCodeMessage('');}}/>
+                    <button style={{flex: '0 0 150px', margin:'0px 0px 0px 30px'}} className={(phoneVerified ? 'inactive' : '')} onClick={(e) => { e.preventDefault(); endPhoneVerify(); } }>
+                        { phoneVerified ? '인증 완료' : '인증확인' }
                     </button>
                 </div>
             ),
@@ -329,33 +337,6 @@ function SignupFill({ givenInfo, proceed } : Props) {
             validate: validatePhoneCode,
         });
 
-        result.push({
-            name: '열람 가능한 유가족 선택',
-            body: (
-                <>
-                    <div> 본인의 사후 본인이 작성한 글을 열람할 수 있는 유가족을 선택해주세요. </div>
-                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        { contentShower.map((text) => (
-                            <div className='checkForm' style={{flex: '1 1 200px', margin: 0}} onClick={() => { 
-                                let nowShowContent = {...showContent}; 
-                                nowShowContent[text] = !nowShowContent[text]; 
-                                setShowContent(nowShowContent); 
-                            }}>
-                                <div className='checkBox'>
-                                    <img className={'checkSign' + (showContent[text] ? ' active' : '')} src={imageUrl('check.png')} />
-                                </div>
-                                <div className='checkLabel'>
-                                    { text }
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </>
-            ),
-            message: '',
-            validate: () => true,
-        })
-        
         return result;
     }, [phoneVerifyStarted, birthDate, birthMessage, birthMonth, birthYear, cellPhoneFront, cellPhoneMessage, cellPhoneMiddle, cellPhoneRear, email, emailMessage, endPhoneVerify, name, nameMessage, password, passwordConfirm, passwordConfirmMessage, passwordMessage, phoneCode, phoneCodeMessage, phoneVerified, sex, sexMessage, startPhoneVerify, username, usernameMessage, usernameValidated, validateBirth, validateCellPhone, validateEmail, validateName, validatePassword, validatePasswordConfirm, validateUsername]);
 
@@ -365,18 +346,18 @@ function SignupFill({ givenInfo, proceed } : Props) {
         for (let { validate } of entries) {
             if (!await validate()) result = false;
         }
-        
+
         return result;
     }
 
     return (
-        <form className='signupForm'>
+        <form className='signupForm margin_72px'>
             { entries.map(({name, body, message}) => (
                 <>
-                    <div className='row' style={{margin: '80px 0px 0px 0px'}}>
+                    <div className={'row'} style={{width: (name === '성명' ? '286px' : (name === '성별' ? '200px' : '100%')), margin: (name === '성별' ? '20px 0px 0px 51px' : '20px 0px 0px 0px')}}>
                         <div className='label'> { name } </div>
                         { body }
-                        { message && <div className='message'> { message } </div> }
+                        { (message && name === '생년월일') && <div className='message'> { message } </div> }
                     </div>
                 </>
             ))}
@@ -385,7 +366,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
                 e.preventDefault();
                 if (!await validateAll()) return false;
                 if (await register({
-                    username, password, name, birthYear, birthMonth, birthDate, sex, email, 
+                    username, password, name, birthYear, birthMonth, birthDate, sex, email,
                     cellphone: `+82${cellPhoneFront.slice(1)}${cellPhoneMiddle}${cellPhoneRear}`,
                     agreeMessage: givenInfo.agreeMessage,
                     phoneCodeDigest,

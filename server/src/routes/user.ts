@@ -109,7 +109,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
                 Authorization: `Bearer ${token}`
             }
         });
-        
+
         if (response.data.id.toString() === id) {
             let user = await User.findOne({ kakaoId: id });
             if (user) {
@@ -175,16 +175,28 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         res.sendStatus(401);
     })
 
+    router.get('/findcellphone/:cellphone', async (req, res) => {
+        let cellphone = '+82' + (req.params.cellphone.slice(1));
+        let result = await User.findOne({ cellphone });
+        res.json(result);
+    });
+
+    router.get('/findusername/:username', async (req, res) => {
+        let username = req.params.username;
+        let result = await User.findOne({ username });
+        res.json(result);
+    });
+
     // Sign up
     router.post('/', signupRateLimiter1, signupRateLimiter2, async (req, res) => {
 
         if (req.isAuthenticated()) req.logout();
-        
+
         const password = req.body.password;
 
         const passwordSalt = crypto.randomBytes(32).toString('hex');
         const passwordHash = crypto.pbkdf2Sync(password, passwordSalt, 10000, 64, 'sha512').toString('hex');
-        
+
         let data : UserType = {
             username: req.body.username,
             passwordSalt, passwordHash,
@@ -200,13 +212,13 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         };
 
         let phoneCodeDigest = req.body.phoneCodeDigest, phoneVerifyData = req.session.verifyPhone;
-        if (!phoneVerifyData) 
+        if (!phoneVerifyData)
             return res.status(401).send('There is no phone verify data on the session');
-        if (phoneCodeDigest !== crypto.pbkdf2Sync(`${phoneVerifyData.phoneNumber}${phoneVerifyData.code}${phoneVerifyData.createdAt}`, config.adminSecret, 10000, 64, 'sha512').toString('hex')) 
+        if (phoneCodeDigest !== crypto.pbkdf2Sync(`${phoneVerifyData.phoneNumber}${phoneVerifyData.code}${phoneVerifyData.createdAt}`, config.adminSecret, 10000, 64, 'sha512').toString('hex'))
             return res.status(401).send('Phone number is not correctly verified');
 
         let phoneUserDigest = crypto.pbkdf2Sync(`${data.cellphone}${data.username}`, config.adminSecret, 10000, 64, 'sha512').toString('hex');
-        
+
         data = Object.assign(data, { phoneUserDigest });
 
 
@@ -224,7 +236,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
             res.end(400);
             return;
         }
-        
+
         await new User(data).save();
 
         res.write(`Now you can login with ID ${data.username}!`);
@@ -237,7 +249,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         let username: string = req.body.username;
 
         if (!await User.findOne({ username })) return res.sendStatus(500);
-        
+
         let name: string = req.body.name;
         let birthYear: number = Number.parseInt(req.body.birthYear);
         let birthMonth: number = Number.parseInt(req.body.birthMonth);
@@ -252,17 +264,37 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         if (password) {
             const passwordSalt = crypto.randomBytes(32).toString('hex');
             const passwordHash = crypto.pbkdf2Sync(password, passwordSalt, 10000, 64, 'sha512').toString('hex');
-            
+
             await User.findOneAndUpdate({ username }, {
                 passwordHash, passwordSalt,
             })
-        }        
+        }
 
         await User.findOneAndUpdate({ username }, {
             name, birthYear, birthMonth, birthDate, sex, email
         });
-        
+
         res.send(200);
+    })
+
+    router.put('/password', onlyNotAuthUser, async (req, res) => {
+      let username: string = req.body.username;
+
+      if (!await User.findOne({ username })) return res.sendStatus(500);
+
+
+      const password: string = req.body.password;
+
+      if (password) {
+          const passwordSalt = crypto.randomBytes(32).toString('hex');
+          const passwordHash = crypto.pbkdf2Sync(password, passwordSalt, 10000, 64, 'sha512').toString('hex');
+
+          await User.findOneAndUpdate({ username }, {
+              passwordHash, passwordSalt,
+          })
+      }
+
+      res.send(200);
     })
 
     router.post('/duplicate', async (req, res) => {
@@ -271,14 +303,14 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
             duplicate: !!(await User.findOne({ username }))
         });
     })
-    
+
     router.post('/duplicate/cellphone', async (req, res) => {
         const cellphone: string = req.body.cellphone;
         res.send({
             duplicate: !!(await User.findOne({ cellphone }))
         });
     })
-    
+
     const sendSMS = async (message: string, phoneNumber: string) => {
         await sns.publish({
             Message: message,
@@ -307,7 +339,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         let verifyData = req.session.verifyPhone;
 
         if (!verifyData) return res.sendStatus(401);
-        let isVerified = verifyData.phoneNumber === phoneNumber 
+        let isVerified = verifyData.phoneNumber === phoneNumber
             && verifyData.code === userCode;
 //            && verifyData.createdAt >= (new Date().getTime()) - 3000000;
 

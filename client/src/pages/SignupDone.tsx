@@ -1,6 +1,5 @@
 import React from 'react';
 import { match, Redirect } from 'react-router-dom';
-import MainLogo from '../components/MainLogo';
 
 interface MatchParams {
     name: string;
@@ -26,7 +25,6 @@ function SignupDone({ match, location }: Props) {
 
     return (
         <>
-            <MainLogo additionalClass='grey' />
             <form className='signupForm'>
                 { `${name}님, 가입이 완료되었습니다. 잠시 후 메인 화면으로 이동합니다.` }
             </form>

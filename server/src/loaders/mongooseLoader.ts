@@ -2,10 +2,14 @@ import { Application } from "express";
 import mongoose, { model } from "mongoose";
 import config from "../config";
 import { userSchema, UserDocument } from "../models/user";
-import { contentSchema } from "../models/content";
+import { questionSchema } from "../models/question";
 import { sectionSchema } from "../models/section";
+import { contentSchema } from "../models/content";
 import { answerSchema } from "../models/answer";
 import { subscriberSchema } from "../models/subscriber";
+import { noticeSchema } from "../models/notice";
+import { newsSchema } from "../models/news";
+import { qnaSchema } from "../models/qna";
 
 
 
@@ -17,10 +21,14 @@ const f = async (app: Application) => {
 
     return {
         User: model('user', userSchema, 'users'),
-        Content: model('content', contentSchema, 'contents'),
+        Question: model('question', questionSchema, 'questions'),
         Section: model('section', sectionSchema, 'sections'),
+        Content: model('content', contentSchema, 'contents'),
         Answer: model('answer', answerSchema, 'answers'),
         Subscriber: model('subscriber', subscriberSchema, 'subscribers'),
+        Notice: model('notice', noticeSchema, 'notices'),
+        News: model('news', newsSchema, 'newss'),
+        Qna: model('qna', qnaSchema, 'qnas'),
     }
 }
 

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link, match, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { getContents } from '../etc/api/content';
+import { getQuestions } from '../etc/api/question';
 import { getSection, writeSection } from '../etc/api/section';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
@@ -20,11 +20,14 @@ function AdminWriteSection({ match }: Props) {
     let id = Number.parseInt(match.params.id);
     let user = useSelector((state: RootReducer) => state.user);
     let [sectionLoading, section] = usePromise(() => getSection(id));
-    let [allContentsLoading, allContents] = usePromise(() => getContents());
+    let [allQuestionsLoading, allQuestions] = usePromise(() => getQuestions());
     let [error, setError] = React.useState<string>();
 
     let [title, setTitle] = React.useState<string>('');
-    let [contents, setContents] = React.useState<number[]>([]);
+    let [tag, setTag] = React.useState<string>('');
+    let [detail, setDetail] = React.useState<string>('');
+    let [imageurl, setImageurl] = React.useState<string>('');
+    let [questions, setQuestions] = React.useState<number[]>([]);
     let [update, setUpdate] = React.useState<number>(1);
 
     let [editDone, setEditDone] = React.useState<boolean>(false);
@@ -32,35 +35,35 @@ function AdminWriteSection({ match }: Props) {
     React.useEffect(() => {
         if (!section) return;
         setTitle(section.title);
-        setContents(section.contents);
+        setQuestions(section.questions);
     }, [section]);
 
-    let contentForm = React.useMemo(() => {
-        if (!allContents) return <></>;
-        else return contents.map((contentId, k) => {
-            console.log(contents);
+    let questionForm = React.useMemo(() => {
+        if (!allQuestions) return <></>;
+        else return questions.map((questionId, k) => {
+            console.log(questions);
             return (
                 <div>
                     { k+1 }
-                    <select style={{width: '888px'}} value={contentId} onChange={(e) => {
+                    <select style={{width: '888px'}} value={questionId} onChange={(e) => {
                         let newId = Number.parseInt(e.target.value);
-                        let newContents = contents;
-                        newContents[k] = newId;
-                        setContents(newContents);
+                        let newQuestions = questions;
+                        newQuestions[k] = newId;
+                        setQuestions(newQuestions);
                         setUpdate(update+1);
                     }}>
                         <option value={-1}> 질문을 골라주세요. </option>
-                        { allContents.map((content) => <option value={content.id}> {content.title} </option>)}
+                        { allQuestions.map((question) => <option value={question.id}> {question.title} </option>)}
                     </select>
                     <button onClick={(e) => {
                         e.preventDefault();
-                        setContents(contents.filter((id, i) => i !== k));
+                        setQuestions(questions.filter((id, i) => i !== k));
                         setUpdate(update+1);
                     }}> 제외하기 </button>
                 </div>
             );
         })
-    }, [update, allContentsLoading, sectionLoading]);
+    }, [update, allQuestionsLoading, sectionLoading]);
 
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
     else if (editDone) return <Redirect to='/admin'/>
@@ -70,9 +73,9 @@ function AdminWriteSection({ match }: Props) {
             <Header additionalClass='grey borderBottom' />
             <form className='signupForm' style={{width: '1000px'}}>
                 <span><Link to='/admin'> 뒤로 가기 </Link></span>
-                    
-                <h1 style={{fontSize: '28px', fontWeight: 'bold', lineHeight: '32px', marginBottom: '32px'}}> 
-                    { !section ? '새 질문지 추가하기' : '질문지 내용 수정하기' } 
+
+                <h1 style={{fontSize: '28px', fontWeight: 'bold', lineHeight: '32px', marginBottom: '32px'}}>
+                    { !section ? '새 질문지 추가하기' : '질문지 내용 수정하기' }
                 </h1>
                 <div className='row'>
                     <div className='label'> ID </div>
@@ -83,26 +86,38 @@ function AdminWriteSection({ match }: Props) {
                     <input value={title} onChange={(e) => setTitle(e.target.value)}/>
                 </div>
                 <div className='row'>
+                    <div className='label'> 태그 </div>
+                    <input value={tag} onChange={(e) => setTag(e.target.value)}/>
+                </div>
+                <div className='row'>
+                    <div className='label'> detail </div>
+                    <input value={detail} onChange={(e) => setDetail(e.target.value)}/>
+                </div>
+                <div className='row'>
+                    <div className='label'> imageurl </div>
+                    <input value={imageurl} onChange={(e) => setImageurl(e.target.value)}/>
+                </div>
+                <div className='row'>
                     <div className='label'> 질문 목록 </div>
-                    { contentForm }
+                    { questionForm }
                     <button onClick={(e) => {
                         e.preventDefault();
-                        setContents(contents.concat(-1));
+                        setQuestions(questions.concat(-1));
                         setUpdate(update+1);
                     }}> 질문 추가하기 </button>
                 </div>
 
                 <button type='submit' className='signupButton' onClick={async (e) => {
                     e.preventDefault();
-                    if (!title || !contents || contents.find((x) => x === -1) !== undefined) setError('모든 항목을 채워주세요.');
-                    else if (await writeSection(id, title, contents)) setEditDone(true);
+                    if (!title || !questions || questions.find((x) => x === -1) !== undefined) setError('모든 항목을 채워주세요.');
+                    else if (await writeSection(id, title, tag, detail, imageurl, questions)) setEditDone(true);
                     else setError('어딘가 문제가 생겼습니다.');
                 }}>
-                    { !section ? '추가하기' : '수정하기' } 
+                    { !section ? '추가하기' : '수정하기' }
                 </button>
                 { error }
             </form>
-            <Footer/>
+            <Footer additionalClass= ' '/>
         </>
     )
 }

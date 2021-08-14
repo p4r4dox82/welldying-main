@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import ProgressCircle from '../components/ProgressCircle';
 import { parseDate } from '../etc';
 import { getAnswerTime } from '../etc/api/answer';
-import { getContents, Content } from '../etc/api/content';
+import { getQuestions, Question } from '../etc/api/question';
 import { getSections } from '../etc/api/section';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
@@ -16,17 +16,17 @@ import { RootReducer } from '../store';
 
 
 
-function ChecklistPost(content: Content) {
+function ChecklistPost(question: Question) {
     let [expanded, setExpanded] = React.useState(false);
 
     return (
         <div className='row'>
-            <h3 className='link postTitle' onClick={(e) => { e.preventDefault(); setExpanded(!expanded); }}> 
-                { `${content.title}` } 
+            <h3 className='link postTitle' onClick={(e) => { e.preventDefault(); setExpanded(!expanded); }}>
+                { `${question.title}` }
             </h3>
-            { expanded && 
-                <ul className='postBody'> 
-                    { content.message.split('\n').map((content) => <p> { content } </p>) } 
+            { expanded &&
+                <ul className='postBody'>
+                    { question.message.split('\n').map((question) => <p> { question } </p>) }
                 </ul>
             }
         </div>
@@ -47,53 +47,53 @@ function Checklist({ match } : Props) {
 
     let user = useSelector((state: RootReducer) => state.user);
     let [, sections] = usePromise(getSections);
-    let [, contents] = usePromise(getContents); 
+    let [, questions] = usePromise(getQuestions);
     let [, times] = usePromise(getAnswerTime);
-    
+
     let lastTime = React.useMemo(() => times && Math.max(...times.map((time) => time.updatedAt)), [times]);
 
     let section = React.useMemo(() => sections?.find((section) => section.id === id), [sections, id]);
 
-    let content = React.useMemo(() => {
+    let question = React.useMemo(() => {
         return (id === undefined) ? undefined : (
             <>
                 <div className='row' style={{marginBottom: 0}}>
-                    <h1> 
+                    <h1>
                         { section?.title }
                     </h1>
                 </div>
-                {section?.contents?.map((contentId) => {
-                    let content = contents?.find((content) => content.id === contentId);
-                    if (!content) return;
+                {section?.questions?.map((questionId) => {
+                    let question = questions?.find((question) => question.id === questionId);
+                    if (!question) return;
 
-                    let time = times?.find((x) => x.contentId === contentId);
-                    
-                    if (content.type === 'question') return (
+                    let time = times?.find((x) => x.questionId === questionId);
+
+                    if (question.type === 'question') return (
                         <div className='row'>
-                            <h2> 
-                                { content.title } 
+                            <h2>
+                                { question.title }
                                 <span className='dialogCheckBox' onClick={() => { if (!(time?.isChecked)) alert('답변 작성 완료 후 체크해주세요!'); }}>
-                                    <img className={'dialogCheckSign' + (time?.isChecked ? ' active' : '')} src={imageUrl('check.png')} />
+                                    <img className={'dialogCheckSign' + (time?.isChecked ? ' active' : '')} src={imageUrl('check.png')} alt = "profile"/>
                                 </span>
                             </h2>
 
-                            <ul> { content.message.split('\n').map((str) => <li> {str} </li>) } </ul>
+                            <ul> { question.message.split('\n').map((str) => <li> {str} </li>) } </ul>
                             <div className='rightArea'>
                                 <div className='message'> { time && `마지막 수정: ${parseDate(new Date(time.updatedAt))}` } </div>
-                                <Link to={`/write/${id}/${contentId}`}><button> 작성하기 </button></Link>
+                                <Link to={`/write/${id}/${questionId}`}><button> 작성하기 </button></Link>
                             </div>
                         </div>
                     );
-                    else return <ChecklistPost {...content} />;
+                    else return <ChecklistPost {...question} />;
                 })}
             </>
         );
     }, [section, times]);
 
-    let emptyContent = React.useMemo(() => (
-        <>  
+    let emptyQuestion = React.useMemo(() => (
+        <>
             <div className='row' style={{marginBottom: 0}}>
-                <h1> 
+                <h1>
                     웰다잉 이야기, 선택과 기록.
                     <span className='message'>
                         { lastTime && `마지막 수정: ${parseDate(new Date(lastTime))}` }
@@ -102,24 +102,24 @@ function Checklist({ match } : Props) {
             </div>
             <div className='checklistContainer'>
                 { times && sections?.map((section, i) => {
-                    if (!times || !sections || !contents) return;
+                    if (!times || !sections || !questions) return;
 
                     const id = i + 1;
-                    const sectionContents = sections.find((section) => section.id === id)?.contents.filter((id) => contents.find((c) => c.id === id)?.type === 'question') || [];
-                    const x = sectionContents.filter((id) => times?.find((at) => at.contentId === id && at.isChecked)).length;
-                    const y = sectionContents.length;
+                    const sectionQuestions = sections.find((section) => section.id === id)?.questions.filter((id) => questions.find((c) => c.id === id)?.type === 'question') || [];
+                    const x = sectionQuestions.filter((id) => times?.find((at) => at.questionId === id && at.isChecked)).length;
+                    const y = sectionQuestions.length;
                     const progress = y ? Math.floor(x * 1000 / y) / 10 : 0;
 
-                    const message = y ? ( x == y ? "완료" : `${progress}%` ) : '';
+                    const message = y ? ( x === y ? "완료" : `${progress}%` ) : '';
 
                     return (
                         <div className='checklistItem'>
                             <Link to={`/checklist/${id}`}>
-                                <ProgressCircle 
-                                    image={`checklists/${id-1}.png`} 
-                                    progress={progress} 
-                                    message={message} 
-                                    title={section.title} 
+                                <ProgressCircle
+                                    image={`checklists/${id-1}.png`}
+                                    progress={progress}
+                                    message={message}
+                                    title={section.title}
                                     color={
                                         ['#E0949159', '#FFC2AD59', '#F9D5D559', '#FFF3F0B2',
                                          '#929AA059', '#DDCCC459', '#B1B3AC59', '#DCA69559'][id-1]
@@ -162,9 +162,9 @@ function Checklist({ match } : Props) {
                 </div>
 
                 <div style={{position: 'absolute', right: '66px', top: '-32px', fontSize: '11px', fontWeight: 'bold'}}><Link to='/checklist/print'> 체크리스트 인쇄하기 </Link></div>
-                { content ?? emptyContent }
+                { question ?? emptyQuestion }
             </div>
-            <Footer/>
+            <Footer additionalClass= ' '/>
         </>
     )
 }

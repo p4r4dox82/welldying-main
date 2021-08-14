@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, match, Redirect } from 'react-router-dom';
-import MainLogo from '../components/MainLogo';
 import { login, oauthConnect } from '../etc/api/user';
 
 
@@ -36,10 +35,9 @@ function LoginConnect({ match } : Props) {
     else if (redirectToMain) return <Redirect to='/'/>;
     else return (
         <>
-            <MainLogo additionalClass='grey' />
 
             <div className='loginForm'>
-                아직 웰다잉 서비스에 연결되어 있지 않은 계정입니다. 
+                아직 웰다잉 서비스에 연결되어 있지 않은 계정입니다.
                 <br/>
                 아이디와 비밀번호를 입력해서 웰다잉 서비스에 연결해주세요!
                 <form>

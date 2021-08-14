@@ -31,7 +31,7 @@ div.content {
 
     div.row {
         margin: 40px 0px 120px 0px;
-        
+
         h1 {
             font-size: 23.3px;
             line-height: 38.3px;
@@ -43,7 +43,7 @@ div.content {
             line-height: 24px;
             font-weight: 600;
         }
-        
+
         h6 {
             font-size: 12px;
             line-height: 18px;
@@ -71,7 +71,7 @@ div.content {
                 }
             }
         }
-        
+
         ul {
             margin: 20px 0px;
 
@@ -122,7 +122,7 @@ div.content {
                     }
                 }
             }
-    
+
             &.timeline {
                 li {
                     padding-bottom: 45px;
@@ -194,7 +194,7 @@ div.content {
                 line-height: 28px;
                 font-weight: 600;
             }
-    
+
             h6 {
                 font-size: 10.7px;
                 line-height: 24px;
@@ -211,18 +211,18 @@ div.content {
                 div {
                     font-size: 17.7px;
                     line-height: 33px;
-        
+
                     &.active {
                         font-weight: bold;
                     }
-        
+
                     &.inactive {
                         color: #60606099;
                     }
                 }
             }
         }
-        
+
         .rightArea {
             position: absolute;
             top: 0px;
@@ -269,7 +269,7 @@ div.content {
                         height: 0;
                         transition: 0.25s ease-in-out;
                     }
-                }    
+                }
             }
 
 
@@ -292,6 +292,22 @@ div.content {
                     padding: 3px 0px;
                     margin: 8px 0px;
                     margin-top: -10px;
+                }
+            }
+
+            .navigationMenu {
+                margin: 40px 0px;
+                div {
+                    font-size: 17.7px;
+                    line-height: 33px;
+
+                    &.active {
+                        font-weight: bold;
+                    }
+        
+                    &.inactive {
+                        color: #60606099;
+                    }
                 }
             }
         }
@@ -324,11 +340,11 @@ div.content {
             }
         }
     }
-    
+
     .reviewContainer {
         display: flex;
         width: 100%;
-    
+
         flex-wrap: wrap;
         justify-content: flex-start;
         align-content: flex-start;
@@ -368,7 +384,7 @@ div.content {
     height: 18px;
     width: 18px;
     border: 1px #606060 solid;
-    
+
     .dialogCheckSign {
         margin: -2px;
         height: 23px;

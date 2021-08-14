@@ -1,14 +1,10 @@
-import React, {useRef} from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { ExternalLink } from 'react-external-link';
 import { imageUrl } from '../etc/config';
-import moment from 'moment';
 import 'moment/locale/ko';
 import {useInterval} from 'react-use';
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 import domtoimage from 'dom-to-image';
-import { saveAs } from 'file-saver';
 
 const LiveTimeContainer = () => {
   let [time, setTime] = React.useState(0.00);
@@ -21,13 +17,11 @@ const LiveTimeContainer = () => {
 }
 const checkline = (data: string) => {
   let str = data;
-  let str_len = str.length;
   let str_arr = str.split('\n');
   let row = str_arr.length;
   let actual_row = row;
   let data_fixed = '';
   let data_len = 0;
-  let real_row;
   let current_row = 0;
   for(let i = 0; i < row; i++) {
     if(str_arr[i].length%20 === 0 && str_arr[i].length !== 0) {
@@ -139,7 +133,6 @@ memento는 언젠가 다가올
 ‘사전예약하기’ 버튼을 눌러보세요!`;
 let text_22 = `아직 테스트가 남았다면
 자유롭게 진행해주세요.`;
-let text_23 = `카톡 브라우저는 미리보기에서 캡쳐해주세요.`;
 
 let vibe_text = ['조용한', '포근한', '활기찬', '설레는'];
 let act_text = ['진솔한 이야기', '말 없는 포옹', '덤덤한 위로', '눈물 섞인 인사'];
@@ -153,12 +146,7 @@ let story_text_2 = [`오랜 시간 전하지 못한
 `남겨질 사람을 위한 당신의
 먹먹한 토닥임 '울지말아요'`];
 let message_capture = `메시지 캡쳐하기 >`;
-let message_preview_text = `메시지 미리보기 >`;
 let copy_link = `링크 복사하기 >`;
-let back_message = `< 메시지 이어쓰기`;
-let hide_logo = `버튼 숨기기`;
-let hide_logo_text = `캡쳐를 위해 5초간 버튼을 숨깁니다`;
-let back_message_text = `메시지를 이어쓰기`;
 let edit_message = `< 메시지 수정하기`;
 let passive_capture = `수동으로 캡쳐하기 >`;
 let passive_capture_text = `자동 캡쳐가 작동 하지 않은 경우 브라우저의
@@ -171,10 +159,6 @@ let person_text = ['든든한 사람', '포근한 사람', '즐거운 사람', '
 
 let text_1_3 = `죽기전에 5분의 시간이 주어진다면,
 누굴 위해 이야기를 남기고 싶나요?`;
-let text_1_4 = `휴대폰 QR 코드
-휴대폰으로 QR코드를 스캔하여
-최적화된 모바일 환경에서 이용하세요.
-(기본 카메라에 QR 코드를 인식해주세요)`;
 
 let sound_ref = `Kevin MacLeod의 Mesmerize에는 크리에이티브
 커먼즈 저작자 표시 4.0 라이선스가 적용됩니다.
@@ -223,20 +207,17 @@ function Survey() {
   let [click_5th, setclick_5th] = React.useState<boolean>(false);
   let [click_6th, setclick_6th] = React.useState<boolean>(false);
   let [click_7th, setclick_7th] = React.useState<boolean>(false);
-  let [click_8th, setclick_8th] = React.useState<boolean>(false);
   let [click_9th, setclick_9th] = React.useState<boolean>(false);
   let [click_10th, setclick_10th] = React.useState<boolean>(false);
   let [go_back_test, setgo_back_test] = React.useState<boolean>(false);
   let [displaynone, setdisplaynone] = React.useState<boolean>(false);
-  let [displaynone_4th, setdisplaynone_4th] = React.useState<boolean>(false);
-  let [displaynone_9th, setdisplaynone_9th] = React.useState<boolean>(false);
+  let [displaynone_9th, ] = React.useState<boolean>(false);
   let [displaynone_10th, setdisplaynone_10th] = React.useState<boolean>(false);
   let [time_start, settime_start] = React.useState<boolean>(false);
   let [check_capture, setcheck_capture] = React.useState<boolean>(false);
   let [check_copy, setcheck_copy] = React.useState<boolean>(false);
   let [passive_capture_hide, setpassive_capture_hide] = React.useState<boolean>(false);
   let [passive_capture_hide_text, setpassive_capture_hide_text] = React.useState<boolean>(false);
-  let [displaynone_preview, setdisplaynone_preview] = React.useState<boolean>(false);
   let [back_message, setback_message] = React.useState<boolean>(false);
   let [sound_click, setsound_click] = React.useState<boolean>(false);
 
@@ -248,8 +229,6 @@ function Survey() {
 
   let minute = (real_time - (real_time%60))/60;
   let second = real_time % 60;
-  let timer_minute = 4 - minute;
-  let timer_second = String(parseInt(String(59 - second))).padStart(2, '0');
 
   return (
     <>
@@ -671,7 +650,6 @@ function Survey() {
               element.style.left = '-9999px';
               document.body.appendChild(element);
               element.select();
-              var returnValue = document.execCommand('copy');
               document.body.removeChild(element);
               setcheck_copy(true); setTimeout(()=>{setcheck_copy(false);}, 1000);}}>
                 <p>{copy_link}</p>

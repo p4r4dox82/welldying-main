@@ -1,21 +1,21 @@
 import React from 'react';
 import { Answer, checkAnswer, uncheckAnswer } from '../etc/api/answer';
-import { Content } from '../etc/api/content';
+import { Question } from '../etc/api/question';
 import { Section } from '../etc/api/section';
 import { imageUrl } from '../etc/config';
 import QuillBody from './QuillBody';
 
 interface Props {
     section: Section;
-    content: Content;
+    question: Question;
     answer: Answer | undefined;
     setCurrentEditor: (value: number) => void,
     setEditTime: (value: number) => void,
 }
 
-function WriteItem({ section, content, answer, setCurrentEditor, setEditTime } : Props) {
+function WriteItem({ section, question, answer, setCurrentEditor, setEditTime } : Props) {
     let sid = section.id;
-    let cid = content.id;
+    let cid = question.id;
     let [isChecked, setIsChecked] = React.useState(answer?.isChecked ?? false);
     let [isEmpty, setIsEmpty] = React.useState(answer ? answer.message.length === 0 : true);
 
@@ -26,45 +26,46 @@ function WriteItem({ section, content, answer, setCurrentEditor, setEditTime } :
     React.useEffect(() => {
         if (isEmpty && isChecked) {
             setIsChecked(false);
-            uncheckAnswer(content.id);
+            uncheckAnswer(question.id);
         }
     }, [isEmpty, isChecked]);
 
     return (
-        <div className='row' id={`content_${sid}_${cid}`}>
-            <p> 
-                { content.title } 
+        <div className='row' id={`question_${sid}_${cid}`}>
+            <p>
+                { question.title }
                 <span className='dialogCheckBox' style={{marginTop: '-2px'}}>
-                    <img 
-                        className={'dialogCheckSign' + (isChecked ? ' active' : '') + (isEmpty ? '' : ' checkable')} 
-                        src={imageUrl('check.png')} 
+                    <img
+                        className={'dialogCheckSign' + (isChecked ? ' active' : '') + (isEmpty ? '' : ' checkable')}
+                        src={imageUrl('check.png')}
                         onClick={async () => {
-                            if (!content) return;
+                            if (!question) return;
                             if (!isChecked && isEmpty) {
                                 alert('답변 작성 완료 후 체크해주세요!');
                                 return;
                             }
-                            
+
                             setIsChecked(!isChecked);
 
                             if (isChecked) {
-                                await uncheckAnswer(content.id);
+                                await uncheckAnswer(question.id);
                             } else {
-                                await checkAnswer(content.id);
+                                await checkAnswer(question.id);
                             }
                         }}
+                        alt = "profile"
                     />
                 </span>
             </p>
 
             <ul>
-                { content.message.split('\n').map((str) => <li> {str} </li>) }
+                { question.message.split('\n').map((str) => <li> {str} </li>) }
             </ul>
-            <QuillBody 
-                id={cid} 
-                initialAnswer={ answer?.message || content.placeholder || '' }
+            <QuillBody
+                id={cid}
+                initialAnswer={ answer?.message || question.placeholder || '' }
                 initialLength={ answer?.length || 0 }
-                setCurrentEditor={setCurrentEditor} 
+                setCurrentEditor={setCurrentEditor}
                 setEditTime={setEditTime}
                 setIsEmpty={setIsEmpty}
             />

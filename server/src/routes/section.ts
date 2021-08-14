@@ -22,15 +22,18 @@ export default (Section: Model<SectionDocument>) => {
         let data: SectionType = {
             id: Number.parseInt(req.body.id),
             title: req.body.title,
-            contents: req.body.contents,
+            tag: req.body.tag,
+            detail: req.body.detail,
+            imageurl: req.body.imageurl,
+            questions: req.body.questions,
         };
 
-        if (!await Section.findOneAndUpdate({ id: data.id }, { title: data.title, contents: data.contents })) {
-            const question = new Section(data);        
+        if (!await Section.findOneAndUpdate({ id: data.id }, { title: data.title, tag: data.tag, detail: data.detail, imageurl: data.imageurl, questions: data.questions })) {
+            const question = new Section(data);
             question.save();
         }
-        
-        
+
+
         res.sendStatus(200);
         return;
     });

@@ -36,9 +36,9 @@ function Aboutus() {
                     <li> ‘죽음의 이면에 있는 삶의 축복을 전하는 일.’ 이것이 저희가 생각하는 메멘토의 역할입니다. </li>
                 </ul>
                 <div style={{marginBottom: '30px'}}/>
-                <img src={imageUrl('members/team.png')} className='teamImage'/>
+                <img src={imageUrl('members/team.png')} className='teamImage' alt = "profile"/>
             </div>
-            <Footer/>
+            <Footer additionalClass= ' '/>
         </>
     );
 }

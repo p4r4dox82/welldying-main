@@ -1,7 +1,5 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
-import MainLogo from '../components/MainLogo';
-
 interface EntryType {
     name: string;
     body: JSX.Element;
@@ -10,7 +8,7 @@ interface EntryType {
     noBorderBottom?: boolean;
 }
 
-function Console() {    
+function Console() {
     let [name, setName] = React.useState('');
     let [nameMessage, setNameMessage] = React.useState('');
     let validateName = () => {
@@ -70,7 +68,7 @@ function Console() {
         setIdMessage('');
         return true;
     }
-    
+
     let [email, setEmail] = React.useState('');
     let [emailMessage, setEmailMessage] = React.useState('');
     let validateEmail = () => {
@@ -173,7 +171,7 @@ function Console() {
             validate: validateFile,
             noBorderBottom: true,
         }];
-        
+
         return result;
     }, [birthDate, birthMessage, birthMonth, birthYear, email, emailMessage, name, nameMessage, validateBirth, validateEmail, validateName]);
 
@@ -183,13 +181,12 @@ function Console() {
         for (let { validate } of entries) {
             if (!await validate()) result = false;
         }
-        
+
         return result;
     }
 
     return (
         <>
-            <MainLogo additionalClass='grey' />
 
             <form className='signupForm'>
                 { entries.map(({name, body, message, noBorderBottom = false }) => (
@@ -203,7 +200,7 @@ function Console() {
                 ))}
 
                 { entries.map(({ name, message } ) => {
-                    if (message) return <p style={{marginBottom: '8px'}}> { `${name}: ${message}` } </p>   
+                    if (message) return <p style={{marginBottom: '8px'}}> { `${name}: ${message}` } </p>
                     else return undefined;
                 }) }
                 <button type='submit' className='signupButton' onClick={async (e) => {

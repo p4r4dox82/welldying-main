@@ -1,4 +1,4 @@
-import ReactQuill, { Quill } from 'react-quill';
+
 
 
 interface Props {
@@ -37,7 +37,7 @@ export default function QuillToolbar({ id, visible = true, scroll = false, image
                     <option value="large"> 크기 큼</option>
                 </select>
             </span>
-            
+
             <span className="ql-formats">
                 <select className="ql-color" title="Colour" defaultValue="rgb(0,0,0)">
                     <option value="rgb(0,0,0)" />
@@ -86,7 +86,7 @@ export default function QuillToolbar({ id, visible = true, scroll = false, image
                 <button className="ql-align-justify" id="align-justify" onClick={()=>onAlignJustifyClick()}>
                     <span className="fa fa-align-justify"></span>
                 </button>
-            </span> 
+            </span>
 */}
 
             <span className="ql-formats">
@@ -102,7 +102,7 @@ export default function QuillToolbar({ id, visible = true, scroll = false, image
                     </button>
                 )}
             </span>
-            
+
 {/*
             <span className="ql-formats">
                 <button type="button" className="ql-blockquote" value="blockquote">

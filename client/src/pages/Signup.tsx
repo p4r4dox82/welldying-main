@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import SignupAgree from '../components/SignupAgree';
 import SignupFill from '../components/SignupFill';
 import { imageUrl } from '../etc/config';
+import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 export interface SignupInfo1 {
     agreeMessage: boolean;
@@ -17,17 +19,28 @@ function Signup() {
     let [info1, setInfo1] = React.useState<SignupInfo1>();
     let [info2, setInfo2] = React.useState<SignupInfo2>();
 
-    if (state == 3) return <Redirect to={{
+    if (state === 3) return <Redirect to={{
         pathname: '/signup/done',
         state: info2,
     }} />;
     return (
         <>
-            <div className='signupLogo'>
-                <img src={imageUrl('textlogo.png')} />
+            <div className = 'signup_page'>
+                <div className = 'signup_background_1'>
+                    <div className = 'signup_background_2'>
+                        <div className = 'signup_form'>
+                            <div className='signupLogo'>
+                                <Link to ='/'>
+                                    <img src = {imageUrl('mainLogo.png')} />
+                                </Link>
+                            </div>
+                            { (state === 1) && <SignupAgree proceed={(info: SignupInfo1) => { setInfo1(info); setState(2); } } /> }
+                            { (state === 2) && <SignupFill givenInfo={info1!} proceed={(info: SignupInfo2) => { setInfo2(info); setState(3); } } /> }
+                            <Footer additionalClass = 'no_background' />
+                        </div>
+                    </div>
+                </div>
             </div>
-            { (state == 1) && <SignupAgree proceed={(info: SignupInfo1) => { setInfo1(info); setState(2); } } /> }
-            { (state == 2) && <SignupFill givenInfo={info1!} proceed={(info: SignupInfo2) => { setInfo2(info); setState(3); } } /> }
         </>
     );
 }

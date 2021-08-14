@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link, match, Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import { getAnswers } from '../etc/api/answer';
-import { getContents } from '../etc/api/content';
+import { getQuestions } from '../etc/api/question';
 import { getSections } from '../etc/api/section';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
@@ -18,7 +18,7 @@ interface NumberMap {
 }
 interface MatchParams {
     sectionId?: string;
-    contentId?: string;
+    questionId?: string;
 };
 
 interface Props {
@@ -28,13 +28,13 @@ interface Props {
 
 function Write({ match } : Props) {
     const sectionId = match.params.sectionId ? Number.parseInt(match.params.sectionId) : undefined;
-    const contentId = match.params.contentId ? Number.parseInt(match.params.contentId) : 0;
+    const questionId = match.params.questionId ? Number.parseInt(match.params.questionId) : 0;
 
     let scroll = useScroll();
 
     let user = useSelector((state: RootReducer) => state.user);
     let [sectionsLoading, sections] = usePromise(getSections);
-    let [contentsLoading, contents] = usePromise(getContents);
+    let [questionsLoading, questions] = usePromise(getQuestions);
     let [answersLoading, answers] = usePromise(getAnswers);
     let [currentEditor, setCurrentEditor] = React.useState<number>();
     let [scrollActive, setScrollActive] = React.useState(false);
@@ -43,7 +43,7 @@ function Write({ match } : Props) {
 
     let allIds = React.useMemo(() => {
         let res: number[] = [];
-        sections?.forEach((section) => res.push(...section.contents))
+        sections?.forEach((section) => res.push(...section.questions))
         if (res.length > 0) setCurrentEditor(res[0]);
         return res;
     }, [sections]);
@@ -66,8 +66,8 @@ function Write({ match } : Props) {
         setTimeout(() => {
             let newOffsets: NumberMap = {};
             sections?.forEach((section) => {
-                section.contents.forEach((id) => {
-                    let key = `content_${section.id}_${id}`;
+                section.questions.forEach((id) => {
+                    let key = `question_${section.id}_${id}`;
                     let value = document.getElementById(key)?.offsetTop;
 
                     if (value) newOffsets[key] = value;
@@ -76,11 +76,11 @@ function Write({ match } : Props) {
 
             setOffsets(newOffsets);
 
-            if (newOffsets && newOffsets[`content_${sectionId}_${contentId}`]) {
-                window.scrollTo(0, newOffsets[`content_${sectionId}_${contentId}`]);
+            if (newOffsets && newOffsets[`question_${sectionId}_${questionId}`]) {
+                window.scrollTo(0, newOffsets[`question_${sectionId}_${questionId}`]);
             }
         }, 0);
-    }, [answers, sections, contents]);
+    }, [answers, sections, questions]);
 
     if (!user.loggedIn) return <Redirect to='/login' />;
     if (answersLoading) return <></>;
@@ -91,9 +91,9 @@ function Write({ match } : Props) {
             <div className='write'>
                 <div className={'left' + (scroll >= 158 ? ' fixed' : '')}>
                     { sections?.map((section) => {
-                        let names = sections.map((section) => `content_${section.id}_${section.contents[0]}`);
+                        let names = sections.map((section) => `question_${section.id}_${section.questions[0]}`);
                         let activeNames = names.filter((name) => offsets && offsets[name] <= scroll);
-                        let name = `content_${section.id}_${section.contents[0]}`;
+                        let name = `question_${section.id}_${section.questions[0]}`;
                         let isActive = activeNames.length > 0 && activeNames[activeNames.length - 1] == name;
 
                         return (
@@ -119,17 +119,17 @@ function Write({ match } : Props) {
                                 { section.title }
                             </h1>
                         </div>
-                        { section.contents.map((id) => {
-                            if (!contents || !answers) return;
-                            let content = contents?.find((value) => value.id === id);
-                            if (!content) return;
-                            if (content.type === 'post') return;
+                        { section.questions.map((id) => {
+                            if (!questions || !answers) return;
+                            let question = questions?.find((value) => value.id === id);
+                            if (!question) return;
+                            if (question.type === 'post') return;
 
-                            let answer = answers?.find((answer) => answer.contentId === id);
+                            let answer = answers?.find((answer) => answer.questionId === id);
 
                             return <WriteItem
                                 section={section}
-                                content={content}
+                                question={question}
                                 answer={answer}
                                 setCurrentEditor={setCurrentEditor}
                                 setEditTime={setEditTime}

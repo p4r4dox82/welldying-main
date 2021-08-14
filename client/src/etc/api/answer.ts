@@ -4,7 +4,7 @@ import { apiAddress } from "../config";
 
 export interface Answer {
     username: string;
-    contentId: number;
+    questionId: number;
     length: number;
     message: string;
     isChecked?: boolean;
@@ -20,7 +20,7 @@ export const getAnswers = async () => {
 }
 
 interface AnswerTime {
-    contentId: number;
+    questionId: number;
     updatedAt: number;
     isChecked: boolean;
 };
@@ -33,22 +33,22 @@ export const getAnswerTime = async () => {
     return response.data;
 }
 
-export const writeAnswer = async (contentId: number, message: string, length: number) => {
+export const writeAnswer = async (questionId: number, message: string, length: number) => {
     let response = await Axios.put(`${apiAddress}/answer`, {
-        contentId, message, length
+        questionId, message, length
     }, { withCredentials: true });
 
     return response.status < 300;
 }
 
-export const checkAnswer = async (contentId: number) => {
-    let response = await Axios.put(`${apiAddress}/answer/check`, { contentId, check: true }, { withCredentials: true });
+export const checkAnswer = async (questionId: number) => {
+    let response = await Axios.put(`${apiAddress}/answer/check`, { questionId, check: true }, { withCredentials: true });
 
     return response.status < 300;
 }
 
-export const uncheckAnswer = async (contentId: number) => {
-    let response = await Axios.put(`${apiAddress}/answer/check`, { contentId, check: false }, { withCredentials: true });
+export const uncheckAnswer = async (questionId: number) => {
+    let response = await Axios.put(`${apiAddress}/answer/check`, { questionId, check: false }, { withCredentials: true });
 
     return response.status < 300;
 }

@@ -19,6 +19,25 @@ interface UserPost {
     showContent: ShowContentType;
 }
 
+export interface User {
+    username: string;
+    passwordHash: string;
+    passwordSalt: string;
+    name: string;
+    birthYear: number;
+    birthMonth: number;
+    birthDate: number;
+    sex: string;
+    email: string;
+    cellphone: string;
+    agreeMessage: boolean;
+    showContent: string;
+    phoneCodeDigest?: string;
+    phoneUserDigest?: string;
+    kakaoId?: string;
+    googleId?: string;
+};
+
 const authConfig: AxiosRequestConfig = {
     validateStatus: (status: number) => (200 <= status && status < 300) || status === 401,
     withCredentials: true,
@@ -44,6 +63,25 @@ interface UserPut {
     email: string;
 }
 
+interface UserPassword {
+    username: string;
+    password: string;
+}
+
+export const getUser = async (cellphone: string) =>  {
+  let response = await Axios.get(`${apiAddress}/user/findcellphone/${cellphone}`);
+  let data : User | null = response.data;
+
+  return data;
+}
+
+export const getUserid = async (username: string) =>  {
+  let response = await Axios.get(`${apiAddress}/user/findusername/${username}`);
+  let data : User | null = response.data;
+
+  return data;
+}
+
 export const modifyUserInfo = async (data: UserPut) => {
     // TODO: Validate data
 
@@ -53,6 +91,14 @@ export const modifyUserInfo = async (data: UserPut) => {
 
     if (response.status !== 200) throw response.data;
     else return response.data;
+}
+
+export const modifyUserPassword = async (data: UserPassword) => {
+  const response = await Axios.put(`${apiAddress}/user/password`, data, { withCredentials: true });
+
+  if(response.status !== 200) throw response.data;
+  else return response.data;
+
 }
 
 export const login = async (username: string, password: string) => {

@@ -31,7 +31,7 @@ function Mypage() {
     let validateOldPassword = () => {
         return true;
     }
-        
+
     let [password, setPassword] = React.useState('');
     let [passwordMessage, setPasswordMessage] = React.useState('');
     let validatePassword = () => {
@@ -102,7 +102,7 @@ function Mypage() {
     let validateSex = () => {
         return true;
     }
-    
+
     let [email, setEmail] = React.useState('');
     let [emailMessage, setEmailMessage] = React.useState('');
     let validateEmail = () => {
@@ -127,7 +127,7 @@ function Mypage() {
         for (let { validate } of entries) {
             if (!await validate()) result = false;
         }
-        
+
         return result;
     }
 
@@ -210,16 +210,16 @@ function Mypage() {
         if (editing) return (
             <>
                 <div className='row' style={{marginBottom: 0}}>
-                    <h1> 
+                    <h1>
                         { `${user.user?.name}님의 개인 설정 수정` }
                     </h1>
                     <form className='signupForm' style={{marginLeft: 0}}>
                         <ul>
-                            <div className='row'> 
+                            <div className='row'>
                                 <div className='label'> 아이디 </div>
                                 <input readOnly value={user.user?.username}/>
                             </div>
-                            
+
                             { entries.map(({name, body, message}) => (
                                 <>
                                     <div className='row'>
@@ -230,43 +230,43 @@ function Mypage() {
                                 </>
                             ))}
 
-                            <div className='row'> 
+                            <div className='row'>
                                 <div className='label'> 전화번호 </div>
                                 <input readOnly value={user.user?.cellphone}/>
                             </div>
 
-                            <div className='row'> 
+                            <div className='row'>
                                 <div className='label'> 카카오톡 계정 </div>
-                                { user.user?.kakaoId 
-                                    ? <input readOnly value='연결됨'/> 
-                                    : <KakaoLogin 
+                                { user.user?.kakaoId
+                                    ? <input readOnly value='연결됨'/>
+                                    : <KakaoLogin
                                         token={kakaoJskey}
                                         onSuccess={async (result) => {
                                             const token = result.response.access_token;
                                             const id = result.profile?.id;
                                             if (!id) return;
-                                            
+
                                             await oauthConnect('kakao', id.toString(), token);
                                         }}
-                                        onFail={(result) => console.log(result)}     
-                                        onLogout={(result) => console.log(result)}   
+                                        onFail={(result) => console.log(result)}
+                                        onLogout={(result) => console.log(result)}
                                         render={(props) => <button onClick={(e) => { e.preventDefault(); props.onClick(); }}> 연결하기 </button>}
                                     />
                                 }
                             </div>
 
-                            <div className='row'> 
+                            <div className='row'>
                                 <div className='label'> 구글 계정 </div>
-                                { user.user?.googleId 
-                                    ? <input readOnly value='연결됨'/> 
+                                { user.user?.googleId
+                                    ? <input readOnly value='연결됨'/>
                                     : <GoogleLogin
                                         clientId={googleClientId}
                                         onSuccess={async (result) => {
                                             if (result.code) return;
-                                            
+
                                             const token = (result as GoogleLoginResponse).tokenId;
                                             const id = (result as GoogleLoginResponse).googleId;
-                    
+
                                             await oauthConnect('google', id, token);
                                         }}
                                         onFailure={(result) => console.log(result)}
@@ -277,13 +277,13 @@ function Mypage() {
                         </ul>
                     </form>
 
-                    <button onClick={async (e) => { 
+                    <button onClick={async (e) => {
                         e.preventDefault();
                         if (!await validateAll()) return false;
                         if (await modifyUserInfo({
-                            username: user.user!.username, 
-                            password: password, 
-                            name, birthYear, birthMonth, birthDate, sex, email, 
+                            username: user.user!.username,
+                            password: password,
+                            name, birthYear, birthMonth, birthDate, sex, email,
                         })) {
                             setEditing(false);
                         }
@@ -293,7 +293,7 @@ function Mypage() {
         ); else return (
             <>
                 <div className='row' style={{marginBottom: 0}}>
-                    <h1> 
+                    <h1>
                         { `${user.user?.name}님의 개인 설정` }
                     </h1>
                     <form className='signupForm' style={{marginLeft: 0}}>
@@ -304,8 +304,8 @@ function Mypage() {
                         <div className='row'> <div className='label'> 이메일 </div> <input readOnly value={user.user?.email ?? '입력하지 않음'}/> </div>
                         <div className='row'> <div className='label'> 전화번호 </div> <input readOnly value={user.user?.cellphone}/> </div>
                     </form>
-                    <button onClick={(e) => { 
-                        e.preventDefault(); 
+                    <button onClick={(e) => {
+                        e.preventDefault();
                         setEditing(true);
                         setBirthYear(user.user!.birthYear);
                         setBirthMonth(user.user!.birthMonth);
@@ -346,10 +346,10 @@ function Mypage() {
                         </div>
                     </div>
                 </div>
-                
+
                 { content }
             </div>
-            <Footer/>
+            <Footer additionalClass= ' '/>
         </>
     )
 }

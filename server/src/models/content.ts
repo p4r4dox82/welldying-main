@@ -2,18 +2,20 @@ import { Schema, Document } from "mongoose";
 
 export interface ContentType {
     id: number;
-    type: 'question' | 'post';
+    type: string;
     title: string;
-    message: string;
-    placeholder: string;
+    category: number;
+    likes: number;
+    tag: string;
 };
 
 export type ContentDocument = Document & ContentType;
 
 export const contentSchema = new Schema<ContentDocument>({
     id: { type: Number, unique: true, required: true},
-    type: { type: String, required: true},
+    type: String,
     title: String,
-    message: String,    
-    placeholder: String,
+    category: Number,
+    likes: Number,
+    tag: String,
 });
