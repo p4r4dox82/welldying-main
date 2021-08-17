@@ -30,6 +30,7 @@ import WriteNotice from './pages/WriteNotice';
 import WriteNews from './pages/WriteNews';
 import Findid from './pages/Findid';
 import Findpassword from './pages/Findpassword';
+import ContentMain from './pages/ContentMain';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -69,6 +70,7 @@ function App() {
         <Route path='/newslist/:id' component = {News} />
         <Route path='/findid' component = {Findid} />
         <Route path='/findpassword' component = {Findpassword} />
+        <Route path='/content' component = {ContentMain} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>
