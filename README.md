@@ -110,6 +110,11 @@ Secret Access Key - kAkRYbfgub92I1KKsm/2kZMG6tFjp3+XPZDl4to6
 
 먼저 클라이언트를 `yarn build && yarn deploy-prod`를 이용해 정적 배포합니다. 다음, memento AWS EC2에 접속하여 `~/welldying` 폴더에 있는 클론된 레포지토리에 들어가서, `git pull` 명령어를 입력합니다. (이를 위해 [PAT](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)를 만들어야 할 거에요..) Pull이 끝났으면 자동으로 서버가 재시작되겠지만 (`~/welldying/server` 폴더에서 `pm2 log` 또는 `pm2 monit`를 입력하면 실시간으로 현황을 볼 수 있습니다) 수동으로 서버를 재시작하고 싶을 때에는 `~/welldying/server` 폴더에서 `pm2 stop server && pm2 start`를 입력해 서버를 재시작할 수 있습니다.
 
+serve로 배포하기
+
+local storage
+session storage
+
 ssh -i memento_welldying.pem ubuntu@ec2-3-38-20-42.ap-northeast-2.compute.amazonaws.com
 git token - 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
 mongodb - 
@@ -149,3 +154,8 @@ git access tokens - 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
 * 서버의 코드는 대부분의 강좌들과 인터넷에서 찾아볼 수 있는 Express 코드와는 다르게 Typescript와 ES6이 적용되어 있습니다. CommonJS의 권장되지 않은 옛 문법 (`var` 등..)을 사용하지 않도록 주의해주세요. CommonJS에서 쓰이는 패키지 추가 방식인 `require` 구문은 권장되지 않으며 (특히 typescript와 같이 사용하면 최악의 궁합을 자랑합니다), `import` 문으로 대체해주셔야 합니다. req, res의 Type도 조심하시고 여차하면 `/server/src/@types` 폴더에 내용을 추가해야 할 수 있습니다..
 
 * 개발하는 과정에서 패키지를 설치할 때에 루트 폴더에 설치하지 않도록 주의하세요. `/client` 폴더나 `/server` 폴더에 설치해야 합니다.
+
+1. nginx를 이용해서 Port Forwarding하기
+
+
+2. SSH 인증서 발급받기 (Let's Encrypt)
