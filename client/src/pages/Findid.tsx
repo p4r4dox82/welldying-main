@@ -116,7 +116,7 @@ function Findid() {
     let [userLoading, user] = usePromise(() => getUser(cellphone), [cellphone]);
     let [error, setError] = React.useState<string>('');
     let [finded, setFinded] = React.useState<boolean>(false);
-    
+
     return (
       <>
         <div className = 'signup_page'>
@@ -144,18 +144,18 @@ function Findid() {
                             {!finded &&
                             <>
                             <div className = 'name'>사용자 정보</div>
-                            <div className={'row'} style={{display: 'flex', margin: '20px 0px 0px 0px'}}>
+                            <div className={'row'} style={{display: 'flex', margin: '17px 0px 0px 0px'}}>
                                 <div className='label flex'>성명</div>
-                                <input className = {(nameMessage ? 'error' : '') + 'small_padding'} style = {{width: '437px', margin: '0px'}} autoComplete='name' onChange={(e) => setName(e.target.value)} value={(nameMessage ? nameMessage : name)} onClick = {() => {setNameMessage('');}} placeholder = '성명을 입력해주세요.'/>
+                                <input className = {(nameMessage ? 'error' : '') + 'small_padding'} style = {{width: '412px', margin: '0px'}} autoComplete='name' onChange={(e) => setName(e.target.value)} value={(nameMessage ? nameMessage : name)} onClick = {() => {setNameMessage('');}} placeholder = '성명을 입력해주세요.'/>
                             </div>
-                            <div className={'row'} style={{display: 'flex', margin: '20px 0px 0px 0px'}}>
+                            <div className={'row'} style={{display: 'flex', margin: '12px 0px 0px 0px'}}>
                                 <div className='label flex'>생년월일</div>
-                                <input className = 'small_padding' style={{width: '143px', textAlign: 'left', margin: '0px 24px 0px 0px'}} type='number' autoComplete='bday-year' onChange={(e) => setBirthYear(Math.min((new Date()).getFullYear(), Number.parseInt(e.target.value)))} value={birthYear} placeholder = '출생년도(4자)'/>
-                                <input className = 'small_padding' style={{width: '125px', textAlign: 'left', margin: '0px 24px 0px 0px'}} type='number' autoComplete='bday-month' onChange={(e) => setBirthMonth(Math.min(12, Math.max(1, Number.parseInt(e.target.value))))} value={birthMonth} placeholder = '월'/>
-                                <input className = 'small_padding' style={{width: '118px', textAlign: 'left'}} type='number' autoComplete='bday-day' onChange={(e) => setBirthDate(Math.min(31, Math.max(1, Number.parseInt(e.target.value))))} value={birthDate} placeholder = '일'/>
+                                <input className = 'small_padding' style={{width: '135px', textAlign: 'left', margin: '0px 16px 0px 0px'}} type='number' autoComplete='bday-year' onChange={(e) => setBirthYear(Math.min((new Date()).getFullYear(), Number.parseInt(e.target.value)))} value={birthYear} placeholder = '출생년도(4자)'/>
+                                <input className = 'small_padding' style={{width: '126px', textAlign: 'left', margin: '0px 16px 0px 0px'}} type='number' autoComplete='bday-month' onChange={(e) => setBirthMonth(Math.min(12, Math.max(1, Number.parseInt(e.target.value))))} value={birthMonth} placeholder = '월'/>
+                                <input className = 'small_padding' style={{width: '119px', textAlign: 'left'}} type='number' autoComplete='bday-day' onChange={(e) => setBirthDate(Math.min(31, Math.max(1, Number.parseInt(e.target.value))))} value={birthDate} placeholder = '일'/>
                             </div>
-                            <div className = 'name' style={{margin: '33px 0px 0px 0px'}}>본인 인증 방법</div>
-                            <div className={'row'} style={{display: 'flex', margin: '20px 0px 0px 0px'}}>
+                            <div className = 'name' style={{margin: '37px 0px 0px 0px'}}>본인 인증 방법</div>
+                            <div className={'row'} style={{display: 'flex', margin: '17px 0px 0px 0px'}}>
                                 <div className='label flex'>휴대전화</div>
                                 <div style={{display: 'flex', width: '437px', margin: '0px'}}>
                                     <input className = {(cellPhoneMessage ? 'error' : '') + 'small_padding'} onChange={(e) => { setPhoneVerifyStarted(false); setCellphone(e.target.value); setCellPhoneMiddle(e.target.value.slice(3, 7)); setCellPhoneRear(e.target.value.slice(7, 11));} } value={(cellPhoneMessage ? cellPhoneMessage : cellphone)} placeholder = '- 없이 번호만 입락해주세요.' onClick = {() => {setCellPhoneMessage('');}}/>
@@ -164,7 +164,7 @@ function Findid() {
                                     </button>
                                 </div>
                             </div>
-                            <div className={'row'} style={{display: 'flex', margin: '20px 0px 0px 0px'}}>
+                            <div className={'row'} style={{display: 'flex', margin: '12px 0px 0px 0px'}}>
                                 <div className='label flex'>인증번호</div>
                                 <div style={{display: 'flex', width: '437px', margin: '0px'}}>
                                     <input type='text' className = {(phoneCodeMessage ? 'error' : '') + 'small_padding'} onChange={(e) => setPhoneCode(Number.parseInt(e.target.value))} value={phoneCodeMessage ? phoneCodeMessage : phoneCode} placeholder = '전송된 인증번호를 입력해주세요.' onClick = {() => {setPhoneCodeMessage('');}}/>
@@ -184,7 +184,7 @@ function Findid() {
                             </button>
                             <div className = 'info bottom'>
                                 <div className = 'detail bottom'>
-                                    <div>&middot; 본인인증을 위해 입력한 정보는 본인인증 용도 외 다른 용도로 이용되지 않습니다.</div>
+                                    <div>&middot; 입력한 정보는 본인인증 용도 외 다른 용도로 이용되지 않습니다.</div>
                                     <div>&middot; 본인인증이 잘 되지 않으시면 메멘토 이메일로 문의해주세요.</div>
                                 </div>
                             </div>
@@ -193,7 +193,7 @@ function Findid() {
                               <button className = 'id_verify' disabled>
                               {user && user.username}
                               </button>
-                              <Link to='/login'><button className = 'findButton margin_17px'>
+                              <Link to='/login'><button className = 'findButton margin_23px'>
                               로그인하기
                               </button>
                               </Link>

@@ -82,8 +82,8 @@ function QnA ({ match }: Props) {
                     {selectfaqid === faq.id ? <img className = 'open_close' src = {imageUrl('close_button.png')} onClick = {() => {setSelectfaqid(0);}}/> : <img className = 'open_close' src = {imageUrl( 'open_button.png')} onClick = {() => {let id = faq?.id; setSelectfaqid(id);}} alt = "profile"/>}
                 </div>
                 {(faq?.id === selectfaqid) && <div className = 'list_content clicked auto_height'>
-                <div className = 'Q'>A.</div>
-                <textarea className = 'faq_answer' value = {faq?.answer} disabled/>
+                <div className = 'A'>A.</div>
+                    <textarea className = 'faq_answer' value = {faq?.answer} disabled/>
                 </div>}
                 </>
               ))}
@@ -94,31 +94,37 @@ function QnA ({ match }: Props) {
               <div>기타</div>
           </div>
           <div className = 'title small'>질문 게시판</div>
-          <div className = 'list margin_21px'>
+          <div className = 'list margin_31px'>
               <div className = 'list_content name'>
                   <div className = 'id'>번호</div>
-                  <div className = 'classification'>분류</div>
                   <div className = 'writer'>작성자</div>
-                  <div className = 'title'>제목</div>
+                  <div className = 'title'>[분류] 제목</div>
                   <div className = 'answerdate'>답변 날짜</div>
                   <div className = 'open'>공개여부</div>
-                  <div className = 'answered'>답변여부</div>
               </div>
               {listqnas?.map((qna) => (
                 <>
                     <div className = 'list_content'>
                         <div className = 'id'>{qna?.id}</div>
-                        <div className = 'classification'>
+                        <div className = 'writer'>{qna?.writer}</div>
+                        {((qna?.state === '답변중' || qna?.open === '비공개')) && <div className = 'title' onClick = {() => {let id = qna?.id; setSelectid(id);}}>
+                        {'['}
                         {qna?.classification === '메멘토에 제안' && '제안'}
                         {qna?.classification === '기타 의견' && '기타'}
                         {(qna?.classification === '메멘토 서비스 질문' || qna?.classification === '유언전달에 관한 질문' || qna?.classification === '기타 질문') && '질문'}
-                        </div>
-                        <div className = 'writer'>{qna?.writer}</div>
-                        {((qna?.state === '답변중' || qna?.open === '비공개')) && <div className = 'title' onClick = {() => {let id = qna?.id; setSelectid(id);}}>{qna?.title}</div>}
-                        {((qna?.state === '완료' && qna?.open === '공개')) && <Link to = {`/qna/${qna?.id}`} ><div className = 'title'>{qna?.title}</div></Link>}
-                        <div className = 'answerdate'>{parseDate(new Date(qna?.answerdate))}</div>
+                        {'] '}
+                        {qna?.title}
+                        </div>}
+                        {((qna?.state === '완료' && qna?.open === '공개')) && <Link to = {`/qna/${qna?.id}`} ><div className = 'title'>
+                        {'['}
+                        {qna?.classification === '메멘토에 제안' && '제안'}
+                        {qna?.classification === '기타 의견' && '기타'}
+                        {(qna?.classification === '메멘토 서비스 질문' || qna?.classification === '유언전달에 관한 질문' || qna?.classification === '기타 질문') && '질문'}
+                        {'] '}
+                        {qna?.title}
+                        </div></Link>}
+                        <div className = 'answerdate'>{qna?.state === '완료' ? parseDate(new Date(qna?.answerdate)) : '답변중'}</div>
                         <div className = 'open'>{qna?.open}</div>
-                        <div className = 'answered'>{qna?.state}</div>
                     </div>
                     {(qna?.id === selectid && qna?.state === '답변중') && <div className = 'list_content clicked'>
                         <Link to = {`/qna/${qna?.id}`} >

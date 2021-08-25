@@ -1,7 +1,5 @@
 @import 'Consts.scss';
 
-$container_width: 1280px;
-
 div.submenu_container {
   margin-top:26px;
   display: flex;
@@ -9,7 +7,7 @@ div.submenu_container {
   align-items: center;
   justify-content: flex-end;
   gap:17px;
-  div {
+  div.text {
     font-family: Noto Sans;
     font-style: normal;
     font-weight: bold;
@@ -30,8 +28,8 @@ div.submenu_container {
   div.searchContainer {
     display: flex;
     align-items: center;
-    width:188px;
-    height:40px;
+    width:149px;
+    height:30px;
     background: #FFFFFF;
     border: 1px solid rgba(35, 52, 42, 0.5);
     box-sizing: border-box;
@@ -39,19 +37,19 @@ div.submenu_container {
     border-radius: 20px;
     img {
       margin-left:15px;
-      width:18px;
-      height:18px;
+      width: 11px;
+      height: 11px;
     }
     input {
       height: 35px;
-      width: 150px;
+      width: 120px;
       background: rgba(1, 1, 1, 0);
       border: none;
       font-family: Noto Sans;
       font-style: normal;
       font-weight: 300;
-      font-size: 13px;
-      line-height: 18px;
+      font-size: 11px;
+      line-height: 15px;
       /* identical to box height */
 
 
@@ -67,20 +65,20 @@ div.submenu_container {
   }
 }
 div.main_title {
-  margin-top:62px;
+  margin-top:87px;
   height: 51px;
 
   font-family: GyeonggiBatang;
   font-style: normal;
   font-weight: bold;
-  font-size: 45px;
-  line-height: 45px;
+  font-size: 30px;
+  line-height: 30px;
   text-align: center;
   letter-spacing: 0.1em;
 
   color: #23342A;
   div.sub_title {
-    margin-top:7px;
+    margin-top:10px;
     font-family: GyeonggiBatang;
     font-style: normal;
     font-weight: bold;
@@ -95,21 +93,28 @@ div.main_title {
   }
 }
 div.list {
-  margin-top: 94px;
+  margin-top: 95px;
   width:100%;
-  .Q {
+  .Q, .A {
     font-family: GyeonggiBatang;
     font-style: normal;
     font-weight: bold;
-    font-size: 30px;
-    line-height: 30px;
+    font-size: 20px;
+    line-height: 20px;
     /* identical to box height */
 
     text-align: center;
     letter-spacing: 0.1em;
 
     color: #000000;
-    margin-left: 47px;
+    margin-left: 40px;
+  }
+  .A {
+    align-self: flex-start;
+    margin-top: 40px;
+    &.margin_14px {
+      margin-top: 14px;
+    }
   }
   div.list_content {
     display: flex;
@@ -119,8 +124,8 @@ div.list {
     font-family: Noto Sans;
     font-style: normal;
     font-weight: normal;
-    font-size: 17px;
-    line-height: 23px;
+    font-size: 14px;
+    line-height: 18px;
     letter-spacing: 0.05em;
 
     color: #23342A;
@@ -129,8 +134,8 @@ div.list {
     &.name {
       height: 58px;
       font-weight: bold;
-      font-size: 16px;
-      line-height: 22px;
+      font-size: 15px;
+      line-height: 25px;
       border-top: 2px solid #27392F;
       border-bottom: 2px solid #27392F;
     }
@@ -145,17 +150,21 @@ div.list {
       height: fit-content;
       margin:0px;
     }
+    div.block {
+      margin: 0px;
+      width: 100%;
+    }
   }
 }
 div.bottommenu_container {
-  margin-top: 48px;
-  margin-bottom: 199px;
-  width: 1280px;
+  margin-top: 39px;
+  margin-bottom: 300px;
+  width: $content-width;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   div.page_container {
-    margin-left: calc(1280px/2 - 300px/2);
+    margin-left: calc(1032px/2 - 300px/2);
     width: 300px;
     display: flex;
     align-items: center;
@@ -165,8 +174,8 @@ div.bottommenu_container {
       font-family: Noto Sans;
       font-style: normal;
       font-weight: normal;
-      font-size: 16px;
-      line-height: 22px;
+      font-size: 12px;
+      line-height: 16px;
       /* identical to box height */
 
       text-align: center;
@@ -183,9 +192,8 @@ div.bottommenu_container {
   }
   div.button {
     display: table;
-    width: 201px;
-    height: 33px;
-
+    width: 147px;
+    height: 31px;
     background: #FFFFFF;
     box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
@@ -196,8 +204,8 @@ div.bottommenu_container {
       font-family: Noto Sans;
       font-style: normal;
       font-weight: bold;
-      font-size: 14px;
-      line-height: 19px;
+      font-size: 12px;
+      line-height: 15px;
       text-align: center;
       letter-spacing: 0.05em;
 
@@ -229,24 +237,28 @@ div.answer_block {
 }
 
 div.notice_page, div.readnotice_page {
-    width: 1280px;
+    width: $content-width;
     margin: auto;
     div.list {
       .id {
-        margin-left:10px;
-        width:109px;
+        text-align: center;
+        width:59px;
       }
       .classification {
-        width:219px;
+        width: 115px;
+        margin-left: 41px;
       }
       .title {
-        width: 655px;
+        width: 499px;
+        margin-left: 53px;
       }
       .date {
-        width: 218px;
+        width: 124px;
+        margin-left: 31px;
       }
       .views {
-        width:69px;
+        width:59px;
+        margin-left: 52px;
         text-align: center;
       }
     }
@@ -285,13 +297,13 @@ div.notice_page, div.readnotice_page {
 div.readnotice_page {
   div.block {
     display: flex;
-    margin-top: 52px;
+    margin-top: 101px;
     align-items: center;
     textarea.detail{
-      width: 1044px;
+      width: 975px;
       height: auto;
       overflow: visible;
-      margin: 0px 0px 0px 109px;
+      margin: 0px 0px 0px 30px;
       font-family: Noto Sans;
       font-style: normal;
       font-weight: normal;
@@ -307,43 +319,42 @@ div.readnotice_page {
       resize: none;
       background: rgba(0, 0, 0, 0);
       &.answer {
+        margin-top: 101px;
         font-weight: normal;
         padding-top: 0px;
         height: 360px;
-        font-size: 15px;
-        line-height: 30px;
-        margin-bottom: 107px;
+        font-size: 13px;
+        line-height: 42px;
+        margin-bottom: 99px;
       }
     }
   }
   div.bottommenu_container {
+    margin-top: 16px;
     div.write_button_margin {
-      margin-left: 1079px;
-      div.button {
-        margin-top: 20px;
-      }
+      margin-left: calc(1032px - 147px);
     }
   }
 }
 
 div.news_page {
-  width: 1280px;
+  width: $content-width;
   margin: auto;
   div.list {
     .archive {
-      width: 397px;
-      margin-left: 10px;
+      width: 262px;
+      margin-left: 15px;
     }
     .news_info {
-      width: 625px;
-      margin-left: 30px;
+      width: 472px;
+      margin-left: 47px;
     }
     .tag {
-      width: 147px;
-      margin-left: 71px;
+      width: 140px;
+      margin-left: 69px;
     }
     div.list_content {
-      height: 253px;
+      height: 204px;
       &.name {
         height: 58px;
       }
@@ -352,31 +363,33 @@ div.news_page {
       font-family: Noto Sans;
       font-style: normal;
       font-weight: bold;
-      font-size: 17px;
-      line-height: 23px;
+      font-size: 15px;
+      line-height: 25px;
       letter-spacing: 0.05em;
 
       color: rgba(35, 52, 42, 1);
       div.company {
+        font-size: 13px;
+        line-height: 16px;
         color: rgba(35, 52, 42, 0.7);
       }
       div.title {
-        margin-top: 7px;
-        font-size: 22px;
-        line-height: 30px;
+        margin-top: 1px;
+        font-size: 16px;
+        line-height: 19px;
       }
       div.detail {
-        margin-top: 13px;
-        height: 49px;
+        margin-top: 27px;
+        height: 46px;
         font-weight: 200;
-        font-size: 16px;
-        line-height: 28px;
+        font-size: 13px;
+        line-height: 20px;
       }
       div.date {
-        margin-top: 27px;
-        font-weight: bold;
-        font-size: 17px;
-        line-height: 23px;
+        margin-top: 7px;
+        font-weight: normal;
+        font-size: 11px;
+        line-height: 15px;
       }
     }
     div.tag {
@@ -385,7 +398,7 @@ div.news_page {
         font-style: normal;
         font-weight: bold;
         font-size: 14px;
-        line-height: 28px;
+        line-height: 30px;
         /* or 200% */
 
         letter-spacing: 0.05em;
@@ -396,8 +409,8 @@ div.news_page {
   }
 }
 
-div.qna_page {
-  width:1280px;
+div.qna_page, div.readqna_page {
+  width:$content-width;
   margin:auto;
   div.classification_container {
     margin: 49px 0px 0px 0px;
@@ -407,21 +420,23 @@ div.qna_page {
     font-family: Noto Sans;
     font-style: normal;
     font-weight: bold;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 13px;
+    line-height: 17px;
     letter-spacing: 0.05em;
 
     color: #000000;
     div {
         &:not(:last-child)::after {
             content: '/';
+            font-size: 17px;
+            line-height: 17px;
             padding: 0px 10px;
         }
     }
   }
   div.title {
     &.small {
-      margin-top:133px;
+      margin-top:103px;
       font-family: Noto Sans;
       font-style: normal;
       font-weight: bold;
@@ -434,29 +449,29 @@ div.qna_page {
   }
   div.list {
     .id {
-      margin-left:10px;
-      width:69px;
+      margin-left: 16px;
+      width:58px;
+      text-align: center;
     }
     .classification {
-      margin-left: 30px;
-      width: 80px;
+      margin-left: 41px;
+      width: 115px;
     }
     .writer {
-      margin-left: 29px;
-      width:80px;
+      margin-left: 24px;
+      width:73px;
     }
     .title {
-      margin-left: 30px;
-      width: 568px;
+      margin-left: 54px;
+      width: 485px;
     }
     .answerdate {
-      margin-left: 19px;
-      width: 107px;
+      margin-left: 66px;
+      width: 124px;
     }
     .open {
-      width:79px;
-      margin-left: 70px;
-      margin-right:30px;
+      width:88px;
+      margin-left: 3px;
       text-align: center;
     }
     .answered {
@@ -464,17 +479,18 @@ div.qna_page {
       text-align: center;
     }
     .password_name {
-      margin-left: 109px;
-      width: 175px;
+      margin-left: 97px;
+      width: 115px;
       font-weight: bold;
       color: rgba(0, 0, 0, 0.5);
     }
     input.password_input {
-      margin-left: 14px;
-      width: 764px;
-      padding-left: 43px;
+      margin-left: 40px;
+      width: 530px;
+      padding-left: 25px;
       color: rgba(0, 0, 0, 0.6);
       font-weight:bold;
+      font-size: 14px;
       outline: none;
       border: none;
       background: #F1F1F1;
@@ -488,9 +504,9 @@ div.qna_page {
       }
     }
     div.password_button {
-      margin-left: 30px;
-      width: 176px;
-      height: 54px;
+      margin-left: 18px;
+      width: 154px;
+      height: 40px;
       background: #27392F;
       box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
       border-radius: 2px;
@@ -501,7 +517,7 @@ div.qna_page {
         font-family: Noto Sans;
         font-style: normal;
         font-weight: bold;
-        font-size: 17px;
+        font-size: 14px;
         line-height: 23px;
         text-align: center;
         letter-spacing: 0.05em;
@@ -513,43 +529,46 @@ div.qna_page {
     }
     .answeredlet {
       font-weight: bold;
-      margin-left: 273px;
+      margin-left: calc(1032px/2 - 734px/2);
       width: 734px;
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 19px;
       text-align: center;
       color: rgba(0, 0, 0, 0.5);
     }
     .faq_title {
-      width: 830px;
-      margin-left: 30px;
+      width: 615px;
+      margin-left: 35px;
     }
     .faq_answerdate {
       width: 178px;
-      margin-left: 49px;
+      margin-left: 55px;
     }
     .open_close {
-      margin-left: 64px;
+      margin-left: 32px;
     }
     .faq_answer {
-      width: 1062px;
+      width: 848px;
       height: fit-content;
       padding: 0px;
-      margin: 30px 0px 30px 30px;
+      margin: 30px 0px 30px 35px;
       background: rgba(0, 0, 0, 0);
       outline: none;
       border: none;
       font-family: Noto Sans;
       font-style: normal;
       font-weight: normal;
-      font-size: 17px;
-      line-height: 30px;
+      font-size: 14px;
+      line-height: 35px;
       /* or 176% */
 
       letter-spacing: 0.05em;
 
       color: #23342A;
     }
-    &.margin_21px {
-      margin-top: 21px;
+    &.margin_31px {
+      margin-top: 31px;
     }
     &.faq {
       border-top: 1px solid rgba(39, 57, 47, 0.5);
@@ -566,7 +585,7 @@ div.qna_page {
 }
 
 div.writenotice_page, div.writeqna_page, div.writenews_page {
-  width:1280px;
+  width:$content-width;
   margin: auto;
   div.list {
     width:100%;
@@ -578,7 +597,7 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
         div {
           font-family: GyeonggiBatang;
           font-style: normal;
-          font-weight: bold;
+          font-weight: normal;
           font-size: 18px;
           line-height: 40px;
           /* or 222% */
@@ -619,15 +638,15 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
         align-items: baseline;
         width:100%;
         div.number {
-          width:79px;
+          width:74px;
           text-align: right;
-          font-size: 20px;
-          line-height: 27px;
+          font-size: 16px;
+          line-height: 21px;
         }
         div.title {
-          margin-left:30px;
-          font-size: 17px;
-          line-height: 23px;
+          margin-left:15px;
+          font-size: 16px;
+          line-height: 21px;
         }
         div.subtitle {
           margin-left: 15px;
@@ -644,11 +663,11 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
       }
       div.answer_container {
         display: flex;
-        margin: 44px 0px 0px 109px;
+        margin: 33px 0px 0px 89px;
         font-family: Noto Sans;
         font-style: normal;
-        font-weight: bold;
-        font-size: 15px;
+        font-weight: normal;
+        font-size: 14px;
         line-height: 25px;
 
         color: rgba(0, 0, 0, 0.5);
@@ -656,8 +675,8 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
           display: flex;
           align-items: center;
           div.checkbox {
-              width:28px;
-              height:28px;
+              width:24px;
+              height:24px;
               border-radius: 50%;
               background: #F9F9F9;
               box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
@@ -671,11 +690,11 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
               }
           }
           div.name {
-            margin-left: 30px;
+            margin-left: 14px;
           }
         }
         div:not(:first-child) {
-          margin-left: 72px;
+          margin-left: 53px;
         }
         input {
           background: rgba(233, 235, 234, 0.5);
@@ -723,30 +742,30 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
       color: #23342A;
       div.dot {
         margin: 20px 0px 0px 0px;
-        width: 14px;
-        height: 14px;
+        width: 12px;
+        height: 12px;
         border-radius: 50%;
         background: #27392F;
         box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
       }
       div.title {
         width: 79px;
-        margin: 15.5px 0px 0px 30px;
+        margin: 12px 0px 0px 13px;
       }
       input {
         font-family: Noto Sans;
         font-style: normal;
         font-weight: bold;
-        font-size: 15px;
+        font-size: 13px;
         line-height: 25px;
         /* identical to box height, or 167% */
 
         letter-spacing: 0.05em;
 
         color: rgba(122, 121, 120, 1);
-        margin: 0px 0px 0px 30px;
+        margin: 0px 0px 0px 14px;
         padding-left: 23px;
-        width: 953px;
+        width: 797px;
         height: 54px;
         background: #E9EBEA;
         box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
@@ -759,23 +778,23 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
           box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
         }
         &.short {
-          width: 735px;
+          width: 589px;
         }
       }
       textarea {
         font-family: Noto Sans;
         font-style: normal;
         font-weight: bold;
-        font-size: 15px;
+        font-size: 13px;
         line-height: 25px;
         /* identical to box height, or 167% */
 
         letter-spacing: 0.05em;
 
         color: rgba(122, 121, 120, 1);
-        margin: 0px 0px 0px 30px;
+        margin: 0px 0px 0px 14px;
         padding: 18px 23px;
-        width: 953px;
+        width: 797px;
         height: 270px;
 
         background: #E9EBEA;
@@ -791,11 +810,11 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
         }
       }
       div.bottom_text {
-        margin: 14px 0px 0px 154px;
+        margin: 14px 0px 0px 118px;
         font-family: Noto Sans;
         font-style: normal;
         font-weight: 300;
-        font-size: 15px;
+        font-size: 13px;
         line-height: 20px;
         letter-spacing: 0.05em;
 
@@ -805,13 +824,13 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
         }
       }
       div.characternumbers {
-        margin: 14px 0px 0px 473px;
+        margin: 14px 0px 0px 350px;
         text-align: right;
         width: 180px;
         font-family: Noto Sans;
         font-style: normal;
         font-weight: bold;
-        font-size: 15px;
+        font-size: 13px;
         line-height: 20px;
         text-align: right;
         letter-spacing: 0.05em;
@@ -819,9 +838,9 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
         color: #23342A;
       }
       div.button {
-        width: 188px;
+        width: 177px;
         height: 54px;
-        margin: 0px 0px 0px 30px;
+        margin: 0px 0px 0px 31px;
         background: #E9EBEA;
         box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
         display: table;
@@ -845,11 +864,11 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
         font-family: Noto Sans;
         font-style: normal;
         font-weight: bold;
-        font-size: 16px;
+        font-size: 15px;
         line-height: 22px;
         /* identical to box height */
 
-        letter-spacing: 0em;
+        letter-spacing: -0.05em;
 
         color: #000000;
         div {
@@ -870,14 +889,24 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
       margin-top: 43px;
     }
     div.margin_150px {
-      margin-top: 150px;
+      margin-left: 0px;
+      padding-left: 65px;
+      margin-top: 82px;
+      padding-top: 88px;
+      border-top: 1px solid rgba(39, 57, 47, 0.3);
     }
   }
+  div.submit_container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 442px;
+    justify-content: space-between;
+    margin: 115px 0px 315px calc(1032px/2 - 442px/2);
+  }
   div.submit {
-    width: 248px;
-    height: 63px;
-    left: calc(50% - 238px/2);
-    margin: 88px 0px 204px 0px;
+    display: inline-block;
+    width: 206px;
+    height: 48px;
 
     background: #3B4B42;
     box-shadow: 0px 4px 4px rgba(21, 31, 26, 0.4);
@@ -896,38 +925,20 @@ div.writenotice_page, div.writeqna_page, div.writenews_page {
 
       color: #FFFFFF;
     }
+    &.cancel {
+      background: #F8F8F8;
+      box-shadow: 0px 1px 13px 2px rgba(21, 31, 26, 0.15);
+      div {
+        color : #3B4B42;
+      }
+    }
   }
 }
 
 div.readqna_page {
-  width: 1280px;
+  width: $content-width;
   margin: auto;
   div.list {
-    .id {
-      margin-left:10px;
-      width:69px;
-    }
-    .classification {
-      margin-left: 30px;
-      width: 80px;
-    }
-    .writer {
-      margin-left: 29px;
-      width:80px;
-    }
-    .title {
-      margin-left: 30px;
-      width: 568px;
-    }
-    .answerdate {
-      margin-left: 19px;
-      width: 107px;
-    }
-    .open {
-      width:79px;
-      margin-left: 179px;
-      text-align: center;
-    }
     div.list_content {
       &.answer {
         display: block;
@@ -938,16 +949,19 @@ div.readqna_page {
       display: flex;
       margin-top: 52px;
       align-items: center;
+      height: fit-content;
       textarea.detail{
-        width: 1044px;
-        height: auto;
+        width: 834px;
+        height: fit-content;
+        min-height: 0px;
         overflow: visible;
+        padding-top: 7px;
         margin: 0px 0px 0px 30px;
         font-family: Noto Sans;
         font-style: normal;
         font-weight: bold;
-        font-size: 17px;
-        line-height: 23px;
+        font-size: 14px;
+        line-height: 30px;
         letter-spacing: 0.05em;
 
         color: #23342A;
@@ -958,11 +972,9 @@ div.readqna_page {
         background: rgba(0, 0, 0, 0);
         &.answer {
           font-weight: normal;
-          padding-top: 0px;
-          height: 360px;
-          font-size: 15px;
-          line-height: 30px;
-          margin-bottom: 107px;
+          font-size: 14px;
+          line-height: 35px;
+          margin-bottom: 84px;
         }
       }
       &.start_end {
@@ -972,7 +984,7 @@ div.readqna_page {
   }
   div.bottommenu_container {
     div.write_button_margin {
-      margin-left: 1079px;
+      margin-left: calc(1032px - 147px);
       div.button {
         margin-top: 20px;
       }

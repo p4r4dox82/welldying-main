@@ -31,6 +31,10 @@ import WriteNews from './pages/WriteNews';
 import Findid from './pages/Findid';
 import Findpassword from './pages/Findpassword';
 import ContentMain from './pages/ContentMain';
+import ContentSub from './pages/ContentSub';
+import ContentPage from './pages/ContentPage';
+import MementoNote from './pages/MementoNote';
+import MementoNoteBook from './pages/MementoNoteBook';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -70,7 +74,10 @@ function App() {
         <Route path='/newslist/:id' component = {News} />
         <Route path='/findid' component = {Findid} />
         <Route path='/findpassword' component = {Findpassword} />
-        <Route path='/content' component = {ContentMain} />
+        <Route path='/content/:id' component = {ContentMain} />
+        <Route path='/contentpage/:id' component = {ContentPage} />
+        <Route path='/note/book/:id' component = {MementoNoteBook} />
+        <Route path='/note/:id' component = {MementoNote} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>

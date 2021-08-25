@@ -261,7 +261,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
             <>
             <div className = 'sex_container'>
                 <span className='checkForm span'>
-                    <div className='checkBox' onClick={(e) => {e.preventDefault(); setSex('male')}}>
+                    <div className='checkBox' style={{margin: '0px 0px 0px 0px'}}onClick={(e) => {e.preventDefault(); setSex('male')}}>
                         <div className={'checkSign' + (sex === 'male' ? ' active' : '')} />
                     </div>
                     <div className='label' style={{margin: '0px 0px 0px 10px'}}>
@@ -287,8 +287,8 @@ function SignupFill({ givenInfo, proceed } : Props) {
            name: '생년월일',
            body: (
                 <>
-                    <input style={{width: '176px', textAlign: 'left', margin: '0px 31px 0px 0px'}} type='number' autoComplete='bday-year' onChange={(e) => setBirthYear(Math.min((new Date()).getFullYear(), Number.parseInt(e.target.value)))} value={birthYear} placeholder = '출생년도(4자)'/>
-                    <input style={{width: '156px', textAlign: 'left', margin: '0px 31px 0px 0px'}} type='number' autoComplete='bday-month' onChange={(e) => setBirthMonth(Math.min(12, Math.max(1, Number.parseInt(e.target.value))))} value={birthMonth} placeholder = '월'/>
+                    <input style={{width: '164px', textAlign: 'left', margin: '0px 16px 0px 0px'}} type='number' autoComplete='bday-year' onChange={(e) => setBirthYear(Math.min((new Date()).getFullYear(), Number.parseInt(e.target.value)))} value={birthYear} placeholder = '출생년도(4자)'/>
+                    <input style={{width: '156px', textAlign: 'left', margin: '0px 16px 0px 0px'}} type='number' autoComplete='bday-month' onChange={(e) => setBirthMonth(Math.min(12, Math.max(1, Number.parseInt(e.target.value))))} value={birthMonth} placeholder = '월'/>
                     <input style={{width: '147px', textAlign: 'left'}} type='number' autoComplete='bday-day' onChange={(e) => setBirthDate(Math.min(31, Math.max(1, Number.parseInt(e.target.value))))} value={birthDate} placeholder = '일'/>
                 </>
            ),
@@ -297,7 +297,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
         });
 
         result.push({
-            name: '이메일 (선택)',
+            name: '이메일',
             body: (
                 <>
                     <input type='email' className = {emailMessage ? 'error' : ''} autoComplete='email' onChange={(e) => setEmail(e.target.value)} value={emailMessage ? emailMessage : email} onClick = {() => {setEmailMessage('');}} placeholder = '이메일을 입력해주세요.'/>
@@ -354,7 +354,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
         <form className='signupForm margin_72px'>
             { entries.map(({name, body, message}) => (
                 <>
-                    <div className={'row'} style={{width: (name === '성명' ? '286px' : (name === '성별' ? '200px' : '100%')), margin: (name === '성별' ? '20px 0px 0px 51px' : '20px 0px 0px 0px')}}>
+                    <div className={'row'} style={{width: (name === '성명' ? '265px' : (name === '성별' ? '190px' : '100%')), margin: (name === '성별' ? '20px 0px 0px 45px' : '20px 0px 0px 0px')}}>
                         <div className='label'> { name } </div>
                         { body }
                         { (message && name === '생년월일') && <div className='message'> { message } </div> }
@@ -375,7 +375,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
                     proceed({ name });
                 }
             }}>
-                가입하기
+                가입 완료
             </button>
         </form>
     );

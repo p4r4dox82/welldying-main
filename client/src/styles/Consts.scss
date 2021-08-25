@@ -8,4 +8,121 @@ $min-tablet-width: 721px;
 $max-tablet-width: 1024px;
 $min-desktop-width: 1025px;
 
-$content-width: 1080px;
+$content-width: 1032px;
+$content-margin: 444px;
+$signup-width: 500px;
+$note-width: 797px;
+$note-margin: calc(50vw - #{$content-width}/2 - 8.5px + 177px + 58px);
+
+
+.GB {
+  font-family: GyeonggiBatang;
+  font-style: normal;
+  font-weight: normal;
+
+  font-size: 12px;
+
+  color: #23342A;
+}
+.NS {
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+
+  color: #23342A;
+}
+.bold {
+  font-weight: bold;
+}
+.px11 {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+.px12 {
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+.px13 {
+  font-size: 13px;
+  letter-spacing: 0.05em;
+}
+.px14 {
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+.px15 {
+  font-size: 15px;
+  letter-spacing: 0.05em;
+}
+.px16 {
+  font-size: 16px;
+  letter-spacing: 0.05em;
+}
+.px17 {
+  font-size: 17px;
+  letter-spacing: 0.05em;
+}
+.px18 {
+  font-size: 18px;
+  letter-spacing: 0.05em;
+}
+.px20 {
+  font-size: 20px;
+  letter-spacing: 0.05em;
+}
+.op2 {
+  color: rgba(35, 52, 42, 0.2);
+}
+.op3 {
+  color: rgba(35, 52, 42, 0.3);
+}
+.op4 {
+  color: rgba(35, 52, 42, 0.4);
+}
+.op5 {
+  color: rgba(35, 52, 42, 0.5);
+}
+.op6 {
+  color: rgba(35, 52, 42, 0.6);
+}
+.op7 {
+  color: rgba(35, 52, 42, 0.7);
+}
+.op9 {
+  color: rgba(35, 52, 42, 0.9);
+}
+.whiteop9 {
+  color: rgba(255, 255, 255, 0.9);
+}
+.line20 {
+  line-height: 20px;
+}
+.line25 {
+  line-height: 25px;
+}
+.line30 {
+  line-height: 30px;
+}
+.line35 {
+  line-height: 35px;
+}
+.line40 {
+  line-height: 40px;
+}
+.line47 {
+  line-height: 47px;
+}
+button.white {
+  background: rgba(255, 255, 255, 0.7);
+  mix-blend-mode: darken;
+  box-shadow: 0px 1px 7px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 50px;
+  color: rgba(81, 96, 88, 1);
+}
+button.green {
+  background: rgba(39, 57, 47, 0.8);
+  mix-blend-mode: darken;
+  box-shadow: 0px 1px 10px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 27px;
+  color: rgba(255, 255, 255, 1);
+}

@@ -107,7 +107,7 @@ function WriteQnAanswer({ match }: Props) {
                     <div className = 'write_box'>
                         <div className = 'dot' />
                         <div className = 'title'>답변</div>
-                        <textarea placeholder = '질문에 대한 답변을 해주세요.' value={answer} onChange={(e) => {setDetail(checkline(e.target.value)); setCharacternumbers(e.target.value.length);}}/>
+                        <textarea placeholder = '질문에 대한 답변을 해주세요.' value={answer} onChange={(e) => {setAnswer(checkline(e.target.value)); setCharacternumbers(e.target.value.length);}}/>
                         <div className = 'bottom_text'>
                         내용은 최대 3,000자 까지 입력 가능합니다.
                         </div>

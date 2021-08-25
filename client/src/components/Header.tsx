@@ -25,8 +25,8 @@ function Header({ additionalClass } : Props) {
                 </div>
                 <div className='menuContainer'>
                     <div><Link to='/aboutus' className = {(expanded_1 ? ' active' : '')} onMouseEnter = {() => (setExpanded_1(true))}>메멘토 소개</Link></div>
-                    <div><Link to='/checklist'>유언작성</Link></div>
-                    <div><Link to='/content'>메멘토 컨텐츠</Link></div>
+                    <div><Link to='/checklist'>메멘토 노트</Link></div>
+                    <div><Link to='/content/0'>메멘토 컨텐츠</Link></div>
                     <div><Link to='/notice' className = {(expanded_4 ? ' active' : '')} onMouseEnter = {() => (setExpanded_4(true))}>고객 지원</Link></div>
                 </div>
                 { user.loggedIn ? (

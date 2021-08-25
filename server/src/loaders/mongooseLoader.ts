@@ -10,6 +10,7 @@ import { subscriberSchema } from "../models/subscriber";
 import { noticeSchema } from "../models/notice";
 import { newsSchema } from "../models/news";
 import { qnaSchema } from "../models/qna";
+import { commentSchema } from "../models/comment";
 
 
 
@@ -29,6 +30,7 @@ const f = async (app: Application) => {
         Notice: model('notice', noticeSchema, 'notices'),
         News: model('news', newsSchema, 'newss'),
         Qna: model('qna', qnaSchema, 'qnas'),
+        Comment: model('comment', commentSchema, 'comments'),
     }
 }
 

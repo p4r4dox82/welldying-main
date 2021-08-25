@@ -49,31 +49,32 @@ function ReadQnA({ match }: Props) {
                 <div className = 'list'>
                     <div className = 'list_content name'>
                         <div className = 'id'>번호</div>
-                        <div className = 'classification'>분류</div>
                         <div className = 'writer'>작성자</div>
-                        <div className = 'title'>제목</div>
+                        <div className = 'title'>[분류] 제목</div>
                         <div className = 'answerdate'>답변 날짜</div>
                         <div className = 'open'>공개여부</div>
                     </div>
-                    <div className = 'list_content'>
+                        <div className = 'list_content'>
                         <div className = 'id'>{qna?.id}</div>
-                        <div className = 'classification'>
+                        <div className = 'writer'>{qna?.writer}</div>
+                        <div className = 'title'>
+                        {'['}
                         {qna?.classification === '메멘토에 제안' && '제안'}
                         {qna?.classification === '기타 의견' && '기타'}
                         {(qna?.classification === '메멘토 서비스 질문' || qna?.classification === '유언전달에 관한 질문' || qna?.classification === '기타 질문') && '질문'}
+                        {'] '}
+                        {qna?.title}
                         </div>
-                        <div className = 'writer'>{qna?.writer}</div>
-                        <div className = 'title'>{qna?.title}</div>
-                        <div className = 'answerdate'>{parseDate(new Date(answerdate_form))}</div>
+                        <div className = 'answerdate'>{qna?.state === '완료' ? parseDate(new Date(qna?.answerdate)) : '답변중'}</div>
                         <div className = 'open'>{qna?.open}</div>
                     </div>
                     <div className = 'list_content answer'>
                         <div className = 'block'>
-                            <div className = 'Q'>Q.</div>
+                            <div className = 'A margin_14px'>Q.</div>
                             <textarea className = 'detail' value = {qna?.detail} disabled />
                         </div>
                         <div className = 'block start_end'>
-                            <div className = 'Q'>A.</div>
+                            <div className = 'A margin_14px'>A.</div>
                             <textarea className = 'detail answer' value = {qna?.answer} disabled/>
                         </div>
                     </div>

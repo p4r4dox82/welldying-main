@@ -100,9 +100,6 @@ function WriteQnA({ match }: Props) {
                             <div className = 'title'>
                             어떤 유형의 질문이신가요?
                             </div>
-                            <div className = 'subtitle'>
-                            제안과 의견은 Q&A 게시판에 게시되지 않는 점 유의바랍니다.
-                            </div>
                         </div>
                         <div className = 'answer_container'>
                             {classification_answer.map((answer) => (
@@ -199,21 +196,26 @@ function WriteQnA({ match }: Props) {
                             <div>{`작성하신 고객 의견 및 답변은 고객 지원 > Q&A 메뉴에서 확인하실 수 있습니다.`} </div>
                             <div>홍보 및 광고성 내용은 관리자에 의해 삭제될 수 있습니다.</div>
                             <div>
-                                <span>제휴 혹은 파트너쉽 등의 세부 문의는 메멘토 대표이메일(</span>
+                                <span>파트너쉽 등의 세부 문의는 메멘토 대표이메일(</span>
                                 <span className = 'small'> memento.welldying@gmail.com </span>
                                 <span>)로 연락주시면 보다 상세한 답변드리겠습니다.</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className = 'submit' onClick={async (e) => {
-                    e.preventDefault();
-                    setDate(new Date().getTime());
-                    if (!title || !detail) setError('모든 항목을 채워주세요.');
-                    else if (await writeQna(id, writer, title, detail, date, answerdate, open, '답변중', password, classification, sns_notice, answer, false)) setEditDone(true);
-                    else setError('어딘가 문제가 생겼습니다.');
-                }}>
-                    <div> 질문 제출 </div>
+                <div className = 'submit_container'>
+                    <div className = 'submit cancel' onClick={async (e) => {setEditDone(true);}}>
+                        <div> 취소하기 </div>
+                    </div>
+                    <div className = 'submit' onClick={async (e) => {
+                        e.preventDefault();
+                        setDate(new Date().getTime());
+                        if (!title || !detail) setError('모든 항목을 채워주세요.');
+                        else if (await writeQna(id, writer, title, detail, date, answerdate, open, '답변중', password, classification, sns_notice, answer, false)) setEditDone(true);
+                        else setError('어딘가 문제가 생겼습니다.');
+                    }}>
+                        <div> 질문 제출 </div>
+                    </div>
                 </div>
             </div>
             <Footer additionalClass = '' />

@@ -7,6 +7,7 @@ export interface ContentType {
     category: number;
     likes: number;
     tag: string;
+    comments: number[];
 };
 
 export type ContentDocument = Document & ContentType;
@@ -18,4 +19,5 @@ export const contentSchema = new Schema<ContentDocument>({
     category: Number,
     likes: Number,
     tag: String,
+    comments: [Number], 
 });

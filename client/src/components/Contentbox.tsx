@@ -29,7 +29,25 @@ function Contentbox(props: Props) {
           </div>
       </div>}
       {props.additionalClass === 'small' && <div className = 'small_content'>
-
+          <img className = 'thumbnail' src = {imageUrl('ContentPage/small_content_image.png')} />
+          <div className = 'cover'>
+              <div className = 'tag'>{props.tag}</div>
+              <div className = 'more'>
+              {[...Array(3).keys()].map((i) => (<div className = 'dot' />))}
+              </div>
+              <div className = 'title'>{'[' + props.type + ']' + props.title}</div>
+              <div className = 'date'>{'2021.08.03'}</div>
+          </div>
+      </div>}
+      {props.additionalClass === 'question' && <div className = 'question_content'>
+          <img className = 'thumbnail' src = {imageUrl('ContentPage/question_content_image.png')} />
+          <button className = 'question' disabled>
+              <div>당신의 삶에서</div>
+              <div>가장 중요한 사람은 누구인가요?</div>
+          </button>
+          <div className = 'cover'>
+              <div className = 'title'>{'[' + props.type + ']' + props.title}</div>
+          </div>
       </div>}
     </>
   );

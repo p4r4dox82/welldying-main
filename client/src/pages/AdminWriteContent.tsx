@@ -101,7 +101,7 @@ function AdminWriteContent({ match }: Props) {
                 <button type='submit' className='signupButton' onClick={async (e) => {
                     e.preventDefault();
                     if (!title || !category || !type || !likes) setError('모든 항목을 채워주세요.');
-                    else if (await writeContent(id, title, type, category, likes, tag)) setEditDone(true);
+                    else if (await writeContent(id, title, type, category, likes, tag, [])) {setEditDone(true); console.log(title);}
                     else setError('어딘가 문제가 생겼습니다.');
                 }}>
                     { !content ? '추가하기' : '수정하기' }

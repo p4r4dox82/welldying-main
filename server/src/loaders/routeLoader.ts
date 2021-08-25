@@ -10,6 +10,7 @@ import subscriberRouter from '../routes/subscriber';
 import noticeRouter from '../routes/notice';
 import newsRouter from '../routes/news';
 import qnaRouter from '../routes/qna';
+import commentRouter from '../routes/comment';
 import { ModelsType } from './mongooseLoader';
 import { AWSServices } from './awsLoader';
 
@@ -24,6 +25,7 @@ export default async (app : Application, models: ModelsType, awsServices: AWSSer
     app.use('/notice', noticeRouter(models.Notice));
     app.use('/news', newsRouter(models.News));
     app.use('/qna', qnaRouter(models.Qna));
+    app.use('/comment', commentRouter(models.Comment));
 
     app.use(errorHandler);
 }

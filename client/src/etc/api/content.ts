@@ -9,6 +9,8 @@ export interface Content {
     category: number,
     likes: number,
     tag: string,
+    comments: number[],
+    thumbnail: FormData,
 }
 
 export const getContents = async () => {
@@ -25,10 +27,18 @@ export const getContent = async (id: number) => {
     return data;
 }
 
-export const writeContent = async (id: number, title: string, type: string, category: number, likes: number, tag: string) => {
+export const writeContent = async (id: number, title: string, type: string, category: number, likes: number, tag: string, comments: number[]) => {
     let response = await Axios.post(`${apiAddress}/content`, {
-        id, title, type, category, likes, tag
+        id, title, type, category, likes, tag, comments
     }, { withCredentials: true });
 
     return response.status === 200;
+}
+
+export const contentComment = async(id: number, comments: number[]) => {
+  let response = await Axios.put(`${apiAddress}/content/comment`, {
+    id, comments
+  }, { withCredentials: true });
+
+  return response.status === 200;
 }

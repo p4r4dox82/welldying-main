@@ -17,7 +17,7 @@ function SignupAgree({ proceed } : Props) {
     let [message, setmessage] = React.useState<String>();
 
     return (
-        <div className='signupForm margin_55px'>
+        <div className='signupForm margin_52px'>
             <div className='row'>
                 <div className='checkForm border' onClick={() => { setCheck1(!allCheck); setCheck2(!allCheck); setCheck3(!allCheck); setCheck4(!allCheck); } }>
                     <div className='checkBox'>
@@ -25,7 +25,7 @@ function SignupAgree({ proceed } : Props) {
                     </div>
                     <div className='checkLabel GyeonggiBatang'>
                         <div>{`메멘토 이용약관, 개인정보 취급 안내, 디지털 유언 이용약관,`}</div>
-                        <div>{`서비스 이용 약관,메멘토 메시지 정보 수신(선택)에 모두 동의합니다.`}</div>
+                        <div>{`메멘토 메시지 정보 수신(선택)에 모두 동의합니다.`}</div>
                     </div>
                 </div>
 
@@ -84,25 +84,24 @@ function SignupAgree({ proceed } : Props) {
                         {`(선택)`}
                         </span>
                     </div>
-                    <div className = 'more NotoSans'>
-                        {`전체보기 >`}
-                    </div>
                 </div>
                 <div className='textbox noborder'>
                     { signupText4.split('\n').map((text) => <div> { text } </div>) }
                 </div>
             </div>
 
-            {message && <div className = 'error_message'>{message}</div>}
+            <div className = 'signupagree_bottom'>
+                {message && <div className = 'error_message'>{message}</div>}
 
-            <div className = 'button_container'>
-                <div className = 'cancel_button'>
-                    <div>취소하기</div>
-                </div>
-                <div className = 'next_button' onClick={() => {
-                    if (check1 && check2 && check3) proceed({ agreeMessage: check4 }); else setmessage('이용약관과 개인정보 수집 및 이용에 대한 안내 모두 동의해주세요');
-                }}>
-                    <div>다음으로</div>
+                <div className = 'button_container'>
+                    <div className = 'cancel_button'>
+                        <div>취소하기</div>
+                    </div>
+                    <div className = 'next_button' onClick={() => {
+                        if (check1 && check2 && check3) proceed({ agreeMessage: check4 }); else setmessage('이용약관과 개인정보 수집 및 이용에 대한 안내 모두 동의해주세요');
+                    }}>
+                        <div>다음으로</div>
+                    </div>
                 </div>
             </div>
         </div>

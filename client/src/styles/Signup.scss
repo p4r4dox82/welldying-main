@@ -37,14 +37,14 @@ div.signup_page {
 }
 
 .info {
-  padding: 30px 0px 33px 0px;
-  width: 542px;
+  padding: 27px 0px 31px 0px;
+  width: $signup-width;
   margin: auto;
-  margin-top: 55px;
+  margin-top: 52px;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 25px;
   /* identical to box height, or 156% */
 
@@ -52,13 +52,14 @@ div.signup_page {
   div.detail {
     margin-top: 11px;
     font-weight: normal;
-    font-size: 15px;
-    line-height: 25px;
+    font-size: 14px;
+    line-height: 23px;
+    letter-spacing: 0.05em;
     color: rgba(0, 0, 0, 0.5);
     &.bottom {
       font-weight: normal;
       font-size: 14px;
-      line-height: 40px;
+      line-height: 23px;
     }
   }
   border-top: 1.5px solid rgba(39, 57, 47, 0.3);
@@ -66,7 +67,7 @@ div.signup_page {
   &.bottom {
     margin-top:34px;
     padding-top: 0px;
-    padding-bottom: 52px;
+    padding-bottom: 16px;
     border-top: none;
     border-bottom: 1.5px solid rgba(39, 57, 47, 0.5);
   }
@@ -74,21 +75,21 @@ div.signup_page {
     border: none;
     padding: 0px;
     margin: auto;
-    margin-top: 52px;
+    margin-top: 29px;
   }
 }
 
 .signupForm {
     display: flex;
     flex-wrap: wrap;
-    width: 542px;
+    width: $signup-width;
     margin: auto;
 
     .name {
       font-family: Noto Sans;
       font-style: normal;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 15px;
       line-height: 25px;
       /* identical to box height, or 156% */
 
@@ -100,8 +101,8 @@ div.signup_page {
     &.margin_72px {
       margin-top:72px;
     }
-    &.margin_55px {
-      margin-top:55px;
+    &.margin_52px {
+      margin-top:52px;
     }
     &.margin_33px {
       margin-top:33px;
@@ -123,12 +124,12 @@ div.signup_page {
             display: flex;
             align-items: center;
             height:28px;
-            margin-top:65px;
+            margin-top:55px;
 
             .checkBox {
-                margin-left: 10px;
-                height: 28px;
-                width: 28px;
+                margin-left: 17px;
+                height: 24px;
+                width: 24px;
                 background: #F9F9F9;
                 box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
                 border-radius: 50%;
@@ -152,15 +153,16 @@ div.signup_page {
             .checkLabel {
                 flex: 0px 1 0;
                 font-weight: bold;
-                font-size: 20px;
-                line-height: 28px;
-                margin-left: 16px;
+                font-size: 13px;
+                line-height: 25px;
+                letter-spacing: 0.05em;
+                margin-left: 32px;
                 &.GyeonggiBatang {
                   font-family: GyeonggiBatang;
                   font-style: normal;
                   font-weight: bold;
                   font-size: 15px;
-                  line-height: 25px;
+                  line-height: 30px;
                   /* or 167% */
 
                   letter-spacing: 0.05em;
@@ -173,7 +175,7 @@ div.signup_page {
                   font-family: Noto Sans;
                   font-style: normal;
                   font-weight: bold;
-                  font-size: 16px;
+                  font-size: 15px;
                   line-height: 25px;
                   /* identical to box height, or 156% */
 
@@ -199,7 +201,7 @@ div.signup_page {
               font-style: normal;
               font-weight: bold;
               font-size: 12px;
-              line-height: 25px;
+              line-height: 16px;
               /* identical to box height, or 208% */
 
               text-align: right;
@@ -208,12 +210,13 @@ div.signup_page {
               color: #000000;
 
               opacity: 0.5;
+              margin-right: 15px;
             }
             &.border {
-              height:122px;
+              height:105px;
               margin-top:0px;
-              border-top: 1.5px solid #27392F;
-              border-bottom: 1.5px solid #27392F;
+              border-top: 1.5px solid rgba(39, 57, 47, 0.3);
+              border-bottom: 1.5px solid rgba(39, 57, 47, 0.3);
             }
             &.span {
               width: fit-content;
@@ -226,9 +229,9 @@ div.signup_page {
             height: fit-content;
             max-height: 161px;
             box-sizing: border-box;
-            margin-top:20px;
+            margin-top:12px;
 
-            padding: 0px 50px;
+            padding: 0px 22px;
             overflow-y: scroll;
 
             background: #F9F9F9;
@@ -246,20 +249,22 @@ div.signup_page {
 
             opacity: 0.5;
             &.noborder {
-               font-size: 14px;
-               line-height: 30px;
-               padding: 0px;
-               padding-top:18px;
-               background: rgba(0, 0, 0, 0);
-               box-shadow: none;
-               border-top: 1px solid rgba(39, 57, 47, 0.5);
+              width: 467px;
+              margin-left: 15px;
+              font-size: 14px;
+              line-height: 23px;
+              padding: 0px;
+              padding-top:9px;
+              background: rgba(0, 0, 0, 0);
+              box-shadow: none;
+              border-top: 1px solid rgba(39, 57, 47, 0.5);
             }
         }
         .label {
           font-family: Noto Sans;
           font-style: normal;
           font-weight: bold;
-          font-size: 16px;
+          font-size: 15px;
           line-height: 25px;
           /* identical to box height, or 156% */
 
@@ -267,15 +272,16 @@ div.signup_page {
 
           color: #7A7978;
           margin:0px;
-          margin-bottom: 12px;
+          margin-bottom: 11px;
           &.flex {
-            width: 106px;
+            width: 88px;
             margin:0px;
+            color: rgba(122, 121, 120, 0.8);
           }
         }
 
         input, textarea, select {
-            padding-left: 38px;
+            padding-left: 25px;
             width:100%;
             height:61px;
             border:none;
@@ -286,7 +292,7 @@ div.signup_page {
             font-family: Noto Sans;
             font-style: normal;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 13px;
             line-height: 25px;
             /* identical to box height, or 167% */
 
@@ -300,7 +306,7 @@ div.signup_page {
               color: #BC9075;
             }
             &.small_padding {
-              padding-left: 28px;
+              padding-left: 25px;
             }
         }
 
@@ -308,6 +314,9 @@ div.signup_page {
           background: #27392F;
           box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
           border-radius: 5px;
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 22px;
         }
 
         input::placeholder {
@@ -350,12 +359,15 @@ div.signup_page {
         }
 
     }
+    div.signupagree_bottom {
+      width: 100%;
+      margin-top: 55px;
+    }
     div.error_message {
-      margin-top:28px;
       font-family: Noto Sans;
       font-style: normal;
       font-weight: bold;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 25px;
       /* identical to box height, or 167% */
 
@@ -364,14 +376,14 @@ div.signup_page {
       color: #BC9075;
     }
     div.button_container {
-      margin-top:42px;
+      margin-top:17px;
       padding-bottom: 250px;
       display: flex;
       justify-content: space-between;
       width:100%;
       div.cancel_button {
-        width: 256px;
-        height: 80px;
+        width: 242px;
+        height: 62px;
 
         background: #E6E5E2;
         box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.25);
@@ -383,8 +395,8 @@ div.signup_page {
           font-family: Noto Sans;
           font-style: normal;
           font-weight: 800;
-          font-size: 18px;
-          line-height: 25px;
+          font-size: 16px;
+          line-height: 20px;
           /* identical to box height */
 
           text-align: center;
@@ -396,8 +408,8 @@ div.signup_page {
         }
       }
       div.next_button {
-        width: 256px;
-        height: 80px;
+        width: 242px;
+        height: 62px;
 
         background: #27392F;
         box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.25);
@@ -409,8 +421,8 @@ div.signup_page {
           font-family: Noto Sans;
           font-style: normal;
           font-weight: 800;
-          font-size: 18px;
-          line-height: 25px;
+          font-size: 16px;
+          line-height: 20px;
           /* identical to box height */
 
           text-align: center;
@@ -427,12 +439,12 @@ div.signup_page {
         border-radius: 5px;
         margin: 57px 0px;
         width: 100%;
-        height: 80px;
+        height: 74px;
         font-family: Noto Sans;
         font-style: normal;
         font-weight: 800;
-        font-size: 18px;
-        line-height: 25px;
+        font-size: 16px;
+        line-height: 22px;
         /* identical to box height */
 
         text-align: center;
@@ -443,9 +455,9 @@ div.signup_page {
         margin-bottom: 400px;
     }
     button.findButton {
-      width: 542px;
-      height: 60px;
-      margin-top: 49px;
+      width: $signup-width;
+      height: 56px;
+      margin-top: 30px;
 
       background: #27392F;
       box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
@@ -453,7 +465,7 @@ div.signup_page {
       font-family: Noto Sans;
       font-style: normal;
       font-weight: 800;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 25px;
       /* identical to box height */
 
@@ -464,15 +476,15 @@ div.signup_page {
       &.white {
         background: #F7F7F6;
         color: #27392F;
-        margin-bottom: 300px;
+        margin-bottom: 250px;
       }
-      &.margin_17px {
-        margin-top: 17px;
+      &.margin_23px {
+        margin-top: 23px;
       }
     }
 
     .id_verify {
-      width: 542px;
+      width: $signup-width;
       height: 91px;
 
       background: #EDEDEB;
