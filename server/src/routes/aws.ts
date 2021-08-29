@@ -16,13 +16,14 @@ export default ({ s3, sns }: AWSServices) => {
             s3,
             bucket: config.awsS3BucketName,
             key: function (req, file, cb) {
-                let extension = path.extname(file.originalname);
-                cb(null, Date.now().toString() + uploadCnt + extension);
+                // let extension = path.extname(file.originalname);
+                // cb(null, Date.now().toString() + uploadCnt + extension);
+                cb(null, file.originalname);
             },
             acl: 'public-read',
         })
     });
-        
+
     // The image is stored in S3 link in response.data.location.
     router.post('/image', onlyAuthUser, (req, res, next) => {
         console.log(req.image?.size);

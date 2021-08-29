@@ -2,6 +2,8 @@ import React from 'react';
 import { imageUrl } from '../etc/config';
 import { getContent, contentComment, Content } from '../etc/api/content';
 import { Question } from '../etc/api/question';
+import { uploadImage } from '../etc/api/image';
+import FileSelector from '../components/FileSelector';
 
 interface Props {
   question: Question | undefined;
@@ -58,6 +60,7 @@ function NoteQuestion(props: Props) {
                 {characternumbers + ' / 550 자'}
                 </div>
                 <div className = 'image_uploader'>
+                    <FileSelector />
                 </div>
                 <div className = 'bottom_container'>
                     <div className = 'more'>

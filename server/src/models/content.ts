@@ -2,22 +2,31 @@ import { Schema, Document } from "mongoose";
 
 export interface ContentType {
     id: number;
-    type: string;
     title: string;
+    type: string;
     category: number;
-    likes: number;
+    userdata: { likes: string[]; bookmark: string[]; read: string[]; };
     tag: string;
+    date: number;
+    source: string;
+    detail: { summary: string; };
     comments: number[];
+    question: number;
+    thumbnailUrl: string;
 };
 
 export type ContentDocument = Document & ContentType;
 
 export const contentSchema = new Schema<ContentDocument>({
     id: { type: Number, unique: true, required: true},
-    type: String,
     title: String,
+    type: String,
     category: Number,
-    likes: Number,
-    tag: String,
-    comments: [Number], 
+    userdata: { likes: [String], bookmark: [String], read: [String], },
+    date: { type: Number, default: new Date(), },
+    source: String,
+    detail: { summary: String },
+    comments: [Number],
+    question: Number,
+    thumbnailUrl: String,
 });

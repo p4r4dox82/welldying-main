@@ -193,7 +193,7 @@ function Maincontent() {
                                     <img src = {imageUrl('memento_colon.png')} alt="profile"/>
                                     <div className = 'like'>
                                         <img src = {imageUrl('content_like.png')} alt="profile"/>
-                                        {slide_content?.likes}
+                                        {slide_content?.userdata.likes?.length}
                                     </div>
                                     <div className = 'type'>{slide_content?.type}</div>
                                     <div className = 'tag'>{slide_content_section?.tag}</div>

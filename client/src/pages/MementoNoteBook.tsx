@@ -11,6 +11,8 @@ import { getQuestions } from '../etc/api/question';
 import { getSection, getSections } from '../etc/api/section';
 import usePromise from '../etc/usePromise';
 
+import { imageUrl } from '../etc/config';
+
 interface MatchParams {
     id: string;
 };
@@ -32,6 +34,8 @@ function MementoNoteBook({ match } : Props) {
   let [barheight, setBarheight] = React.useState<number>();
 
   let section = React.useMemo(() => sections?.find((section) => section.id === id), [sections, id]);
+
+  let [search_word, setSearch_word] = React.useState<string>('');
 
 
   let section_questions = React.useMemo(() => {
@@ -88,7 +92,12 @@ function MementoNoteBook({ match } : Props) {
                       })}
                   </div>
                   <div className = 'book_main'>
-                      <div className = 'side_bar_container' />
+                      <div className = 'side_bar_container'>
+                          <img className = 'zoom_button' src = {imageUrl('NotePage/zoom_image.png')} />
+                          <img className = 'add_button' src = {imageUrl('NotePage/add_image.png')} />
+                          <div className = 'title GB px13 line30'>{'나의 아이들에게 남기는 이야기'}</div>
+                          <img className = 'edit_button' style = {{margin: '483px 0px 0px 0px'}} src = {imageUrl('NotePage/edit_image.png')} />
+                      </div>
                       <div className = 'left page'>
 
                       </div>
@@ -99,19 +108,19 @@ function MementoNoteBook({ match } : Props) {
               </div>
           </div>
           <div className = 'block note_book_page'>
-              <div className = 'written_question margin_note border'>
-                  <div className = 'title GB px16 bold'>
-                  {section?.title}
+              <div className = 'submenu_container'>
+                  <div className = 'searchContainer'>
+                      <img src = {imageUrl('search_image.png')} />
+                      <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)감동'/>
                   </div>
-                  {section_questions}
+                  <div className = 'button_container'>
+                      <img src = {imageUrl('NotePage/block_image.png')} />
+                      <img src = {imageUrl('NotePage/sort_image.png')} />
+                      <img src = {imageUrl('NotePage/add_image_.png')} />
+                  </div>
               </div>
-          </div>
-          <div className = 'block note_book_page'>
-              <div className = 'unwritten_question margin_note'>
-                  <div className = 'title GB px16 bold'>
-                  {'아직 작성하지 않은 질문'}
-                  </div>
-                  {section_questions_unwritten}
+              <div className = 'written_question margin_note' style = {{marginTop: '-23px'}}>
+                  {section_questions}
               </div>
           </div>
       </div>

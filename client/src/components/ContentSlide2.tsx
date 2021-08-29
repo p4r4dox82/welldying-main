@@ -5,8 +5,8 @@ import usePromise from '../etc/usePromise';
 
 function ContentSlide2 () {
   let [, contents] = usePromise(getContents);
-  let [slide_number, setSlide_number] = React.useState<number>(0);
-  let [content_id, setContent_id] = React.useState<number>(0);
+  let [slide_number, setSlide_number] = React.useState<number>(1);
+  let [content_id, setContent_id] = React.useState<number>(1);
   const maxslide_number = 5;
   let start_number = slide_number;
   let end_number = ((slide_number + maxslide_number) <= maxslide_number ? slide_number + maxslide_number : slide_number + maxslide_number - maxslide_number);

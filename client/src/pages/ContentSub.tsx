@@ -37,7 +37,7 @@ function ContentSub({ match } : Props) {
               </div>
               <div className = 'content_container'>
                   {popular_contents?.map((content) =>
-                  <Contentbox additionalClass = 'big' title = {content.title} type = {content.type} category = {content.category} likes = {content.likes} tag = {content.tag}/>)}
+                  <Contentbox additionalClass = 'big' content = {content}/>)}
               </div>
           </div>
       </div>
@@ -49,7 +49,7 @@ function ContentSub({ match } : Props) {
               </div>
               <div className = 'content_container nowrap'>
                   {question_contents?.map((content) =>
-                  <Contentbox additionalClass = 'question' title = {content.title} type = {content.type} category = {content.category} likes = {content.likes} tag = {content.tag}/>)}
+                  <Contentbox additionalClass = 'question' content = {content}/>)}
               </div>
               <img className = 'slide_right_button' src = {imageUrl('ContentPage/slide_right_button.png')} />
               <img className = 'slide_left_button' src = {imageUrl('ContentPage/slide_left_button.png')} />
@@ -62,7 +62,7 @@ function ContentSub({ match } : Props) {
               </div>
               <div className = 'content_container'>
                   {subject_contents?.map((content) =>
-                  <Contentbox additionalClass = 'small' title = {content.title} type = {content.type} category = {content.category} likes = {content.likes} tag = {content.tag}/>)}
+                  <Contentbox additionalClass = 'small' content = {content}/>)}
               </div>
           </div>
       </div>

@@ -70,7 +70,7 @@ function ContentPage ({ match } : Props) {
                 </div>
                 <div className = 'content_container'>
                     {more_contents?.map((content) =>
-                    <Contentbox additionalClass = 'big' title = {content.title} type = {content.type} category = {content.category} likes = {content.likes} tag = {content.tag}/>)}
+                    <Contentbox additionalClass = 'small wide' content = {content}/>)}
                 </div>
                 {more_contents_count !== 8 && <div className = 'more_border' onClick = {() => {setMore_contents_count(Math.min(more_contents_count + 6, 8))}}>
                     <div className = 'GB px18 bold op5'>더보기</div>

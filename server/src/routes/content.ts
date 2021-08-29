@@ -35,16 +35,21 @@ export default (Content: Model<ContentDocument>) => {
     router.post('/', onlyAdmin, async (req, res, next) => {
         let data: ContentType = {
             id: Number.parseInt(req.body.id),
-            type: req.body.type,
             title: req.body.title,
+            type: req.body.type,
             category: Number.parseInt(req.body.category),
-            likes: Number.parseInt(req.body.likes),
+            userdata: { likes: req.body.userdata.likes, bookmark: req.body.userdata.bookmark, read: req.body.userdata.read, },
             tag: req.body.tag,
-            comments: req.body.coments
+            date: new Date().getTime(),
+            source: req.body.source,
+            detail: { summary: req.body.detail.summary, },
+            comments: req.body.coments,
+            question: Number.parseInt(req.body.question),
+            thumbnailUrl: req.body.thumbnailUrl,
         };
 
         if (!await Content.findOneAndUpdate({ id: data.id },
-                { type: data.type, title: data.title, category: data.category, likes: data.likes, tag: data.tag, comments: data.comments})) {
+                { title: data.title, type: data.type, category: data.category, userdata: data.userdata, tag: data.tag, date: data.date, source: data.source, detail: data.detail, comments: data.comments, question: data.question, thumbnailUrl: data.thumbnailUrl })) {
             const content = new Content(data);
             content.save();
         }
@@ -54,7 +59,6 @@ export default (Content: Model<ContentDocument>) => {
     });
 
     router.put('/comment', async (req, res) => {
-        let user = req.user!;
         let id: number = Number.parseInt(req.body.id);
         let comments: number[] = req.body.comments;
 
@@ -64,6 +68,17 @@ export default (Content: Model<ContentDocument>) => {
 
         res.send(200);
     });
+
+    router.put('/userdata', async (req, res) => {
+      let id: number = Number.parseInt(req.body.id);
+      let userdata: { likes: string[], bookmark: string[], read: string[] } = req.body.userdata;
+
+      await Content.findOneAndUpdate({ id }, {
+        userdata
+      });
+
+      res.send(200);
+    })
 
     return router;
 }

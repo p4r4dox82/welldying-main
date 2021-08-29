@@ -65,7 +65,7 @@ function ContentBorder (props : Props) {
           <div className = 'button_container'>
               <button className = 'like_button white NS px12 bold op9'>
                   <img src = {imageUrl('ContentPage/like_image.png')} />
-                  {content?.likes}
+                  {content?.userdata.likes?.length}
               </button>
               <button className = 'share_button white NS px12 bold op9'>
                   <img src = {imageUrl('ContentPage/share_image.png')} />

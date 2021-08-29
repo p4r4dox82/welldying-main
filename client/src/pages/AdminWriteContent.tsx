@@ -38,7 +38,6 @@ function AdminWriteContent({ match }: Props) {
         setTitle(content.title);
         setType(content.type);
         setCategory(content.category);
-        setLikes(content.likes);
         setTag(content.tag);
     }, [content]);
 
@@ -100,8 +99,8 @@ function AdminWriteContent({ match }: Props) {
 
                 <button type='submit' className='signupButton' onClick={async (e) => {
                     e.preventDefault();
-                    if (!title || !category || !type || !likes) setError('모든 항목을 채워주세요.');
-                    else if (await writeContent(id, title, type, category, likes, tag, [])) {setEditDone(true); console.log(title);}
+                    if (!title || !category || !type ) setError('모든 항목을 채워주세요.');
+                    else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, 'asd', { summary: 'asd', }, [], 1, 'asd')) {setEditDone(true); console.log(title);}
                     else setError('어딘가 문제가 생겼습니다.');
                 }}>
                     { !content ? '추가하기' : '수정하기' }

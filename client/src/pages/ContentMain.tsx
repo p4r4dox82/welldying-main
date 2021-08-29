@@ -6,7 +6,7 @@ import ContentDetail from '../components/ContentDetail';
 import ContentSlide from '../components/ContentSlide';
 import ContentSlide2 from '../components/ContentSlide2';
 import Contentbox from '../components/Contentbox';
-import { getContents } from '../etc/api/content';
+import { getContents, Content } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
 import { Link, match, Redirect } from 'react-router-dom';
 import { imageUrl } from '../etc/config';
@@ -53,7 +53,7 @@ function ContentMain({ match } : Props) {
                 </div>
                 <div className = 'content_container'>
                     {popular_contents?.map((content) =>
-                    <Contentbox additionalClass = 'big' title = {content.title} type = {content.type} category = {content.category} likes = {content.likes} tag = {content.tag}/>)}
+                    <Contentbox additionalClass = 'big' content = {content}/>)}
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@ function ContentMain({ match } : Props) {
                 </div>
                 <div className = 'content_container border'>
                     {subject_contents?.map((content) =>
-                    <Contentbox additionalClass = 'small' title = {content.title} type = {content.type} category = {content.category} likes = {content.likes} tag = {content.tag}/>)}
+                    <Contentbox additionalClass = 'small' content = {content}/>)}
                 </div>
             </div>
             <div className = 'subject_content'>
@@ -73,7 +73,7 @@ function ContentMain({ match } : Props) {
                 </div>
                 <div className = 'content_container border'>
                     {subject_contents?.map((content) =>
-                    <Contentbox additionalClass = 'small' title = {content.title} type = {content.type} category = {content.category} likes = {content.likes} tag = {content.tag}/>)}
+                    <Contentbox additionalClass = 'small' content = {content}/>)}
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@ function ContentMain({ match } : Props) {
                 </div>
                 <div className = 'content_container'>
                     {popular_contents?.map((content) =>
-                    <Contentbox additionalClass = 'big' title = {content.title} type = {content.type} category = {content.category} likes = {content.likes} tag = {content.tag}/>)}
+                    <Contentbox additionalClass = 'big type2' content = {content}/>)}
                 </div>
             </div>
         </div>
@@ -106,10 +106,14 @@ function ContentMain({ match } : Props) {
                 </div>
                 <div className = 'content_container nowrap transition' ref = {question_content_dom}>
                     {question_contents?.map((content) =>
-                    <Contentbox additionalClass = 'question' title = {content.title} type = {content.type} category = {content.category} likes = {content.likes} tag = {content.tag}/>)}
+                    <Contentbox additionalClass = 'question' content = {content}/>)}
                 </div>
-                {position !== (maxquestion_contents - 3) && <img className = 'slide_right_button' src = {imageUrl('ContentPage/slide_right_button.png')} onClick = {() => {let newposition = Math.min(position + 3, maxquestion_contents - 3); setPosition(newposition); moveLeft(newposition);}}/>}
-                {position !== 0 && <img className = 'slide_left_button' src = {imageUrl('ContentPage/slide_left_button.png')} onClick = {() => {let newposition = Math.max(position - 3, 0); setPosition(newposition); moveRight(newposition);}} />}
+                {position !== (maxquestion_contents - 3) && <div className = 'button_background right'>
+                    <img className = 'slide_right_button' src = {imageUrl('ContentPage/slide_right_button.png')} onClick = {() => {let newposition = Math.min(position + 3, maxquestion_contents - 3); setPosition(newposition); moveLeft(newposition);}}/>
+                </div>}
+                {position !== 0 && <div className = 'button_background left'>
+                    <img className = 'slide_left_button' src = {imageUrl('ContentPage/slide_left_button.png')} onClick = {() => {let newposition = Math.max(position - 3, 0); setPosition(newposition); moveRight(newposition);}} />
+                </div>}
             </div>
         </div>
         <div className = 'block contentpage flex' >
@@ -119,7 +123,7 @@ function ContentMain({ match } : Props) {
                 </div>
                 <div className = 'content_container'>
                     {subject_contents_8?.map((content) =>
-                    <Contentbox additionalClass = 'small' title = {content.title} type = {content.type} category = {content.category} likes = {content.likes} tag = {content.tag}/>)}
+                    <Contentbox additionalClass = 'small' content = {content}/>)}
                 </div>
             </div>
         </div>

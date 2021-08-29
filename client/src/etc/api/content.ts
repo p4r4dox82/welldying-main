@@ -7,10 +7,14 @@ export interface Content {
     title: string,
     type: string,
     category: number,
-    likes: number,
+    userdata: { likes: string[], bookmark: string[], read: string[], },
     tag: string,
+    date: number,
+    source: string,
+    detail: { summary: string, },
     comments: number[],
-    thumbnail: FormData,
+    question: number,
+    thumbnailUrl: string,
 }
 
 export const getContents = async () => {
@@ -27,9 +31,9 @@ export const getContent = async (id: number) => {
     return data;
 }
 
-export const writeContent = async (id: number, title: string, type: string, category: number, likes: number, tag: string, comments: number[]) => {
+export const writeContent = async (id: number, title: string, type: string, category: number, userdata: { likes: string[], bookmark: string[], read: string[], }, tag: string, date: number, source: string, detail: {summary: string, }, comments: number[], question: number, thumbnailUrl: string) => {
     let response = await Axios.post(`${apiAddress}/content`, {
-        id, title, type, category, likes, tag, comments
+        id, title, type, category, userdata, tag, date, source, detail, comments, question, thumbnailUrl
     }, { withCredentials: true });
 
     return response.status === 200;
@@ -38,6 +42,14 @@ export const writeContent = async (id: number, title: string, type: string, cate
 export const contentComment = async(id: number, comments: number[]) => {
   let response = await Axios.put(`${apiAddress}/content/comment`, {
     id, comments
+  }, { withCredentials: true });
+
+  return response.status === 200;
+}
+
+export const content_userdata = async(id: number, userdata: { likes: string[], bookmark: string[], read: string[], }) => {
+  let response = await Axios.put(`${apiAddress}/content/userdata`, {
+    id, userdata
   }, { withCredentials: true });
 
   return response.status === 200;
