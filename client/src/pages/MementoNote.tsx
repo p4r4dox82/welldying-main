@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import NoteLeftBar from '../components/NoteLeftBar';
 import NoteQuestion from '../components/NoteQuestion';
 import useScroll from '../etc/useScroll';
+import { imageUrl } from '../etc/config';
 
 import { getQuestions } from '../etc/api/question';
 import { getSection, getSections } from '../etc/api/section';
@@ -82,9 +83,11 @@ function MementoNote({ match } : Props) {
           </div>
           <div className = 'block note_page'>
               <div className = 'written_question margin_note border'>
-                  <div className = 'title GB px16 bold'>
+                  <div className = 'title GB px16 bold line30'>
                   {section?.title}
                   </div>
+                  <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} />
+                  <img className = 'order_button' src = {imageUrl('ContentPage/order_button.svg')} />
                   {section_questions}
               </div>
           </div>

@@ -6,6 +6,7 @@ import { uploadImage } from '../etc/api/image';
 import { getAnswers, writeAnswer } from '../etc/api/answer';
 import FileSelector from '../components/FileSelector';
 import usePromise from '../etc/usePromise';
+import { parseDate } from '../etc/index';
 
 interface Props {
   question: Question | undefined;
@@ -56,7 +57,7 @@ function NoteQuestion(props: Props) {
     <div>
         {props.written && <div className = 'questionBox' onClick = {() => {setShow_answer(!show_answer); setAnswer_type('written');}}>
             <div className = 'title GB px20 line40' style = {{margin: '0px'}}>{question.title}</div>
-            <div className = 'answerdate GB px13'>{'답변일 : ' + '2021. 07. 03'}</div>
+            <div className = 'answerdate GB px13'>{'답변일 : ' + String(parseDate(new Date(Number(answer?.updatedAt))))}</div>
             <div className = 'write_button NS px12'>
                 답변보기
                 <img src = {imageUrl('NotePage/down_image.png')} />

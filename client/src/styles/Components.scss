@@ -9,8 +9,6 @@ div.fileSelector {
   border-radius: 0px;
   background: #FBFBFB;
   box-shadow: inset 0px 1px 5px 3px rgba(0, 0, 0, 0.05);
-  display: flex;
-  align-items: center;
   button.image_input {
     padding: 0px;
     width: 100%;
@@ -19,8 +17,19 @@ div.fileSelector {
     height: fit-content;
     border-radius: 0px;
     background: rgba(0, 0, 0, 0);
+  }
+  img {
+    width: 848px;
+    height: 500px;
+    object-fit: cover;
+  }
+  .Crop {
+    div {
+      width: fit-content;
+      height: fit-content;
+    }
     img {
-      object-position: 50% 50%;
+      object-fit: none;
     }
   }
 }

@@ -36,14 +36,6 @@ function Main() {
     return (
         <>
             <Header additionalClass='absolute ' />
-            {(user.loggedIn && user.user!.username === "admin") ? (
-              <>
-              <div className = 'admin_button'><Link to = '/admin'>admin</Link></div>
-              </>
-            ) : (
-              <>
-              </>
-            )}
             <Maincontent/>
             <Footer additionalClass=' '/>
         </>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { uploadImage_formdata } from '../etc/api/image';
+import ReactCrop from 'react-image-crop';
 
 interface Props {
   setImageUri: any;
@@ -7,7 +8,8 @@ interface Props {
 }
 
 function FileSelector(props: Props) {
-  let [state, setState] = React.useState<any>(null);
+  let input_file = React.useRef<any>(null);
+  let [state, setState] = React.useState<any>({ image: '', imageLoaded: false });
   let [imageUrl, setImageUrl] = React.useState<string>('https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png');
   if(props.imageUri !== '' && props.imageUri !== imageUrl)
     setImageUrl(props.imageUri);
@@ -31,19 +33,42 @@ function FileSelector(props: Props) {
     input_file.current.click();
   };
 
+  const [crop, setCrop] = React.useState<{
+    unit: "px" | "%",
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  }>({
+    unit: "px",
+    x: 0,
+    y: 0,
+    width: 500,
+    height: 800,
+  });
 
-  let img = React.useMemo(() => (
-    <img src = {`${imageUrl}`} />
-  ), [imageUrl]);
 
-  let input_file = React.useRef<any>(null);
+  let img = React.useMemo(() => {
+    return (
+      <>
+        <img src = {imageUrl} />
+      </>
+    );
+  }, [imageUrl]);
 
 
   return (
   <div className = 'fileSelector'>
       <button className = 'image_input' onClick = {() => {handleClick();}} >
-      {img}
+      <div className = 'new_image' style = {{width: crop.width, height: crop.height, overflow: 'hidden'}}>
+          <img className = 'new_image' src = {imageUrl} style = {{left: -crop.x, top: -crop.y, objectFit: 'none'}}/>
+      </div>
       </button>
+      <ReactCrop className = 'Crop' src = {imageUrl} crop = {crop} onChange = {(newCrop) => {
+        let changeCrop = newCrop;
+        setCrop(changeCrop);
+      }} locked style = {{width: '848px', height: 'fit-content', objectFit: 'cover'}}/>
+      {img}
       <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
   </div>
   );

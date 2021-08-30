@@ -37,7 +37,8 @@ function ContentQuestion (props : Props) {
   let [, answers] = usePromise(getAnswers);
   let [, questions] = usePromise(getQuestions);
   let answer = answers?.find((answer) => answer.questionId === content!.question);
-  let question = React.useMemo(() => questions?.find((question) => question.id === content!.question), [content, questions]);
+  let questionId = React.useMemo(() => content?.question, [content]);
+  let question = React.useMemo(() => questions?.find((question) => question.id === questionId), [id, questions]);
 
   React.useEffect(() => {
     if(!content) return;
@@ -50,17 +51,13 @@ function ContentQuestion (props : Props) {
     setImageUri(answer.imageUrl);
   }, [answer]);
 
-  React.useEffect(() => {
-
-  }, [question]);
-
 
   if (!content) return <></>;
   else return (
     <>
       <div className = 'content_question'>
           <img className = 'background' src = {imageUrl('ContentPage/question_background.png')} />
-          <img className ='memento_colon' src = {imageUrl('memento_colon.png')} />
+          <img className = 'memento_colon' src = {imageUrl('memento_colon.png')} />
           <div className = 'question_container'>
               <div className ='question GB px20 line40'>{question?.title}</div>
               <div className = 'tag GB px14'>{content.tag}</div>
