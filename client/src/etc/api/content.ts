@@ -1,6 +1,11 @@
 import Axios from "axios";
 import { apiAddress } from "../config";
 
+export interface Userdata {
+  likes: string[],
+  bookmark: string[],
+  read: string[],
+}
 
 export interface Content {
     id: number,

@@ -39,7 +39,7 @@ function ContentPage ({ match } : Props) {
       <>
         <Header additionalClass = '' />
         <ContentCover additionalClass = '0' title = {title} tag = {tag} date = {'2021. 07 .03'} source = {'brunch.co.kr/@ssls1223/456'}/>
-        <Content_type additionalClass = {type} title = {title} tag = {tag} date = {'2021. 07 .03'} source = {'brunch.co.kr/@ssls1223/456'}/>
+        <Content_type additionalClass = {type} content = {content}/>
         <div className = 'block contentpage'>
             <div className = 'contentsummary margin_large'>
                 <div className = 'title GB px20'>
@@ -55,7 +55,7 @@ function ContentPage ({ match } : Props) {
                 <div className = 'title GB px20'>
                 메멘토 질문
                 </div>
-                <ContentQuestion additionalClass = {type} title = {title} tag = {tag} />
+                <ContentQuestion additionalClass = {type} content = {content} />
             </div>
         </div>
         <div className = 'block contentpage'>

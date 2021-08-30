@@ -19,7 +19,7 @@ function dataURIToBlob(dataURI: string) {
     const ia = new Uint8Array(byteString.length)
     for (let i = 0; i < byteString.length; i++)
         ia[i] = byteString.charCodeAt(i)
-  
+
     return new Blob([ia], { type: mimeString })
 }
 
@@ -32,8 +32,8 @@ function QuillBody({ id, initialAnswer, initialLength, setIsEmpty, setCurrentEdi
     return (
         <>
             <div className='message'> { length !== undefined && `${length} / ${maxLength}` }</div>
-            <ReactQuill 
-                theme="snow" 
+            <ReactQuill
+                theme="snow"
                 modules={{
                     toolbar: `.quill-toolbar${id}`,
                     clipboard: {
@@ -59,7 +59,7 @@ function QuillBody({ id, initialAnswer, initialLength, setIsEmpty, setCurrentEdi
                         setLength(newLength);
                         setEditTime(new Date().getTime());
                         setIsEmpty((newAnswer === initialAnswer) || (newAnswer.length === 0));
-                        await writeAnswer(id, (newAnswer === initialAnswer) ? '' : newAnswer, newLength);
+                        await writeAnswer(id, (newAnswer === initialAnswer) ? '' : newAnswer, newLength, 'asd');
                     } else {
                         setAnswer(answer + ' ');
                     }

@@ -9,6 +9,7 @@ import useScroll from '../etc/useScroll';
 
 import { getQuestions } from '../etc/api/question';
 import { getSection, getSections } from '../etc/api/section';
+import { getAnswers } from '../etc/api/answer';
 import usePromise from '../etc/usePromise';
 
 interface MatchParams {
@@ -27,8 +28,8 @@ function MementoNote({ match } : Props) {
   let user = useSelector((state: RootReducer) => state.user);
   let [scrollActive, setScrollActive] = React.useState(false);
   let [, questions] = usePromise(getQuestions);
-  let question = questions?.find((question) => question.id === 1);
-  let [, sections] = usePromise(() => getSections());
+  let [, sections] = usePromise(getSections);
+  let [, answers] = usePromise(getAnswers);
   let [barheight, setBarheight] = React.useState<number>();
 
   let section = React.useMemo(() => sections?.find((section) => section.id === id), [sections, id]);
@@ -39,7 +40,8 @@ function MementoNote({ match } : Props) {
       <>
           {section?.questions?.map((questionId) => {
             let question = questions?.find((question) => question.id === questionId);
-            if (!question) return;
+            let answer = answers?.find((answer) => answer.questionId === questionId);
+            if (!question || !answer) return;
 
             return (
               <NoteQuestion question = {question} written = {true}/>
@@ -47,14 +49,15 @@ function MementoNote({ match } : Props) {
           })}
       </>
     );
-  }, [section]);
+  }, [section, answers, questions]);
 
   let section_questions_unwritten = React.useMemo(() => {
     return (id === undefined) ? undefined : (
       <>
           {section?.questions?.map((questionId) => {
             let question = questions?.find((question) => question.id === questionId);
-            if (!question) return;
+            let answer = answers?.find((answer) => answer.questionId === questionId);
+            if (!question || answer) return;
 
             return (
               <NoteQuestion question = {question} written = {false}/>

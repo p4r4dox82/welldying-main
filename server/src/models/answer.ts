@@ -7,6 +7,7 @@ export interface AnswerType {
     length: string;
     isChecked?: boolean;
     updatedAt: number;
+    imageUrl: string;
 };
 
 export type AnswerDocument = Document & AnswerType;
@@ -17,7 +18,8 @@ export const answerSchema = new Schema<AnswerDocument>({
     message: String,
     length: Number,
     isChecked: Boolean,
-    updatedAt: { type: Number, default: new Date(), }
+    updatedAt: { type: Number, default: new Date(), },
+    imageUrl: String,
 });
 
 answerSchema.index({username: true, questionId: true}, {unique: true});

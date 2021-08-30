@@ -15,7 +15,7 @@ export default (Answer: Model<AnswerDocument>) => {
         let questionId = req.body.questionId;
         let check = req.body.check;
 
-        if (await Answer.findOneAndUpdate({ username: user.username, questionId }, 
+        if (await Answer.findOneAndUpdate({ username: user.username, questionId },
                                           { isChecked: check }))
             res.sendStatus(200);
 
@@ -33,18 +33,19 @@ export default (Answer: Model<AnswerDocument>) => {
             message: req.body.message,
             length: req.body.length,
             updatedAt: new Date().getTime(),
+            imageUrl: req.body.imageUrl,
         };
         console.log(data.message, data.length);
 
-        if (data.message.length === 0) {
+        if (data.message.length === 0 && data.imageUrl === undefined) {
             await Answer.deleteOne({ username: data.username, questionId: data.questionId });
 
             res.sendStatus(202);
             return;
         }
 
-        if (!await Answer.findOneAndUpdate({ username: data.username, questionId: data.questionId }, 
-                                           { message: data.message, length: data.length, updatedAt: data.updatedAt })) {
+        if (!await Answer.findOneAndUpdate({ username: data.username, questionId: data.questionId },
+                                           { message: data.message, length: data.length, updatedAt: data.updatedAt, imageUrl: data.imageUrl })) {
             const answer = new Answer(data);
             await answer.save();
 

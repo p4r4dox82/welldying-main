@@ -1,0 +1,26 @@
+@import 'Consts.scss';
+
+div.fileSelector {
+  width: 100%;
+  height: fit-content;
+  margin-top: 53px;
+  padding: 30px 28px;
+  min-height: 150px;
+  border-radius: 0px;
+  background: #FBFBFB;
+  box-shadow: inset 0px 1px 5px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  button.image_input {
+    padding: 0px;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+    height: fit-content;
+    border-radius: 0px;
+    background: rgba(0, 0, 0, 0);
+    img {
+      object-position: 50% 50%;
+    }
+  }
+}

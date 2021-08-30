@@ -1011,6 +1011,21 @@ div.videocontent {
       top: 383px;
       left: 183px;
     }
+    img.bookmark {
+      position: absolute;
+      top: -8px;
+      right: 29px;
+    }
+  }
+  div.share_container {
+    width: 239px;
+    height: 106px;
+    position: absolute;
+    top: calc(432px + 18px);
+    left: calc(769px + 24px);
+    background: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
   }
 }
 div.bookcontent {
@@ -1094,10 +1109,11 @@ div.contentsummary {
 
 div.content_question {
   margin-top: 33px;
-  height: 909px;
+  height: fit-content;
   img.background {
-    height: 909px;
-    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.23));
+    height: 100%;
+    opacity: 0.4;
+    filter: drop-shadow(0px 4px 3px rgba(0, 0, 0, 0.23));
     border-radius: 5px;
   }
   img.memento_colon {
@@ -1108,7 +1124,7 @@ div.content_question {
     left: 51px;
   }
   div.question_container {
-    top: 41px;
+    padding-top: 41px;
     left: 75px;
     width: 848px;
     div.question {
@@ -1134,6 +1150,7 @@ div.content_question {
       display: flex;
       flex-wrap: wrap;
       margin-top: 75px;
+      padding-bottom: 61px;
       gap: 24px;
       div.more {
         display: flex;
@@ -1149,7 +1166,31 @@ div.content_question {
         width: 241px;
         height: 40px;
       }
+      div.save_container, div.upload_container {
+        position: absolute;
+        top: -106px;
+        left: 607px;
+        width: 241px;
+        height: 94px;
+        background: #FBFBFB;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 19px 23px;
+        gap: 15px 7px;
+        button {
+          width: 93px;
+          height: 26px;
+        }
+      }
+      div.upload_container {
+        left: 344px;
+      }
     }
+  }
+  div.image_uploader {
+    width: 848px;
   }
 }
 

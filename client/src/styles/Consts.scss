@@ -121,6 +121,11 @@ button.white {
   box-shadow: 0px 1px 7px 2px rgba(0, 0, 0, 0.15);
   border-radius: 50px;
   color: rgba(81, 96, 88, 1);
+  &.rec {
+    background: rgba(251, 251, 251, 0.7);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+  }
 }
 button.green {
   background: rgba(39, 57, 47, 0.8);
@@ -128,4 +133,9 @@ button.green {
   box-shadow: 0px 1px 10px 2px rgba(0, 0, 0, 0.25);
   border-radius: 27px;
   color: rgba(255, 255, 255, 1);
+  &.rec {
+    background: rgba(35, 52, 42, 0.7);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+  }
 }
