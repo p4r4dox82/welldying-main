@@ -32,41 +32,52 @@ function MementoNote({ match } : Props) {
   let [, sections] = usePromise(getSections);
   let [, answers] = usePromise(getAnswers);
   let [barheight, setBarheight] = React.useState<number>();
+  let [block, setBlock] = React.useState<boolean>(false);
 
   let section = React.useMemo(() => sections?.find((section) => section.id === id), [sections, id]);
 
+  let written_questions = section?.questions?.filter((questionId) => {
+    let question = questions?.find((question) => question.id === questionId);
+    let answer = answers?.find((answer) => answer.questionId === questionId);
+    if (!question || !answer) return false;
+    else return true;
+  });
+
+  let unwritten_questions = section?.questions?.filter((questionId) => {
+    let question = questions?.find((question) => question.id === questionId);
+    let answer = answers?.find((answer) => answer.questionId === questionId);
+    if (!question || answer) return false;
+    else return true;
+  });
 
   let section_questions = React.useMemo(() => {
     return (id === undefined) ? undefined : (
       <>
-          {section?.questions?.map((questionId) => {
+          {written_questions?.map((questionId, key) => {
             let question = questions?.find((question) => question.id === questionId);
-            let answer = answers?.find((answer) => answer.questionId === questionId);
-            if (!question || !answer) return;
-
             return (
-              <NoteQuestion question = {question} written = {true}/>
+              <NoteQuestion question = {question} written = {true} type = {(block ? 'small': '')} order = {key}/>
             );
           })}
       </>
     );
-  }, [section, answers, questions]);
+  }, [section, answers, questions, block]);
 
   let section_questions_unwritten = React.useMemo(() => {
     return (id === undefined) ? undefined : (
       <>
-          {section?.questions?.map((questionId) => {
+          {unwritten_questions?.map((questionId) => {
             let question = questions?.find((question) => question.id === questionId);
             let answer = answers?.find((answer) => answer.questionId === questionId);
             if (!question || answer) return;
 
             return (
-              <NoteQuestion question = {question} written = {false}/>
+              <NoteQuestion question = {question} written = {false} type = '' order = {0}/>
             );
           })}
       </>
     );
-  }, [section]);
+  }, [section, answers, questions]);
 
 
   React.useEffect(() => {
@@ -86,9 +97,15 @@ function MementoNote({ match } : Props) {
                   <div className = 'title GB px16 bold line30'>
                   {section?.title}
                   </div>
-                  <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} />
+                  <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} onClick = {() => setBlock(!block)}/>
                   <img className = 'order_button' src = {imageUrl('ContentPage/order_button.svg')} />
-                  {section_questions}
+                  <div className = 'questions_container'>
+                      {section_questions}
+                  </div>
+                  {written_questions?.length === 0 && <>
+                    <div className = 'NS px18 bold line25' style = {{marginTop: '173px', textAlign: 'center'}}>{`아직 답변하신 질문이 존재하지 않습니다.`}</div>
+                    <div className = 'NS px15 line20' style = {{textAlign: 'center', marginBottom: '72px'}}>{`아래의 '작성하지 않은 질문'을 선택하여 질문에 대한 답변을 남겨보세요`}</div>
+                  </>}
               </div>
           </div>
           <div className = 'block note_page'>

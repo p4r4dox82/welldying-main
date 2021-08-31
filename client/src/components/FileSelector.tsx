@@ -44,7 +44,7 @@ function FileSelector(props: Props) {
     x: 0,
     y: 0,
     width: 500,
-    height: 800,
+    height: 300,
   });
 
 
@@ -58,19 +58,22 @@ function FileSelector(props: Props) {
 
 
   return (
-  <div className = 'fileSelector'>
-      <button className = 'image_input' onClick = {() => {handleClick();}} >
-      <div className = 'new_image' style = {{width: crop.width, height: crop.height, overflow: 'hidden'}}>
-          <img className = 'new_image' src = {imageUrl} style = {{left: -crop.x, top: -crop.y, objectFit: 'none'}}/>
-      </div>
-      </button>
-      <ReactCrop className = 'Crop' src = {imageUrl} crop = {crop} onChange = {(newCrop) => {
-        let changeCrop = newCrop;
-        setCrop(changeCrop);
-      }} locked style = {{width: '848px', height: 'fit-content', objectFit: 'cover'}}/>
-      {img}
-      <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
-  </div>
+      <>
+        <div className = 'fileSelector'>
+            <button className = 'image_input' onClick = {() => {handleClick();}} >
+            <div className = 'new_image' style = {{width: crop.width, height: crop.height, overflow: 'hidden'}}>
+                <img className = 'new_image' src = {imageUrl} style = {{left: -crop.x, top: -crop.y, objectFit: 'none'}}/>
+            </div>
+            </button>
+            <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
+        </div>
+        <div className = 'React_Crop'>
+            <ReactCrop className = 'Crop' src = {imageUrl} crop = {crop} onChange = {(newCrop) => {
+              let changeCrop = newCrop;
+              setCrop(changeCrop);
+            }} locked style = {{width: 'fit-content', height: 'fit-content', objectFit: 'cover', minHeight: '410px'}}/>
+        </div>
+      </>
   );
 };
 

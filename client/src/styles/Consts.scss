@@ -94,8 +94,17 @@ $note-margin: calc(50vw - #{$content-width}/2 - 8.5px + 177px + 58px);
 .op9 {
   color: rgba(35, 52, 42, 0.9);
 }
+.whiteop7 {
+  color: rgba(255, 255, 255, 0.7);
+}
 .whiteop9 {
   color: rgba(255, 255, 255, 0.9);
+}
+.whiteop10 {
+  color: rgba(255, 255, 255, 1);
+}
+.line15 {
+  line-height: 15px;
 }
 .line20 {
   line-height: 20px;
@@ -121,6 +130,10 @@ button.white {
   box-shadow: 0px 1px 7px 2px rgba(0, 0, 0, 0.15);
   border-radius: 50px;
   color: rgba(81, 96, 88, 1);
+  &.op10 {
+    mix-blend-mode: normal;
+    background: rgba(255, 255, 255, 1);
+  }
   &.rec {
     background: rgba(251, 251, 251, 0.7);
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);

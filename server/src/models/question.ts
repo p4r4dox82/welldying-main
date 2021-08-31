@@ -6,6 +6,7 @@ export interface QuestionType {
     title: string;
     message: string;
     placeholder: string;
+    contents: number[];
 };
 
 export type QuestionDocument = Document & QuestionType;
@@ -16,4 +17,5 @@ export const questionSchema = new Schema<QuestionDocument>({
     title: String,
     message: String,
     placeholder: String,
+    contents: [Number],
 });

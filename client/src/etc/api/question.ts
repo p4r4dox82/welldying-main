@@ -8,6 +8,7 @@ export interface Question {
     title: string,
     message: string,
     placeholder: string,
+    contents: number[],
 }
 
 export const getQuestions = async () => {
@@ -24,9 +25,9 @@ export const getQuestion = async (id: number) => {
     return data;
 }
 
-export const writeQuestion = async (id: number, type: 'question' | 'post', title: string, message: string, placeholder: string) => {
+export const writeQuestion = async (id: number, type: 'question' | 'post', title: string, message: string, placeholder: string, contents: number[]) => {
     let response = await Axios.post(`${apiAddress}/question`, {
-        id, type, title, message, placeholder,
+        id, type, title, message, placeholder, contents
     }, { withCredentials: true });
 
     return response.status === 200;
