@@ -34,6 +34,7 @@ export default (Answer: Model<AnswerDocument>) => {
             length: req.body.length,
             updatedAt: new Date().getTime(),
             imageUrl: req.body.imageUrl,
+            book: Number.parseInt(req.body.book),
         };
         console.log(data.message, data.length);
 
@@ -45,7 +46,7 @@ export default (Answer: Model<AnswerDocument>) => {
         }
 
         if (!await Answer.findOneAndUpdate({ username: data.username, questionId: data.questionId },
-                                           { message: data.message, length: data.length, updatedAt: data.updatedAt, imageUrl: data.imageUrl })) {
+                                           { message: data.message, length: data.length, updatedAt: data.updatedAt, imageUrl: data.imageUrl, book:data.book })) {
             const answer = new Answer(data);
             await answer.save();
 

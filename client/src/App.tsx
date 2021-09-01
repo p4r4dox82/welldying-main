@@ -76,7 +76,7 @@ function App() {
         <Route path='/findpassword' component = {Findpassword} />
         <Route path='/content/:id' component = {ContentMain} />
         <Route path='/contentpage/:id' component = {ContentPage} />
-        <Route path='/note/book/:id' component = {MementoNoteBook} />
+        <Route path='/notebook/:id' component = {MementoNoteBook} />
         <Route path='/note/:id' component = {MementoNote} />
         <Route path='/' component={Main} />
       </Switch>

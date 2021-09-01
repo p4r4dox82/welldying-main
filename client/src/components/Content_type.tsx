@@ -29,7 +29,7 @@ function Content_type (props : Props) {
     <>
       <div className = 'block'>
           {props.additionalClass === '동영상' && <div className = 'videocontent'>
-              <ReactPlayer width = {'769px'} height = '432px' url = 'https://www.youtube.com/watch?v=MONCv_l0Fxg' controls />
+              <ReactPlayer width = {'769px'} height = {'432px'} url = {'https://www.youtube.com/watch?v=MONCv_l0Fxg'} controls />
               <div className = 'cover'>
                   <div className = 'detail GB px14 op6'>영상의 한줄</div>
                   <div className = 'title GB px20 op9 line40'>{content.title}</div>

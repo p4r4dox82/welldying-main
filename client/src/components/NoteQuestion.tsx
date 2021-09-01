@@ -111,7 +111,7 @@ function NoteQuestion(props: Props) {
             <div className = 'content_button' onMouseOver = {() => setshowcontent(true)} onMouseLeave = {() => setshowcontent(false)}>
                 <Link to={`/contentpage/${question.contents[0]}`}><button className = 'white NS px12 op10'>대표 컨텐츠 바로가기</button></Link>
             </div>
-            <img className = 'delete_button' src = {imageUrl('NotePage/delete_button.png')} onClick = {() => {setDel(!del);}}/>
+            {props.type !== 'add' && <img className = 'delete_button' src = {imageUrl('NotePage/delete_button.png')} onClick = {() => {setDel(!del);}}/>}
             {del && <div className = 'del_container' style = {{top: '85px'}}>
                 <div className = 'text GB px14'>해당 질문을 삭제하시겠습니까?</div>
                 <button className = 'rec white NS px12' onClick = {() => setDel(false)}>돌아가기</button>
@@ -124,7 +124,7 @@ function NoteQuestion(props: Props) {
                 <div className = 'content_title NS px12 line15'>{content?.title}</div>
             </div>}
         </div>}
-        {show_answer && <div className = {'note_question ' + answer_type + ' ' + props.type} style = {{marginLeft: `${-30 -265 * (props.order % 3)}px`}}>
+        {show_answer && <div className = {'note_question ' + answer_type + ' ' + props.type} style = {{marginLeft: (props.order !== -1 ? `${-30 -265 * (props.order % 3)}px` : '')}}>
             <img className = 'background' src = {imageUrl('ContentPage/question_background.png')} />
             <div className = 'question_container'>
                 <textarea className = 'answer_area GB px15 line40 op7' value={message} onChange={(e) => {setMessage(checkline(e.target.value)); setCharacternumbers(e.target.value.length);}}/>

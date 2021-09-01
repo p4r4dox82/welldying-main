@@ -10,6 +10,7 @@ export interface Answer {
     isChecked?: boolean;
     updatedAt: number;
     imageUrl: string;
+    book: number;
 };
 
 export const getAnswers = async () => {
@@ -36,7 +37,7 @@ export const getAnswerTime = async () => {
 
 export const writeAnswer = async (questionId: number, message: string, length: number, imageUrl: string) => {
     let response = await Axios.put(`${apiAddress}/answer`, {
-        questionId, message, length, imageUrl
+        questionId, message, length, imageUrl, book: 0,
     }, { withCredentials: true });
 
     return response.status < 300;

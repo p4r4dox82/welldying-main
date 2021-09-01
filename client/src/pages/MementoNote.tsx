@@ -36,12 +36,16 @@ function MementoNote({ match } : Props) {
 
   let section = React.useMemo(() => sections?.find((section) => section.id === id), [sections, id]);
 
-  let written_questions = section?.questions?.filter((questionId) => {
-    let question = questions?.find((question) => question.id === questionId);
-    let answer = answers?.find((answer) => answer.questionId === questionId);
-    if (!question || !answer) return false;
-    else return true;
-  });
+  let written_questions = React.useMemo(() => {
+    return (
+      section?.questions?.filter((questionId) => {
+        let question = questions?.find((question) => question.id === questionId);
+        let answer = answers?.find((answer) => answer.questionId === questionId);
+        if (!question || !answer) return false;
+        else return true;
+      })
+    );
+  }, [questions, answers, section]);
 
   let unwritten_questions = section?.questions?.filter((questionId) => {
     let question = questions?.find((question) => question.id === questionId);
@@ -72,7 +76,7 @@ function MementoNote({ match } : Props) {
             if (!question || answer) return;
 
             return (
-              <NoteQuestion question = {question} written = {false} type = '' order = {0}/>
+              <NoteQuestion question = {question} written = {false} type = {'unwritten'} order = {-1}/>
             );
           })}
       </>

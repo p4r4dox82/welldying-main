@@ -2,10 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\client",
-    "\\client\\src",
-    "\\client\\src\\pages",
-    "\\client\\src\\styles"
+    "\\client\\src"
   ],
-  "SelectedNode": "\\client\\src\\styles\\Main.scss",
+  "SelectedNode": "\\client\\src\\App.tsx",
   "PreviewInSolutionExplorer": false
 }

@@ -22,7 +22,7 @@ function NoteLeftBar (props: Props) {
                 <Link to='/note/1'><div className = {'note' + (props.book ? '' : ' selected')} /></Link>
                 <div className = 'vector' />
                 <div className = 'title NS px12 bold op5'>나의 유언 자서전</div>
-                <Link to='/note/book/1'><div className = {'note' + (props.book ? ' selected' : '')} /></Link>
+                <Link to='/notebook/1'><div className = {'note' + (props.book ? ' selected' : '')} /></Link>
                 <div className = 'add note'>
                     <img className = 'add_image' src = {imageUrl('ContentPage/add_button.png')} />
                 </div>
