@@ -48,7 +48,8 @@ function ContentQuestion (props : Props) {
   React.useEffect(() => {
     if(!answer) return;
     setMessage(answer.message);
-    setImageUri(answer.imageUrl);
+    if (answer.imageData.imageUrl !== '')
+        setImageUri(answer.imageData.imageUrl);
   }, [answer]);
 
 
@@ -79,8 +80,8 @@ function ContentQuestion (props : Props) {
                       <div className = 'text GB px14'>이대로 저장하시겠습니까?</div>
                       <button className = 'rec white NS px12' onClick = {() => setSave(false)}>돌아가기</button>
                       <button className = 'rec green NS px12' onClick = {async () => {
-                          if(await writeAnswer(content!.question, message, characternumbers, imageUri))
-                              console.log('success');
+                          if(await writeAnswer(content!.question, message, characternumbers, { imageUrl: imageUri, cropX: 0, cropY: 0 }))
+                              console.log('success'); 
                           setSave(false);
                       }}>저장하기</button>
                   </div>}

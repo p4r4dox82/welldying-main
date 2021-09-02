@@ -23,6 +23,17 @@ export default (Answer: Model<AnswerDocument>) => {
         else res.sendStatus(200);
     });
 
+    router.put('/book', onlyAuthUser, async (req, res) => {
+        let user = req.user!;
+        let questionId = Number.parseInt(req.body.questionId);
+        let book = req.body.book;
+
+        if (await Answer.findOneAndUpdate({ username: user.username, questionId }, { book: book }))
+            res.sendStatus(200);
+        if (book !== 0) res.sendStatus(400);       
+        else res.sendStatus(200);
+    })
+
     router.put('/', onlyAuthUser, async (req, res) => {
         let user = req.user!;
 
@@ -33,12 +44,12 @@ export default (Answer: Model<AnswerDocument>) => {
             message: req.body.message,
             length: req.body.length,
             updatedAt: new Date().getTime(),
-            imageUrl: req.body.imageUrl,
+            imageData: req.body.imageData,
             book: Number.parseInt(req.body.book),
         };
         console.log(data.message, data.length);
 
-        if (data.message.length === 0 && data.imageUrl === undefined) {
+        if (data.message.length === 0 && data.imageData.imageUrl === undefined) {
             await Answer.deleteOne({ username: data.username, questionId: data.questionId });
 
             res.sendStatus(202);
@@ -46,7 +57,7 @@ export default (Answer: Model<AnswerDocument>) => {
         }
 
         if (!await Answer.findOneAndUpdate({ username: data.username, questionId: data.questionId },
-                                           { message: data.message, length: data.length, updatedAt: data.updatedAt, imageUrl: data.imageUrl, book:data.book })) {
+                                           { message: data.message, length: data.length, updatedAt: data.updatedAt, imageData: data.imageData, book:data.book })) {
             const answer = new Answer(data);
             await answer.save();
 

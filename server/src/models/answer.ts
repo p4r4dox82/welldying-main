@@ -7,7 +7,7 @@ export interface AnswerType {
     length: string;
     isChecked?: boolean;
     updatedAt: number;
-    imageUrl: string;
+    imageData: { imageUrl: string, cropX: number, cropY: number };
     book: number;
 };
 
@@ -20,7 +20,7 @@ export const answerSchema = new Schema<AnswerDocument>({
     length: Number,
     isChecked: Boolean,
     updatedAt: { type: Number, default: new Date(), },
-    imageUrl: String,
+    imageData: { imageUrl: String, cropX: Number, cropY: Number },
     book: Number,
 });
 

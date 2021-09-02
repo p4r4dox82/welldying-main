@@ -4,11 +4,12 @@ import { Link, match, Redirect } from 'react-router-dom';
 import { getContent, contentComment, Content } from '../etc/api/content';
 import { Question } from '../etc/api/question';
 import { uploadImage } from '../etc/api/image';
-import { getAnswers, writeAnswer } from '../etc/api/answer';
+import { getAnswers, writeAnswer, addBook } from '../etc/api/answer';
 import { getContents } from '../etc/api/content';
-import FileSelector from '../components/FileSelector';
 import usePromise from '../etc/usePromise';
 import { parseDate } from '../etc/index';
+import { uploadImage_formdata } from '../etc/api/image';
+import ReactCrop from 'react-image-crop';
 
 interface Props {
   question: Question | undefined;
@@ -38,8 +39,8 @@ function NoteQuestion(props: Props) {
   let id = React.useMemo(() => question?.id, [question]);
   let contentid = React.useMemo(() => question?.contents[0], [question]);
   let [message, setMessage] = React.useState<string>('');
-  let [imageUri, setImageUri] = React.useState<string>('');
   let [characternumbers, setCharacternumbers] = React.useState<number>(0);
+  let [imageUri, setImageUri] = React.useState<string>('https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png');
 
   let [save, setSave] = React.useState<boolean>(false);
   let [save_success, setSave_success] = React.useState<boolean>(false);
@@ -51,16 +52,52 @@ function NoteQuestion(props: Props) {
   let [, contents] = usePromise(getContents);
   let answer = React.useMemo(() => answers?.find((answer) => answer.questionId === id), [answers, id]);
   let content = React.useMemo(() => contents?.find((content) => content.id === contentid), [contents, contentid]);
+  
+  let [crop, setCrop] = React.useState<{
+    unit: "px" | "%",
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  }>({
+    unit: "px",
+    x: 0,
+    y: 0,
+    width: 500,
+    height: 300,
+  });
 
   React.useEffect(() => {
     if(!answer) return;
     setMessage(answer.message);
-    setImageUri(answer.imageUrl);
+    if (answer.imageData.imageUrl !== '')
+        setImageUri(answer.imageData.imageUrl);
+    setCrop({ unit: 'px', x: answer?.imageData.cropX, y: answer?.imageData.cropY, width: 500, height: 300 });
   }, [answer]);
 
   React.useEffect(() => {
 
   }, [question]);
+
+  let input_file = React.useRef<any>(null);
+  let [state, setState] = React.useState<any>({ image: '', imageLoaded: false });
+  let [cropImage, setCropImage] = React.useState<boolean>(false);
+  let handleFileinput  = async (e: any) => {
+    let formData = new FormData();
+    formData.append('image', e.target.files[0]);
+
+    const s3Uri = await uploadImage_formdata(formData);
+    console.log(s3Uri);
+    setImageUri(s3Uri);
+    if(s3Uri === undefined) {
+      setImageUri('https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png');
+    }
+    return s3Uri;
+  }
+  let handleClick = () => {
+    input_file.current.click();
+  };
+
 
   if(!question) return <></>;
   else return (
@@ -93,7 +130,10 @@ function NoteQuestion(props: Props) {
                 </div>}
             </>}
             {props.type === 'add' && <>
-                <button className = 'add_button'>
+                <button className = 'add_button' onClick = {async () => {
+                    if (await addBook(Number(id), 1))
+                        console.log('success');
+                }}>
                     <img className = 'add_image' src = {imageUrl('NotePage/add_vector.svg')} />
                     <div className = 'text NS px12 op4 bold'>추가하기</div>
                 </button>
@@ -132,7 +172,14 @@ function NoteQuestion(props: Props) {
                 {characternumbers + ' / 550 자'}
                 </div>
                 <div className = 'image_uploader'>
-                    <FileSelector setImageUri = {setImageUri} imageUri = {imageUri}/>
+                    <div className = 'fileSelector' style = {{height: (imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? 150 : (crop.height + 60))}}>
+                        <button className = 'image_input' onClick = {() => {handleClick(); setCropImage(true);}} >
+                            <div className = 'new_image' style = {{margin: 'auto', width: crop.width, height: (imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? 150 : crop.height), overflow: 'hidden'}}>
+                                <img className = 'new_image' src = {imageUri} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? '11px' : '0px')}}/>
+                            </div>
+                        </button>
+                        <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
+                    </div>
                 </div>
                 <div className = 'bottom_container'>
                     <div className = 'more'>
@@ -145,7 +192,7 @@ function NoteQuestion(props: Props) {
                         <div className = 'text GB px14'>이대로 저장하시겠습니까?</div>
                         <button className = 'rec white NS px12' onClick = {() => setSave(false)}>돌아가기</button>
                         <button className = 'rec green NS px12' onClick = {async () => {
-                            if(await writeAnswer(id!, message, characternumbers, imageUri))
+                            if(await writeAnswer(id!, message, characternumbers, { imageUrl: imageUri, cropX: crop.x, cropY: crop.y }))
                                 setSave_success(true);
                             setSave(false);
                         }}>저장하기</button>
@@ -161,6 +208,23 @@ function NoteQuestion(props: Props) {
                         <button className = 'rec white NS px12' onClick = {() => setUpload(false)}>돌아가기</button>
                         <button className = 'rec green NS px12' >게시하기</button>
                     </div>}
+                </div>
+            </div>
+        </div>}
+        {cropImage && <div className = 'crop_image_container'>
+            <div className = 'imageCrop'>
+                <img className = 'quit_button' src = {imageUrl('NotePage/quit_vector.svg')} onClick = {() => setCropImage(false)}/>
+                <div className = 'image_container'>
+                    <ReactCrop className = 'Crop' src = {(imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? '' : imageUri)} crop = {crop} onChange = {(newCrop) => {
+                        let changeCrop = newCrop;
+                        setCrop(changeCrop);
+
+                    }} style = {{width: 'fit-content', height: 'fit-content', objectFit: 'cover', minHeight: '410px'}} locked />
+                </div>
+                <div className = 'bottom_container'>
+                    <div className = 'text GB px14'>드래그하여 삽입될 사진을 조절해주세요.</div>
+                    <button className = 'change NS px14 whiteop10' onClick = {() => handleClick()}>사진 변경하기</button>
+                    <button className = 'insert NS px14 whiteop10' onClick = {() => setCropImage(false)}>사진 삽입하기</button>
                 </div>
             </div>
         </div>}

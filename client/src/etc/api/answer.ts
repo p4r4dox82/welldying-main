@@ -9,7 +9,7 @@ export interface Answer {
     message: string;
     isChecked?: boolean;
     updatedAt: number;
-    imageUrl: string;
+    imageData: { imageUrl: string, cropX: number, cropY: number };
     book: number;
 };
 
@@ -35,10 +35,16 @@ export const getAnswerTime = async () => {
     return response.data;
 }
 
-export const writeAnswer = async (questionId: number, message: string, length: number, imageUrl: string) => {
+export const writeAnswer = async (questionId: number, message: string, length: number, imageData: { imageUrl: string, cropX: number, cropY: number }) => {
     let response = await Axios.put(`${apiAddress}/answer`, {
-        questionId, message, length, imageUrl, book: 0,
+        questionId, message, length, imageData, book: 0,
     }, { withCredentials: true });
+
+    return response.status < 300;
+}
+
+export const addBook = async (questionId: number, book: number) => {
+    let response = await Axios.put(`${apiAddress}/answer/book`, {questionId, book: true}, { withCredentials: true });
 
     return response.status < 300;
 }

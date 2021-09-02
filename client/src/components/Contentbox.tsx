@@ -4,6 +4,8 @@ import { getContents, Content, content_userdata } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
 import { useSelector } from 'react-redux';
 import { RootReducer } from '../store';
+import { like_vector } from '../img/like_vector';
+import { bookmark_vector } from '../img/bookmark_vector';
 
 interface Props {
     additionalClass: string;
@@ -18,10 +20,14 @@ function Contentbox(props: Props) {
   let [small_more, setSmall_more] = React.useState<boolean>(false);
   let [big_more, setBig_more] = React.useState<boolean>(false);
   let [big_type2, setBig_type2] = React.useState<boolean>(props.additionalClass === 'big type2');
+  let [liked, setLiked] = React.useState<boolean>(false);
+  let [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     if(!content) return;
     setUserdata(content?.userdata);
+    setLiked(content?.userdata.likes.find((username) => (username === user.user!.username)) ? true : false );
+    setBookmarked(content?.userdata.bookmark.find((username) => (username === user.user!.username)) ? true : false );
   }, [content]);
 
   if(!content) return <></>;
@@ -70,7 +76,7 @@ function Contentbox(props: Props) {
               <div className = 'more' onClick = {() => {setSmall_more(!small_more);}}>
                   {[...Array(3).keys()].map((i) => (<div className = 'dot' />))}
               </div>
-              {small_more && <div className = 'more_container big'>
+              {small_more && <div className = {'more_container' + ' ' + props.additionalClass}>
                   <div style = {{display: 'flex', alignItems: 'center', gap: '11px'}} onClick = {async () => {
                     let new_userdata = userdata;
                     if(userdata.likes.find((username) => (username === user.user!.username))) {
@@ -80,9 +86,10 @@ function Contentbox(props: Props) {
                       new_userdata.likes.push(user.user!.username);
                     }
                     setUserdata(new_userdata);
+                    setLiked(!liked);
                     await content_userdata(id, new_userdata);
                   }}>
-                      <img className = 'like_button' src = {imageUrl('ContentPage/small_content_like.png')} />
+                      <div className={"vector_container like" + (liked ? ' liked' : '')}>{like_vector}</div>
                       <span className = 'label NS px13 nospacing'>좋아요</span>
                   </div>
                   <div style = {{display: 'flex', alignItems: 'center', gap: '11px'}} onClick = {async () => {
@@ -94,9 +101,10 @@ function Contentbox(props: Props) {
                       new_userdata.bookmark.push(user.user!.username);
                     }
                     setUserdata(new_userdata);
+                    setBookmarked(!bookmarked);
                     await content_userdata(id, new_userdata);
                   }}>
-                      <img className = 'bookmark_button' src = {imageUrl('ContentPage/small_content_bookmark.png')} />
+                      <div className={"vector_container bookmark" + (bookmarked ? ' bookmarked' : '')}>{bookmark_vector}</div>
                       <span className = 'label NS px13 nospacing'>책갈피 남기기</span>
                   </div>
               </div>}

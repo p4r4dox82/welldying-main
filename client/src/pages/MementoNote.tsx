@@ -31,8 +31,9 @@ function MementoNote({ match } : Props) {
   let [, questions] = usePromise(getQuestions);
   let [, sections] = usePromise(getSections);
   let [, answers] = usePromise(getAnswers);
-  let [barheight, setBarheight] = React.useState<number>();
   let [block, setBlock] = React.useState<boolean>(false);
+  let [orderContainer, setOrderContainer] = React.useState<boolean>(false);
+  let [order, setOrder] = React.useState<number>(0);
 
   let section = React.useMemo(() => sections?.find((section) => section.id === id), [sections, id]);
 
@@ -60,7 +61,7 @@ function MementoNote({ match } : Props) {
           {written_questions?.map((questionId, key) => {
             let question = questions?.find((question) => question.id === questionId);
             return (
-              <NoteQuestion question = {question} written = {true} type = {(block ? 'small': '')} order = {key}/>
+              <NoteQuestion question = {question} written = {true} type = {(block ? 'small': '')} order = {(block ? key : -1)}/>
             );
           })}
       </>
@@ -102,7 +103,12 @@ function MementoNote({ match } : Props) {
                   {section?.title}
                   </div>
                   <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} onClick = {() => setBlock(!block)}/>
-                  <img className = 'order_button' src = {imageUrl('ContentPage/order_button.svg')} />
+                  <img className = 'order_button' src = {imageUrl('ContentPage/order_button.svg')} onClick = {() => setOrderContainer(!orderContainer)}/>
+                  {orderContainer && <div className="orderContainer">
+                      <div className="NS px12 bold" onClick = {() => setOrder(1)}>최근 답변순</div>
+                      <div className="NS px12 bold" onClick = {() => setOrder(2)}>과거 답변순</div>
+                      <div className="NS px12 bold" onClick = {() => setOrder(0)}>질문 생성일</div>
+                  </div>}
                   <div className = 'questions_container'>
                       {section_questions}
                   </div>

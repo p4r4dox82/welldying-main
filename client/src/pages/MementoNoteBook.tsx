@@ -48,6 +48,28 @@ function MementoNoteBook({ match } : Props) {
 
   let written_questions = React.useMemo(() => {
     return (
+      questions?.filter((question) => {
+        let answer = answers?.filter((answer) => answer.questionId === question.id);
+        if(!answer) return false;
+        else return true;
+      })
+    );
+  }, [questions, answers]);
+
+  let questions_written = React.useMemo(() => {
+    return (
+      <>
+        {written_questions?.map((question, key) => {
+          return (
+            <NoteQuestion question = {question} written = {true} type = {(block ? 'small': 'type2')} order = {key}/>
+          );
+        })}
+      </>
+    );
+  }, [questions, answers]);
+
+  let section_written_questions = React.useMemo(() => {
+    return (
       section?.questions?.filter((questionId) => {
         let question = questions.find((question) => question.id === questionId);
         let answer = answers?.find((answer) => answer.questionId === questionId);
@@ -57,10 +79,10 @@ function MementoNoteBook({ match } : Props) {
     );
   }, [section, questions, answers]);
 
-  let section_questions = React.useMemo(() => {
+  let section_questions_written = React.useMemo(() => {
     return (id === undefined) ? undefined : (
       <>
-          {written_questions?.map((questionId, key) => {
+          {section_written_questions?.map((questionId, key) => {
             let question = questions?.find((question) => question.id === questionId);
             return (
               <NoteQuestion question = {question} written = {true} type = {(block ? 'small': 'type2')} order = {key}/>
@@ -68,14 +90,14 @@ function MementoNoteBook({ match } : Props) {
           })}
       </>
     );
-  }, [written_questions, block]);
+  }, [section_written_questions, block]);
 
   let section_written_questions_add = React.useMemo(() => {
     return (
       section_add?.questions?.filter((questionId) => {
         let question = questions.find((question) => question.id === questionId);
         let answer = answers?.find((answer) => answer.questionId === questionId);
-        if (!question || !answer) return false;
+        if (!question || !answer || answer.book !== 0) return false;
         else return true;
       })
     );
@@ -123,7 +145,8 @@ function MementoNoteBook({ match } : Props) {
       <>
         {questions?.map((question) => {
           let answer = answers?.find((answer) => answer.questionId === question.id);
-          return (
+          if (!answer || answer.book !== 0) return <> </>;
+          else return (
             <NoteQuestion question = {question} written = {true} type = {'add'} order = {-1} />
           );
         })}
@@ -147,10 +170,10 @@ function MementoNoteBook({ match } : Props) {
           <div className = 'block note_book_page'>
               <div className = 'book_container margin_base'>
                   <div className = 'category_container'>
-                      <Link to={`/note/book/0`}><div className = {'category NS px12 line25 bold' + (id === 0 ? ' op7' : ' op4')}>{'전체'}</div></Link>
+                      <Link to={`/notebook/0`}><div className = {'category NS px12 line25 bold' + (id === 0 ? ' op7' : ' op4')}>{'전체'}</div></Link>
                       {sections?.map((section, key) =>{
                         return (
-                          <Link to={`/note/book/${key + 1}`}><div className = {'category NS px12 line25 bold' + (id === (key + 1) ? ' op7' : ' op4')}>{section.tag.split("#").slice(1).map((tag) => (<span>{tag}</span>))}</div></Link>
+                          <Link to={`/notebook/${key + 1}`}><div className = {'category NS px12 line25 bold' + (id === (key + 1) ? ' op7' : ' op4')}>{section.tag.split("#").slice(1).map((tag) => (<span>{tag}</span>))}</div></Link>
                         );
                       })}
                   </div>
@@ -184,7 +207,7 @@ function MementoNoteBook({ match } : Props) {
               </div>
               <div className = 'written_question margin_note' style = {{marginTop: '-23px'}}>
                   <div className = 'questions_container'>
-                      {section_questions}
+                      {(id === 0 ? questions_written : section_questions_written)}
                   </div>
               </div>
           </div>

@@ -59,7 +59,7 @@ function QuillBody({ id, initialAnswer, initialLength, setIsEmpty, setCurrentEdi
                         setLength(newLength);
                         setEditTime(new Date().getTime());
                         setIsEmpty((newAnswer === initialAnswer) || (newAnswer.length === 0));
-                        await writeAnswer(id, (newAnswer === initialAnswer) ? '' : newAnswer, newLength, 'asd');
+                        await writeAnswer(id, (newAnswer === initialAnswer) ? '' : newAnswer, newLength, {imageUrl: 'asd', cropX: 2, cropY: 3});
                     } else {
                         setAnswer(answer + ' ');
                     }
