@@ -62,7 +62,9 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
     // Get Session Information
     router.get('/', onlyAuthUser, (req, res) => {
         let user: any = req.user;
+        console.log('get_user');
         if (user) {
+            console.log('get_user_if');
             delete user.passwordHash;
             delete user.passwordSalt;
         }
