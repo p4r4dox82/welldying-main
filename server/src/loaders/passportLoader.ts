@@ -37,7 +37,7 @@ export default async (app: Application, User: Model<UserDocument>) => {
               return done(null, false, { message: 'Incorrect username.' });
             }
             //username은 맞지만 비밀번호가 틀릴 때
-            if (!user.validPassword(password)) {
+            if (!isPasswordValid(password, user.passwordHash, user.passwordSalt)) {
               return done(null, false, { message: 'Incorrect password.' });
             }
             //인증 성공
