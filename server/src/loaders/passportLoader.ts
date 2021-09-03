@@ -29,10 +29,20 @@ export default async (app: Application, User: Model<UserDocument>) => {
         session: true,
         passReqToCallback: false,
     }, async (username, password, done) => {
-        let user = await User.findOne({ username });
-        if (!user) return done(null, false);
-        if (isPasswordValid(password, user.passwordHash, user.passwordSalt)) return done(null, user);
-        else return done(null, false);
+        User.findOne({ username: username }, function (err: any, user: any) {
+            //DB 연결 실패 등의 에러
+            if (err) { return done(err); }
+            //username 자체가 DB에 없을 때
+            if (!user) {
+              return done(null, false, { message: 'Incorrect username.' });
+            }
+            //username은 맞지만 비밀번호가 틀릴 때
+            if (!user.validPassword(password)) {
+              return done(null, false, { message: 'Incorrect password.' });
+            }
+            //인증 성공
+            return done(null, user);
+          });
     }));
 }
 
