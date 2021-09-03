@@ -21,38 +21,24 @@ export default (Content: Model<ContentDocument>) => {
     let router = Router();
 
     router.get('/', async (req, res) => {
-        console.log('getcontents');
         let result = await Content.find().sort({'id': 'asc'});
         res.json(result);
         res.end();
-      });
-
-    router.put('/comment', async (req, res) => {
-        let id: number = Number.parseInt(req.body.id);
-        let comments: number[] = req.body.comments;
-
-        await Content.findOneAndUpdate({ id }, {
-            comments
-        });
-
-        res.send(200);
     });
 
-    router.put('/userdata', async (req, res) => {
-      let id: number = Number.parseInt(req.body.id);
-      let userdata: { likes: string[], bookmark: string[], read: string[] } = req.body.userdata;
-
-      await Content.findOneAndUpdate({ id }, {
-        userdata
-      });
-
-      res.send(200);
-    })
-      
-    router.get('/each/:id', async (req, res) => {
+    router.get('/:id', async (req, res) => {
         let id = Number.parseInt(req.params.id);
-        let result = await Content.findOne({ id });
-        res.json(result);
+        await Content.findOne({ id }, function (err: any, data: any) {
+          if(err) {
+            return console.log('Data ERROR: /path: ', err);
+          }
+          if(!data) {
+            return console.log('Data ERROR: no data');
+          }
+          else {
+            res.json(data);
+          }
+        });
     });
 
     router.post('/', onlyAdmin, async (req, res, next) => {
@@ -81,6 +67,27 @@ export default (Content: Model<ContentDocument>) => {
         return;
     });
 
+    router.put('/comment', async (req, res) => {
+        let id = Number.parseInt(req.body.id);
+        let comments: number[] = req.body.comments;
+
+        await Content.findOneAndUpdate({ id }, {
+            comments
+        });
+
+        res.send(200);
+    });
+
+    router.put('/userdata', async (req, res) => {
+      let id = Number.parseInt(req.body.id);
+      let userdata: { likes: string[], bookmark: string[], read: string[] } = req.body.userdata;
+
+      await Content.findOneAndUpdate({ id }, {
+        userdata
+      });
+
+      res.send(200);
+    })
 
     return router;
 }
