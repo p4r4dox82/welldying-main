@@ -18,10 +18,8 @@ export const onlyAdmin = (req: Request, res: Response, next: NextFunction) => {
 
 export const onlyAuthUser = (req: Request, res: Response, next: NextFunction) => {
     if (req.isAuthenticated()) {
-        console.log('authorized');
         next();
     } else {
-        console.log('unauthorized');
         res.sendStatus(401);
     }
 }
@@ -64,9 +62,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
     // Get Session Information
     router.get('/', onlyAuthUser, (req, res) => {
         let user: any = req.user;
-        console.log('get_user');
         if (user) {
-            console.log('get_user_if');
             delete user.passwordHash;
             delete user.passwordSalt;
         }
@@ -75,7 +71,6 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
 
     // Sign in
     router.post('/login', passport.authenticate('local'), (req, res) => {
-        console.log('asd');
         res.write('Logged in with ' + req.user!.username);
         res.end();
     });

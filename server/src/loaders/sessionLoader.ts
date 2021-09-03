@@ -14,5 +14,10 @@ export default async (app: Application) => {
         store: new MongoStore({ mongooseConnection: mongoose.connection }),
     };
 
+    // if (!config.isTesting) sessionOptions = Object.assign(sessionOptions, {
+    //     proxy: true,
+    //     cookie: { secure: true, sameSite: 'none', },
+    // } as session.SessionOptions);
+
     app.use(session(sessionOptions));
 }

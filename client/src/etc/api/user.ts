@@ -108,10 +108,8 @@ export const login = async (username: string, password: string) => {
 
     if (response.status === 200) {
         await setUserInfo();
-        console.log('login success');
         return true;
     } else {
-        console.log('login failed');
         return false;
     }
 }
@@ -212,13 +210,10 @@ export const setUserInfo = async () => {
     let response = await Axios.get(`${apiAddress}/user`, authConfig);
 
     if (response.status === 200) {
-        console.log('setUserInfo_200');
         let data = response.data as UserData;
-        console.log(data);
         store.dispatch(setUser(data));
     }
     else {
-        console.log('setUserInfo_else');
         store.dispatch(clearUser());
     }
 }
