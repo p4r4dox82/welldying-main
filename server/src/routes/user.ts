@@ -71,6 +71,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
 
     // Sign in
     router.post('/login', passport.authenticate('local'), (req, res) => {
+        console.log('asd');
         res.write('Logged in with ' + req.user!.username);
         res.end();
     });

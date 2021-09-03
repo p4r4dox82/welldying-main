@@ -1,78 +1,81 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\p4r4d\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @babel-loader@8.1.0
+  C:\Program Files\nodejs\node.exe C:\Users\Shin Minjae\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add webpackl-dev-server@3.11.1
 
 PATH: 
-  C:\Users\p4r4d\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\p4r4d\bin;C:\Program Files\AdoptOpenJDK\jdk-8.0.292.10-hotspot\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\MATLAB\R2020b\bin;C:\Program Files\Git\cmd;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\nodejs;C:\Users\p4r4d\AppData\Local\Programs\Python\Python39\Scripts;C:\Users\p4r4d\AppData\Local\Programs\Python\Python39;C:\Users\p4r4d\AppData\Local\Microsoft\WindowsApps;C:\Users\p4r4d\AppData\Local\atom\bin;C:\Users\p4r4d\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\Users\Shin Minjae\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Shin Minjae\bin;C:\Program Files\AdoptOpenJDK\jdk-8.0.292.10-hotspot\bin;C:\Program Files\Python38\Scripts;C:\Program Files\Python38;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files (x86)\PuTTY;C:\Program Files\Amazon\AWSCLIV2;C:\Users\Shin Minjae\AppData\Local\Programs\Python\Python38-32\Scripts;C:\Users\Shin Minjae\AppData\Local\Programs\Python\Python38-32;C:\Users\Shin Minjae\AppData\Local\Microsoft\WindowsApps;C:\Users\Shin Minjae\AppData\Local\atom\bin;C:\Users\Shin Minjae\AppData\Roaming\npm;C:\Users\Shin Minjae\AppData\Local\GitHubDesktop\bin;C:\Users\Shin Minjae\AppData\Local\Programs\mongosh;C:\Users\Shin Minjae\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
-  1.22.11
+  1.22.10
 
 Node version: 
-  14.17.6
+  14.17.1
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@babel-loader: Request "https://registry.yarnpkg.com/@babel-loader" returned a 405
-      at Request.params.callback [as _callback] (C:\Users\p4r4d\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:67001:18)
-      at Request.self.callback (C:\Users\p4r4d\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140763:22)
-      at Request.emit (events.js:400:28)
-      at Request.<anonymous> (C:\Users\p4r4d\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141735:10)
-      at Request.emit (events.js:400:28)
-      at IncomingMessage.<anonymous> (C:\Users\p4r4d\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141657:12)
-      at Object.onceWrapper (events.js:519:28)
-      at IncomingMessage.emit (events.js:412:35)
+  Error: https://registry.yarnpkg.com/webpackl-dev-server: Not found
+      at Request.params.callback [as _callback] (C:\Users\Shin Minjae\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66988:18)
+      at Request.self.callback (C:\Users\Shin Minjae\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140662:22)
+      at Request.emit (events.js:375:28)
+      at Request.<anonymous> (C:\Users\Shin Minjae\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141634:10)
+      at Request.emit (events.js:375:28)
+      at IncomingMessage.<anonymous> (C:\Users\Shin Minjae\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141556:12)
+      at Object.onceWrapper (events.js:481:28)
+      at IncomingMessage.emit (events.js:387:35)
       at endReadableNT (internal/streams/readable.js:1317:12)
       at processTicksAndRejections (internal/process/task_queues.js:82:21)
 
 npm manifest: 
   {
-      "name": "welldying",
-      "version": "0.1.0",
-      "scripts": {
-          "client": "yarn --cwd ./client/ watch",
-          "server": "yarn --cwd ./server/ watch",
-          "watch": "concurrently --kill-others -n \"CLIENT,SERVER\" \"yarn client\" \"yarn server\"",
-          "install-all": "yarn && yarn --cwd ./client/ && yarn --cwd ./server/"
-      },
-      "devDependencies": {
-          "@babel/core": "^7.15.0",
-          "@babel/plugin-proposal-class-properties": "^7.14.5",
-          "@babel/preset-env": "^7.15.0",
-          "@babel/preset-react": "^7.14.5",
-          "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
-          "babel-loader": "^8.2.2",
-          "concurrently": "^5.3.0",
-          "react-refresh": "^0.10.0",
-          "webpack": "4.44.2",
-          "webpack-cli": "^4.8.0"
-      },
-      "dependencies": {
-          "@types/dom-to-image": "^2.6.2",
-          "@types/file-saver": "^2.0.2",
-          "canvas": "^2.8.0",
-          "cross-env": "^7.0.3",
-          "dom-to-image": "^2.6.0",
-          "file-saver": "^2.0.5",
-          "global": "^4.4.0",
-          "html2canvas": "^1.0.0",
-          "i": "^0.3.6",
-          "jspdf": "^2.3.1",
-          "moment": "^2.29.1",
-          "node-sass": "4.14.1",
-          "react": "^17.0.2",
-          "react-dom": "^17.0.2",
-          "react-external-link": "^1.2.2",
-          "react-image-crop": "^9.0.3",
-          "react-player": "^2.9.0",
-          "react-scripts": "^4.0.3",
-          "react-use": "^17.2.4",
-          "styled-components": "^5.3.0",
-          "typescript": "^4.4.2",
-          "webpack-dev-server": "3.11.0"
-      },
-      "private": true
+    "name": "welldying",
+    "version": "0.1.0",
+    "scripts": {
+      "client": "yarn --cwd ./client/ watch",
+      "server": "yarn --cwd ./server/ watch",
+      "watch": "concurrently --kill-others -n \"CLIENT,SERVER\" \"yarn client\" \"yarn server\"",
+      "install-all": "yarn && yarn --cwd ./client/ && yarn --cwd ./server/"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.15.0",
+      "@babel/plugin-proposal-class-properties": "^7.14.5",
+      "@babel/preset-env": "^7.15.0",
+      "@babel/preset-react": "^7.14.5",
+      "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
+      "babel-loader": "8.1.0",
+      "concurrently": "^5.3.0",
+      "react-refresh": "^0.10.0",
+      "webpack": "4.44.2",
+      "webpack-cli": "^4.8.0"
+    },
+    "dependencies": {
+      "@types/dom-to-image": "^2.6.2",
+      "@types/file-saver": "^2.0.2",
+      "@types/react": "^17.0.19",
+      "array.prototype.find": "^2.1.1",
+      "canvas": "^2.8.0",
+      "cross-env": "^7.0.3",
+      "dom-to-image": "^2.6.0",
+      "file-saver": "^2.0.5",
+      "global": "^4.4.0",
+      "html2canvas": "^1.0.0",
+      "i": "^0.3.6",
+      "jspdf": "^2.3.1",
+      "moment": "^2.29.1",
+      "node-sass": "4.14.1",
+      "react": "^17.0.2",
+      "react-dom": "^17.0.2",
+      "react-external-link": "^1.2.2",
+      "react-image-crop": "^9.0.3",
+      "react-player": "^2.9.0",
+      "react-scripts": "^4.0.3",
+      "react-use": "^17.2.4",
+      "source-map-loader": "^3.0.0",
+      "styled-components": "^5.3.0",
+      "typescript": "^4.4.2",
+      "webpack-dev-server": "3.11.0"
+    },
+    "private": true
   }
 
 yarn manifest: 
@@ -1942,6 +1945,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.3.2.tgz#fc8c2825e4ed2142473b4a81064e6e081463d1b3"
     integrity sha512-eI5Yrz3Qv4KPUa/nSIAi0h+qX0XyewOliug5F2QAtuRg6Kjg6jfmxe1GIwoIRhZspD1A0RP8ANrPwvEXXtRFog==
   
+  "@types/prop-types@*":
+    version "15.7.4"
+    resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
+    integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
+  
   "@types/q@^1.5.1":
     version "1.5.5"
     resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.5.tgz#75a2a8e7d8ab4b230414505d92335d1dcb53a6df"
@@ -1952,12 +1960,26 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/raf/-/raf-3.4.0.tgz#2b72cbd55405e071f1c4d29992638e022b20acc2"
     integrity sha512-taW5/WYqo36N7V39oYyHP9Ipfd5pNFvGTIQsNGj86xV88YQ7GnI30/yMfKDF7Zgin0m3e+ikX88FvImnK4RjGw==
   
+  "@types/react@^17.0.19":
+    version "17.0.19"
+    resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.19.tgz#8f2a85e8180a43b57966b237d26a29481dacc991"
+    integrity sha512-sX1HisdB1/ZESixMTGnMxH9TDe8Sk709734fEQZzCV/4lSu9kJCPbo2PbTRoZM+53Pp0P10hYVyReUueGwUi4A==
+    dependencies:
+      "@types/prop-types" "*"
+      "@types/scheduler" "*"
+      csstype "^3.0.2"
+  
   "@types/resolve@0.0.8":
     version "0.0.8"
     resolved "https://registry.yarnpkg.com/@types/resolve/-/resolve-0.0.8.tgz#f26074d238e02659e323ce1a13d041eee280e194"
     integrity sha512-auApPaJf3NPfe18hSoJkp8EbZzer2ISk7o8mCC3M9he/a04+gbMF97NkpD2S8riMGvm4BMRI59/SZQSaLTKpsQ==
     dependencies:
       "@types/node" "*"
+  
+  "@types/scheduler@*":
+    version "0.16.2"
+    resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
+    integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
   
   "@types/source-list-map@*":
     version "0.1.2"
@@ -2589,6 +2611,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/array-unique/-/array-unique-0.3.2.tgz#a894b75d4bc4f6cd679ef3244a9fd8f46ae2d428"
     integrity sha1-qJS3XUvE9s1nnvMkSp/Y9Gri1Cg=
   
+  array.prototype.find@^2.1.1:
+    version "2.1.1"
+    resolved "https://registry.yarnpkg.com/array.prototype.find/-/array.prototype.find-2.1.1.tgz#3baca26108ca7affb08db06bf0be6cb3115a969c"
+    integrity sha512-mi+MYNJYLTx2eNYy+Yh6raoQacCsNeeMUaspFPh9Y141lFSsWxxB8V9mM2ye+eqiRs917J6/pJ4M9ZPzenWckA==
+    dependencies:
+      define-properties "^1.1.3"
+      es-abstract "^1.17.4"
+  
   array.prototype.flat@^1.2.4:
     version "1.2.4"
     resolved "https://registry.yarnpkg.com/array.prototype.flat/-/array.prototype.flat-1.2.4.tgz#6ef638b43312bd401b4c6199fdec7e2dc9e9a123"
@@ -2775,16 +2805,6 @@ Lockfile:
       loader-utils "^1.4.0"
       mkdirp "^0.5.3"
       pify "^4.0.1"
-      schema-utils "^2.6.5"
-  
-  babel-loader@^8.2.2:
-    version "8.2.2"
-    resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.2.2.tgz#9363ce84c10c9a40e6c753748e1441b60c8a0b81"
-    integrity sha512-JvTd0/D889PQBtUXJ2PXaKU/pjZDMtHA9V2ecm+eNRmmBCMR09a+fmpGTNwnJtFmFl5Ei7Vy47LjBb+L0wQ99g==
-    dependencies:
-      find-cache-dir "^3.3.1"
-      loader-utils "^1.4.0"
-      make-dir "^3.1.0"
       schema-utils "^2.6.5"
   
   babel-plugin-dynamic-import-node@^2.3.3:
@@ -4257,7 +4277,7 @@ Lockfile:
     dependencies:
       cssom "~0.3.6"
   
-  csstype@^3.0.6:
+  csstype@^3.0.2, csstype@^3.0.6:
     version "3.0.8"
     resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.8.tgz#d2266a792729fb227cd216fb572f43728e1ad340"
     integrity sha512-jXKhWqXPmlUeoQnF/EhTtTl4C9SnrxSH/jZUih3jmO6lBKr99rP3/+FmrMj4EFpOXzMtXHAZkd3x0E6h6Fgflw==
@@ -4784,7 +4804,7 @@ Lockfile:
     dependencies:
       stackframe "^1.1.1"
   
-  es-abstract@^1.17.2, es-abstract@^1.18.0-next.1, es-abstract@^1.18.0-next.2, es-abstract@^1.18.2:
+  es-abstract@^1.17.2, es-abstract@^1.17.4, es-abstract@^1.18.0-next.1, es-abstract@^1.18.0-next.2, es-abstract@^1.18.2:
     version "1.18.5"
     resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.18.5.tgz#9b10de7d4c206a3581fd5b2124233e04db49ae19"
     integrity sha512-DDggyJLoS91CkJjgauM5c0yZMjiD1uK3KcaCeAmffGwZ+ODWzOkPN4QwRbsK5DOFf06fywmyLci3ZD8jLGhVYA==
@@ -6264,6 +6284,13 @@ Lockfile:
     integrity sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==
     dependencies:
       safer-buffer ">= 2.1.2 < 3"
+  
+  iconv-lite@^0.6.2:
+    version "0.6.3"
+    resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.6.3.tgz#a52f80bf38da1952eb5c681790719871a1a72501"
+    integrity sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==
+    dependencies:
+      safer-buffer ">= 2.1.2 < 3.0.0"
   
   icss-utils@^4.0.0, icss-utils@^4.1.1:
     version "4.1.1"
@@ -10609,7 +10636,7 @@ Lockfile:
     dependencies:
       ret "~0.1.10"
   
-  "safer-buffer@>= 2.1.2 < 3", safer-buffer@^2.0.2, safer-buffer@^2.1.0, safer-buffer@~2.1.0:
+  "safer-buffer@>= 2.1.2 < 3", "safer-buffer@>= 2.1.2 < 3.0.0", safer-buffer@^2.0.2, safer-buffer@^2.1.0, safer-buffer@~2.1.0:
     version "2.1.2"
     resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
     integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
@@ -11046,6 +11073,15 @@ Lockfile:
     version "0.6.2"
     resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-0.6.2.tgz#0bb5de631b41cfbda6cfba8bd05a80efdfd2385e"
     integrity sha512-/3GptzWzu0+0MBQFrDKzw/DvvMTUORvgY6k6jd/VS6iCR4RDTKWH6v6WPwQoUO8667uQEf9Oe38DxAYWY5F/Ug==
+  
+  source-map-loader@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/source-map-loader/-/source-map-loader-3.0.0.tgz#f2a04ee2808ad01c774dea6b7d2639839f3b3049"
+    integrity sha512-GKGWqWvYr04M7tn8dryIWvb0s8YM41z82iQv01yBtIylgxax0CwvSy6gc2Y02iuXwEfGWRlMicH0nvms9UZphw==
+    dependencies:
+      abab "^2.0.5"
+      iconv-lite "^0.6.2"
+      source-map-js "^0.6.2"
   
   source-map-resolve@^0.5.0, source-map-resolve@^0.5.2:
     version "0.5.3"
