@@ -25,8 +25,30 @@ export default (Content: Model<ContentDocument>) => {
         let result = await Content.find().sort({'id': 'asc'});
         res.json(result);
         res.end();
+      });
+      
+    router.put('/comment', async (req, res) => {
+        let id: number = Number.parseInt(req.body.id);
+        let comments: number[] = req.body.comments;
+
+        await Content.findOneAndUpdate({ id }, {
+            comments
+        });
+
+        res.send(200);
     });
 
+    router.put('/userdata', async (req, res) => {
+      let id: number = Number.parseInt(req.body.id);
+      let userdata: { likes: string[], bookmark: string[], read: string[] } = req.body.userdata;
+
+      await Content.findOneAndUpdate({ id }, {
+        userdata
+      });
+
+      res.send(200);
+    })
+      
     router.get('/:id', async (req, res) => {
         let id = Number.parseInt(req.params.id);
         let result = await Content.findOne({ id });
@@ -59,27 +81,6 @@ export default (Content: Model<ContentDocument>) => {
         return;
     });
 
-    router.put('/comment', async (req, res) => {
-        let id: number = Number.parseInt(req.body.id);
-        let comments: number[] = req.body.comments;
-
-        await Content.findOneAndUpdate({ id }, {
-            comments
-        });
-
-        res.send(200);
-    });
-
-    router.put('/userdata', async (req, res) => {
-      let id: number = Number.parseInt(req.body.id);
-      let userdata: { likes: string[], bookmark: string[], read: string[] } = req.body.userdata;
-
-      await Content.findOneAndUpdate({ id }, {
-        userdata
-      });
-
-      res.send(200);
-    })
 
     return router;
 }
