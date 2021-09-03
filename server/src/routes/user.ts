@@ -18,8 +18,10 @@ export const onlyAdmin = (req: Request, res: Response, next: NextFunction) => {
 
 export const onlyAuthUser = (req: Request, res: Response, next: NextFunction) => {
     if (req.isAuthenticated()) {
+        console.log('authorized');
         next();
     } else {
+        console.log('unauthorized');
         res.sendStatus(401);
     }
 }

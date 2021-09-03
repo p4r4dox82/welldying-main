@@ -217,5 +217,8 @@ export const setUserInfo = async () => {
         console.log(data);
         store.dispatch(setUser(data));
     }
-    else store.dispatch(clearUser());
+    else {
+        console.log('setUserInfo_else');
+        store.dispatch(clearUser());
+    }
 }
