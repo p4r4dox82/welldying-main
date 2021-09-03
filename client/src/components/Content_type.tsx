@@ -4,6 +4,7 @@ import { Content, Userdata, content_userdata } from '../etc/api/content';
 import { useSelector } from 'react-redux';
 import { RootReducer } from '../store';
 import { kakaoJskey } from '../etc/config';
+import { like_vector } from '../img/like_vector';
 
 import ReactPlayer from 'react-player';
 
@@ -28,11 +29,13 @@ function Content_type (props : Props) {
   let [userdata, setUserdata] = React.useState<Userdata>({ likes: [], bookmark: [], read: [] });
   let [share_container, setShare_container] = React.useState<boolean>(false);
   let uri = `mymemento.kr/contentpage/${id}`;
+  let [liked, setLiked] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     if(!content) return;
     setUserdata(content?.userdata);
     setId(content?.id);
+    setLiked(content?.userdata.likes.find((username) => (username === user.user!.username)) ? true : false );
   }, [content]);
 
   React.useEffect(() => {
@@ -106,7 +109,7 @@ function Content_type (props : Props) {
                   <div className = 'title GB px20 op9 line40'>{content.title}</div>
                   <div className = 'date GB px14 op9'>{'영상제작일 : ' + content.date}</div>
                   <div className = 'tag GB px14 op6'>{content.tag}</div>
-                  <img className = 'like_button' src = {imageUrl('ContentPage/like_button.png')} onClick = {async () => {
+                  <div className={"vector_container like" + (liked ? ' liked' : '')} onClick = {async () => {
                     let new_userdata = userdata;
                     if(userdata.likes.find((username) => (username === user.user!.username))) {
                       new_userdata.likes.splice(Number(userdata.likes.find((username) => (username === user.user!.username))), 1);
@@ -115,8 +118,9 @@ function Content_type (props : Props) {
                       new_userdata.likes.push(user.user!.username);
                     }
                     setUserdata(new_userdata);
+                    setLiked(!liked);
                     await content_userdata(id, new_userdata);
-                  }}/>
+                  }}>{like_vector}</div>
                   <img className = 'share_button' src = {imageUrl('ContentPage/share_button.png')} onClick = { () => {setShare_container(!share_container);}} />
                   <div className = 'more NS px12 bold op6'>{'원본파일 보기>'}</div>
                   {true && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark_white.png')} /> }

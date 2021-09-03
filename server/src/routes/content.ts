@@ -21,6 +21,7 @@ export default (Content: Model<ContentDocument>) => {
     let router = Router();
 
     router.get('/', async (req, res) => {
+        console.log('getcontents');
         let result = await Content.find().sort({'id': 'asc'});
         res.json(result);
         res.end();
