@@ -26,7 +26,7 @@ export default (Content: Model<ContentDocument>) => {
         res.json(result);
         res.end();
       });
-      
+
     router.put('/comment', async (req, res) => {
         let id: number = Number.parseInt(req.body.id);
         let comments: number[] = req.body.comments;
@@ -49,7 +49,7 @@ export default (Content: Model<ContentDocument>) => {
       res.send(200);
     })
       
-    router.get('/:id', async (req, res) => {
+    router.get('/each/:id', async (req, res) => {
         let id = Number.parseInt(req.params.id);
         let result = await Content.findOne({ id });
         res.json(result);

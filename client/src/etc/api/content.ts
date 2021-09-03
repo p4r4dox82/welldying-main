@@ -30,7 +30,7 @@ export const getContents = async () => {
 }
 
 export const getContent = async (id: number) => {
-    let response = await Axios.get(`${apiAddress}/content/${id}`);
+    let response = await Axios.get(`${apiAddress}/content/each/${id}`);
     let data : Content | null = response.data;
 
     return data;
