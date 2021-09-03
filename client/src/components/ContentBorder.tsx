@@ -20,7 +20,7 @@ let writeCommenttoContent = async (id: number, content_comments : number[]) => {
 function ContentBorder (props : Props) {
   let user = useSelector((state: RootReducer) => state.user);
   let content = props.content;
-  let id = Number(content?.id);
+  let [id, setId] = React.useState<number>(0);
   let [, comments] = usePromise(getComments);
   let [comment_write, setComment_write] = React.useState<string>('');
   let [date, setDate] = React.useState<number>();
@@ -43,7 +43,7 @@ function ContentBorder (props : Props) {
       if (!content) return;
       setContent_comments(content.comments);
       setTitle(content.title);
-      console.log(title);
+      setId(content.id);
   }, [content]);
 
   React.useEffect(() => {

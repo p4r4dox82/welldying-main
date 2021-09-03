@@ -28,9 +28,7 @@ export default (Content: Model<ContentDocument>) => {
 
     router.get('/:id', async (req, res) => {
         let id = Number.parseInt(req.params.id);
-        if (id === NaN )
-          return console.log('id is not number');
-        else await Content.findOne({ id }, function (err: any, data: any) {
+        await Content.findOne({ id }, function (err: any, data: any) {
           if(err) {
             return console.log('Data ERROR: /path: ', err);
           }
