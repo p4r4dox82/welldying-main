@@ -26,12 +26,12 @@ export default (Answer: Model<AnswerDocument>) => {
     router.put('/book', onlyAuthUser, async (req, res) => {
         let user = req.user!;
         let questionId = Number.parseInt(req.body.questionId);
-        let book = req.body.book;
+        let book = Number.parseInt(req.body.book);
 
         if (await Answer.findOneAndUpdate({ username: user.username, questionId }, { book: book }))
             res.sendStatus(200);
-        if (book !== 0) res.sendStatus(400);       
-        else res.sendStatus(200);
+        else
+            res.sendStatus(400);
     })
 
     router.put('/', onlyAuthUser, async (req, res) => {

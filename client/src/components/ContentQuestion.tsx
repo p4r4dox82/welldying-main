@@ -5,6 +5,7 @@ import { Content } from '../etc/api/content';
 import { writeAnswer, getAnswers } from '../etc/api/answer';
 import { getQuestions } from '../etc/api/question';
 import usePromise from '../etc/usePromise';
+import { uploadImage_formdata } from '../etc/api/image';
 
 interface Props {
     additionalClass: string;
@@ -52,6 +53,51 @@ function ContentQuestion (props : Props) {
         setImageUri(answer.imageData.imageUrl);
   }, [answer]);
 
+  let [crop, setCrop] = React.useState<{
+    unit: "px" | "%",
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  }>({
+    unit: "px",
+    x: 0,
+    y: 0,
+    width: 500,
+    height: 300,
+  });
+
+  React.useEffect(() => {
+    if(!answer) return;
+    setMessage(answer.message);
+    if (answer.imageData.imageUrl !== '')
+        setImageUri(answer.imageData.imageUrl);
+    setCrop({ unit: 'px', x: answer?.imageData.cropX, y: answer?.imageData.cropY, width: 500, height: 300 });
+  }, [answer]);
+
+  React.useEffect(() => {
+
+  }, [question]);
+
+  let input_file = React.useRef<any>(null);
+  let [state, setState] = React.useState<any>({ image: '', imageLoaded: false });
+  let [cropImage, setCropImage] = React.useState<boolean>(false);
+  let handleFileinput  = async (e: any) => {
+    let formData = new FormData();
+    formData.append('image', e.target.files[0]);
+
+    const s3Uri = await uploadImage_formdata(formData);
+    console.log(s3Uri);
+    setImageUri(s3Uri);
+    if(s3Uri === undefined) {
+      setImageUri('https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png');
+    }
+    return s3Uri;
+  }
+  let handleClick = () => {
+    input_file.current.click();
+  };
+
 
   if (!content) return <></>;
   else return (
@@ -67,8 +113,15 @@ function ContentQuestion (props : Props) {
               {characternumbers + ' / 550 자'}
               </div>
               <div className = 'image_uploader'>
-                  <FileSelector setImageUri = {setImageUri} imageUri = {imageUri}/>
-              </div>
+                    <div className = 'fileSelector' style = {{height: (imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? 150 : (crop.height + 60))}}>
+                        <button className = 'image_input' onClick = {() => {handleClick(); setCropImage(true);}} >
+                            <div className = 'new_image' style = {{margin: 'auto', width: crop.width, height: (imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? 150 : crop.height), overflow: 'hidden'}}>
+                                <img className = 'new_image' src = {imageUri} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? '11px' : '0px')}}/>
+                            </div>
+                        </button>
+                        <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
+                    </div>
+                </div>
               <div className = 'bottom_container'>
                   <div className = 'more'>
                       <div className = 'NS px12 op9'>같은 질문에 사람들은 어떻게 답변했을까요?</div>

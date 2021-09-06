@@ -8,10 +8,11 @@ import NoteQuestion from '../components/NoteQuestion';
 import useScroll from '../etc/useScroll';
 import { imageUrl } from '../etc/config';
 
-import { getQuestions } from '../etc/api/question';
+import { getQuestions, Question } from '../etc/api/question';
 import { getSection, getSections } from '../etc/api/section';
 import { getAnswers } from '../etc/api/answer';
 import usePromise from '../etc/usePromise';
+import { setupMaster } from 'cluster';
 
 interface MatchParams {
     id: string;
@@ -34,39 +35,45 @@ function MementoNote({ match } : Props) {
   let [block, setBlock] = React.useState<boolean>(false);
   let [orderContainer, setOrderContainer] = React.useState<boolean>(false);
   let [order, setOrder] = React.useState<number>(0);
+  let [update, setUpdate] = React.useState<number>(0);
 
   let section = React.useMemo(() => sections?.find((section) => section.id === id), [sections, id]);
 
   let written_questions = React.useMemo(() => {
     return (
+      questions?.filter((question) => {
+        if(section?.questions?.find((questionId) => questionId === question.id)) {
+          let answer = answers?.find((answer) => answer.questionId === question.id);
+          if(answer) return true;
+          else return false;
+        }
+        else return false;
+      })
+    );
+  }, [questions, answers, section, update]);
+
+  let unwritten_questions = React.useMemo(() => {
+    return (
       section?.questions?.filter((questionId) => {
         let question = questions?.find((question) => question.id === questionId);
         let answer = answers?.find((answer) => answer.questionId === questionId);
-        if (!question || !answer) return false;
+        if (!question || answer) return false;
         else return true;
       })
     );
-  }, [questions, answers, section]);
-
-  let unwritten_questions = section?.questions?.filter((questionId) => {
-    let question = questions?.find((question) => question.id === questionId);
-    let answer = answers?.find((answer) => answer.questionId === questionId);
-    if (!question || answer) return false;
-    else return true;
-  });
+  }, [questions, answers, section, update]);
 
   let section_questions = React.useMemo(() => {
     return (id === undefined) ? undefined : (
       <>
-          {written_questions?.map((questionId, key) => {
-            let question = questions?.find((question) => question.id === questionId);
+          {written_questions?.map((question, key) => {
             return (
               <NoteQuestion question = {question} written = {true} type = {(block ? 'small': '')} order = {(block ? key : -1)}/>
             );
           })}
       </>
     );
-  }, [section, answers, questions, block]);
+  }, [section, answers, questions, block, update]);
 
   let section_questions_unwritten = React.useMemo(() => {
     return (id === undefined) ? undefined : (
@@ -82,8 +89,28 @@ function MementoNote({ match } : Props) {
           })}
       </>
     );
-  }, [section, answers, questions]);
+  }, [section, answers, questions, update]);
 
+  let sort_answered = (questionA: Question, questionB: Question) => {
+    let answerA = answers?.find((answer) => answer.questionId === questionA.id);
+    let answerB = answers?.find((answer) => answer.questionId === questionB.id);
+    if((answerA?.updatedAt !== undefined && answerB?.updatedAt !== undefined) && answerA?.updatedAt < answerB?.updatedAt)
+      return 1;
+    else return -1;
+  };
+
+  let sort_answered_reverse = (questionA: Question, questionB: Question) => {
+    let answerA = answers?.find((answer) => answer.questionId === questionA.id);
+    let answerB = answers?.find((answer) => answer.questionId === questionB.id);
+    if((answerA?.updatedAt !== undefined && answerB?.updatedAt !== undefined) && answerA?.updatedAt > answerB?.updatedAt)
+      return 1;
+    else return -1;
+  };
+
+  let sort_made = (questionA: Question, questionB: Question) => {
+    if(questionA?.id > questionB?.id) return 1;
+    else return -1;
+  };
 
   React.useEffect(() => {
       setScrollActive(scroll >= 137);
@@ -105,9 +132,9 @@ function MementoNote({ match } : Props) {
                   <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} onClick = {() => setBlock(!block)}/>
                   <img className = 'order_button' src = {imageUrl('ContentPage/order_button.svg')} onClick = {() => setOrderContainer(!orderContainer)}/>
                   {orderContainer && <div className="orderContainer">
-                      <div className="NS px12 bold" onClick = {() => setOrder(1)}>최근 답변순</div>
-                      <div className="NS px12 bold" onClick = {() => setOrder(2)}>과거 답변순</div>
-                      <div className="NS px12 bold" onClick = {() => setOrder(0)}>질문 생성일</div>
+                      <div className={"NS px12 bold " + (order !== 1 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered); setUpdate(update + 1); console.log(questions); setOrder(1);}}>최근 답변순</div>
+                      <div className={"NS px12 bold " + (order !== 2 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered_reverse); setUpdate(update + 1); console.log(questions); setOrder(2);}}>과거 답변순</div>
+                      <div className={"NS px12 bold " + (order !== 0 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_made); setUpdate(update + 1); setOrder(0);}}>질문 생성일</div>
                   </div>}
                   <div className = 'questions_container'>
                       {section_questions}

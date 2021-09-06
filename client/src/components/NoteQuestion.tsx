@@ -52,6 +52,8 @@ function NoteQuestion(props: Props) {
   let [, contents] = usePromise(getContents);
   let answer = React.useMemo(() => answers?.find((answer) => answer.questionId === id), [answers, id]);
   let content = React.useMemo(() => contents?.find((content) => content.id === contentid), [contents, contentid]);
+
+  let [booked, setBooked] = React.useState<number>(0);
   
   let [crop, setCrop] = React.useState<{
     unit: "px" | "%",
@@ -73,6 +75,7 @@ function NoteQuestion(props: Props) {
     if (answer.imageData.imageUrl !== '')
         setImageUri(answer.imageData.imageUrl);
     setCrop({ unit: 'px', x: answer?.imageData.cropX, y: answer?.imageData.cropY, width: 500, height: 300 });
+    setBooked(answer.book);
   }, [answer]);
 
   React.useEffect(() => {
@@ -106,7 +109,7 @@ function NoteQuestion(props: Props) {
             <div className = 'click_area' style = {{width: '100%', height: '100%', borderRadius: '5px'}} onClick = {() => {setShow_answer(!show_answer); setAnswer_type('written');}}>
                 {props.type === 'small' && <div className = 'cover' style = {{background: 'rgba(255, 255, 255, 1)', width: '100%', height: '100px', top: '230px'}} />}
                 <div className = 'title GB px20 line40' style = {{margin: '0px'}} >{question.title}</div>
-                <div className = 'answerdate GB px13'>{'답변일 : ' + String(parseDate(new Date(Number(answer?.updatedAt))))}</div>
+                <div className = 'answerdate GB px13'>{'답변일 : ' + (answer?.updatedAt === undefined ? String(parseDate(new Date())) : String(parseDate(new Date(Number(answer?.updatedAt)))))}</div>
                 {!(props.type === 'type2') && <div className = 'write_button NS px12' >
                     답변보기
                     <img src = {imageUrl('NotePage/down_image.png')} />
@@ -132,7 +135,7 @@ function NoteQuestion(props: Props) {
             {props.type === 'add' && <>
                 <button className = 'add_button' onClick = {async () => {
                     if (await addBook(Number(id), 1))
-                        console.log('success');
+                        setBooked(1);
                 }}>
                     <img className = 'add_image' src = {imageUrl('NotePage/add_vector.svg')} />
                     <div className = 'text NS px12 op4 bold'>추가하기</div>

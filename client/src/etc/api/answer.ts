@@ -44,7 +44,7 @@ export const writeAnswer = async (questionId: number, message: string, length: n
 }
 
 export const addBook = async (questionId: number, book: number) => {
-    let response = await Axios.put(`${apiAddress}/answer/book`, {questionId, book: true}, { withCredentials: true });
+    let response = await Axios.put(`${apiAddress}/answer/book`, { questionId, book }, { withCredentials: true });
 
     return response.status < 300;
 }

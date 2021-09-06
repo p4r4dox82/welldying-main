@@ -12,12 +12,8 @@ export default async (app: Application) => {
         resave: true,
         saveUninitialized: true,
         store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    };
-
-    if (true) sessionOptions = Object.assign(sessionOptions, {
-        proxy: true,
         cookie: { secure: true, sameSite: 'none', },
-    } as session.SessionOptions);
+    };
 
     app.use(session(sessionOptions));
 }
