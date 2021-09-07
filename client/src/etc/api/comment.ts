@@ -7,7 +7,7 @@ export interface Comment {
     writer: string,
     detail: string,
     date: number,
-    likes: number,
+    userdata: { likes: string[] },
     declare: string,
 }
 
@@ -25,9 +25,9 @@ export const getComment = async (id: number) => {
     return data;
 }
 
-export const writeComment = async (id: number, writer: string, detail: string, date: number, likes: number, declare: string) => {
-    let response = await Axios.post(`${apiAddress}/comment`, {
-        id, writer, detail, date, likes, declare
+export const writeComment = async (id: number, writer: string, detail: string, date: number, userdata: { likes: string[] }, declare: string) => {
+    let response = await Axios.put(`${apiAddress}/comment`, {
+        id, writer, detail, date, userdata, declare
     }, { withCredentials: true });
 
     return response.status === 200;

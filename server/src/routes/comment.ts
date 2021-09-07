@@ -19,18 +19,18 @@ export default (Comment: Model<CommentDocument>) => {
         res.json(result);
     });
 
-    router.post('/', onlyAdmin, async (req, res, next) => {
+    router.put('/', onlyAdmin, async (req, res, next) => {
         let data: CommentType = {
             id: Number.parseInt(req.body.id),
             writer: req.body.writer,
             detail: req.body.detail,
             date: new Date().getTime(),
-            likes: Number.parseInt(req.body.likes),
+            userdata: req.body.userdata,
             declare: req.body.declare,
         };
 
         if (!await Comment.findOneAndUpdate({ id: data.id },
-                { writer: data.writer, detail: data.detail, date: data.date, likes: data.likes, declare: data.declare})) {
+                { writer: data.writer, detail: data.detail, date: data.date, userdata: data.userdata, declare: data.declare})) {
             const comment = new Comment(data);
             comment.save();
         }

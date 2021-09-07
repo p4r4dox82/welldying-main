@@ -5,7 +5,7 @@ export interface CommentType {
     writer: string;
     detail: string;
     date: number;
-    likes: number;
+    userdata: { likes: string[] };
     declare: string;
 };
 
@@ -16,6 +16,6 @@ export const commentSchema = new Schema<CommentDocument>({
     writer: String,
     detail: String,
     date: Number,
-    likes: Number,
+    userdata: {likes: [String] },
     declare: String,
 });

@@ -25,19 +25,21 @@ function ContentBorder (props : Props) {
   let [comment_write, setComment_write] = React.useState<string>('');
   let [date, setDate] = React.useState<number>();
   let [error, setError] = React.useState<string>('');
-  let maxCommentId = React.useMemo(() => comments ? Math.max(...comments.map(comment => comment.id)) : 0, [comments]);
+  let [maxCommentId, setMaxCommentId] = React.useState<number>(0);
+  React.useEffect(() => setMaxCommentId(comments ? Math.max(...comments.map(comment => comment.id)) : 0), [comments]);
   let [editDone, setEditDone] = React.useState<boolean>(false);
   let [content_comments, setContent_comments] = React.useState<number[]>([]);
   let [title, setTitle] = React.useState<string>('');
   let [update, setUpdate] = React.useState<number>(0);
   let [show_comment, setShow_comment] = React.useState<boolean>(false);
 
-  let comments_ = comments?.filter((comment) => content?.comments.includes(comment.id));
-  let max_show_comments_number = comments_?.length;
+  let comments_content = React.useMemo(() => comments?.filter((comment) => content_comments.includes(comment.id))
+  , [comments, id]);
+
+  let [max_show_comments_number, setMax_show_comments_number] = React.useState<number>(0);
+  React.useEffect (() => setMax_show_comments_number(comments_content?.length), [comments_content])
   let [show_comments_number, setShow_comments_number] = React.useState<number>(0);
-  console.log(show_comments_number);
-  console.log(max_show_comments_number);
-  let show_comments = comments_?.slice(0, show_comments_number);
+  let show_comments = React.useMemo(() => comments_content?.slice(0, show_comments_number), [comments_content, show_comments_number]);
 
   React.useEffect(() => {
       if (!content) return;
@@ -50,9 +52,25 @@ function ContentBorder (props : Props) {
     writeCommenttoContent(id, content_comments);
   }, [update]);
 
-  React.useEffect(() => {
-    show_comments = comments_?.slice(0, show_comments_number);
-  }, [show_comments_number, max_show_comments_number]);
+  let comment_container = React.useMemo(() => show_comments?.map((comment) => (
+    <div className = 'comment_box'>
+        <div className = 'user_icon'>
+            <img className = 'user_icon' src = {imageUrl('user_login.png')}  alt = "profile"/>
+        </div>
+        <div className = 'writer NS px13 bold'>
+        {user.user!.name + ' 님'}
+        </div>
+        <textarea className = 'comment_area written NS px13 line25' placeholder = '메멘토에 댓글을 남겨보세요.' value = {comment.detail} disabled/>
+        <img className = 'like_button' src = {imageUrl('ContentPage/like_button.png')} />
+        <div className = 'likes NS px13 bold line25'>
+        {comment.userdata.likes.length}
+        </div>
+        <div className = 'date_container'>
+            <div className = 'date NS px12 bold op9'>{parseDate(new Date(comment.date))}</div>
+            <div className = 'declare_button  NS px12 bold op9'>{'신고하기'}</div>
+        </div>
+    </div>
+  )), [update, show_comments]);
 
   return (
     <>
@@ -77,25 +95,7 @@ function ContentBorder (props : Props) {
               </button>
           </div>
           {show_comment && <div className = 'comment_container'>
-              {show_comments?.map((comment) => (
-                <div className = 'comment_box'>
-                    <div className = 'user_icon'>
-                        <img className = 'user_icon' src = {imageUrl('user_login.png')}  alt = "profile"/>
-                    </div>
-                    <div className = 'writer NS px13 bold'>
-                    {user.user!.name + ' 님'}
-                    </div>
-                    <textarea className = 'comment_area written NS px13 line25' placeholder = '메멘토에 댓글을 남겨보세요.' value = {comment.detail} disabled/>
-                    <img className = 'like_button' src = {imageUrl('ContentPage/like_button.png')} />
-                    <div className = 'likes NS px13 bold line25'>
-                    {comment.likes}
-                    </div>
-                    <div className = 'date_container'>
-                        <div className = 'date NS px12 bold op9'>{parseDate(new Date(comment.date))}</div>
-                        <div className = 'declare_button  NS px12 bold op9'>{'신고하기'}</div>
-                    </div>
-                </div>
-              ))}
+              {comment_container}
               <div className = 'comment_box'>
                   <div className = 'user_icon'>
                       <img className = 'user_icon' src = {imageUrl('user_login.png')}  alt = "profile"/>
@@ -107,9 +107,9 @@ function ContentBorder (props : Props) {
                   <button className = 'green NS px13 bold' onClick={async (e) => {
                       e.preventDefault();
                       setDate(new Date().getTime());
-                      if (!comment_write) setError('모든 항목을 채워주세요.');
-                      else if (await writeComment(maxCommentId + 1, user.user!.name, comment_write, Number(date), 0, 'none')) {
-                        setEditDone(true); setContent_comments(content_comments.concat([maxCommentId + 1])); setUpdate(update + 1);
+                      if (!comment_write) alert('댓글을 작성해주세요.');
+                      else if (await writeComment(maxCommentId + 1, user.user!.name, comment_write, Number(date), { likes: [] }, 'none')) {
+                        setEditDone(true); content_comments.push(maxCommentId + 1); alert('댓글이 작성되었습니다.'); comments_content.push({ id: maxCommentId + 1, writer: String(user.user!.name), detail: comment_write, date: new Date().getTime(), userdata: { likes: [] }, declare: 'none' }); setUpdate(update + 1); setShow_comments_number(show_comments_number + 1); setMaxCommentId(maxCommentId + 1); setMax_show_comments_number(max_show_comments_number + 1); setTimeout(() => setComment_write(''), 1000); console.log(maxCommentId);
                       }
                       else setError('어딘가 문제가 생겼습니다.');
                   }}>확인</button>
