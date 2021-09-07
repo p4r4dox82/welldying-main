@@ -23,6 +23,7 @@ export const contentSchema = new Schema<ContentDocument>({
     type: String,
     category: Number,
     userdata: { likes: [String], bookmark: [String], read: [String], },
+    tag: String,
     date: { type: Number, default: new Date(), },
     source: String,
     detail: { summary: String },

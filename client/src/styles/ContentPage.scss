@@ -393,8 +393,6 @@ div.contentslide, div.contentslide2 {
       color: #FFFFFF;
 
     }
-    &.second {
-    }
     &.first {
       &:hover {
         .title_background {
@@ -589,8 +587,7 @@ div.big_content {
     display: flex;
     flex-wrap: wrap;
     width: 280px;
-    margin-top: 23px;
-    margin-bottom: 27px;
+    padding: 23px 0px 27px 0px;
     left: 23px;
   }
   img.memento_colon {

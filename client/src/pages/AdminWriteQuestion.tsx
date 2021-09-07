@@ -6,8 +6,10 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import QuillToolbar from '../components/QuillToolbar';
 import { getQuestion, writeQuestion } from '../etc/api/question';
+import { getContents } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
+import { getSections } from '../etc/api/section';
 
 interface MatchParams {
     id: string;
@@ -21,12 +23,15 @@ function AdminWriteQuestion({ match }: Props) {
     let id = Number.parseInt(match.params.id);
     let user = useSelector((state: RootReducer) => state.user);
     let [questionLoading, question] = usePromise(() => getQuestion(id));
+    let [, AllContents] = usePromise(getContents);
     let [error, setError] = React.useState<string>();
 
     let [title, setTitle] = React.useState<string>('');
     let [type, setType] = React.useState<'question' | 'post'>('question');
     let [message, setMessage] = React.useState<string>('');
     let [placeholder, setPlaceholder] = React.useState<string>('');
+    let [contents, setContents] = React.useState<number[]>([]);
+    let [update, setUpdate] = React.useState<number>(0);
 
     let [editDone, setEditDone] = React.useState<boolean>(false);
 
@@ -36,7 +41,34 @@ function AdminWriteQuestion({ match }: Props) {
         setType(question.type);
         setMessage(question.message);
         setPlaceholder(question.placeholder);
+        setContents(question.contents);
     }, [question]);
+
+    let contentForm = React.useMemo(() => {
+        if (!AllContents) return <></>;
+        else return contents.map((contentId, k) => {
+            return (
+                <div>
+                    { k+1 }
+                    <select style={{width: '888px'}} value={contentId} onChange={(e) => {
+                        let newId = Number.parseInt(e.target.value);
+                        let newContents = contents;
+                        newContents[k] = newId;
+                        setContents(newContents);
+                        setUpdate(update+1);
+                    }}>
+                        <option value={-1}> 컨텐츠를 골라주세요. </option>
+                        { AllContents.map((content) => <option value={content.id}> {content.title} </option>)}
+                    </select>
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        setContents(contents.filter((id, i) => i !== k));
+                        setUpdate(update+1);
+                    }}> 제외하기 </button>
+                </div>
+            );
+        })
+    }, [update, AllContents, questionLoading]);
 
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
     else if (editDone) return <Redirect to='/admin'/>
@@ -56,44 +88,20 @@ function AdminWriteQuestion({ match }: Props) {
                     <div className='label'> 제목 </div>
                     <input value={title} onChange={(e) => setTitle(e.target.value)}/>
                 </div>
-
                 <div className='row'>
-                    <button className={'selectButton ' + (type === 'question' ? 'active' : 'inactive')} onClick={(e) => {e.preventDefault(); setType('question') }}> 질문 </button>
-                    <span> / </span>
-                    <button className={'selectButton ' + (type === 'post' ? 'active' : 'inactive')} onClick={(e) => {e.preventDefault(); setType('post') }}> 읽기 자료 </button>
-                    <div className='label'> 내용 </div>
-                    <textarea value={message} onChange={(e) => setMessage(e.target.value)}/>
+                    <div className='label'> 컨텐츠 목록 </div>
+                    { contentForm }
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        setContents(contents.concat(-1));
+                        setUpdate(update+1);
+                    }}> 컨텐츠 추가하기 </button>
                 </div>
-
-                { type === 'question' && <div className='row'>
-                    <div className='label' style={{marginBottom: '50px'}}> 답안 기본값 (템플릿) </div>
-                    <QuillToolbar id={1} image={false}/>
-                    <ReactQuill
-                        theme="snow"
-                        modules={{
-                            toolbar: `.quill-toolbar1`,
-                            clipboard: {
-                                matchVisual: false,
-                            }
-                        }}
-                        onChange={async (question, delta, source, editor) => {
-                            let newLength = editor.getLength() - 1;
-                            let newPlaceholder = newLength > 0 ? editor.getHTML() : '';
-
-                            if (newLength <= 1000) {
-                                setPlaceholder(newPlaceholder);
-                            } else {
-                                setPlaceholder(placeholder + ' ');
-                            }
-                        }}
-                        value={placeholder}
-                    />
-                </div> }
 
                 <button type='submit' className='signupButton' onClick={async (e) => {
                     e.preventDefault();
-                    if (!type || !title || !message) setError('모든 항목을 채워주세요.');
-                    else if (await writeQuestion(id, type, title, message, placeholder, [1])) setEditDone(true);
+                    if (!type || !title || !message || !contents) setError('모든 항목을 채워주세요.');
+                    else if (await writeQuestion(id, type, title, message, placeholder, contents)) setEditDone(true);
                     else setError('어딘가 문제가 생겼습니다.');
                 }}>
                     { !question ? '추가하기' : '수정하기' }

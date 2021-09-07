@@ -31,7 +31,6 @@ import WriteNews from './pages/WriteNews';
 import Findid from './pages/Findid';
 import Findpassword from './pages/Findpassword';
 import ContentMain from './pages/ContentMain';
-import ContentSub from './pages/ContentSub';
 import ContentPage from './pages/ContentPage';
 import MementoNote from './pages/MementoNote';
 import MementoNoteBook from './pages/MementoNoteBook';

@@ -2,19 +2,7 @@ import { Router } from "express";
 import { Model } from "mongoose";
 import { ContentDocument, ContentType } from "../models/content";
 import { onlyAdmin } from "./user";
-import multer from 'multer';
-import fs from 'fs';
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname);
-    }
-  }),
-});
 
 
 export default (Content: Model<ContentDocument>) => {
@@ -60,6 +48,7 @@ export default (Content: Model<ContentDocument>) => {
         if (!await Content.findOneAndUpdate({ id: data.id },
                 { title: data.title, type: data.type, category: data.category, userdata: data.userdata, tag: data.tag, date: data.date, source: data.source, detail: data.detail, comments: data.comments, question: data.question, thumbnailUrl: data.thumbnailUrl })) {
             const content = new Content(data);
+            console.log(data);
             content.save();
         }
 

@@ -85,7 +85,7 @@ function AdminWriteContent({ match }: Props) {
               </select>
           </div>
         );
-    }, [update, allSectionsLoading, contentLoading]);
+    }, [update, allSectionsLoading, QuestionsLoading]);
 
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
     else if (editDone) return <Redirect to='/admin'/>
@@ -137,7 +137,7 @@ function AdminWriteContent({ match }: Props) {
                 <button type='submit' className='signupButton' onClick={async (e) => {
                     e.preventDefault();
                     if (!title || !category || !type || !source || !summary || !question || !thumbnailUri ) setError('모든 항목을 채워주세요.');
-                    else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, source, { summary: summary, }, [], question, thumbnailUri)) {setEditDone(true); console.log(tag);}
+                    else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, source, { summary: summary, }, [], question, thumbnailUri)) {setEditDone(true);}
                     else setError('어딘가 문제가 생겼습니다.');
                 }}>
                     { !content ? '추가하기' : '수정하기' }

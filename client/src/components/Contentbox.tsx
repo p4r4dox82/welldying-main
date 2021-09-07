@@ -1,7 +1,7 @@
 import React from 'react';
 import { imageUrl } from '../etc/config';
-import { getContents, Content, content_userdata } from '../etc/api/content';
-import usePromise from '../etc/usePromise';
+import { Link, Redirect } from 'react-router-dom';
+import { Content, content_userdata } from '../etc/api/content';
 import { useSelector } from 'react-redux';
 import { RootReducer } from '../store';
 import { like_vector } from '../img/like_vector';
@@ -15,16 +15,16 @@ interface Props {
 function Contentbox(props: Props) {
   let user = useSelector((state: RootReducer) => state.user);
   let content = props.content;
-  let id = props.content!.id;
+  let [id, setId] = React.useState<number>(0);
   let [userdata, setUserdata] = React.useState<{ likes: string[], bookmark: string[], read: string[] }>({ likes: [], bookmark: [], read: [] });
   let [small_more, setSmall_more] = React.useState<boolean>(false);
-  let [big_more, setBig_more] = React.useState<boolean>(false);
   let [big_type2, setBig_type2] = React.useState<boolean>(props.additionalClass === 'big type2');
   let [liked, setLiked] = React.useState<boolean>(false);
   let [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     if(!content) return;
+    setId(content.id);
     setUserdata(content?.userdata);
     setLiked(content?.userdata.likes.find((username) => (username === user.user!.username)) ? true : false );
     setBookmarked(content?.userdata.bookmark.find((username) => (username === user.user!.username)) ? true : false );
@@ -34,14 +34,14 @@ function Contentbox(props: Props) {
   else return (
     <>
       {(props.additionalClass === 'big' || props.additionalClass === 'big type2') && <div className = 'big_content'>
-          <img className = 'thumbnail' src = {imageUrl('ContentPage/big_content_image.png')} onClick = {async () => {
+          <Link to={`/contentpage/${id}`}><img className = 'thumbnail' src = {imageUrl('ContentPage/big_content_image.png')} onClick = {async () => {
             let new_userdata = userdata;
             if(userdata.read.find((username) => (username === user.user!.username)) === undefined) {
               new_userdata.read.push(user.user!.username);
               setUserdata(new_userdata);
               await content_userdata(id, new_userdata);
             }
-          }}/>
+          }}/></Link>
           <div className = 'cover'>
               {!big_type2 && <img className = 'memento_colon' src = {imageUrl('memento_colon.png')} />}
               <div className = 'type'>{content.type === '책' ? 'book' : (content.type === '동영상' ? 'video' : '')}</div>

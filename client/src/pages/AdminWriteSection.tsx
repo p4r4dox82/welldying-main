@@ -36,12 +36,14 @@ function AdminWriteSection({ match }: Props) {
         if (!section) return;
         setTitle(section.title);
         setQuestions(section.questions);
+        setTag(section.tag);
+        setDetail(section.detail);
+        setImageurl(section.imageurl);
     }, [section]);
 
     let questionForm = React.useMemo(() => {
         if (!allQuestions) return <></>;
         else return questions.map((questionId, k) => {
-            console.log(questions);
             return (
                 <div>
                     { k+1 }
