@@ -4,7 +4,8 @@ import { Link, match, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { getContent, writeContent } from '../etc/api/content';
-import { getSections } from '../etc/api/section'
+import { getSections } from '../etc/api/section';
+import { getQuestions } from '../etc/api/question';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
 
@@ -21,17 +22,20 @@ function AdminWriteContent({ match }: Props) {
     let user = useSelector((state: RootReducer) => state.user);
     let [contentLoading, content] = usePromise(() => getContent(id));
     let [allSectionsLoading, allSections] = usePromise(() => getSections());
+    let [QuestionsLoading, Questions] = usePromise(getQuestions);
     let [error, setError] = React.useState<string>();
 
     let [title, setTitle] = React.useState<string>('');
     let [type, setType] = React.useState<string>('');
     let [category, setCategory] = React.useState<number>(1);
-    let [likes, setLikes] = React.useState<number>();
+    let [question, setQuestion] = React.useState<number>(1);
+    let [source, setSource] = React.useState<string>('');
+    let [summary, setSummary] = React.useState<string>('');
     let [tag, setTag] = React.useState<string>('');
+    let [thumbnailUri, setThumbnailUri] = React.useState<string>('');
     let [update, setUpdate] = React.useState<number>(1);
 
     let [editDone, setEditDone] = React.useState<boolean>(false);
-    let content_section = React.useMemo(() => allSections?.find((section) => section.id === category), [allSections, category]);
 
     React.useEffect(() => {
         if (!content) return;
@@ -39,6 +43,10 @@ function AdminWriteContent({ match }: Props) {
         setType(content.type);
         setCategory(content.category);
         setTag(content.tag);
+        setSource(content.source);
+        setSummary(content.detail.summary);
+        setQuestion(content.question);
+        setThumbnailUri(content.thumbnailUrl);
     }, [content]);
 
     let categoryForm = React.useMemo(() => {
@@ -50,6 +58,7 @@ function AdminWriteContent({ match }: Props) {
                   let newCategory = category;
                   newCategory = newId;
                   setCategory(newCategory);
+                  let content_section = allSections?.find((section) => section.id === newCategory);
                   setTag(content_section ? content_section?.tag : 'nosection');
                   setUpdate(update+1);
               }}>
@@ -60,9 +69,26 @@ function AdminWriteContent({ match }: Props) {
         );
     }, [update, allSectionsLoading, contentLoading]);
 
+    let questionForm = React.useMemo(() => {
+        if (!Questions) return <></>;
+        else return (
+          <div>
+              <select style={{width: '888px'}} value={question} onChange={(e) => {
+                  let newId = Number.parseInt(e.target.value);
+                  let newQuestion = question;
+                  newQuestion = newId;
+                  setQuestion(newQuestion);
+                  setUpdate(update+1);
+              }}>
+                  <option value={-1}> 질문을 골라주세요. </option>
+                  { Questions.map((question) => <option value={question.id}> {question.title} </option>)}
+              </select>
+          </div>
+        );
+    }, [update, allSectionsLoading, contentLoading]);
+
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
     else if (editDone) return <Redirect to='/admin'/>
-    else if (contentLoading) return <></>;
     else return (
         <>
             <Header additionalClass='grey borderBottom' />
@@ -89,18 +115,29 @@ function AdminWriteContent({ match }: Props) {
                     { categoryForm }
                 </div>
                 <div className='row'>
-                    <div className='label'> 좋아요 </div>
-                    <input value={likes} onChange={(e) => setLikes(Number.parseInt(e.target.value))}/>
-                </div>
-                <div className='row'>
                     <div className='label'> 태그 </div>
                     <input value={tag} disabled/>
                 </div>
-
+                <div className='row'>
+                    <div className='source'> 출처 </div>
+                    <input value={source} onChange={(e) => setSource(e.target.value)}/>
+                </div>
+                <div className='row'>
+                    <div className='summary'> 요약 </div>
+                    <textarea value={summary} onChange={(e) => setSummary(e.target.value)}/>
+                </div>
+                <div className='row'>
+                    <div className='label'> 질문 목록 </div>
+                    { questionForm }
+                </div>
+                <div className='row'>
+                    <div className='source'> 썸네일 </div>
+                    <input value={thumbnailUri} onChange={(e) => setThumbnailUri(e.target.value)}/>
+                </div>
                 <button type='submit' className='signupButton' onClick={async (e) => {
                     e.preventDefault();
-                    if (!title || !category || !type ) setError('모든 항목을 채워주세요.');
-                    else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, 'asd', { summary: 'asd', }, [], 1, 'asd')) {setEditDone(true); console.log(title);}
+                    if (!title || !category || !type || !source || !summary || !question || !thumbnailUri ) setError('모든 항목을 채워주세요.');
+                    else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, source, { summary: summary, }, [], question, thumbnailUri)) {setEditDone(true); console.log(tag);}
                     else setError('어딘가 문제가 생겼습니다.');
                 }}>
                     { !content ? '추가하기' : '수정하기' }

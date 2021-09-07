@@ -18,7 +18,6 @@ function Admin() {
 
     let maxSectionId = React.useMemo(() => sections ? Math.max(...sections.map(section => section.id)) : 0, [sections]);
     let maxQuestionId = React.useMemo(() => questions ? Math.max(...questions.map(question => question.id)) : 0, [questions]);
-    console.log(maxSectionId);
     let maxContentId = React.useMemo(() => contents ? Math.max(...contents.map(content => content.id)) : 0, [contents]);
 
     let [id, setId] = React.useState<number>(1);

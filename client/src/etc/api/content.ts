@@ -37,6 +37,7 @@ export const getContent = async (id: number) => {
 }
 
 export const writeContent = async (id: number, title: string, type: string, category: number, userdata: { likes: string[], bookmark: string[], read: string[], }, tag: string, date: number, source: string, detail: {summary: string, }, comments: number[], question: number, thumbnailUrl: string) => {
+    console.log(tag);
     let response = await Axios.post(`${apiAddress}/content`, {
         id, title, type, category, userdata, tag, date, source, detail, comments, question, thumbnailUrl
     }, { withCredentials: true });

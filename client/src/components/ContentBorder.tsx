@@ -33,7 +33,7 @@ function ContentBorder (props : Props) {
   let [update, setUpdate] = React.useState<number>(0);
   let [show_comment, setShow_comment] = React.useState<boolean>(false);
 
-  let comments_content = React.useMemo(() => comments?.filter((comment) => content_comments.includes(comment.id))
+  let comments_content = React.useMemo(() => comments?.filter((comment) => content_comments?.includes(comment.id))
   , [comments, id]);
 
   let [max_show_comments_number, setMax_show_comments_number] = React.useState<number>(0);

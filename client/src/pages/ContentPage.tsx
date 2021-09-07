@@ -11,6 +11,7 @@ import { getContents, getContent } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
 import { Link, match, Redirect } from 'react-router-dom';
 import { imageUrl } from '../etc/config';
+import { parseDate } from '../etc';
 
 interface MatchParams {
     id: string;
@@ -35,10 +36,11 @@ function ContentPage ({ match } : Props) {
     more_contents = contents?.slice(0, more_contents_count);
   }, [more_contents_count]);
 
-  return (
+  if(!content) return <></>;
+  else return (
       <>
         <Header additionalClass = '' />
-        <ContentCover additionalClass = '0' title = {title} tag = {tag} date = {'2021. 07 .03'} source = {'brunch.co.kr/@ssls1223/456'}/>
+        <ContentCover additionalClass = '0' title = {title} tag = {tag} date = {String(parseDate(new Date(Number(content.date))))} source = {content.source}/>
         <Content_type additionalClass = {type} content = {content}/>
         <div className = 'block contentpage'>
             <div className = 'contentsummary margin_large'>
@@ -46,7 +48,9 @@ function ContentPage ({ match } : Props) {
                 영상 내용 요약
                 </div>
                 <div className = 'summary GB px16 line35'>
-                {'어떤 어떤 삶을 살아왔다는 그녀의 이야기 그녀는 왜 이런 생가ㅣㄱ을 가지게 도ㅓㅣ었을까. 행복한 그녀가 말하는 50분의 다른ㅇ 생각 지금 시작합니다. 어쩌구 저쩌구 어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구어쩌구'}
+                {content.detail.summary.split('\n').map((summary_line) => 
+                    <div>{summary_line}</div>
+                )}
                 </div>
             </div>
         </div>

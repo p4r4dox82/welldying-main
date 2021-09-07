@@ -7,6 +7,7 @@ import { kakaoJskey } from '../etc/config';
 import { like_vector } from '../img/like_vector';
 
 import ReactPlayer from 'react-player';
+import { parseDate } from '../etc';
 
 interface Props {
   additionalClass: string;
@@ -103,11 +104,11 @@ function Content_type (props : Props) {
     <>
       <div className = 'block'>
           {props.additionalClass === '동영상' && <div className = 'videocontent'>
-              <ReactPlayer width = {'769px'} height = {'432px'} url = {'https://www.youtube.com/watch?v=MONCv_l0Fxg'} controls />
+              <ReactPlayer width = {'769px'} height = {'432px'} url = {content.source} controls />
               <div className = 'cover'>
                   <div className = 'detail GB px14 op6'>영상의 한줄</div>
                   <div className = 'title GB px20 op9 line40'>{content.title}</div>
-                  <div className = 'date GB px14 op9'>{'영상제작일 : ' + content.date}</div>
+                  <div className = 'date GB px14 op9'>{'영상제작일 : ' + String(parseDate(new Date(Number(content.date))))}</div>
                   <div className = 'tag GB px14 op6'>{content.tag}</div>
                   <div className={"vector_container like" + (liked ? ' liked' : '')} onClick = {async () => {
                     let new_userdata = userdata;

@@ -40,7 +40,6 @@ function AdminWriteQuestion({ match }: Props) {
 
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
     else if (editDone) return <Redirect to='/admin'/>
-    else if (questionLoading) return <></>;
     else return (
         <>
             <Header additionalClass='grey borderBottom' />
