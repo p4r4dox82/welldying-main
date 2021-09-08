@@ -494,6 +494,7 @@ div.contentslide2 {
     flex-wrap: nowrap;
     gap: 30px;
     left: -708px;
+    transform: translateX(-708px);
     transition-property: transform, opacity;
     transition-duration: 1s, 0s;
     transition-timing-function: ease-in-out;
@@ -635,6 +636,7 @@ div.big_content {
   }
   div.tag {
     margin-top: 12px;
+    align-self: flex-end;
     width: 200px;
     font-family: GyeonggiBatang;
     font-style: normal;

@@ -58,7 +58,7 @@ function Maincontent() {
     }, [section, currentItem]);
     return (
         <div className='main_display'>
-            <div className = 'block margin-137px'>
+            <div className = 'block'>
                 <div className = 'main_image'>
                     <img className = 'main_background' src={imageUrl('main_background.png')} alt="profile"/>
                     <div className = 'main_background_blend' />

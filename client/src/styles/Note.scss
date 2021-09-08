@@ -82,6 +82,7 @@ div.NoteLeftBar {
   top: 0px;
   width: calc(50vw - #{$content-width}/2 - 8.5px + 177px);
   height: calc(100% + 46px);
+  min-height: 100vh;
   z-index: 10;
   &.short {
     width: calc(50vw - #{$content-width}/2 - 8.5px);
@@ -801,4 +802,143 @@ div.crop_image_container {
       }
     }
   }
+}
+
+div.MementoNoteMain {
+  div.category_container {
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-left: 22px;
+  }
+  div.MementoLogo {
+    margin: 88px 0px 0px calc(50% - 205px/2);
+  }
+  div.UserImage {
+    top: -31px;
+    margin-left: calc(50% - 90px/2);
+    width: 90px;
+    height: 62px;
+    border-radius: 80px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+    svg.UserImage{
+      width: 44px;
+      height: 44px;
+      top: 19px;
+      left: 23px;
+    }
+  }
+  div.explain {
+    display: flex;
+    flex-wrap: wrap;
+    width: 678px;
+    margin: 0px 0px 0px calc(50% - 678px/2);
+    transform: translateY(-11px);
+    justify-content: center;
+    div {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  div.agreeCheck {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    left: calc(50% + 516px);
+    top: 517px;
+  }
+  div.checkbox {
+    width: 14px;
+    height: 14px;
+    border: 1px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    &.checked {
+      background: rgba(35, 52, 42, 0.7);
+    }
+  }
+  div.toolbarContainer {
+    width: 100%;
+    border-bottom: 1px solid rgba(110, 118, 114, 0.4) ;
+  }
+  div.toolbar {
+    display: flex;
+    gap: 212px;
+    width: 690px;
+    margin-left: calc(50% - 690px/2);
+    justify-content: space-between;
+    padding-bottom: 25px;
+    div.select {
+      margin-top: 19px;
+      position: absolute;
+      left: calc(50% - 147px/2);
+      width: 147px;
+      height: 6px;
+      background-color: rgba(110, 118, 114, 1);
+    }
+  }
+  div.questionContainer {
+    width: 100%;
+    box-sizing: content-box;
+    padding: 30px;
+    margin-left: -30px;
+    padding-left: 30px;
+    div.questions {
+      transition: all 1s ease-in-out;
+    }
+    div.Button {
+      z-index: 5;
+      position: absolute;
+      top: 104px;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(250, 250, 250, 1);
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+      border-radius: 50%;
+    }
+    div.left {
+      padding: 7px 14px 6px 12px;
+      left: 10px;
+    }
+    div.right {
+      padding: 7px 12px 6px 14px;
+      left: 1042px;
+    }
+  }
+  div.questionBox {
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    div.question {
+      margin: 35px 76px;
+      width: 348px;
+      text-align: center;
+    }
+  }
+  div.contents_bookmark {
+    div.button {
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.5);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+      border-radius: 50%;
+      &.left {
+        padding: 5.5px 10.5px 5.5px 7.5px;
+      }
+      &.right {
+        padding: 5.5px 7.5px 5.5px 10.5px;
+      }
+      svg {
+        width: 10px;
+        height: 17px;     
+      }
+    }
+  }
+}
+
+div.margin_base {
+  width: $content-width;
+  margin: auto;
+  height: fit-content;
 }

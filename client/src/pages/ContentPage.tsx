@@ -82,7 +82,7 @@ function ContentPage ({ match } : Props) {
                 </div>}
             </div>
         </div>
-        <Footer additionalClass = '' />
+        <Footer additionalClass = ''/>
       </>
   );
 }

@@ -34,6 +34,7 @@ import ContentMain from './pages/ContentMain';
 import ContentPage from './pages/ContentPage';
 import MementoNote from './pages/MementoNote';
 import MementoNoteBook from './pages/MementoNoteBook';
+import MementoNoteMain from './pages/MementoNoteMain';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -77,6 +78,7 @@ function App() {
         <Route path='/contentpage/:id' component = {ContentPage} />
         <Route path='/notebook/:id' component = {MementoNoteBook} />
         <Route path='/note/:id' component = {MementoNote} />
+        <Route path='/note' component = {MementoNoteMain} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>

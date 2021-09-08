@@ -4,7 +4,7 @@ import { Content, Userdata, content_userdata } from '../etc/api/content';
 import { useSelector } from 'react-redux';
 import { RootReducer } from '../store';
 import { kakaoJskey } from '../etc/config';
-import { like_vector } from '../img/like_vector';
+import { like_vector } from '../img/Vectors';
 
 import ReactPlayer from 'react-player';
 import { parseDate } from '../etc';
@@ -40,7 +40,8 @@ function Content_type (props : Props) {
   }, [content]);
 
   React.useEffect(() => {
-    Kakao.init(kakaoJskey);
+    if(!Kakao.isInitialized())
+      Kakao.init(kakaoJskey);
   }, []);
 
   let kakaoShare = () => {
@@ -58,8 +59,8 @@ function Content_type (props : Props) {
         },
       },
       social: {
-        likeCount: content?.userdata.likes.length,
-        commentCount: content?.comments.length,
+        likeCount: (content?.userdata.likes ? (content?.userdata.likes.length) : 0),
+        commentCount: (content?.comments ? (content?.comments?.length) : 0),
       },
       buttons: [
         {
@@ -131,7 +132,7 @@ function Content_type (props : Props) {
                   <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} />
                   <div className="shareLink">
                       <input type="text NS px11" value = {`mymemento.kr/contentpage/${id}`} disabled/>
-                      <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} >링크 복사</button>
+                      <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} onClick = {() => alert('링크가 복사되었습니다.')}>링크 복사</button>
                   </div>
               </div>}
           </div>}

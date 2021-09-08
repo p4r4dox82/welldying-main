@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Content, content_userdata } from '../etc/api/content';
 import { useSelector } from 'react-redux';
 import { RootReducer } from '../store';
-import { like_vector } from '../img/like_vector';
+import { like_vector } from '../img/Vectors';
 import { bookmark_vector } from '../img/bookmark_vector';
 
 interface Props {

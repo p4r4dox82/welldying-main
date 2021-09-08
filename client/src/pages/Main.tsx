@@ -35,7 +35,7 @@ function Main() {
 
     return (
         <>
-            <Header additionalClass='absolute ' />
+            <Header additionalClass='' />
             <Maincontent/>
             <Footer additionalClass=' '/>
         </>

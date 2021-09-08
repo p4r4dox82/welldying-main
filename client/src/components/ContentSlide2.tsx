@@ -4,17 +4,18 @@ import { getContents } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
 
 function ContentSlide2 () {
-  let [, contents] = usePromise(getContents);
+  let [, AllContents] = usePromise(getContents);
+  let contents = React.useMemo(() => AllContents?.filter((content) => content.id <= 5), [AllContents]);
   let [slide_number, setSlide_number] = React.useState<number>(1);
   let [content_id, setContent_id] = React.useState<number>(1);
   const maxslide_number = 5;
   let start_number = slide_number;
   let end_number = ((slide_number + maxslide_number) <= maxslide_number ? slide_number + maxslide_number : slide_number + maxslide_number - maxslide_number);
   let new_slide_contents = (end_number > start_number ? contents?.slice(start_number, end_number) : contents?.slice(start_number, maxslide_number).concat(contents?.slice(0, end_number)));
-  let slide_contents_1 = contents?.filter((content) => content.id === 5);
-  slide_contents_1 = slide_contents_1?.concat(contents?.filter((content) => ((content.id >=1 && content.id <=2))));
-  let slide_contents_2 = contents?.filter((content) => (content.id >=3 && content.id <=5));
-  let content = slide_contents_1?.find((content, key) => key === 0);
+  let slide_contents_1 = contents?.filter((content, key) => key === 4);
+  slide_contents_1 = slide_contents_1?.concat(contents?.filter((content, key) => ((key >=0 && key <=1))));
+  let slide_contents_2 = contents?.filter((content, key) => (key >= 2 && key <= 4));
+  let content = React.useMemo(() => contents?.find((content, key) => key === slide_number), [slide_number, contents]);
 
   let slide_container_dom_1 = React.useRef<any>(null);
   let slide_container_dom_2 = React.useRef<any>(null);
@@ -59,6 +60,13 @@ function ContentSlide2 () {
       slide_container_dom_2.current.style.transitionDelay = '0s, 0s';
       slide_container_dom_2.current.style.opacity = '1';
     }
+    if(position === 1) {
+      slide_container_dom_2.current.style.transitionDelay = '0s, 0s';
+      slide_container_dom_2.current.style.opacity = '0';
+      slide_container_dom_2.current.style.transitionDuration = '0s, 0s';
+      slide_container_dom_2.current.style.transform = `translateX(${708 * 0 + 'px'})`;
+      setTimeout(() => {slide_container_dom_2.current.style.transitionDuration = '1s, 0s'; slide_container_dom_2.current.style.transform = `translateX(${708 * (0 - (position)) + 'px'})`; slide_container_dom_2.current.style.opacity = '1'; }, 0);
+    }
   };
 
   const moveRight = (position: number) => {
@@ -91,6 +99,13 @@ function ContentSlide2 () {
     else {
       slide_container_dom_2.current.style.transitionDelay = '0s, 0s';
       slide_container_dom_2.current.style.opacity = '1';
+    }
+    if(position === 4) {
+      slide_container_dom_2.current.style.transitionDelay = '0s, 0s';
+      slide_container_dom_2.current.style.opacity = '0';
+      slide_container_dom_2.current.style.transitionDuration = '0s, 0s';
+      slide_container_dom_2.current.style.transform = `translateX(${708 * (-5) + 'px'})`;
+      setTimeout(() => {slide_container_dom_2.current.style.transitionDuration = '1s, 0s'; slide_container_dom_2.current.style.transform = `translateX(${708 * (0 - (position)) + 'px'})`; slide_container_dom_2.current.style.opacity = '1'; }, 0);
     }
   }
 

@@ -31,8 +31,8 @@ function Footer({ additionalClass } : Props) {
             <div className = 'footer_logo'>
                 <img className = 'logo' src = {imageUrl(('footer_logo_color.png'))} alt = "profile"/>
                 <div className = 'share_container'>
-                    {[...Array(4).keys()].map((i) => (
-                      <img src={imageUrl(`share_image_${i+1}.png`)} alt = "profile"/>
+                    {[...Array(4).keys()].map((i, key) => (
+                      <img src={imageUrl(`share_image_${i+1}.png`)} alt = "profile" key = {key}/>
                     ))}
                 </div>
             </div>
