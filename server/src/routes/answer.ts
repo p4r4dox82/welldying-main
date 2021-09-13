@@ -47,7 +47,6 @@ export default (Answer: Model<AnswerDocument>) => {
             imageData: req.body.imageData,
             book: Number.parseInt(req.body.book),
         };
-        console.log(data.message, data.length);
 
         if (data.message.length === 0 && data.imageData.imageUrl === undefined) {
             await Answer.deleteOne({ username: data.username, questionId: data.questionId });
