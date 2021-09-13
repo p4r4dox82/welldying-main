@@ -203,6 +203,7 @@ export interface UserData {
     cellphone : string;
     kakaoId?: string;
     googleId?: string;
+    bookname: string[];
 }
 
 
@@ -216,4 +217,12 @@ export const setUserInfo = async () => {
     else {
         store.dispatch(clearUser());
     }
+}
+
+export const setBookName = async (username: string, bookname: string[]) => {
+    let response = await Axios.put(`${apiAddress}/user/bookname`, {
+         username, bookname
+    }, { withCredentials: true });
+
+    return response.status === 200;
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { imageUrl } from '../etc/config';
 import { getContents } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
+import { Link } from 'react-router-dom';
 
 function ContentSlide2 () {
   let [, AllContents] = usePromise(getContents);
@@ -109,8 +110,18 @@ function ContentSlide2 () {
     }
   }
 
+  let link_content = React.useRef<any>(null);
+  let LinkClick = () => {
+    link_content.current.click();
+  }
+  let id = React.useMemo(() => {
+    if(!content) return;
+    return content.id;
+  }, [content]);
+
   return (
     <>
+      <Link to = {`/contentpage/${id}`} ref = {link_content} style = {{display: 'none'}} />
       <div className = 'block'>
           <div className = 'contentslide2'>
               <div className = 'selector_container'>
@@ -121,7 +132,7 @@ function ContentSlide2 () {
               <div className = 'slide_content_container flex'>
                   <div className = 'container_1' ref = {slide_container_dom_1}>
                   {slide_contents_1?.map((content, key) => (
-                    <div className = {'slide_content'}>
+                    <div className = {'slide_content'} onClick = {() => LinkClick()}>
                         <div className = 'slide_image'>
                             <img src = {imageUrl('ContentPage/video_content_image.png')}/>
                         </div>
@@ -130,7 +141,7 @@ function ContentSlide2 () {
                   </div>
                   <div className = 'container_2' ref = {slide_container_dom_2}>
                   {slide_contents_2?.map((content, key) => (
-                    <div className = {'slide_content'}>
+                    <div className = {'slide_content'} onClick = {() => LinkClick()}>
                         <div className = 'slide_image'>
                             <img src = {imageUrl('ContentPage/video_content_image.png')}/>
                         </div>
@@ -141,13 +152,13 @@ function ContentSlide2 () {
               <div className = 'blur left' />
               <div className = 'blur right' />
               <div className = 'slide_content_title'>
-                  <div className = 'question'>
+                  <div className = 'question' onClick = {() => LinkClick()}>
                       {content?.title}
                   </div>
                   <div className = 'tag'>
                       {content?.tag}
                   </div>
-                  <div className = 'title'>
+                  <div className = 'title' onClick = {() => LinkClick()}>
                       {'[' + content?.type + ']' + content?.title}
                   </div>
                   <button className = 'left_button' onClick = {left_button_click} ref = {left_button_dom} disabled = {button_function}>

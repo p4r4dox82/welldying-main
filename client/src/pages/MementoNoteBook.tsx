@@ -10,6 +10,7 @@ import useScroll from '../etc/useScroll';
 import { getQuestions, Question } from '../etc/api/question';
 import { getSection, getSections } from '../etc/api/section';
 import { getAnswers, addBook } from '../etc/api/answer';
+import { setBookName } from '../etc/api/user';
 import usePromise from '../etc/usePromise';
 
 import { imageUrl } from '../etc/config';
@@ -21,6 +22,14 @@ interface MatchParams {
 interface Props {
     match: match<MatchParams>;
 };
+
+let checkbookname = (bookname: string) => {
+  let newbookname = bookname;
+  if(newbookname.length > 15)
+  newbookname = newbookname.slice(0, 14);
+  console.log(newbookname);
+  return newbookname;
+}
 
 function MementoNoteBook({ match } : Props) {
   let id = Number.parseInt(match.params.id);
@@ -46,7 +55,8 @@ function MementoNoteBook({ match } : Props) {
   let [orderContainer, setOrderContainer] = React.useState<boolean>(false);
   let [order, setOrder] = React.useState<number>(0);
   let [update, setUpdate] = React.useState<number>(0);
-  let [Hookupdate, setHookupdate] = React.useState<number>(0);
+  let [bookname, setBookname] = React.useState<string>('');
+  let [booknameupload, setBooknameupload] = React.useState<string>('');
 
   let [answers_booked, ] = React.useState<{ questionId: number, book: number }[]>([]);
 
@@ -57,10 +67,15 @@ function MementoNoteBook({ match } : Props) {
     })
   }, [answers]);
 
+  React.useEffect(() => {
+    if(!user.user?.bookname) return;
+    setBooknameupload(user.user.bookname[0]);
+  }, [user]);
+
   let written_questions = React.useMemo(() => {
     return (
       questions?.filter((question) => {
-        let answer = answers?.filter((answer) => answer.questionId === question.id);
+        let answer = answers?.find((answer) => (answer.questionId === question.id));
         if(!answer) return false;
         else return true;
       })
@@ -68,6 +83,7 @@ function MementoNoteBook({ match } : Props) {
   }, [questions, answers, update]);
 
   let questions_written = React.useMemo(() => {
+    console.log(written_questions);
     return (
       <>
         {written_questions?.map((question, key) => {
@@ -154,7 +170,10 @@ function MementoNoteBook({ match } : Props) {
   }, [section_unwritten_questions_add, block]);
 
   let written_questions_add = React.useMemo(() => {
-    if(!answers || !answers_booked) return;
+    if(!answers || !answers_booked) {
+      console.log(answers_booked);
+      return;
+    }
     else return (
       <>
         {questions?.map((question) => {
@@ -212,9 +231,24 @@ function MementoNoteBook({ match } : Props) {
       setScrollActive(scroll >= 137);
   }, [scroll]);
 
+  let GetBookName = React.useMemo(() => {
+    return (
+      !booknameupload && <div className="setbookname" style = {{width: '100vw', height: '100vh', background: 'rgba(0, 0, 0, 0.6)', position: 'fixed', zIndex: 200, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <div className="booknamecontainer" style = {{width: '837px', height: '137px', padding: '38px 50px', background: '#FFFFFF', boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.08)', borderRadius: '5px', display: 'flex', justifyContent: 'space-between'}}>
+            <input type="text" className="bookname NS bold px14" style = {{width: '581px', height: '100%', borderRadius: '5px', padding: '18px 30px', color: 'rgba(122, 121, 120, 1)', outline: 'none', border: 'none', boxShadow: 'inset 0px 1px 2px 1px rgba(0, 0, 0, 0.25)', background: 'rgba(249, 249, 249, 1)' }} placeholder = '노트의 제목을 입력해주세요. (15자 이내)' value = {bookname} onChange = {(e) => {setBookname(checkbookname(e.target.value));}} />
+            <button className="submit green NS bold px16" style = {{width: '141px', height: '100%', background: 'rgba(39, 57, 47, 1)', borderRadius: '5px'}} onClick = {async () => {
+              if(await setBookName(user.user!.username, [bookname]))
+                setBooknameupload(bookname);
+            }}>제목 입력</button>
+          </div>
+      </div>
+    );
+  }, [booknameupload, bookname]);
+
   if (!user.loggedIn) return <Redirect to='/login' />;
   else return (
     <>
+      {GetBookName}
       <Header additionalClass = '' />
       <div className = 'MementoNoteBook'>
           <div className = {'leftbar_container short'}>
@@ -234,7 +268,7 @@ function MementoNoteBook({ match } : Props) {
                       <div className = 'side_bar_container'>
                           <img className = 'zoom_button' src = {imageUrl('NotePage/zoom_image.png')} />
                           <img className = 'add_button' src = {imageUrl('NotePage/add_image.png')} onClick = {() => {setAddQuestions(true); setUpdate(update + 1);}}/>
-                          <div className = 'title GB px13 line30'>{'나의 아이들에게 남기는 이야기'}</div>
+                          <div className = 'title GB px13 line30'>{booknameupload ? booknameupload : ''}</div>
                           <img className = 'edit_button' style = {{margin: '483px 0px 0px 0px'}} src = {imageUrl('NotePage/edit_image.png')} />
                       </div>
                       <div className = 'left page'>
@@ -260,7 +294,7 @@ function MementoNoteBook({ match } : Props) {
                       <div className={"NS px12 bold " + (order !== 2 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered_reverse); setUpdate(update + 1); console.log(questions); setOrder(2);}}>과거 답변순</div>
                       <div className={"NS px12 bold " + (order !== 0 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_made); setUpdate(update + 1); setOrder(0);}}>질문 생성일</div>
                   </div>}
-                      <img src = {imageUrl('NotePage/add_image_.png')} onClick = {() => setAddQuestions(true)}/>
+                      <img src = {imageUrl('NotePage/add_image_.png')} onClick = {() => {setAddQuestions(true); window.scrollTo(0, 0);}}/>
                   </div>
               </div>
               <div className = 'written_question margin_note' style = {{marginTop: '-23px'}}>

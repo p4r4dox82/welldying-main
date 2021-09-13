@@ -148,7 +148,7 @@ function QnA ({ match }: Props) {
                   <Link to ={`/qnalist/${Math.min(id + 1, list_num)}`}><span>{`>`}</span></Link>
               </div>
               <div className = 'write_button_margin'>
-                  <Link to = {`/writeqna/${maxQnAId+1}`}>
+                  <Link to = {(user.loggedIn ? `/writeqna/${maxQnAId+1}` : '/login')}>
                       <div className = 'button'>
                           <div>질문 및 제안하기</div>
                       </div>

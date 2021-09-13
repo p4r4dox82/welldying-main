@@ -38,26 +38,12 @@ function Admin() {
                     let question = questions?.find((question) => question.id === questionId);
                     if (!question) return;
 
-                    if (question.type === 'question') return (
-                        <div className='row'>
-                            <h2> { `[질문 ID: ${question.id}] ` } { question.title } </h2>
-                            <ul> { question.message.split('\n').map((str) => <li> {str} </li>) } </ul>
-                            <div style={{marginBottom: '50px'}}/>
-                            <Link to={`/admin/question/${questionId}`}><button> 질문 내용 수정하기 </button></Link>
-                        </div>
-                    );
-                    else return (
-                        <div className='row'>
-
-                            <h2> { `[질문 ID: ${question.id}] ` } { `[읽기자료] ${question.title}` } </h2>
-                            <div className='row'>
-                            <h2> { `[읽기 자료] ${question.title}` } </h2>
-                                <ul> { question.message.split('\n').map((question) => <p> { question } </p>) } </ul>
-                            </div>
-                            <div style={{marginBottom: '50px'}}/>
-                            <Link to={`/admin/question/${questionId}`}><button> 질문 내용 수정하기 </button></Link>
-                        </div>
-                    );
+                    <div className='row'>
+                        <h2> { `[질문 ID: ${question.id}] ` } { question.title } </h2>
+                        <ul> { question.message.split('\n').map((str) => <li> {str} </li>) } </ul>
+                        <div style={{marginBottom: '50px'}}/>
+                        <Link to={`/admin/question/${questionId}`}><button> 질문 내용 수정하기 </button></Link>
+                    </div>
                 })}
             </>
         );

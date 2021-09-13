@@ -8,8 +8,6 @@ import Admin from './pages/Admin';
 import AdminWriteQuestion from './pages/AdminWriteQuestion';
 import AdminWriteSection from './pages/AdminWriteSection';
 import AdminWriteContent from './pages/AdminWriteContent';
-import Checklist from './pages/Checklist';
-import ChecklistPrint from './pages/ChecklistPrint';
 import Console from './pages/Console';
 import Login from './pages/Login';
 import LoginConnect from './pages/LoginConnect';
@@ -23,7 +21,6 @@ import ReadQnA from './pages/ReadQnA';
 import ReadNotice from './pages/ReadNotice';
 import Signup from './pages/Signup';
 import SignupDone from './pages/SignupDone';
-import Write from './pages/Write';
 import WriteQnA from './pages/WriteQnA';
 import WriteQnAanswer from './pages/WriteQnAanswer';
 import WriteNotice from './pages/WriteNotice';
@@ -54,12 +51,6 @@ function App() {
         <Route path='/signup' component={Signup} />
         <Route path='/console' component={Console} />
         <Route path='/mypage' component={Mypage} />
-        <Route path='/checklist/print' component={ChecklistPrint} />
-        <Route path='/checklist/:id' component={Checklist} />
-        <Route path='/checklist' component={Checklist} />
-        <Route path='/write/:sectionId/:questionId' component={Write} />
-        <Route path='/write/:sectionId' component={Write} />
-        <Route path='/write' component={Write} />
         <Route path='/writeqna/answer/:id' component = {WriteQnAanswer} />
         <Route path='/writeqna/:id' component={WriteQnA} />
         <Route path='/writenotice/:id' component = {WriteNotice} />

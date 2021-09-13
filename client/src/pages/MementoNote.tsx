@@ -44,7 +44,7 @@ function MementoNote({ match } : Props) {
       questions?.filter((question) => {
         if(section?.questions?.find((questionId) => questionId === question.id)) {
           let answer = answers?.find((answer) => answer.questionId === question.id);
-          if(answer) return true;
+          if(answer && (!question.userdata.exceptuser.find((username) => username === user.user!.username))) return true;
           else return false;
         }
         else return false;
@@ -57,7 +57,7 @@ function MementoNote({ match } : Props) {
       section?.questions?.filter((questionId) => {
         let question = questions?.find((question) => question.id === questionId);
         let answer = answers?.find((answer) => answer.questionId === questionId);
-        if (!question || answer) return false;
+        if (!question || answer || question.userdata.exceptuser.find((username) => username === user.user?.username)) return false;
         else return true;
       })
     );

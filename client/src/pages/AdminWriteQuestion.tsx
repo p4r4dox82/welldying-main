@@ -38,7 +38,6 @@ function AdminWriteQuestion({ match }: Props) {
     React.useEffect(() => {
         if (!question) return;
         setTitle(question.title);
-        setType(question.type);
         setMessage(question.message);
         setPlaceholder(question.placeholder);
         setContents(question.contents);
@@ -101,7 +100,7 @@ function AdminWriteQuestion({ match }: Props) {
                 <button type='submit' className='signupButton' onClick={async (e) => {
                     e.preventDefault();
                     if (!type || !title || !message || !contents) setError('모든 항목을 채워주세요.');
-                    else if (await writeQuestion(id, type, title, message, placeholder, contents)) setEditDone(true);
+                    else if (await writeQuestion(id, title, message, placeholder, contents)) setEditDone(true);
                     else setError('어딘가 문제가 생겼습니다.');
                 }}>
                     { !question ? '추가하기' : '수정하기' }

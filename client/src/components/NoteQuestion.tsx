@@ -2,7 +2,7 @@ import React from 'react';
 import { imageUrl } from '../etc/config';
 import { Link, match, Redirect } from 'react-router-dom';
 import { getContent, contentComment, Content } from '../etc/api/content';
-import { Question } from '../etc/api/question';
+import { Question, deleteQuestion } from '../etc/api/question';
 import { uploadImage } from '../etc/api/image';
 import { getAnswers, writeAnswer, addBook } from '../etc/api/answer';
 import { getContents } from '../etc/api/content';
@@ -10,6 +10,8 @@ import usePromise from '../etc/usePromise';
 import { parseDate } from '../etc/index';
 import { uploadImage_formdata } from '../etc/api/image';
 import ReactCrop from 'react-image-crop';
+import { RootReducer } from '../store';
+import { useSelector } from 'react-redux';
 
 interface Props {
   question: Question | undefined;
@@ -23,7 +25,7 @@ const checkline = (data: string) => {
   let str_len = str.length;
   let data_fixed;
   if(str_len >= 550) {
-    data_fixed = str.slice(0, -1);
+    data_fixed = str.slice(0, 549);
   }
   else {
     data_fixed = str;
@@ -36,7 +38,8 @@ function NoteQuestion(props: Props) {
   let [show_answer, setShow_answer] = React.useState<boolean>(false);
   let [answer_type, setAnswer_type] = React.useState<string>('');
 
-  let id = React.useMemo(() => question?.id, [question]);
+  let id = React.useMemo(() => Number(question?.id), [question]);
+  let user = useSelector((state: RootReducer) => state.user);
   let contentid = React.useMemo(() => question?.contents[0], [question]);
   let [message, setMessage] = React.useState<string>('');
   let [characternumbers, setCharacternumbers] = React.useState<number>(0);
@@ -72,6 +75,7 @@ function NoteQuestion(props: Props) {
   React.useEffect(() => {
     if(!answer) return;
     setMessage(answer.message);
+    setCharacternumbers(answer.message.length);
     if (answer.imageData.imageUrl !== '')
         setImageUri(answer.imageData.imageUrl);
     setCrop({ unit: 'px', x: answer?.imageData.cropX, y: answer?.imageData.cropY, width: 500, height: 300 });
@@ -79,7 +83,15 @@ function NoteQuestion(props: Props) {
   }, [answer]);
 
   React.useEffect(() => {
+    if(imageUri !== answer?.imageData.imageUrl)
+        setCrop({ ...crop, x: 0, y: 0 });
+  }, [imageUri]);
 
+  let [exceptuser, setExceptUser] = React.useState<string[]>([]);
+
+  React.useEffect(() => {
+    if(!question) return;
+    setExceptUser(question.userdata.exceptuser);
   }, [question]);
 
   let input_file = React.useRef<any>(null);
@@ -124,11 +136,14 @@ function NoteQuestion(props: Props) {
                     <div className = 'angle' />
                     <div className = 'round' />
                 </div>
-                {del && <div className = 'del_container'>
+                {del && <div className = 'del_container' style = {{zIndex: 10}}>
                     <div className = 'text GB px14'>해당 질문을 삭제하시겠습니까?</div>
                     <button className = 'rec white NS px12' onClick = {() => setDel(false)}>돌아가기</button>
                     <button className = 'rec green NS px12' onClick = {async () => {
-
+                        let newexceptuser = exceptuser;
+                        newexceptuser = newexceptuser?.concat(user.user!.username);
+                        if(await deleteQuestion(id, newexceptuser))
+                            alert('질문이 삭제되었습니다.');
                     }}>삭제하기</button>
                 </div>}
             </>}
@@ -155,11 +170,14 @@ function NoteQuestion(props: Props) {
                 <Link to={`/contentpage/${question.contents[0]}`}><button className = 'white NS px12 op10'>대표 컨텐츠 바로가기</button></Link>
             </div>
             {props.type !== 'add' && <img className = 'delete_button' src = {imageUrl('NotePage/delete_button.png')} onClick = {() => {setDel(!del);}}/>}
-            {del && <div className = 'del_container' style = {{top: '85px'}}>
+            {del && <div className = 'del_container' style = {{top: '12px', zIndex: 10}}>
                 <div className = 'text GB px14'>해당 질문을 삭제하시겠습니까?</div>
                 <button className = 'rec white NS px12' onClick = {() => setDel(false)}>돌아가기</button>
                 <button className = 'rec green NS px12' onClick = {async () => {
-
+                    let newexceptuser = exceptuser;
+                    newexceptuser = newexceptuser?.concat(user.user!.username);
+                    if(await deleteQuestion(id, newexceptuser))
+                        alert('질문이 삭제되었습니다.');
                 }}>삭제하기</button>
             </div>}
             {showcontent && <div className = 'show_content_container'>
@@ -170,9 +188,9 @@ function NoteQuestion(props: Props) {
         {show_answer && <div className = {'note_question ' + answer_type + ' ' + props.type} style = {{marginLeft: (props.order !== -1 ? `${-30 -265 * (props.order % 3)}px` : '')}}>
             <img className = 'background' src = {imageUrl('ContentPage/question_background.png')} />
             <div className = 'question_container'>
-                <textarea className = 'answer_area GB px15 line40 op7' value={message} onChange={(e) => {setMessage(checkline(e.target.value)); setCharacternumbers(e.target.value.length);}}/>
+                <textarea className = 'answer_area GB px15 line40 op7' value={message} onChange={(e) => {setMessage(checkline(e.target.value)); setCharacternumbers(e.target.value.length);}} />
                 <div className = 'characternumbers NS px12 bold op6'>
-                {characternumbers + ' / 550 자'}
+                {Math.min(550, characternumbers) + ' / 550 자'}
                 </div>
                 <div className = 'image_uploader'>
                     <div className = 'fileSelector' style = {{height: (imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? 150 : (crop.height + 60))}}>
@@ -222,7 +240,7 @@ function NoteQuestion(props: Props) {
                         let changeCrop = newCrop;
                         setCrop(changeCrop);
 
-                    }} style = {{width: 'fit-content', height: 'fit-content', objectFit: 'cover', minHeight: '410px'}} locked />
+                    }} style = {{width: 'fit-content', height: 'fit-content', objectFit: 'none', minHeight: '410px'}} locked />
                 </div>
                 <div className = 'bottom_container'>
                     <div className = 'text GB px14'>드래그하여 삽입될 사진을 조절해주세요.</div>

@@ -36,7 +36,9 @@ function Content_type (props : Props) {
     if(!content) return;
     setUserdata(content?.userdata);
     setId(content?.id);
-    setLiked(content?.userdata.likes.find((username) => (username === user.user!.username)) ? true : false );
+    if(!user.loggedIn)
+      setLiked(false);
+    else setLiked(content?.userdata.likes.find((username) => (username === user.user!.username)) ? true : false );
   }, [content]);
 
   React.useEffect(() => {
@@ -70,13 +72,6 @@ function Content_type (props : Props) {
             webUrl: `https://mymemento.kr/contentpage/${id}`,
           },
         },
-        {
-          title: '앱으로 보기',
-          link: {
-            mobileWebUrl: `https://mymemento.kr/contentpage/${id}`,
-            webUrl: `https://mymemento.kr/contentpage/${id}`,
-          },
-        },
       ],
     });
   }
@@ -86,19 +81,6 @@ function Content_type (props : Props) {
   }
 
   let clipboard = new ClipboardJS('.clipboard_btn');
-
-  clipboard.on('success', function(e: any) {
-    console.info('Action:', e.action);
-		console.info('Text:', e.text);
-		console.info('Trigger:', e.trigger);
-		
-		e.clearSelection();
-  });
-
-  clipboard.on('error', function(e: any) {
-		console.error('Action:', e.action);
-		console.error('Trigger:', e.trigger);
-	});
 
   if(!content) return <></>;
   else return (
@@ -111,7 +93,7 @@ function Content_type (props : Props) {
                   <div className = 'title GB px20 op9 line40'>{content.title}</div>
                   <div className = 'date GB px14 op9'>{'영상제작일 : ' + String(parseDate(new Date(Number(content.date))))}</div>
                   <div className = 'tag GB px14 op6'>{content.tag}</div>
-                  <div className={"vector_container like" + (liked ? ' liked' : '')} onClick = {async () => {
+                  <div className={"vector_container like" + (liked ? ' liked' : '')} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;
                     if(userdata.likes.find((username) => (username === user.user!.username))) {
                       new_userdata.likes.splice(Number(userdata.likes.find((username) => (username === user.user!.username))), 1);
@@ -122,9 +104,9 @@ function Content_type (props : Props) {
                     setUserdata(new_userdata);
                     setLiked(!liked);
                     await content_userdata(id, new_userdata);
-                  }}>{like_vector}</div>
+                  } : () => {}}>{like_vector}</div>
                   <img className = 'share_button' src = {imageUrl('ContentPage/share_button.png')} onClick = { () => {setShare_container(!share_container);}} />
-                  <div className = 'more NS px12 bold op6'>{'원본파일 보기>'}</div>
+                  <div className = 'more NS px12 bold op6' onClick = {() => window.open(content?.source, '_blank')}>{'원본파일 보기>'}</div>
                   {true && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark_white.png')} /> }
               </div>
               {share_container && <div className = 'share_container'>

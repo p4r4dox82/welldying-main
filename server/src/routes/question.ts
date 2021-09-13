@@ -22,15 +22,15 @@ export default (Question: Model<QuestionDocument>) => {
     router.post('/', onlyAdmin, async (req, res, next) => {
         let data: QuestionType = {
             id: Number.parseInt(req.body.id),
-            type: req.body.type,
             title: req.body.title,
             message: req.body.message,
             placeholder: req.body.placeholder,
             contents: req.body.contents,
+            userdata: { exceptuser: [] },
         };
 
         if (!await Question.findOneAndUpdate({ id: data.id },
-                { type: data.type, title: data.title, message: data.message, placeholder: data.placeholder, contents: data.contents })) {
+                { title: data.title, message: data.message, placeholder: data.placeholder, contents: data.contents, userdata: data.userdata })) {
             const question = new Question(data);
             question.save();
         }
@@ -38,6 +38,16 @@ export default (Question: Model<QuestionDocument>) => {
         res.sendStatus(200);
         return;
     });
+
+    router.put('/delete', onlyAdmin, async (req, res, next) => {
+        let id = Number.parseInt(req.body.id);
+        let userdata = { exceptuser: req.body.exceptuser };
+
+        if(await Question.findOneAndUpdate({ id: id }, 
+            { userdata: userdata }))
+            res.sendStatus(200);
+        return;
+    })
 
     return router;
 }

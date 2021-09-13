@@ -2,7 +2,7 @@ import React from 'react';
 import { imageUrl } from '../etc/config';
 import { getContents } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
-import { css, keyframes } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 function ContentSlide () {
   let [, contents] = usePromise(getContents);
@@ -48,8 +48,18 @@ function ContentSlide () {
       return b - a;
   }
 
+  let link_content = React.useRef<any>(null);
+  let LinkClick = () => {
+    link_content.current.click();
+  }
+  let id = React.useMemo(() => {
+    if(!slide_contents) return;
+    return slide_contents[slide_number].id;
+  }, [slide_contents, slide_number]);
+
   return (
     <>
+      <Link to={`/contentpage/${id}`} ref = {link_content} style = {{display: 'none'}} />
       <div className = 'block overflow_hidden'>
           <div className = 'contentslide'>
               <div className = 'selector_container'>
@@ -57,7 +67,7 @@ function ContentSlide () {
                       <img className = {i === start_number ? '' : 'opacity'} src = {imageUrl('ContentPage/selector_select.png')} />
                   ))}
               </div>
-              <div className = 'slide_content_container' >
+              <div className = 'slide_content_container' onClick = {() => LinkClick()}>
                   <div className = 'left'>
                   {slide_contents?.map((content, key) => (
                     <div className = {('slide_content absolute' + ((key === slide_number || key === slide_after(slide_number, 1)) ? ' animate' : ''))} ref = {(key === slide_number ? slide_dom_left : (key === slide_after(slide_number, 1) ? slide_dom_right : (key === slide_before(slide_number, 1) ? slide_dom_left_hidden : (key === slide_before(slide_number, 2) ? slide_dom_right_hidden : other_slide_dom))))} style = {{left: ((key === 0 || key === 4) ? '0px' : '1062px'), zIndex: parseInt((slide_number === 4 && key < 3) ? `${-1 - key}` : `${0 - abs(key, slide_number)}`)}}>
@@ -86,7 +96,7 @@ function ContentSlide () {
                   </div>
               </div>
               <div className = 'slide_content_title'>
-                  <div className = 'title'>
+                  <div className = 'title' onClick = {() => LinkClick()}>
                       <div>당신의</div>
                       <div>행복한 이야기를</div>
                       <div>영상에 담다.</div>

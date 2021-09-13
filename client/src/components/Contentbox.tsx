@@ -26,58 +26,72 @@ function Contentbox(props: Props) {
     if(!content) return;
     setId(content.id);
     setUserdata(content?.userdata);
-    setLiked(content?.userdata.likes.find((username) => (username === user.user!.username)) ? true : false );
-    setBookmarked(content?.userdata.bookmark.find((username) => (username === user.user!.username)) ? true : false );
+    if(user.loggedIn) {
+      setLiked(content?.userdata.likes.find((username) => (username === user.user!.username)) ? true : false );
+      setBookmarked(content?.userdata.bookmark.find((username) => (username === user.user!.username)) ? true : false );
+    } else {
+      setLiked(false);
+      setBookmarked(false);
+    }
   }, [content]);
+
+  let link_content = React.useRef<any>(null);
+  let LinkClick = () => {
+    link_content.current.click();
+  }
 
   if(!content) return <></>;
   else return (
     <>
+      <Link to={`/contentpage/${id}`} ref = {link_content} style = {{display: 'none'}} />
       {(props.additionalClass === 'big' || props.additionalClass === 'big type2') && <div className = 'big_content'>
-          <Link to={`/contentpage/${id}`}><img className = 'thumbnail' src = {imageUrl('ContentPage/big_content_image.png')} onClick = {async () => {
+          <img className = 'thumbnail' src = {imageUrl('ContentPage/big_content_image.png')} onClick = {user.loggedIn ? async () => {
             let new_userdata = userdata;
             if(userdata.read.find((username) => (username === user.user!.username)) === undefined) {
               new_userdata.read.push(user.user!.username);
               setUserdata(new_userdata);
               await content_userdata(id, new_userdata);
             }
-          }}/></Link>
+            LinkClick();
+          } : () => {LinkClick();}}/>
           <div className = 'cover'>
               {!big_type2 && <img className = 'memento_colon' src = {imageUrl('memento_colon.png')} />}
               <div className = 'type'>{content.type === '책' ? 'book' : (content.type === '동영상' ? 'video' : '')}</div>
-              <div className = 'title' onClick = {async () => {
+              <div className = 'title' onClick = {user.loggedIn ? async () => {
                 let new_userdata = userdata;
                 if(userdata.read.find((username) => (username === user.user!.username)) === undefined) {
                   new_userdata.read.push(user.user!.username);
                   setUserdata(new_userdata);
                   await content_userdata(id, new_userdata);
                 }
-              }}>{'[' + content.type + ']' + content.title}</div>
+                LinkClick();
+              } : () => {LinkClick();}}>{'[' + content.type + ']' + content.title}</div>
               <div className = 'tag'>{content.tag}</div>
               <div className = 'likes_container'>
                   <img className = 'likes_image' src = {imageUrl('content_like.png')} />
                   <span>{content.userdata.likes.length}</span>
               </div>
           </div>
-          {content.userdata.read.find((username) => username === user.user!.username) && <div className = 'read'/>}
-          {content.userdata.bookmark.find((username) => username === user.user!.username) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
+          {(user.loggedIn && content.userdata.read.find((username) => username === user.user!.username)) && <div className = 'read'/>}
+          {(user.loggedIn && content.userdata.bookmark.find((username) => username === user.user!.username)) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
       </div>}
       {(props.additionalClass === 'small' || props.additionalClass === 'small wide') && <div className = {'small_content ' + props.additionalClass}>
-          <img className = 'thumbnail' src = {imageUrl(props.additionalClass === 'small' ? 'ContentPage/small_content_image.png' : 'ContentPage/big_content_image.png')} onClick = {async () => {
+          <img className = 'thumbnail' src = {imageUrl(props.additionalClass === 'small' ? 'ContentPage/small_content_image.png' : 'ContentPage/big_content_image.png')} onClick = {user.loggedIn ? async () => {
             let new_userdata = userdata;
             if(userdata.read.find((username) => (username === user.user!.username)) === undefined) {
               new_userdata.read.push(user.user!.username);
               setUserdata(new_userdata);
               await content_userdata(id, new_userdata);
             }
-          }}/>
+            LinkClick();
+          } : () => {LinkClick();}}/>
           <div className = 'cover'>
               <div className = 'tag'>{content.tag}</div>
               <div className = 'more' onClick = {() => {setSmall_more(!small_more);}}>
                   {[...Array(3).keys()].map((i) => (<div className = 'dot' />))}
               </div>
               {small_more && <div className = {'more_container' + ' ' + props.additionalClass}>
-                  <div style = {{display: 'flex', alignItems: 'center', gap: '11px'}} onClick = {async () => {
+                  <div style = {{display: 'flex', alignItems: 'center', gap: '11px'}} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;
                     if(userdata.likes.find((username) => (username === user.user!.username))) {
                       new_userdata.likes.splice(Number(userdata.likes.find((username) => (username === user.user!.username))), 1);
@@ -88,11 +102,11 @@ function Contentbox(props: Props) {
                     setUserdata(new_userdata);
                     setLiked(!liked);
                     await content_userdata(id, new_userdata);
-                  }}>
+                  } : () => {}}>
                       <div className={"vector_container like" + (liked ? ' liked' : '')}>{like_vector}</div>
                       <span className = 'label NS px13 nospacing'>좋아요</span>
                   </div>
-                  <div style = {{display: 'flex', alignItems: 'center', gap: '11px'}} onClick = {async () => {
+                  <div style = {{display: 'flex', alignItems: 'center', gap: '11px'}} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;
                     if(userdata.bookmark.find((username) => (username === user.user!.username))) {
                       new_userdata.bookmark.splice(Number(userdata.bookmark.find((username) => (username === user.user!.username))), 1);
@@ -103,23 +117,24 @@ function Contentbox(props: Props) {
                     setUserdata(new_userdata);
                     setBookmarked(!bookmarked);
                     await content_userdata(id, new_userdata);
-                  }}>
+                  } : () => {}}>
                       <div className={"vector_container bookmark" + (bookmarked ? ' bookmarked' : '')}>{bookmark_vector}</div>
                       <span className = 'label NS px13 nospacing'>책갈피 남기기</span>
                   </div>
               </div>}
-              <div className = 'title' onClick = {async () => {
+              <div className = 'title' onClick = {user.loggedIn ? async () => {
                 let new_userdata = userdata;
                 if(userdata.read.find((username) => (username === user.user!.username)) === undefined) {
                   new_userdata.read.push(user.user!.username);
                   setUserdata(new_userdata);
                   await content_userdata(id, new_userdata);
                 }
-              }}>{'[' + content.type + ']' + content.title}</div>
+                LinkClick();
+              } : () => {LinkClick();}}>{'[' + content.type + ']' + content.title}</div>
               <div className = 'date'>{'2021.08.03'}</div>
           </div>
-          {content.userdata.read.find((username) => username === user.user!.username) && <div className = 'read'/>}
-          {content.userdata.bookmark.find((username) => username === user.user!.username) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
+          {(user.loggedIn && content.userdata.read.find((username) => username === user.user!.username)) && <div className = 'read'/>}
+          {(user.loggedIn && content.userdata.bookmark.find((username) => username === user.user!.username)) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
       </div>}
       {props.additionalClass === 'question' && <div className = 'question_content'>
           <img className = 'thumbnail' src = {imageUrl('ContentPage/question_content_image.png')} />
@@ -127,10 +142,10 @@ function Contentbox(props: Props) {
               <div>당신의 삶에서</div>
               <div>가장 중요한 사람은 누구인가요?</div>
           </button>
-          <div className = 'cover'>
+          <div className = 'cover' onClick = {() => LinkClick()}>
               <div className = 'title'>{'[' + content.type + ']' + content.title}</div>
           </div>
-          {content.userdata.bookmark.find((username) => username === user.user!.username) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
+          {(user.loggedIn && content.userdata.bookmark.find((username) => username === user.user!.username)) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
       </div>}
     </>
   );

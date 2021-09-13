@@ -2,9 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootReducer } from '../store';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { imageUrl } from '../etc/config';
 import { MementoLogo, UserImage, Colon, leftVector, rightVector } from '../img/Vectors';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { getSections } from '../etc/api/section';
 import { getQuestions } from '../etc/api/question';
 import { getContents } from '../etc/api/content';
@@ -72,6 +73,7 @@ function MementoNoteMain () {
     }, [id, questions, section]);
     let maxQuestionId = React.useMemo(() => section_questions?.length, [section_questions]);
 
+    if(!user.loggedIn) return <Redirect to='/login'/>
     return (
         <div className = 'MementoNoteMain'>
             <Header additionalClass = ' ' />
@@ -148,12 +150,13 @@ function MementoNoteMain () {
                     <div className="content_container" style = {{textAlign: 'left', flexWrap: 'nowrap', overflow: 'hidden', padding: '20px 20px', left: '-20px', top: '-20px', width: '100%', boxSizing: 'content-box'}}>
                         {contents?.map((content) => <Contentbox additionalClass = 'big type2' content = {content}/>)}
                     </div>
-                    <div className="buttoncontainer" style = {{display: 'flex', gap: '25px', top: '-23px', left: 'calc(1032px - 81px)'}}>
+                    <div className="buttoncontainer" style = {{display: 'flex', gap: '25px', top: '-23px', marginLeft: 'calc(1032px - 81px)'}}>
                         <div className="left button">{leftVector}</div>
                         <div className="right button">{rightVector}</div>
                     </div>
                 </div>
             </div>
+            <Footer additionalClass = '' />
         </div>
     );
 }

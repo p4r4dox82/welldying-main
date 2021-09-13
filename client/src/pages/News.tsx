@@ -82,7 +82,7 @@ function News ({ match }: Props) {
                   ))}
                   <Link to ={`/newslist/${Math.min(id + 1, list_num)}`}><span>{`>`}</span></Link>
               </div>
-              {user.user!.username === 'admin' && <div className = 'write_button_margin'>
+              {(user.loggedIn && user.user!.username === 'admin') && <div className = 'write_button_margin'>
                   <Link to = {`/writenews/${maxNewsId+1}`}>
                       <div className = 'button'>
                           <div>뉴스 작성하기</div>

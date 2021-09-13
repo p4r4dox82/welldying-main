@@ -37,6 +37,7 @@ export const userSchema = new Schema<UserDocument>({
     phoneUserDigest: { type: String, required: true, },
     kakaoId: String,
     googleId: String,
+    bookname: [String],
 });
 
 userSchema.set('timestamps', true);

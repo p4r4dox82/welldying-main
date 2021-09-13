@@ -84,7 +84,7 @@ function Notice ({ match }: Props) {
                   ))}
                   <Link to ={`/noticelist/${Math.min(id + 1, list_num)}`}><span>{`>`}</span></Link>
               </div>
-              {user.user!.username === 'admin' && <div className = 'write_button_margin'>
+              {(user.loggedIn && user.user!.username === 'admin') && <div className = 'write_button_margin'>
                   <Link to = {`/writenotice/${maxNoticeId+1}`}>
                       <div className = 'button'>
                           <div>공지 작성하기</div>

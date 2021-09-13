@@ -10,6 +10,8 @@ import { getContents, Content } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
 import { Link, match, Redirect } from 'react-router-dom';
 import { imageUrl } from '../etc/config';
+import { RootReducer } from '../store';
+import { useSelector } from 'react-redux';
 
 
 interface MatchParams {
@@ -21,25 +23,25 @@ interface Props {
 };
 
 function ContentMain({ match } : Props) {
-  let id = Number.parseInt(match.params.id);
-  let [, contents] = usePromise(getContents);
-  let popular_contents = contents?.slice(0, 3);
-  let subject_contents = contents?.slice(0, 4);
-  let subject_contents_8 = contents?.slice(0, 8);
-  let question_contents = contents?.slice(0, 8);
-  const maxquestion_contents = 8;
-  let [position, setPosition] = React.useState<number>(0);
+    let id = Number.parseInt(match.params.id);
+    let [, contents] = usePromise(getContents);
+    let popular_contents = contents?.slice(0, 3);
+    let subject_contents = contents?.slice(0, 4);
+    let subject_contents_8 = contents?.slice(0, 8);
+    let question_contents = contents?.slice(0, 8);
+    const maxquestion_contents = 8;
+    let [position, setPosition] = React.useState<number>(0);
 
-  let question_content_dom = React.useRef<any>(null);
+    let question_content_dom = React.useRef<any>(null);
 
-  let moveLeft = (position: number) => {
-    question_content_dom.current.style.transform = `translateX(${-353 * position + 'px'})`;
-  }
-  let moveRight = (position: number) => {
-    question_content_dom.current.style.transform = `translateX(${-353 * position + 'px'})`;
-  }
+    let moveLeft = (position: number) => {
+        question_content_dom.current.style.transform = `translateX(${-353 * position + 'px'})`;
+    }
+    let moveRight = (position: number) => {
+        question_content_dom.current.style.transform = `translateX(${-353 * position + 'px'})`;
+    }
 
-  return (
+    return (
     <>
       <Header additionalClass = ' '/>
       <ContentCategory additionalClass = {String(id)}/>

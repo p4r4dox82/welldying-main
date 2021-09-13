@@ -355,5 +355,21 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         }
     });
 
+    router.put('/bookname', onlyAuthUser, async (req, res, next) => {
+        let user = req.user!;
+        let username = req.body.username;
+        
+        if (!await User.findOne({ username })) return res.sendStatus(500);
+
+        let bookname = req.body.bookname;
+
+        if (user.username !== username) return res.sendStatus(401);
+
+        if(await User.findOneAndUpdate({ username: username }, {
+            bookname
+        }))
+        res.send(200);
+    })
+
     return router;
 };

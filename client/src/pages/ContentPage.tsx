@@ -66,7 +66,7 @@ function ContentPage ({ match } : Props) {
             <OtherContent additionalClass = {type} title = {title} tag = {tag} />
         </div>
         <ContentBorder content = {content}/>
-        <div className = 'block contentpage overflow_hidden'>
+        <div className = 'block contentpage overflow_hidden'style = {{paddingTop: '115px'}}>
             <div className = 'more_content margin_base'>
                 <div className = 'background' />
                 <div className = 'title GB px20'>
