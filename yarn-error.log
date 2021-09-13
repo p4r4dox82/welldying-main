@@ -1,19 +1,31 @@
 Arguments: 
+<<<<<<< Updated upstream
   C:\Program Files\nodejs\node.exe C:\Users\p4r4d\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add node-sas
 
 PATH: 
   C:\Users\p4r4d\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\p4r4d\bin;C:\Program Files\AdoptOpenJDK\jdk-8.0.292.10-hotspot\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\MATLAB\R2020b\bin;C:\Program Files\Git\cmd;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\nodejs;C:\Program Files\PuTTY;C:\Program Files\Amazon\AWSCLI\bin;C:\Users\p4r4d\AppData\Local\Programs\Python\Python39\Scripts;C:\Users\p4r4d\AppData\Local\Programs\Python\Python39;C:\Users\p4r4d\AppData\Local\Microsoft\WindowsApps;C:\Users\p4r4d\AppData\Local\atom\bin;C:\Users\p4r4d\AppData\Roaming\npm;C:\Users\p4r4d\AppData\Local\GitHubDesktop\bin;C:\Users\p4r4d\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+=======
+  /usr/local/bin/node /usr/local/bin/yarn add cookieSession --save
+
+PATH: 
+  /usr/local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+>>>>>>> Stashed changes
 
 Yarn version: 
   1.22.11
 
 Node version: 
+<<<<<<< Updated upstream
   14.17.6
+=======
+  16.7.0
+>>>>>>> Stashed changes
 
 Platform: 
-  win32 x64
+  linux x64
 
 Trace: 
+<<<<<<< Updated upstream
   Error: https://registry.yarnpkg.com/node-sas: Not found
       at Request.params.callback [as _callback] (C:\Users\p4r4d\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66992:18)
       at Request.self.callback (C:\Users\p4r4d\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140763:22)
@@ -25,6 +37,19 @@ Trace:
       at IncomingMessage.emit (events.js:412:35)
       at endReadableNT (internal/streams/readable.js:1317:12)
       at processTicksAndRejections (internal/process/task_queues.js:82:21)
+=======
+  Error: https://registry.yarnpkg.com/cookieSession: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66992:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140763:22)
+      at Request.emit (node:events:394:28)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141735:10)
+      at Request.emit (node:events:394:28)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141657:12)
+      at Object.onceWrapper (node:events:513:28)
+      at IncomingMessage.emit (node:events:406:35)
+      at endReadableNT (node:internal/streams/readable:1348:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+>>>>>>> Stashed changes
 
 npm manifest: 
   {
