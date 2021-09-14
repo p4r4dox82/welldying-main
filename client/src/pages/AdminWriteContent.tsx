@@ -8,6 +8,9 @@ import { getSections } from '../etc/api/section';
 import { getQuestions } from '../etc/api/question';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
+import { uploadImage_formdata } from '../etc/api/image';
+import ReactCrop from 'react-image-crop';
+import { imageUrl } from '../etc/config';
 
 interface MatchParams {
     id: string;
@@ -37,6 +40,20 @@ function AdminWriteContent({ match }: Props) {
 
     let [editDone, setEditDone] = React.useState<boolean>(false);
 
+    let [crop, setCrop] = React.useState<{
+        unit: "px" | "%",
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+    }>({
+        unit: "px",
+        x: 0,
+        y: 0,
+        width: 1228,
+        height: 720,
+    });
+
     React.useEffect(() => {
         if (!content) return;
         setTitle(content.title);
@@ -46,7 +63,10 @@ function AdminWriteContent({ match }: Props) {
         setSource(content.source);
         setSummary(content.detail.summary);
         setQuestion(content.question);
-        setThumbnailUri(content.thumbnailUrl);
+        if(!content.imageData || !content.imageData.imageUrl) return;
+        if (content.imageData.imageUrl !== '')
+            setThumbnailUri(content.imageData.imageUrl);
+        setCrop({ ...crop, x: content.imageData.cropX, y: content.imageData.cropY });
     }, [content]);
 
     let categoryForm = React.useMemo(() => {
@@ -87,12 +107,36 @@ function AdminWriteContent({ match }: Props) {
         );
     }, [update, allSectionsLoading, QuestionsLoading]);
 
+    React.useEffect(() => {
+        if(!content?.imageData || !content?.imageData.imageUrl) return;
+        if(thumbnailUri !== content?.imageData.imageUrl)
+            setCrop({ ...crop, x: 0, y: 0 });
+    }, [thumbnailUri]);
+
+    let input_file = React.useRef<any>(null);
+    let [cropImage, setCropImage] = React.useState<boolean>(false);
+    let handleFileinput  = async (e: any) => {
+        let formData = new FormData();
+        formData.append('image', e.target.files[0]);
+
+        const s3Uri = await uploadImage_formdata(formData);
+        console.log(s3Uri);
+        setThumbnailUri(s3Uri);
+        if(s3Uri === undefined) {
+        setThumbnailUri('https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png');
+        }
+        return s3Uri;
+    }
+    let handleClick = () => {
+        input_file.current.click();
+    };
+
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
     else if (editDone) return <Redirect to='/admin'/>
     else return (
         <>
             <Header additionalClass='grey borderBottom' />
-            <form className='signupForm' style={{width: '1000px'}}>
+            <div className='signupForm' style={{width: '1000px'}}>
                 <span><Link to='/admin'> 뒤로 가기 </Link></span>
 
                 <h1 style={{fontSize: '28px', fontWeight: 'bold', lineHeight: '32px', marginBottom: '32px'}}>
@@ -130,20 +174,46 @@ function AdminWriteContent({ match }: Props) {
                     <div className='label'> 질문 목록 </div>
                     { questionForm }
                 </div>
-                <div className='row'>
+                <div className='row' style = {{width: '100vw'}}>
                     <div className='source'> 썸네일 </div>
-                    <input value={thumbnailUri} onChange={(e) => setThumbnailUri(e.target.value)}/>
+                    <div className = 'image_uploader' style = {{marginLeft: '-200px'}}>
+                        <div className = 'fileSelector' style = {{height: (thumbnailUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? 150 : (crop.height + 60))}}>
+                            <button className = 'image_input' onClick = {() => {handleClick(); setCropImage(true);}} style = {{background:'rgba(255, 255, 255, 1)'}}>
+                                <div className = 'new_image' style = {{margin: 'auto', width: crop.width, height: (thumbnailUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? 150 : crop.height), overflow: 'hidden'}}>
+                                    <img className = 'new_image' src = {thumbnailUri} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (thumbnailUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? '11px' : '0px')}}/>
+                                </div>
+                            </button>
+                            <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
+                        </div>
+                    </div>
                 </div>
                 <button type='submit' className='signupButton' onClick={async (e) => {
                     e.preventDefault();
                     if (!title || !category || !type || !source || !summary || !question || !thumbnailUri ) setError('모든 항목을 채워주세요.');
-                    else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, source, { summary: summary, }, [], question, thumbnailUri)) {setEditDone(true);}
+                    else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, source, { summary: summary, }, [], question, { imageUrl: thumbnailUri, cropX: crop.x, cropY: crop.y })) {setEditDone(true);}
                     else setError('어딘가 문제가 생겼습니다.');
                 }}>
                     { !content ? '추가하기' : '수정하기' }
                 </button>
                 { error }
-            </form>
+            </div>
+            {cropImage && <div className = 'crop_image_container admin'>
+                <div className = 'imageCrop'>
+                    <img className = 'quit_button' src = {imageUrl('NotePage/quit_vector.svg')} onClick = {() => setCropImage(false)}/>
+                    <div className = 'image_container'>
+                        <ReactCrop className = 'Crop' src = {(thumbnailUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? '' : thumbnailUri)} crop = {crop} onChange = {(newCrop) => {
+                            let changeCrop = newCrop;
+                            setCrop(changeCrop);
+
+                        }} style = {{width: 'fit-content', height: 'fit-content', objectFit: 'none', minHeight: '410px'}} locked />
+                    </div>
+                    <div className = 'bottom_container'>
+                        <div className = 'text GB px14'>드래그하여 삽입될 사진을 조절해주세요.</div>
+                        <button className = 'change NS px14 whiteop10' onClick = {() => handleClick()}>사진 변경하기</button>
+                        <button className = 'insert NS px14 whiteop10' onClick = {() => setCropImage(false)}>사진 삽입하기</button>
+                    </div>
+                </div>
+            </div>}
             <Footer additionalClass= ' '/>
         </>
     )

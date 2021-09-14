@@ -1,5 +1,11 @@
 import { Schema, Document } from "mongoose";
 
+export interface imageData {
+    imageUrl: string;
+    cropX: number;
+    cropY: number;
+}
+
 export interface ContentType {
     id: number;
     title: string;
@@ -12,7 +18,7 @@ export interface ContentType {
     detail: { summary: string; };
     comments: number[];
     question: number;
-    thumbnailUrl: string;
+    imageData: imageData;
 };
 
 export type ContentDocument = Document & ContentType;
@@ -29,5 +35,5 @@ export const contentSchema = new Schema<ContentDocument>({
     detail: { summary: String },
     comments: [Number],
     question: Number,
-    thumbnailUrl: String,
+    imageData: { imageUrl: String, cropX: Number, cropY: Number },
 });

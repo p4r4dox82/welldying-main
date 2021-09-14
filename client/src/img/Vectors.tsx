@@ -85,3 +85,69 @@ export const rightVector = (
     <path opacity="0.7" d="M2 21L12 11.5L2 2" stroke="#283A30" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 );
+
+export const MementoNoteVector = (
+    <svg width="34" height="28" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'MementoNoteVector'>
+    <path d="M18.5455 13.1765H29.3636V15.6471H18.5455V13.1765ZM18.5455 9.05882H29.3636V11.5294H18.5455V9.05882ZM18.5455 17.2941H29.3636V19.7647H18.5455V17.2941ZM30.9091 0H3.09091C1.39091 0 0 1.48235 0 3.29412V24.7059C0 26.5176 1.39091 28 3.09091 28H30.9091C32.6091 28 34 26.5176 34 24.7059V3.29412C34 1.48235 32.6091 0 30.9091 0ZM30.9091 24.7059H17V3.29412H30.9091V24.7059Z"/>
+    </svg>
+);
+
+export const MementoContentVector = (
+    <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'MementoContentVector'>
+    <path opacity="0.7" d="M27.9 9.3H3.1V6.2H27.9V9.3ZM24.8 0H6.2V3.1H24.8V0ZM31 15.5V27.9C31 29.605 29.605 31 27.9 31H3.1C1.395 31 0 29.605 0 27.9V15.5C0 13.795 1.395 12.4 3.1 12.4H27.9C29.605 12.4 31 13.795 31 15.5ZM21.7 21.7L12.4 16.6315V26.753L21.7 21.7Z"/>
+    </svg>
+);
+
+export const MementoBookVector = (
+    <svg width="34" height="28" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'MementoBookVector'>
+    <path opacity="0.7" d="M30.6 0H3.4C1.53 0 0.017 1.575 0.017 3.5L0 24.5C0 26.425 1.53 28 3.4 28H30.6C32.47 28 34 26.425 34 24.5V3.5C34 1.575 32.47 0 30.6 0ZM22.1 24.5H3.4V17.5H22.1V24.5ZM22.1 15.75H3.4V8.75H22.1V15.75ZM30.6 24.5H23.8V8.75H30.6V24.5Z"/>
+    </svg>
+);
+
+export const MementoMakeBookVector = (
+    <svg width="28" height="32" viewBox="0 0 28 32" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'MementoMakeBookVector'>
+    <path opacity="0.7" d="M14 14.871C10.3289 11.4453 5.41333 9.34307 0 9.34307V26.472C5.41333 26.472 10.3289 28.5742 14 32C17.6711 28.5898 22.5867 26.472 28 26.472V9.34307C22.5867 9.34307 17.6711 11.4453 14 14.871ZM14 9.34307C16.5822 9.34307 18.6667 7.25645 18.6667 4.67153C18.6667 2.08662 16.5822 0 14 0C11.4178 0 9.33333 2.08662 9.33333 4.67153C9.33333 7.25645 11.4178 9.34307 14 9.34307Z"/>
+    </svg>
+);
+
+export const MementoTogetherNoteVector = (
+    <svg width="35" height="28" viewBox="0 0 35 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path opacity="0.4" d="M31.5 0H3.5C1.575 0 0 1.575 0 3.5V24.5C0 26.425 1.575 28 3.5 28H31.5C33.425 28 35 26.425 35 24.5V3.5C35 1.575 33.425 0 31.5 0ZM3.5 14H10.5V17.5H3.5V14ZM21 24.5H3.5V21H21V24.5ZM31.5 24.5H24.5V21H31.5V24.5ZM31.5 17.5H14V14H31.5V17.5Z"/>
+    </svg>
+);
+
+export const LeftVector2 = (
+    <svg width="28" height="22" viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path opacity="0.4" d="M18 11L1 11" stroke="#23342A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path opacity="0.4" d="M27 11H23" stroke="#23342A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path opacity="0.4" d="M11.001 21L1.00098 11L11.001 1" stroke="#23342A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);
+
+export const RightVector2 = (
+    <svg width="28" height="22" viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path opacity="0.4" d="M10 11L27 10.9988" stroke="#23342A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path opacity="0.4" d="M16.999 1L26.999 11L16.999 21" stroke="#23342A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path opacity="0.4" d="M5 11H1" stroke="#23342A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);
+
+export const RightVector = (
+    <svg width="10" height="34" viewBox="0 0 10 34" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'RightVector'>   
+    <path opacity="0.2" d="M1 1L9 17L0.999994 33" stroke="#23342A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);
+
+export const LeftArrowVector = (
+    <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'LeftArrowVector'>
+    <path d="M21 11.5L2 11.5" stroke="#23342A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M11.5 21L2 11.5L11.5 2" stroke="#23342A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);
+
+export const RightArrowVector = (
+    <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'RightArrowVector'>
+    <path d="M2 11.5L21 11.5" stroke="#23342A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M11.5 2L21 11.5L11.5 21" stroke="#23342A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);

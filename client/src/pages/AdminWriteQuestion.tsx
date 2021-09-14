@@ -85,7 +85,7 @@ function AdminWriteQuestion({ match }: Props) {
                 </div>
                 <div className='row'>
                     <div className='label'> 제목 </div>
-                    <input value={title} onChange={(e) => setTitle(e.target.value)}/>
+                    <textarea value={title} onChange={(e) => setTitle(e.target.value)}/>
                 </div>
                 <div className='row'>
                     <div className='label'> 컨텐츠 목록 </div>

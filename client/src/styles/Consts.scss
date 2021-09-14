@@ -70,6 +70,10 @@ $note-margin: calc(50vw - #{$content-width}/2 - 8.5px + 177px + 58px);
   font-size: 20px;
   letter-spacing: 0.05em;
 }
+.px30 {
+  font-size: 30px;
+  letter-spacing: 0.05em;
+}
 .nospacing {
   letter-spacing: -0.05em;
 }
@@ -123,6 +127,9 @@ $note-margin: calc(50vw - #{$content-width}/2 - 8.5px + 177px + 58px);
 }
 .line47 {
   line-height: 47px;
+}
+.line55 {
+  line-height: 55px;
 }
 button.white {
   background: rgba(255, 255, 255, 0.7);
