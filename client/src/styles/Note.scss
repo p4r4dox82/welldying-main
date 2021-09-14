@@ -772,7 +772,7 @@ div.crop_image_container {
       margin: 0px 18px;
       padding: 10px;
       min-width: 760px;
-      max-width: 1200px;
+      max-width: 1440px;
       min-height: 430px;
       max-height: 700px;
       object-fit: none;
@@ -815,6 +815,29 @@ div.crop_image_container {
       }
       button.insert {
         background: rgba(87, 100, 93, 1);
+      }
+    }
+  }
+  &.admin {
+    div.imageCrop {
+      div.image_container {
+        margin: 0px 18px;
+        padding: 10px;
+        min-width: 760px;
+        max-width: 1440px;
+        min-height: 430px;
+        max-height: 750px;
+        object-fit: none;
+        overflow: auto;
+        background: #FFFFFF;
+        box-shadow: inset 0px 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        div {
+          overflow: auto;
+        }
+        img {
+          object-fit: none;
+        }
       }
     }
   }

@@ -42,11 +42,11 @@ export default (Content: Model<ContentDocument>) => {
             detail: { summary: req.body.detail.summary, },
             comments: req.body.coments,
             question: Number.parseInt(req.body.question),
-            thumbnailUrl: req.body.thumbnailUrl,
+            imageData: req.body.imageData,
         };
 
         if (!await Content.findOneAndUpdate({ id: data.id },
-                { title: data.title, type: data.type, category: data.category, userdata: data.userdata, tag: data.tag, date: data.date, source: data.source, detail: data.detail, comments: data.comments, question: data.question, thumbnailUrl: data.thumbnailUrl })) {
+                { title: data.title, type: data.type, category: data.category, userdata: data.userdata, tag: data.tag, date: data.date, source: data.source, detail: data.detail, comments: data.comments, question: data.question, imageData: data.imageData })) {
             const content = new Content(data);
             console.log(data);
             content.save();

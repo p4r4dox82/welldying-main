@@ -120,7 +120,10 @@ function NoteQuestion(props: Props) {
         {props.written && <div className = {'questionBox ' + props.type + ' ' + String(props.order)} >
             <div className = 'click_area' style = {{width: '100%', height: '100%', borderRadius: '5px'}} onClick = {() => {setShow_answer(!show_answer); setAnswer_type('written');}}>
                 {props.type === 'small' && <div className = 'cover' style = {{background: 'rgba(255, 255, 255, 1)', width: '100%', height: '100px', top: '230px'}} />}
-                <div className = 'title GB px20 line40' style = {{margin: '0px'}} >{question.title}</div>
+                <div className = 'title GB px20 line40' style = {{margin: '0px'}} >
+                    <div>{question.title.split('\n')[0]}</div>
+                    <div>{question.title.split('\n')[1]}</div>
+                </div>
                 <div className = 'answerdate GB px13'>{'답변일 : ' + (answer?.updatedAt === undefined ? String(parseDate(new Date())) : String(parseDate(new Date(Number(answer?.updatedAt)))))}</div>
                 {!(props.type === 'type2') && <div className = 'write_button NS px12' >
                     답변보기

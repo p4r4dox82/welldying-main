@@ -7,6 +7,12 @@ export interface Userdata {
   read: string[],
 }
 
+export interface imageData {
+  imageUrl: string,
+  cropX: number,
+  cropY: number,
+}
+
 export interface Content {
     id: number,
     title: string,
@@ -19,7 +25,7 @@ export interface Content {
     detail: { summary: string, },
     comments: number[],
     question: number,
-    thumbnailUrl: string,
+    imageData: { imageUrl: string, cropX: number, cropY: number };
 }
 
 export const getContents = async () => {
@@ -36,9 +42,9 @@ export const getContent = async (id: number) => {
     return data;
 }
 
-export const writeContent = async (id: number, title: string, type: string, category: number, userdata: { likes: string[], bookmark: string[], read: string[], }, tag: string, date: number, source: string, detail: {summary: string, }, comments: number[], question: number, thumbnailUrl: string) => {
+export const writeContent = async (id: number, title: string, type: string, category: number, userdata: { likes: string[], bookmark: string[], read: string[], }, tag: string, date: number, source: string, detail: {summary: string, }, comments: number[], question: number, imageData: imageData) => {
     let response = await Axios.post(`${apiAddress}/content`, {
-        id, title, type, category, userdata, tag, date, source, detail, comments, question, thumbnailUrl
+        id, title, type, category, userdata, tag, date, source, detail, comments, question, imageData
     }, { withCredentials: true });
 
     return response.status === 200;
