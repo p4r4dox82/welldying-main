@@ -5,6 +5,7 @@ import { getContents, Content } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
 
 import { MementoNoteVector, MementoBookVector, MementoContentVector, MementoMakeBookVector, MementoTogetherNoteVector, LeftVector2, RightVector2, RightVector, LeftArrowVector, RightArrowVector, Colon, like_vector } from '../img/Vectors';
+import { parseDate } from '../etc';
 
 
 let main_testament_text = `당신의 어쩌구 당신의 어쩌구당신의 어쩌구당신의 어쩌구당신의 어쩌구
@@ -123,14 +124,21 @@ function Maincontent() {
     }, []);
 
     let [newContentNumber, setNewContentNumber] = React.useState<number>(0);
+    let [popularContentNumber, setPopularContentNumber] = React.useState<number>(0);
     let ContentCategorySelected = React.useMemo(() => MementoContentCategoryArray[ContentCategory], [ContentCategory, MementoContentCategoryArray]);
     let newContents = React.useMemo(() => ContentCategorySelected.contents?.filter((content, key) => key < 6), [ContentCategorySelected]);
     let newContent = React.useMemo(() => {
         if(!newContents) return;
         return newContents[newContentNumber];
     }, [newContents, newContentNumber]);
+    let PopularContents = React.useMemo(() => ContentCategorySelected.contents?.filter((content, key) => key < 10), [ContentCategorySelected]);
+    let PopularContent = React.useMemo(() => {
+        if(!PopularContents) return;
+        return PopularContents[popularContentNumber];
+    }, [newContents, popularContentNumber]);
     
     let MementoContentCategoryElement = React.useMemo(() => {
+        console.log(PopularContents);
         return (
             <div className="MementoContentCategory" style = {{marginTop: '143px'}}>
                 <div className="title GB px16">메멘토 컨텐츠 카테고리</div>
@@ -151,26 +159,60 @@ function Maincontent() {
                 </div>
                 <div className="NewContentContainer">
                     <div className="titleContainer">
-                        <div className="title GB px16 bold">{`'${ContentCategorySelected.name}'신규 컨텐츠`}</div>
+                        <div className="title GB px16 bold">{`'${ContentCategorySelected.name}' 신규 컨텐츠`}</div>
                         <div className="buttonContainer">
-                            <button className="left Button">{LeftArrowVector}</button>
-                            <button className="right Button">{RightArrowVector}</button>
+                            <button className="left Button" onClick = {() => {setNewContentNumber((newContentNumber - 1) === -1 ? 5 : (newContentNumber - 1));}}>{LeftArrowVector}</button>
+                            <button className="right Button" onClick = {() => {setNewContentNumber((newContentNumber + 1)%6)}}>{RightArrowVector}</button>
                         </div>
                     </div>
                     <div className="contentContainer">
-                        <img src = {imageUrl('content_slide.png')} alt="profile"/>
+                        <img src = {imageUrl('content_slide.png')} alt="profile" className = 'thumbnail'/>
+                        <div className = 'image_selector_container'>
+                            {[...Array(total_content_number).keys()].map((i) => (
+                                <img className = {(newContentNumber === (i) ? 'selected' : 'notselected')}src = {imageUrl('content_selector.png')}  alt="profile"/>
+                            ))}
+                        </div>
                         <div className="CoverContainer">
                             {Colon}
                             <button className="likeContainer">
                                 {like_vector}
                                 <div className="text NS px12 bold">{newContent?.userdata.likes.length}</div>
                             </button>
+                            <div className="type NS px18 line25 bold">{newContent?.type === '동영상' ? 'video' : 'book'}</div>
+                            <div className="tag NS px14 op6 line15">{newContent?.tag}</div>
+                            <div className="title NS px16 line25 bold">{'[' + newContent?.type + ']' + newContent?.title}</div>
                         </div>
+                    </div>
+                </div>
+                <div className="PopularContentContainer" style = {{marginTop: '106px'}}>
+                    <div className="titleContainer">
+                        <div className="title GB px16 bold">{`'${ContentCategorySelected.name}' 인기 컨텐츠`}</div>
+                    </div>
+                    <div className="contentContainer" style = {{marginTop: '30px'}}>
+                        {PopularContents.map((content) => {
+                            return (
+                                <div className="contentElement">
+                                    <img src = {imageUrl('content_slide.png')} alt="profile" className = 'thumbnail'/>
+                                    <div className="CoverContainer">           
+                                        <div className="oneline GB px14 op6">컨텐츠 한줄</div>
+                                        <div className="type GB px20 line35">{newContent?.title}</div>
+                                        <div className="date GB px14">{'컨텐츠 생성일 : ' + String(parseDate(new Date(Number(newContent?.date))))}</div>
+                                        <div className="tag GB px14 op6 line15">{newContent?.tag}</div>
+                                        <div className="title NS px13 bold">{`컨텐츠 확인하러 가기>`}</div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                        
+                    </div>
+                    <div className="buttonContainer">
+                        <button className="left Button" onClick = {() => {setNewContentNumber((newContentNumber - 1) === -1 ? 5 : (newContentNumber - 1));}}>{LeftArrowVector}</button>
+                        <button className="right Button" onClick = {() => {setNewContentNumber((newContentNumber + 1)%6)}}>{RightArrowVector}</button>
                     </div>
                 </div>
             </div>
         );
-    }, [ContentCategory, MementoContentCategoryArray, newContentNumber, newContent]);
+    }, [ContentCategory, MementoContentCategoryArray, newContentNumber, newContent, PopularContents, PopularContent]);
 
     return (
         <div className='main_display'>
@@ -245,181 +287,11 @@ function Maincontent() {
             <div className="block" style = {{minHeight: '678px'}}>
                 <div className="background" style = {{width: '100%', height: '678px', position: 'absolute', top: '0px', background: 'rgba(210, 217, 215, 0.3)', boxShadow: 'inset 0px 1px 4px rgba(0, 0, 0, 0.15)'}}></div>
                 <div className="MainContent margin_base">
-                    <div className="title GB px30" style = {{paddingTop: '130px'}}>memento AllContents</div>
+                    <div className="title GB px30" style = {{paddingTop: '130px'}}>memento contents</div>
                     <div className="subtitle GB px14" style = {{borderBottom: '1px solid rgba(110, 118, 114, 0.3)'}}>ㄷㅏㅇ신ㄴㅇㅡㅣ ㅇㅓㅉㅓㄱㅜ ㅈㅓㅉㅓㄱㅜ ㅁㅏㄴㅅ</div>
                     <div className="more NS px12 bold line15" style = {{marginTop: '14px', textAlign: 'right'}}>{`컨텐츠 페이지 바로가기>`}</div>
                     <div className="detail GB px16 line40 op7" style = {{width: '796px', marginTop: '33px'}}>메멘토 노트는 당신의 죽음에 대해 작성하고 어쩌구 하는 공간입니다. 당신은 죽음에 대해 충분한 준비에 대한 이해가 충분히 되어있나요? 혹시 현재의 슬픔에 휩싸여 어쩌구 글을 작성하려 하지는 않았나요? 저희 메멘토는엄냐ㅓㅇ머ㅐㅁ너ㅑ처먀ㅐㄴ처ㅑㅁㄴ처ㅑㅁ냐ㅓㅁㄴ처ㅐ먄챰ㄴㅊ</div>
                     {MementoContentCategoryElement}
-                </div>
-            </div>
-            <div className = 'block'>
-                <div className = 'main_image'>
-                    <img className = 'main_background' src={imageUrl('main_background.png')} alt="profile"/>
-                    <div className = 'main_background_blend' />
-                    <div className = 'vector_1' />
-                    <div className = 'vector_2' />
-                    <div className = 'vector_3' />
-                    <div className = 'main_text_container'>
-                        <div className = 'text_1'>Cherish your memories</div>
-                        <div className = 'text_2'>Cherish your memories</div>
-                        <div className = 'slide_container'>
-                            <img className = 'left_button' src = {imageUrl('left_button.png')} onClick = {() => {setmain_slide((main_slide - 1) === 0 ? 4 : (main_slide - 1));}} alt="profile"/>
-                            <img className = 'right_button' src = {imageUrl('right_button.png')} onClick = {() => {setmain_slide((main_slide + 1)%4 === 0 ? 4 : (main_slide + 1)%4); }} alt="profile"/>
-                            <div className = 'slide_rectangle_container'>
-                                {[...Array(4).keys()].map((i) => (
-                                    <div className = {'slide_bar' + (main_slide === (i + 1) ? ' selected' : '')} />
-                                ))}
-                            </div>
-                        </div>
-                        <img className = 'text_3' src={imageUrl('text_3.png')} alt="profile"/>
-                    </div>
-                    <div className = 'circle' />
-                    <img className = 'main_image_1' src = {imageUrl('main_iamge_1.png')} alt="profile"/>
-                    <div className = 'text_container_1'>
-                        <img className = 'memento_colon' src = {imageUrl('memento_colon.png')} alt="profile"/>
-                        <div className = 'title'>당신의 아름다운 이야기를 소중하게 전달합니다.</div>
-                        <div className = 'numbering'>{'0' + main_slide}</div>
-                        <div className = 'total_number'> / 04</div>
-                        <div className = 'vector' />
-                        <div className = 'detail'>
-                        {`어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌`}
-                        </div>
-                        <div className = 'more'>{`작성 페이지 바로가기>`}</div>
-                    </div>
-                    <div className = 'share_container'>
-                        {[...Array(4).keys()].map((i) => (
-                          <img src={imageUrl(`share_image_${i+1}.png`)} alt="profile"/>
-                        ))}
-                    </div>
-                    <div className = 'family_container'>
-                        <div className = 'family_button'>
-                            <div className = 'button_text'>
-                            유가족 열람 요청
-                            </div>
-                        </div>
-                        <div className = 'dot' />
-                        <div className = 'text'>
-                        memento 사용자가 남겨놓은 이야기를 확인하러 오셨나요?
-                        </div>
-                    </div>
-                    <img className = 'scroll_image' src = {imageUrl('scroll_image.png')} alt="profile"/>
-                </div>
-            </div>
-            <div className = 'block'>
-                <div className={'main_testament' + (expand ? ' expanded' : '')}>
-                    <img className = 'testament_background' src={imageUrl('testament_background.png')} alt="profile"/>
-                    <div className = 'mementoLogo_center'>
-                        <img src={imageUrl('mementoLogo_center.png')} alt="profile"/>
-                    </div>
-                    <div className = 'text'>
-                    {main_testament_text}
-                    </div>
-                    <div className = 'testament_button'>
-                        <div className = 'button_text'>
-                        나의 유언 작성하기
-                        </div>
-                    </div>
-                    <div className = {'expand_button' + (expand ? ' expanded' : '')} onClick = {() => {setexpand(!expand);}}>
-                        유언 카테고리 확인하기
-                    </div>
-                    <img className = {'mouse_click' + (expand ? ' expanded' : '')} src={imageUrl('mouse_click.png')} alt="profile"/>
-                    <div className = {'main_explain' + (expand ? ' expanded' : '')}>
-                        <div className = 'category_vector' />
-                        <div className = 'category'>
-                            { sections?.map((section)=> (
-                              <div className = {'item' + (currentItem === section.id ? ' active' : '')}>
-                              <div className = 'tag' onMouseEnter={() => {setCurrentItem(section.id);} } >
-                              {section.tag}
-                              </div>
-                              <div className = {'image' + (currentItem === section.id ? ' active' : '')} >
-                              <img src = {(currentItem === section.id ? imageUrl('category_select.png') : imageUrl('category_notselect.png'))} alt="profile"/>
-                              </div>
-                              </div>
-                            ))}
-                        </div>
-                        {category_detail}
-                        <div className = 'category_image'>
-                            <img className = 'image' src = {imageUrl('category_image.png')} alt="profile"/>
-                            <img className = 'colon' src = {imageUrl('category_colon.png')} alt="profile"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className = 'block'>
-                <div className = 'main_content'>
-                    <div className = 'main_name'>
-                    메멘토 컨텐츠
-                    </div>
-                    <div className = 'main_subname'>
-                    당신의 글을 쓰기 전 당신의 감정을 어쩌구 해보세요.
-                    </div>
-                    <div className = 'vector'>
-                        <div className = 'line' />
-                        <div className = 'more_content'>
-                            <div className = 'text'>컨텐츠 더보기</div>
-                        </div>
-                    </div>
-                    <div className = 'content'>
-                        <div className = 'name'>
-                            당신이 나아갈 삶의 이야기
-                        </div>
-                        <div className = 'subname'>
-                            한 주간 인기있는 컨텐츠를 소개합니다
-                        </div>
-                        <div className = 'numbering'>
-                            <span className = 'left_button' onClick = {() => {setcontent_number((content_number - 1) === 0 ? 6 : (content_number - 1));}}>{`<`}</span>
-                            <span>
-                            {` ${content_number}/${total_content_number} `}
-                            </span>
-                            <span className = 'right_button' onClick = {() => {setcontent_number((content_number + 1)%6 === 0 ? 6 : (content_number + 1)%6); }}>{`>`}</span>
-                        </div>
-                        <div className = 'content_container'>
-                            <div className = 'slide_content'>
-                                <div className = 'content_image'>
-                                    <img src = {imageUrl('content_slide.png')} alt="profile"/>
-                                    <div className = 'image_selector_container'>
-                                        {[...Array(total_content_number).keys()].map((i) => (
-                                          <img className = {(content_number === (i+1) ? 'selected' : 'notselected')}src = {imageUrl('content_selector.png')}  alt="profile"/>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className = 'content_detail'>
-                                    <img src = {imageUrl('memento_colon.png')} alt="profile"/>
-                                    <div className = 'like'>
-                                        <img src = {imageUrl('content_like.png')} alt="profile"/>
-                                        {slide_content?.userdata.likes?.length}
-                                    </div>
-                                    <div className = 'type'>{slide_content?.type}</div>
-                                    <div className = 'tag'>{slide_content_section?.tag}</div>
-                                    <div className = 'title'>{`[` + slide_content?.type + ']' + slide_content?.title}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className = 'content'>
-                        <div className = 'name'>
-                            {`주간 인기 컨텐츠 >`}
-                        </div>
-                        <div className = 'subname'>
-                            한 주간 인기있는 컨텐츠를 소개합니다
-                        </div>
-                        <div className = 'content_container'>
-                            {contents_8 && contents_8.map((content) => (
-                              <div className = 'small_content'>
-                                  <div className = 'Thumbnail'>
-                                      <img src = {imageUrl(`content_small.png`)} alt="profile"/>
-                                  </div>
-                                  <div className = 'content_name'>
-                                      {'['+content?.type+']'}
-                                      {content?.title}
-                                  </div>
-                                  <div className = 'content_tag'>
-                                      {content?.tag}
-                                  </div>
-                              </div>
-                            ))}
-                        </div>
-                    </div>
                 </div>
             </div>
             <div className = 'block'>

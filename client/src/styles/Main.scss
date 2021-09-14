@@ -1,50 +1,6 @@
 @import 'Consts.scss';
 @import url('https://fonts.googleapis.com/css2?family=Playball&display=swap');
 
-div.signupForm {
-  div.crop_image_container {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: calc(100vw - 18px);
-    height: 10vh;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    div.imageCrop {
-      padding-top: 19px;
-      padding-bottom: 19px;
-      width: fit-content;
-      max-width: 90vw;
-      height: fit-content;
-      background: #FFFFFF;
-      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-      overflow: visible;
-      div.image_container {
-        margin: 0px 18px;
-        padding: 10px;
-        min-width: 760px;
-        max-width: 1440px;
-        min-height: 430px;
-        max-height: 447px;
-        object-fit: none;
-        overflow: auto;
-        background: #FFFFFF;
-        box-shadow: inset 0px 4px 20px rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-        div {
-          overflow: auto;
-        }
-        img {
-          object-fit: none;
-        }
-      }
-    }
-  }
-}
 
 div.mainA {
     display: block;
@@ -391,12 +347,23 @@ div.main_display {
           border-radius: 5px;
           padding: 33px 34px 0px 746px;
           box-sizing: border-box;
-          img {
+          img.thumbnail {
             position: absolute;
             top: 0px;
             left: 0px;
             width: 708px;
             height: 296px;
+          }
+          div.image_selector_container {
+            display: flex;
+            position: absolute;
+            top: 33px;
+            right: 354px;
+            width:98px;
+            gap:10.5px;
+            img.notselected {
+              opacity: 0.5;
+            }
           }
           div.CoverContainer {
             display: flex;
@@ -412,6 +379,10 @@ div.main_display {
                 opacity: 1;
               }
             }
+            div {
+              width: 100%;
+              box-sizing: border-box;
+            }
             button.likeContainer {
               background: rgba(255, 255, 255, 0.7);
               width: 70px;
@@ -426,7 +397,53 @@ div.main_display {
               svg {
                 fill: rgba(196, 196, 196, 1);
               }
-            } 
+              div {
+                width: 30px;
+              }
+            }
+            div.type {
+              margin-top: 10px;
+            }
+            div.tag {
+              margin-top: 80px;
+            }
+            div.title {
+              margin-top: 15px;
+            }
+          }
+        }
+      }
+      div.PopularContentContainer {
+        div.titleContainer {
+          display: flex;
+          justify-content: space-between;
+        }
+        div.contentContainer {
+          display: flex;
+          flex-wrap: nowrap;
+          gap: 58px;
+          div.contentElement {
+            display: flex;
+            gap: 34px;
+            img.thumbnail {
+              width: 354px;
+              height: 261px;
+              border-radius: 5px;
+              filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+            }
+            div.CoverContainer {
+              width: 232px;
+              height: 250px;
+              div.date { 
+                margin-top: 63px;
+              }
+              div.tag {
+                margin-top: 9px;
+              }
+              div.more {
+                margin-top: 9px;
+              }
+            }
           }
         }
       }
