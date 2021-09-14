@@ -1,16 +1,13 @@
 import React from 'react';
 import { imageUrl } from '../etc/config';
-import { getSections } from '../etc/api/section';
 import { getContents, Content } from '../etc/api/content';
+import { getComments } from '../etc/api/comment';
 import usePromise from '../etc/usePromise';
+import { Link } from 'react-router-dom';
 
-import { MementoNoteVector, MementoBookVector, MementoContentVector, MementoMakeBookVector, MementoTogetherNoteVector, LeftVector2, RightVector2, RightVector, LeftArrowVector, RightArrowVector, Colon, like_vector } from '../img/Vectors';
+import { MementoNoteVector, MementoBookVector, MementoContentVector, MementoMakeBookVector, MementoTogetherNoteVector, LeftVector2, RightVector2, RightVector, LeftArrowVector, RightArrowVector, Colon, like_vector, MementoDotVector, leftVector, rightVector } from '../img/Vectors';
 import { parseDate } from '../etc';
 
-
-let main_testament_text = `당신의 어쩌구 당신의 어쩌구당신의 어쩌구당신의 어쩌구당신의 어쩌구
-당신의 어쩌구당신의 어쩌구당신의 어쩌구당신의 어쩌구당신의 어쩌구 신의 어쩌구신의 어쩌구
-당신의 어쩌구당신의 어쩌구당신의 어쩌구당신의`;
 let content_type_eng = ['book', 'book', 'book'];
 let content_name = ['어쩌구 저쩌구 어쩌구 저쩌구 어쩌구 저쩌구어쩌구 저쩌저쩌구어쩌구저쩌구어쩌구', 'ㅂㅈㄷ', 'ㅋㅌㅍ'];
 let content_tag = ['1', '2', '3'];
@@ -20,45 +17,11 @@ let memento_brand_text = `메멘토는 단순하고 쉬운 솔루션과 가이�
 ‘모든 사람이 죽음을 준비할 수 있는 사회와 문화’를 만들어 나갑니다.`;
 
 function Maincontent() {
-    let [, sections] = usePromise(getSections);
     let [, AllContents] = usePromise(getContents);
-    let [currentItem, setCurrentItem] = React.useState<number>(1);
-    let [expand, setexpand] = React.useState<boolean>(false);
-    let [main_slide, setmain_slide] = React.useState<number>(1);
-    let [content_number, setcontent_number] = React.useState<number>(1);
+    let [, AllComments] = usePromise(getComments);
     let [total_content_number, settotal_content_number] = React.useState<number>(6);
     let [review_number, setreview_number] = React.useState<number>(1);
-    let [total_review_number, settotal_review_number] = React.useState<number>(8);
-
-    let section = React.useMemo(() => sections?.find((section) => section.id === currentItem), [sections, currentItem]);
-    let slide_content = React.useMemo(() => AllContents?.find((content) => content.id === content_number), [AllContents, content_number]);
-    let slide_content_section = React.useMemo(() => sections?.find((section) => section.id === slide_content?.category), [sections, slide_content]);
-    let contents_8 = React.useMemo(() => AllContents?.filter((content) => content.id <= 8), [AllContents]);
-
-    let category_detail = React.useMemo(() => {
-      return (
-        <div className='category_detail'>
-            <div className={ 'detail' }>
-                { currentItem !== -1 &&
-                  <>
-                  <div className = 'title'>
-                  {`카테고리 설명`}
-                  </div>
-                  <div className = 'name'>
-                  { section?.title }
-                  </div>
-                  <div className = 'detail'>
-                  { section?.detail }
-                  </div>
-                  <div className = 'more'>
-                  {`더 보기 >`}
-                  </div>
-                  </>
-                }
-            </div>
-        </div>
-      );
-    }, [section, currentItem]);
+    let [total_review_number, settotal_review_number] = React.useState<number>(6);
 
     let [ContentCategory, setContentCategory] = React.useState<number>(0);
 
@@ -115,13 +78,13 @@ function Maincontent() {
             contents: AllContents?.filter((content) => content.id < 10),
         });
         result.push({
-            name: '죽음, 그 이후의 이약기.',
+            name: '죽음, 그 이후의 이야기.',
             detail: '메멘토 노트는 당신의 죽음에 대해 작성하고 어쩌구 하는 공간입니다. 당신은 죽음에 대해 충분한 준비에 대한 이해가 충분히 되어있나요? 혹시 현재의 슬픔에 휩싸여 어쩌구 글을 작성하려 하지는 않았나요? 저희 메멘토는엄냐ㅓㅇ머ㅐㅁ너ㅑ처먀ㅐㄴ처ㅑㅁㄴ처ㅑㅁ냐ㅓㅁㄴ처ㅐ먄챰ㄴㅊ',
             tag: '# 기록  # 추억 # 자서전 # 죽음의 이해 # 심적준비 # 편지',
             contents: AllContents?.filter((content) => content.id < 10),
         });
         return result;
-    }, []);
+    }, [AllContents]);
 
     let [newContentNumber, setNewContentNumber] = React.useState<number>(0);
     let [popularContentNumber, setPopularContentNumber] = React.useState<number>(0);
@@ -136,83 +99,144 @@ function Maincontent() {
         if(!PopularContents) return;
         return PopularContents[popularContentNumber];
     }, [newContents, popularContentNumber]);
+
+    let MainComents = React.useMemo(() => AllComments?.filter((comment) => comment.id >= 62),[AllComments]);
+    let [CommentNumber, setCommentNumber] = React.useState<number>(0);
+    let Comment = React.useMemo(() => {
+        if(!MainComents) return;
+        return MainComents[CommentNumber];
+    }, [MainComents, CommentNumber]);
+
+    let NewContentLink = React.useRef<any>(null);
+    let PopularContentLink = React.useRef<any>(null);
+    let NewContentLinkClick = () => NewContentLink.current.click();
+    let PopularContentLinkClick = () => PopularContentLink.current.click();
     
     let MementoContentCategoryElement = React.useMemo(() => {
-        console.log(PopularContents);
         return (
-            <div className="MementoContentCategory" style = {{marginTop: '143px'}}>
-                <div className="title GB px16">메멘토 컨텐츠 카테고리</div>
-                <div className="CategoryContainer">
-                    {MementoContentCategoryArray.map((MementoContentCategory, key) => {
-                        return (
-                            <div className="ContentCategoryContainer" onClick = {() => setContentCategory(key)}>
-                                <div className="image"></div>
-                                <div className="title GB px16 line20">{MementoContentCategory.name}</div>
-                                <div className="vector" style = {{opacity: (ContentCategory === key ? '1' : '0')}}></div>
-                            </div>
-                        )
-                    })}
-                </div>
-                <div className="detailContainer" style = {{width: '676px', marginLeft: 'calc(50% - 676px/2)', textAlign: 'center', marginTop: '88px'}}>
-                    <div className="detail GB px16 line40 op8">{ContentCategorySelected.detail}</div>
-                    <div className="tag NS px14 line30 op4" style = {{marginTop: '29px'}}>{ContentCategorySelected.tag}</div>
-                </div>
-                <div className="NewContentContainer">
-                    <div className="titleContainer">
-                        <div className="title GB px16 bold">{`'${ContentCategorySelected.name}' 신규 컨텐츠`}</div>
-                        <div className="buttonContainer">
-                            <button className="left Button" onClick = {() => {setNewContentNumber((newContentNumber - 1) === -1 ? 5 : (newContentNumber - 1));}}>{LeftArrowVector}</button>
-                            <button className="right Button" onClick = {() => {setNewContentNumber((newContentNumber + 1)%6)}}>{RightArrowVector}</button>
-                        </div>
-                    </div>
-                    <div className="contentContainer">
-                        <img src = {imageUrl('content_slide.png')} alt="profile" className = 'thumbnail'/>
-                        <div className = 'image_selector_container'>
-                            {[...Array(total_content_number).keys()].map((i) => (
-                                <img className = {(newContentNumber === (i) ? 'selected' : 'notselected')}src = {imageUrl('content_selector.png')}  alt="profile"/>
-                            ))}
-                        </div>
-                        <div className="CoverContainer">
-                            {Colon}
-                            <button className="likeContainer">
-                                {like_vector}
-                                <div className="text NS px12 bold">{newContent?.userdata.likes.length}</div>
-                            </button>
-                            <div className="type NS px18 line25 bold">{newContent?.type === '동영상' ? 'video' : 'book'}</div>
-                            <div className="tag NS px14 op6 line15">{newContent?.tag}</div>
-                            <div className="title NS px16 line25 bold">{'[' + newContent?.type + ']' + newContent?.title}</div>
-                        </div>
-                    </div>
-                </div>
-                <div className="PopularContentContainer" style = {{marginTop: '106px'}}>
-                    <div className="titleContainer">
-                        <div className="title GB px16 bold">{`'${ContentCategorySelected.name}' 인기 컨텐츠`}</div>
-                    </div>
-                    <div className="contentContainer" style = {{marginTop: '30px'}}>
-                        {PopularContents.map((content) => {
+            <>
+                <Link to = {`/contentpage/${newContent?.id}`} ref = {NewContentLink} style = {{display: 'none'}}/>
+                <Link to = {`/contentpage/${PopularContent?.id}`} ref = {PopularContentLink} style = {{display: 'none'}}/>
+                <div className="MementoContentCategory" style = {{marginTop: '143px'}}>
+                    <div className="title GB px16">메멘토 컨텐츠 카테고리</div>
+                    <div className="CategoryContainer">
+                        {MementoContentCategoryArray.map((MementoContentCategory, key) => {
                             return (
-                                <div className="contentElement">
-                                    <img src = {imageUrl('content_slide.png')} alt="profile" className = 'thumbnail'/>
-                                    <div className="CoverContainer">           
-                                        <div className="oneline GB px14 op6">컨텐츠 한줄</div>
-                                        <div className="type GB px20 line35">{newContent?.title}</div>
-                                        <div className="date GB px14">{'컨텐츠 생성일 : ' + String(parseDate(new Date(Number(newContent?.date))))}</div>
-                                        <div className="tag GB px14 op6 line15">{newContent?.tag}</div>
-                                        <div className="title NS px13 bold">{`컨텐츠 확인하러 가기>`}</div>
-                                    </div>
+                                <div className="ContentCategoryContainer" onClick = {() => setContentCategory(key)}>
+                                    <div className="image"></div>
+                                    <div className="title GB px16 line20">{MementoContentCategory.name}</div>
+                                    <div className="vector" style = {{opacity: (ContentCategory === key ? '1' : '0')}}></div>
                                 </div>
-                            );
+                            )
                         })}
-                        
                     </div>
-                    <div className="buttonContainer">
-                        <button className="left Button" onClick = {() => {setNewContentNumber((newContentNumber - 1) === -1 ? 5 : (newContentNumber - 1));}}>{LeftArrowVector}</button>
-                        <button className="right Button" onClick = {() => {setNewContentNumber((newContentNumber + 1)%6)}}>{RightArrowVector}</button>
+                    <div className="detailContainer" style = {{width: '676px', marginLeft: 'calc(50% - 676px/2)', textAlign: 'center', marginTop: '88px'}}>
+                        <div className="detail GB px16 line40 op8">{ContentCategorySelected.detail}</div>
+                        <div className="tag NS px14 line30 op4" style = {{marginTop: '29px'}}>{ContentCategorySelected.tag}</div>
+                    </div>
+                    <div className="NewContentContainer">
+                        <div className="titleContainer">
+                            <div className="title GB px16 bold">{`'${ContentCategorySelected.name}' 신규 컨텐츠`}</div>
+                            <div className="buttonContainer">
+                                <button className="left Button" onClick = {() => {setNewContentNumber((newContentNumber - 1) === -1 ? 5 : (newContentNumber - 1));}}>{LeftArrowVector}</button>
+                                <button className="right Button" onClick = {() => {setNewContentNumber((newContentNumber + 1)%6)}}>{RightArrowVector}</button>
+                            </div>
+                        </div>
+                        <div className="contentContainer">
+                            <img src = {imageUrl('content_slide.png')} alt="profile" className = 'thumbnail' onClick = {() => NewContentLinkClick()}/>
+                            <div className = 'image_selector_container'>
+                                {[...Array(total_content_number).keys()].map((i) => (
+                                    <img className = {(newContentNumber === (i) ? 'selected' : 'notselected')}src = {imageUrl('content_selector.png')}  alt="profile"/>
+                                ))}
+                            </div>
+                            <div className="CoverContainer">
+                                {Colon}
+                                <button className="likeContainer">
+                                    {like_vector}
+                                    <div className="text NS px12 bold">{newContent?.userdata.likes.length}</div>
+                                </button>
+                                <div className="type NS px18 line25 bold">{newContent?.type === '동영상' ? 'video' : 'book'}</div>
+                                <div className="tag NS px14 op6 line15">{newContent?.tag}</div>
+                                <div className="title NS px16 line25 bold" onClick = {() => NewContentLinkClick()}>{'[' + newContent?.type + ']' + newContent?.title}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="PopularContentContainer" style = {{marginTop: '106px', paddingBottom: '115px'}}>
+                        <div className="titleContainer">
+                            <div className="title GB px16 bold">{`'${ContentCategorySelected.name}' 인기 컨텐츠`}</div>
+                        </div>
+                        <div className="contentContainer" style = {{marginTop: '30px', transform: `translateX(${(-412 * popularContentNumber) + 'px'})`}}>
+                            {PopularContents && PopularContents.map((content, key) => {
+                                return (
+                                    <div className="contentElement">
+                                        <div className="vector" style = {{width: '100vw', height: '1px', background: 'rgba(39, 57, 47, 0.2)', position: 'absolute', top: '281px', left: 'calc(50% - 50vw)', zIndex: -1}}></div>
+                                        <div className="imageContainer" style = {{marginRight: (popularContentNumber === key ? '0px' : '58px')}}>
+                                            <img src = {imageUrl('content_slide.png')} alt="profile" className = 'thumbnail' style = {{opacity: (popularContentNumber === key ? '1' : '0.6')}} onClick = {() => PopularContentLinkClick()}/>
+                                            <div className="vector" style = {{opacity: (popularContentNumber === key ? '1' : '0.1')}}></div>
+                                            <div className="title NS px12 line15 bold op6" onClick = {() => PopularContentLinkClick()}>{content.title}</div>
+                                        </div>
+                                        {popularContentNumber === key && <div className="CoverContainer">           
+                                            <div className="oneline GB px14 op6">컨텐츠 한줄</div>
+                                            <div className="title GB px20 line35" onClick = {() => PopularContentLinkClick()}>{content?.title}</div>
+                                            <div className="date GB px14 line15">{'컨텐츠 생성일 : ' + String(parseDate(new Date(Number(content?.date))))}</div>
+                                            <div className="tag GB px14 op6 line15">{content?.tag}</div>
+                                            <div className="vector" style = {{width: '100%', height: '1px', background: 'rgba(110, 118, 114, 0.4)', marginTop: '18px'}}></div>
+                                            <div className="title NS px13 bold" onClick = {() => PopularContentLinkClick()}>{`컨텐츠 확인하러 가기>`}</div>
+                                        </div>}
+                                    </div>
+                                );
+                            })}
+                            
+                        </div>
+                        <button className="left Button" onClick = {() => {setPopularContentNumber((popularContentNumber - 1) === -1 ? 0 : (popularContentNumber - 1));}}>{LeftArrowVector}</button>
+                        <button className="right Button" onClick = {() => {setPopularContentNumber((popularContentNumber + 1)%9 === 0 ? 8 : (popularContentNumber + 1)%9)}}>{RightArrowVector}</button>
                     </div>
                 </div>
-            </div>
+            </>
         );
     }, [ContentCategory, MementoContentCategoryArray, newContentNumber, newContent, PopularContents, PopularContent]);
+
+    let comment_content = React.useRef<any>(null);
+    let LinkCommentContent = () => {comment_content.current.click()};
+
+    let MainComment = React.useMemo(() => {
+        if(!AllContents) return;
+        let Content = AllContents?.find((content) => content.comments?.includes(Number(Comment?.id)));
+        return (
+            <>
+                <Link to={`/contentpage/${Content?.id}`} style = {{display: 'none'}} ref = {comment_content}/>
+                <div className="Comment">
+                    <img src={imageUrl('MainCommentImage.png')} alt="" className="ComentImage" style = {{marginLeft: '-24px'}} />
+                    <div className = 'comment_box'>
+                        <div className = 'writer NS px13 bold line25'>
+                        {Comment?.writer + ' 님'}
+                        </div>
+                        <textarea className = 'comment_area written NS px13 line25' placeholder = '메멘토에 댓글을 남겨보세요.' value = {Comment?.detail} disabled/>
+                        <div className="bottomContainer">
+                            <div className = 'date_container'>
+                                <div className = 'date NS px12 bold op9'>{parseDate(new Date(Number(Comment?.date)))}</div>
+                                <button className = 'declare_button  NS px12 bold op9' style = {{padding: '0px', background: 'rgba(0, 0, 0, 0)'}} onClick = {() => LinkCommentContent()}>{`컨텐츠 확인하기>`}</button>
+                            </div>
+                            <div className="like_container">
+                                <button className="like_button">{like_vector}</button>
+                                <div className = 'likes NS px13 bold line25'>
+                                {Comment?.userdata.likes.length}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="topContainer">
+                    <div className="selectorContainer">
+                        {[...Array(6).keys()].map((i) => (
+                            <div className={"dotvector" + (review_number === (i+1) ? '' : ' notselected')} >{MementoDotVector}</div>
+                        ))}
+                    </div>
+                    <div className="contentTitle NS px12 op6 bold line15">{Content?.title.slice(0, 20) + ((Content?.title && Content?.title.length > 20) ? '...' : '')}</div>
+                </div>
+            </>
+        );
+    }, [Comment, AllContents,review_number])
 
     return (
         <div className='main_display'>
@@ -284,7 +308,7 @@ function Maincontent() {
                     </div>
                 </div>
             </div>
-            <div className="block" style = {{minHeight: '678px'}}>
+            <div className="block">
                 <div className="background" style = {{width: '100%', height: '678px', position: 'absolute', top: '0px', background: 'rgba(210, 217, 215, 0.3)', boxShadow: 'inset 0px 1px 4px rgba(0, 0, 0, 0.15)'}}></div>
                 <div className="MainContent margin_base">
                     <div className="title GB px30" style = {{paddingTop: '130px'}}>memento contents</div>
@@ -294,96 +318,17 @@ function Maincontent() {
                     {MementoContentCategoryElement}
                 </div>
             </div>
-            <div className = 'block'>
-                <div className = 'main_review'>
-                    <img className = 'background' src = {imageUrl('review_background.png')} alt="profile"/>
-                    <img className = 'image_1' src = {imageUrl('review_back_image_1.png')} alt="profile"/>
-                    <img className = 'image_2' src = {imageUrl('review_back_image_2.png')} alt="profile"/>
-                    <div className = 'review_1'>
-                        <div className = 'main_name'>댓글 이야기</div>
-                        <div className = 'main_subname'>죽음을 어쩌구 아름다운 ~합니다.</div>
-                        <div className = 'tag'>{'#' + content_tag[review_number]}</div>
-                        <div className = 'detail'>{content_detail[review_number]}</div>
-                        <div className = 'review_selector'>
-                            {[...Array(8).keys()].map((i) => (
-                              <img className = {(review_number === (i+1) ? '' : 'notselected')}src = {imageUrl('review_selector.png')} alt="profile"/>
-                            ))}
-                            <div className = 'review_number'>
-                                {review_number + '/' + total_review_number}
-                            </div>
-                        </div>
-                    </div>
-                    <div className = 'review_2'>
-                        <img className = 'background' src = {imageUrl('review_image_2.png')} alt="profile"/>
-                        <img className = 'left_button' src = {imageUrl('review_left_button.png')} onClick = {() => {setreview_number((review_number - 1) === 0 ? total_review_number : (review_number - 1));}} alt="profile"/>
-                        <img className = 'right_button' src = {imageUrl('review_right_button.png')} onClick = {() => {setreview_number((review_number + 1)%total_review_number === 0 ? total_review_number : (review_number + 1)%total_review_number); }} alt="profile"/>
-                        <img className = 'colon' src = {imageUrl('review_colon.png')} alt="profile"/>
-                        <div className = 'type'>{content_type_eng[review_number - 1]}</div>
-                        <div className = 'name'>{content_name[review_number - 1]}</div>
-                        <div className = 'like'>
-                            <img className = 'review_like' src = {imageUrl('review_like.png')} alt="profile"/>
-                            {content_like[review_number - 1]}
-                        </div>
-                        <div className = 'review'>
-                            <img src = {imageUrl('review_user_image.png')} alt="profile"/>
-                            <div className = 'user_name'>asdasd</div>
-                            <div className = 'write_date'>2021.09.03</div>
-                            <div className = 'coment'>{`어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구`}</div>
-                            <div className = 'review_like'>
-                                <img className = 'review_like' src = {imageUrl('review_like.png')} alt="profile"/>
-                                {`좋아요`}
-                            </div>
-                        </div>
-                        <div className = 'more'>
-                        {`컨텐츠 보러가기 >`}
-                        </div>
-                    </div>
+            <div className="block" style = {{minHeight: '521px'}}> 
+                <div className="BackgroundContainer" style = {{opacity: '0.2', filter: 'drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.1))'}}>
+                    <img src={imageUrl('CommentMainBackground.png')} alt="" className="MainCommentBackground" style = {{position: 'absolute', top: '0px'}}/>
+                    <div className="MainCommentBackgroundBlend" style = {{width: '100vw', height: '521px', position: 'absolute',top: '0px', background: 'rgba(253, 252, 252, 1)', mixBlendMode: 'multiply'}}></div>
                 </div>
-            </div>
-            <div className = 'block'>
-                <div className = 'main_more'>
-                    <div className = 'memento_brand'>
-                        <img src = {imageUrl('main_more_image.png')} alt="profile"/>
-                        <div className = 'text_box'>
-                            <div className = 'text'>
-                            {memento_brand_text}
-                            </div>
-                        </div>
-                        <div className = 'button'>
-                            <div className = 'button_text'>
-                            메멘토 브랜드 소개
-                            </div>
-                        </div>
-                    </div>
-                    <div className = 'memento_instagram'>
-                        <div className = 'title'>
-                        메멘토 인스타그램
-                        </div>
-                        <div className = 'subtitle'>
-                        {`'메멘토' 인스타그램 바로가기 >`}
-                        </div>
-                        {[...Array(3).keys()].map((i) => (
-                          <img src = {imageUrl('instragram_image.png')} />
-                        ))}
-                    </div>
-                    <div className = 'vector' />
-                    <div className = 'memento_notice'>
-                        <div className = 'title'>
-                        공지사항
-                        </div>
-                        <div className = 'name'>
-                        {`[긴급] 메멘토 서버 폭발 사과문, 죄송합니다. 어쩌구 어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구`}
-                        </div>
-                        <div className = 'detail'>
-                        {`라일락 꽃향기 마맡으며 잊을 수 업ㅇ느니ㅏㅁ으추충마ㅜ차머ㅜㅇ차ㅜㅁㅇ처ㅏㅜㅁㅇ춰ㅜㅇㅊ무ㅏㅊ...`}
-                        </div>
-                        <div className = 'write_date'>
-                        2021.11.13
-                        </div>
-                        <div className = 'more'>
-                        {`공지사항 더보기 >`}
-                        </div>
-                    </div>
+                <div className="CommentsContainer margin_base">
+                    <div className="title GB px30" style = {{paddingTop: '85px'}}>memento comments</div>
+                    <div className="subtitle GB px14 line15" style = {{borderBottom: '1px solid rgba(110, 118, 114, 0.3)'}}>메멘토 서비스 사용자분들이 남겨주신 이야기.</div>
+                    {MainComment}
+                    <button className = 'left_button' onClick = {() => {setreview_number((review_number - 1) === 0 ? total_review_number : (review_number - 1));}}>{LeftArrowVector}</button>
+                    <button className = 'right_button' onClick = {() => {setreview_number((review_number + 1)%total_review_number === 0 ? total_review_number : (review_number + 1)%total_review_number); }} >{RightArrowVector}</button>
                 </div>
             </div>
         </div>

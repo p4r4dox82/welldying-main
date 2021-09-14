@@ -115,7 +115,7 @@ function ContentBorder (props : Props) {
             <img className = 'user_icon' src = {imageUrl('user_login.png')}  alt = "profile"/>
         </div>
         <div className = 'writer NS px13 bold'>
-        {user.user!.name + ' 님'}
+        {comment.writer + ' 님'}
         </div>
         <textarea className = 'comment_area written NS px13 line25' placeholder = '메멘토에 댓글을 남겨보세요.' value = {comment.detail} disabled/>
         <img className = 'like_button' src = {imageUrl('ContentPage/like_button.png')} />
