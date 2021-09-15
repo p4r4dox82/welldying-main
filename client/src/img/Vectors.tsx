@@ -151,3 +151,9 @@ export const RightArrowVector = (
     <path d="M11.5 2L21 11.5L11.5 21" stroke="#23342A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 );
+
+export const MementoDotVector = (
+    <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'MementoDotVector'>
+    <path d="M3.81545 0.138518H3.70946C2.01371 0.742709 0 1.95109 0 3.66296C0 5.37484 1.48378 6.78462 3.28552 6.78462C5.08726 6.78462 6.78301 5.77763 6.99498 3.26017V2.25319C7.10097 0.541313 5.5112 -0.364974 3.81545 0.138518Z"/>
+    </svg>
+);

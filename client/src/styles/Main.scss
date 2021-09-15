@@ -1,50 +1,6 @@
 @import 'Consts.scss';
 @import url('https://fonts.googleapis.com/css2?family=Playball&display=swap');
 
-div.signupForm {
-  div.crop_image_container {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: calc(100vw - 18px);
-    height: 10vh;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    div.imageCrop {
-      padding-top: 19px;
-      padding-bottom: 19px;
-      width: fit-content;
-      max-width: 90vw;
-      height: fit-content;
-      background: #FFFFFF;
-      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-      overflow: visible;
-      div.image_container {
-        margin: 0px 18px;
-        padding: 10px;
-        min-width: 760px;
-        max-width: 1440px;
-        min-height: 430px;
-        max-height: 447px;
-        object-fit: none;
-        overflow: auto;
-        background: #FFFFFF;
-        box-shadow: inset 0px 4px 20px rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-        div {
-          overflow: auto;
-        }
-        img {
-          object-fit: none;
-        }
-      }
-    }
-  }
-}
 
 div.mainA {
     display: block;
@@ -391,12 +347,23 @@ div.main_display {
           border-radius: 5px;
           padding: 33px 34px 0px 746px;
           box-sizing: border-box;
-          img {
+          img.thumbnail {
             position: absolute;
             top: 0px;
             left: 0px;
             width: 708px;
             height: 296px;
+          }
+          div.image_selector_container {
+            display: flex;
+            position: absolute;
+            top: 33px;
+            right: 354px;
+            width:98px;
+            gap:10.5px;
+            img.notselected {
+              opacity: 0.5;
+            }
           }
           div.CoverContainer {
             display: flex;
@@ -412,6 +379,10 @@ div.main_display {
                 opacity: 1;
               }
             }
+            div {
+              width: 100%;
+              box-sizing: border-box;
+            }
             button.likeContainer {
               background: rgba(255, 255, 255, 0.7);
               width: 70px;
@@ -426,9 +397,241 @@ div.main_display {
               svg {
                 fill: rgba(196, 196, 196, 1);
               }
-            } 
+              div {
+                width: 30px;
+              }
+            }
+            div.type {
+              margin-top: 10px;
+            }
+            div.tag {
+              margin-top: 80px;
+            }
+            div.title {
+              margin-top: 15px;
+            }
           }
         }
+      }
+      div.PopularContentContainer {
+        div.titleContainer {
+          display: flex;
+          justify-content: space-between;
+        }
+        div.contentContainer {
+          display: flex;
+          flex-wrap: nowrap;
+          transition: all 1s ease-in-out;
+          div.contentElement {
+            display: flex;
+            div.imageContainer {
+              width: 354px;
+              height: 311px;
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              div {
+                width: 100%;
+                box-sizing: border-box;
+              }
+              img.thumbnail {
+                width: 354px;
+                height: 261px;
+                border-radius: 5px;
+                filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+              }
+              div.vector {
+                width: 207px;
+                height: 3px;
+                background: rgba(39, 57, 47, 0.6);
+                margin-top: 17px;
+              }
+              div.title {
+                margin-top: 14px;
+                text-align: center;
+              }
+            }
+            div.CoverContainer {
+              width: 232px;
+              height: 100%;
+              box-sizing: content-box;
+              background: rgba(255, 255, 255, 1);
+              div.date { 
+                margin-top: 63px;
+              }
+              div.tag {
+                margin-top: 9px;
+              }
+              div.more {
+                margin-top: 9px;
+              }
+              padding-left: 34px;
+              padding-right: 58px;
+            }
+          }
+          
+        }
+        button {
+          position: absolute;
+          top: 213px;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background: rgba(242, 244, 243, 0.7);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          svg {
+            width: 19px;
+            height: 19px;
+          }
+        }
+        .left {
+          left: -29px;
+        }
+        .right {
+          right: -29px;
+        }
+      }
+    }
+    div.CommentsContainer {
+      .subtitle {
+        margin-top: 6px;
+        padding-bottom: 20px;
+        width: 767px;
+        border-bottom: 1px solid rgba(39, 57, 47, 0.2);
+      }
+      .Comment {
+        margin-top: 14px;
+        img.ComentImage {
+          position: absolute;
+        }
+        div.comment_box {
+          display: flex;
+          flex-wrap: wrap;
+          padding: 62px 99px 0px 90px;
+          .writer {
+            width: 62px;
+          }
+          textarea {
+            margin-left: 17px;
+            width: 751px;
+            height: 131px;
+            resize: none;
+            outline: none;
+            border: none;
+            border: 1px solid rgba(39, 57, 47, 0.3);
+            box-sizing: border-box;
+            padding: 5px 13px;
+            &::placeholder {
+              color : rgba(40, 58, 48, 0.5);
+            }
+            &.written {
+              border: none;
+              background: rgba(0, 0, 0, 0);
+              padding: 0px 13px;
+              height: 85px;
+            }
+          }
+          button.green {
+            margin-left: 34px;
+            width: 95px;
+            height: 29px;
+            align-self: flex-end;
+            margin-bottom: 5px;
+          }
+          div.bottomContainer {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            div.date_container {
+              margin-left: 92px;
+              display: flex;
+              width: 200px;
+              div:not(:last-child)::after {
+                content: "|";
+                padding: 0px 7px;
+              }
+            }
+            div.like_container {
+              display: flex;
+              gap: 14px;
+              button.like_button {
+                width: 26px;
+                height: 26px;
+                border-radius: 50%;
+                background: rgba(247, 247, 246, 0.7);
+                box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0px;
+                svg {
+                  fill: rgba(196, 196, 196, 1);
+                }
+              }
+              div.likes {
+                margin: 0px;
+              }
+            }
+            
+          }
+          
+        }
+      }
+      .topContainer {
+        position: absolute;
+        top: 95px;
+        left: 796px;
+        width: 236px;
+        height: 69px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        .selectorContainer {
+          display: flex;
+          height: 7px;
+          gap: 10px;
+          width: 100px;
+          justify-content: center;
+          div.dotvector {
+            svg {
+              top: -11px;
+              fill: rgba(48, 59, 53, 1);
+            }
+            &.notselected {
+              svg {
+                fill: rgba(48, 59, 53, 0.3);
+              }
+            }
+          }
+          img {
+            width: 7px;
+            height: 6.8px;
+          }
+        }
+        div.contentTitle {
+          margin-top: 24px;
+        }
+      }
+      button.left_button, button.right_button {
+        width: 12.5px;
+        height: 12.5px;
+        padding: 0px;
+        position: absolute;
+        top: 301px;
+        background: rgba(0, 0, 0, 0);
+        svg {
+          width: 12.5px;
+          height: 12.5px;
+        }
+      }
+      .left_button {
+        left: -6px;
+      }
+      .right_button {
+        right: -6px;
       }
     }
     div.main_image {
