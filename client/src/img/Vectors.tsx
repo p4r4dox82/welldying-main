@@ -157,3 +157,11 @@ export const MementoDotVector = (
     <path d="M3.81545 0.138518H3.70946C2.01371 0.742709 0 1.95109 0 3.66296C0 5.37484 1.48378 6.78462 3.28552 6.78462C5.08726 6.78462 6.78301 5.77763 6.99498 3.26017V2.25319C7.10097 0.541313 5.5112 -0.364974 3.81545 0.138518Z"/>
     </svg>
 );
+
+export const EditVector = (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16.9104 10.2767C17.8642 9.32348 18.4 8.03067 18.4 6.68266C18.4 5.33465 17.8642 4.04185 16.9104 3.08866C15.9567 2.13547 14.6631 1.59998 13.3143 1.59998C11.9655 1.59998 10.672 2.13547 9.71821 3.08866L4 8.8035V16H11.2007L16.9104 10.2767Z" stroke="#939B97" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M13.6001 6.40002L1.6001 18.4" stroke="#939B97" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M13.6001 12.4H7.6001" stroke="#939B97" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);

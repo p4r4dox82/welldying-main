@@ -6,15 +6,17 @@ import { Link, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { getSections } from '../etc/api/section';
-import { modifyUserInfo, oauthConnect } from '../etc/api/user';
+import { modifyUserInfo, oauthConnect, setUserDeathInfo } from '../etc/api/user';
 import { googleClientId, kakaoJskey } from '../etc/config';
 import usePromise from '../etc/usePromise';
 import useScroll from '../etc/useScroll';
 import { RootReducer } from '../store';
 
 
-import { MementoLogo } from '../img/Vectors';
+import { MementoLogo, UserImage, EditVector, leftVector, rightVector } from '../img/Vectors';
 import { imageUrl } from '../etc/config';
+import { getContents } from '../etc/api/content';
+import Contentbox from '../components/Contentbox';
 
 interface EntryType {
     name: string;
@@ -22,6 +24,7 @@ interface EntryType {
     message: string;
     validate: () => boolean | PromiseLike<boolean>;
 }
+
 
 function Mypage() {
     let user = useSelector((state: RootReducer) => state.user);
@@ -323,42 +326,260 @@ function Mypage() {
         )
     }, [editing, entries]);
 
+    let [, contents] = usePromise(getContents);
+    
+    interface DeathInformation {
+        agree: boolean,
+        answer1: string,
+        answer2: string,
+        answer3: string,
+        answer4: string,
+        answer5: string
+    }
+
+    let [agree, setAgree] = React.useState<boolean>(false);
+    
+    let [answer1Else, setAnswer1Else] = React.useState<boolean>(false);
+    let [answer2Else, setAnswer2Else] = React.useState<boolean>(false);
+    let [answer3Else, setAnswer3Else] = React.useState<boolean>(false);
+
+    let answer1Array = ['불교 형식', '기독교 형식', '전통 장례', '기타'];
+    let answer2Array = ['화장 형식', '매장 형식', '기타'];
+    let answer3Array = ['지인 모두 참석', '가족만 참석', '기타'];
+    let answer4Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
+    let answer5Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
+
+    let [DeathInfo, setDeathInfo] = React.useState<DeathInformation>({ agree: false, answer1: '', answer2: '', answer3: '', answer4: '', answer5: ''});
+
+    let Questions = React.useMemo(() => {
+        return (
+            <>
+                <div className = 'question'>
+                        <div className = 'title_container'>
+                            <div className = 'number'>
+                            1.
+                            </div>
+                            <div className = 'title'>
+                            원하시는 장례 진행 방법이 있나요?
+                            </div>
+                        </div>
+                        <div className = 'answer_container'>
+                            {answer1Array.map((answer) => (
+                              <div className = 'answer_block'>
+                                  <div className = 'checkbox' onClick = {answer === '기타' ? () => {setAnswer1Else(true); setDeathInfo({...DeathInfo, answer1: ''})} : () => {setDeathInfo({...DeathInfo, answer1: answer}); setAnswer1Else(false);}}>
+                                      <div className = {(answer1Else ? (answer === '기타' ? ' checked' : '') : (DeathInfo.answer1 === answer ? 'checked': ''))} />
+                                  </div>
+                                  <div className = 'name'>
+                                  {answer}
+                                  </div>
+                              </div>
+                            ))}
+                            <input type='text' autoComplete='password' onChange={(e) => setDeathInfo({...DeathInfo, answer1: e.target.value})} value={(answer1Else ? DeathInfo.answer1 : '')} placeholder = '25자 이하로 작성해주세요.' disabled = {(answer1Else ? false : true)}/>
+                        </div>
+                    </div>
+                    <div className = 'question'>
+                        <div className = 'title_container'>
+                            <div className = 'number'>
+                            2.
+                            </div>
+                            <div className = 'title'>
+                            어떤 장법을 원하시나요?
+                            </div>
+                        </div>
+                        <div className = 'answer_container'>
+                            {answer2Array.map((answer) => (
+                              <div className = 'answer_block'>
+                                  <div className = 'checkbox' onClick = {answer === '기타' ? () => {setAnswer2Else(true); setDeathInfo({...DeathInfo, answer2: ''})} : () => {setDeathInfo({...DeathInfo, answer2: answer}); setAnswer2Else(false);}}>
+                                      <div className = {(answer2Else ? (answer === '기타' ? ' checked' : '') : (DeathInfo.answer2 === answer ? 'checked': ''))} />
+                                  </div>
+                                  <div className = 'name'>
+                                  {answer}
+                                  </div>
+                              </div>
+                            ))}
+                            <input type='text' autoComplete='password' onChange={(e) => setDeathInfo({...DeathInfo, answer2: e.target.value})} value={(answer2Else ? DeathInfo.answer2 : '')} placeholder = '25자 이하로 작성해주세요.' disabled = {(answer2Else ? false : true)}/>
+                        </div>
+                    </div>
+                    <div className = 'question'>
+                        <div className = 'title_container'>
+                            <div className = 'number'>
+                            3.
+                            </div>
+                            <div className = 'title'>
+                            장례식의 규모는 어떻게 하시겠습니까?
+                            </div>
+                        </div>
+                        <div className = 'answer_container'>
+                            {answer3Array.map((answer) => (
+                              <div className = 'answer_block'>
+                                  <div className = 'checkbox' onClick = {answer === '기타' ? () => {setAnswer3Else(true); setDeathInfo({...DeathInfo, answer3: ''})} : () => {setDeathInfo({...DeathInfo, answer3: answer}); setAnswer3Else(false);}}>
+                                      <div className = {(answer3Else ? (answer === '기타' ? ' checked' : '') : (DeathInfo.answer3 === answer ? 'checked': ''))} />
+                                  </div>
+                                  <div className = 'name'>
+                                  {answer}
+                                  </div>
+                              </div>
+                            ))}
+                            <input type='text' autoComplete='password' onChange={(e) => setDeathInfo({...DeathInfo, answer3: e.target.value})} value={(answer3Else ? DeathInfo.answer3 : '')} placeholder = '25자 이하로 작성해주세요.' disabled = {(answer3Else ? false : true)}/>
+                        </div>
+                    </div>
+                    <div className = 'question'>
+                        <div className = 'title_container'>
+                            <div className = 'number'>
+                            4.
+                            </div>
+                            <div className = 'title'>
+                            장기기증을 희망하십니까?
+                            </div>
+                        </div>
+                        <div className = 'answer_container'>
+                            {answer4Array.map((answer) => (
+                              <div className = 'answer_block'>
+                                  <div className = 'checkbox' onClick = {() => {setDeathInfo({...DeathInfo, answer4: answer});}}>
+                                      <div className = {(DeathInfo.answer4 === answer ? 'checked': '')} />
+                                  </div>
+                                  <div className = 'name'>
+                                  {answer}
+                                  </div>
+                              </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className = 'question'>
+                        <div className = 'title_container'>
+                            <div className = 'number'>
+                            5.
+                            </div>
+                            <div className = 'title'>
+                            연명 치료를 희망하십니까?
+                            </div>
+                        </div>
+                        <div className = 'answer_container'>
+                            {answer5Array.map((answer) => (
+                              <div className = 'answer_block'>
+                                  <div className = 'checkbox' onClick = {() => {setDeathInfo({...DeathInfo, answer5: answer});}}>
+                                      <div className = {(DeathInfo.answer5 === answer ? 'checked': '')} />
+                                  </div>
+                                  <div className = 'name'>
+                                  {answer}
+                                  </div>
+                              </div>
+                            ))}
+                        </div>
+                    </div>
+                
+            </>
+        )
+    }, [DeathInfo]);
+
+    React.useEffect(() => {
+        if(!user) return;
+        if(!user.user?.DeathInfo) return;
+        setAgree(user.user?.DeathInfo.agree);
+        setDeathInfo(user.user?.DeathInfo);
+    }, []);
+
+    let LinkNote = React.useRef<any>(null);
+    let LinkNoteClick = () => LinkNote.current.click();
+
     if (!user.loggedIn) return <Redirect to='/login' />;
     return (
         <>
+        <Link to = {'/note/1'} ref = {LinkNote} style = {{display: 'none'}} />
+        <div className = 'MyPage'>
             <Header additionalClass='grey borderBottom' />
             <div className="block" style = {{overflow: 'hidden', height: '223px'}}>
                 <img src={imageUrl('NotePage/NoteMainBackground.png')} alt="" className="NoteMainBackground" style = {{position: 'absolute'}} />
                 <div className="mixblend" style = {{background: 'rgba(230, 229, 226, 1)',mixBlendMode: 'soft-light', width: '100%', height: '223px', position: 'absolute', top: '0px'}}></div>
-                <div className="MementoLogo">{MementoLogo}</div>
+                <div className="MementoLogo" style = {{margin: '88px 0px 0px calc(50% - 205px/2)'}}>{MementoLogo}</div>
             </div>
-            <div className='content'>
-                <div className='row' style={{margin: 0}}>
-                    <div className={'leftArea' + (scroll >= 138 ? ' fixed' : '')}>
-                        <Link to='/checklist'>
-                            <h1> { `${user.user!.name}님의`} </h1>
-                            <h1> 웰다잉 체크리스트 </h1>
-                        </Link>
-                        <div className='submenuContainer'>
-                            <h6> <Link to='/logout'> 로그아웃 </Link> </h6>
-                            <h6> <Link to='/mypage'> 개인 설정 </Link> </h6>
+            <div className="block">
+                <div className="UserInfo margin_base">
+                    <div className="element"><div className="UserImage">{UserImage}</div></div>
+                    <div className="element">
+                        <div className="UserData">
+                            <div className="namephone NS px15 line25 bold op6">{user.user?.name + ' / 0' + user.user?.cellphone.slice(3, 5) + '-' + user.user?.cellphone.slice(5, 9) + '-' + user.user?.cellphone.slice(9, 13)}</div>
+                            <div className="email NS px15 line25 bold op6">{user.user?.email}</div>
+                            <button className="Edit" onClick = {() => setEditing(true)}>{EditVector}</button>
                         </div>
-
-                        <div className='navigationMenu'>
-                            { sections?.map((section) => (
-                                <Link to={`/checklist/${section.id}`}>
-                                    <div>
-                                        { section.title }
-                                    </div>
-                                </Link>
-                            ))}
+                    </div>
+                    <div className="text GB px20 line40" style = {{marginTop: '94px', textAlign: 'center'}}>당신은 죽음을 받아들일 준비 되어있는 사람인가요?</div>
+                    <div className="text GB px15 line40 op7" style = {{marginTop: '54px', textAlign: 'center'}}>
+                        <div>나는 유언을 작성, 전달, 사용하는 과정에서 절대로 자해나 자살을 시도하지 않을 것을 서약합니다. </div>
+                        <div>자살하고 싶은 생각이 들면 반드시 주위 사람에게 도움을 청하거나, 중앙자살예방센터(1393), </div>
+                        <div>한국생명의 전화(1588-9191) 등으로 전화를 걸어 도움을 요청하겠습니다.</div>
+                    </div>
+                      <div className="element">
+                        <div className="AgreeContainer" onClick = {() => {setAgree(true); setDeathInfo({...DeathInfo, agree: true})}}>
+                            {!agree && <>
+                                <div className="NS px12 bold">네 이해하고 동의합니다.</div>
+                                <button className="agree"></button>
+                            </>}
+                            {agree && <div className="NS px12 bold op3">{`네, 저 ${user.user?.name}은(는) 위와 같이 서약합니다.`}</div>}
                         </div>
                     </div>
                 </div>
-
+            </div>
+            <div className="block">
+                <div className="DeathInfo margin_base">
+                    <img src={imageUrl('MyPageBackground.png')} alt="" className = 'background'/>
+                    <div className="title GB px25 line40">나의 사전 장례 & 연명의료, 장기기증 의향서</div>
+                    <div className="detail NS px15 line30">
+                        <div>급박한 상황이 생겼을 때, 스스로의 자기결정권을 실현할 수 있는 질문들입니다. </div>
+                        <div>작성하신 답변은 사망 전에도 열람할 수 있는 오픈프로필에 반영됩니다.</div>
+                    </div>
+                    <div className="vector" style = {{marginTop: '43px'}}></div>
+                    <div className = 'type_container'>
+                    </div>
+                    {Questions}
+                    <div className="vector" style = {{marginTop: '70px'}}></div>
+                    <button className="submit NS px18 bold" onClick = {async () => {
+                        console.log(DeathInfo);
+                        if(DeathInfo.answer1 === '' || DeathInfo.answer2 === '' || DeathInfo.answer3 === '' || DeathInfo.answer4 === '' || DeathInfo.answer5 === '') alert('모든 항목을 채워주세요');
+                        else if(await setUserDeathInfo(user.user!.username, DeathInfo))
+                            alert('저장되었습니다');
+                        else alert('실패하였습니다');
+                    }}>저장하기</button>
+                </div>
+            </div>
+            <div className="block">
+                <div className="UsersInfo margin_base">
+                    <div className="element">
+                        <div className="title GB px20 line40">나에게 남긴, 그리고 내가 남긴 기록들</div>
+                    </div>
+                    <div className="element" style ={{marginTop: '10px'}}>
+                        <div className="detail GB px14 line25 op5">
+                            <div>내가 기록을 남겨둔 이들과, 나에게 기록을 남겨둔 이들의 목록입니다.</div>
+                            <div>각각의 기록은 사망 사실 확인 후 열람 가능한 상태로 변경됩니다.</div>
+                        </div>
+                    </div>
+                    <div className="element" style ={{marginTop: '27px'}}>
+                        <div className="more NS px12 bold" onClick = {() => LinkNoteClick()}>{`작성페이지 바로가기>`}</div>
+                    </div>
+                </div>
+            </div>
+            <div className="block">
+                <div className="contents_bookmark margin_base" style = {{marginTop: '115px', textAlign: 'center', paddingBottom: '105px'}}>
+                    <div className="title GB px20 line40">당신을 의미있게 만들어준 책갈피</div>
+                    <div className="message GB px14 line25 op5 " style = {{marginTop: '10px'}}>
+                        <div>죽기 전, 어떤 감정을 느낄 것 같나요? 혹은 절대 느끼고 싶지 않은 감정이 있나요</div>
+                        <div>않은 감정이 있나요?죽기 전?죽기 전. 감정이 있나요</div>
+                    </div>
+                    <div className="more NS px12 line15 bold" style = {{marginTop: '27px', color: 'rgba(79, 84, 80, 0.6)'}}>{'나의 책갈피 전체보기>'}</div>
+                    <div className="content_container" style = {{textAlign: 'left', flexWrap: 'nowrap', overflow: 'hidden', padding: '20px 20px', left: '-20px', top: '-20px', width: 'fit-content', boxSizing: 'content-box'}}>
+                        {contents?.map((content) => <Contentbox additionalClass = 'big type2' content = {content}/>)}
+                    </div>
+                    <div className="buttoncontainer" style = {{display: 'flex', gap: '25px', top: '-23px', marginLeft: 'calc(1032px - 81px)'}}>
+                        <div className="left button">{leftVector}</div>
+                        <div className="right button">{rightVector}</div>
+                    </div>
+                </div>
+            </div>
+            <div className='content'>
                 { content }
             </div>
             <Footer additionalClass= ' '/>
+        </div>
         </>
     )
 }

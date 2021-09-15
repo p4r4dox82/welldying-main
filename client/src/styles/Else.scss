@@ -1,0 +1,228 @@
+@import 'Consts.scss';
+
+div.MyPage {
+    div.UserInfo {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        div.element {
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+        }
+        div.UserImage {
+            top: -31px;
+            width: 90px;
+            height: 62px;
+            border-radius: 80px;
+            background: #FFFFFF;
+            box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+            svg.UserImage{
+                width: 44px;
+                height: 44px;
+                top: 19px;
+                left: 23px;
+            }
+        }
+        div.UserData {
+            width: 324px;
+            height: 84px;
+            background: rgba(247, 246, 246, 0.4);
+            box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.08);
+            border-radius: 5px;
+            padding: 18px 28px;
+            div {
+                width: 200px;
+                text-align: justify-all;
+            }
+            button.Edit {
+                position: absolute;
+                top: 24px;
+                left: 267px;
+                width: 36px;
+                height: 36px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #FFFFFF;
+                box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
+                border-radius: 5px;
+                padding: 0px;
+            }
+        }
+        div.AgreeContainer {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 100px;
+            button.agree {
+                width: 14px;
+                height: 14px;
+                background: #FFFFFF;
+                box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+                border-radius: 1px;
+                padding: 0px;
+            }
+        }
+    }
+    div.DeathInfo {
+        margin-top: 123px;
+        img.background {
+            width: 100%;
+            height: 1124px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            object-fit: none;
+            border-radius: 5px;
+            opacity: 0.6;
+        }
+        text-align: center;
+        div.title {
+            padding-top: 66px;
+        }
+        div.detail {
+            margin-top: 21px;
+        }
+        .vector {
+            width: 915px;
+            border-bottom: 1px dashed rgba(147, 156, 151, 1);
+            left: calc(50% - 915px/2);
+        }
+        div.question {
+            width:100%;
+            margin-top: 57px;
+            div.title_container {
+                display: flex;
+                flex-wrap:wrap;
+                align-items: baseline;
+                width:100%;
+                height: fit-content;
+                div.number {
+                    width:102px;
+                    text-align: right;
+                    font-size: 16px;
+                    line-height: 16px;
+                }   
+                div.title {
+                    padding: 0px;
+                    margin-left:15px;
+                    font-size: 16px;
+                    line-height: 16px;
+                }
+                div.subtitle {
+                    margin-left: 15px;
+                    font-family: Noto Sans;
+                    font-style: normal;
+                    text-align: left;
+                    letter-spacing: 0.05em;
+        
+                    color: #23342A;
+                    font-size: 14px;
+                    line-height: 19px;
+                    font-weight:normal;
+                }
+            }
+            div.answer_container {
+                display: flex;
+                margin: 25px 0px 0px 117px;
+                font-family: Noto Sans;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 25px;
+        
+                color: rgba(0, 0, 0, 0.5);
+                div.answer_block {
+                    display: flex;
+                    align-items: center;
+                    div.checkbox {
+                        width:24px;
+                        height:24px;
+                        border-radius: 50%;
+                        background: #F9F9F9;
+                        box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
+                        div.checked {
+                        margin: calc(50% - 14px/2) calc(50% - 14px/2);
+                        width:14px;
+                        height:14px;
+                        border-radius: 50%;
+                        background: #27392F;
+                        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
+                        }
+                    }
+                    div.name {
+                    margin-left: 14px;
+                    }
+                }
+                div:not(:first-child) {
+                    margin-left: 50px;
+                }
+                input {
+                    background: rgba(233, 235, 234, 0.5);
+                    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+                    width: 298px;
+                    height: 36px;
+                    margin: 0px 0px 0px 20px;
+                    padding-left: 20px;
+                    border: none;
+                    font-family: Noto Sans;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 13px;
+                    line-height: 25px;
+                    color: rgba(122, 121, 120, 1);
+                    outline: none;
+                    &::placeholder {
+                    color: rgba(122, 121, 120, 0.6);
+                    }
+                    &:disabled {
+                    background: rgba(233, 235, 234, 0.4);
+                    }
+                }
+            }
+        }
+        button.submit {
+            margin-top: 64px;
+            width: 207px;
+            height: 46px;
+            background: #7C847F;
+            box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+            border-radius: 2px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    }
+    div.UsersInfo {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 202px;
+        div.element {
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+        }
+        
+    }
+    div.contents_bookmark {
+        div.button {
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            border-radius: 50%;
+            &.left {
+                padding: 5.5px 10.5px 5.5px 7.5px;
+            }
+            &.right {
+                padding: 5.5px 7.5px 5.5px 10.5px;
+            }
+            svg {
+                width: 10px;
+                height: 17px;     
+            }
+        }
+    }
+}

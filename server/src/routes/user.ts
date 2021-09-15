@@ -369,7 +369,45 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
             bookname
         }))
         res.send(200);
-    })
+    });
+
+    router.put('/deathinfo', onlyAuthUser, async (req, res, next) => {
+        let user = req.user!;
+        let username = req.body.username;
+
+        if (!await User.findOne({ username })) return res.sendStatus(500);
+
+        let DeathInfo = req.body.DeathInfo;
+
+        if(user.username !== username) return res.sendStatus(401);
+
+        if(await User.findOneAndUpdate({ username: username }, {
+            DeathInfo
+        }))
+        res.send(200);
+    });
+
+    router.put('/users', onlyAuthUser, async (req, res, next) => {
+        let user = req.user!;
+        let username = req.body.username;
+
+        if (!await User.findOne({ username })) return res.sendStatus(500);
+
+        let UsersInfo = req.body.UsersInfo;
+
+        if(user.username !== username) return res.sendStatus(401);
+
+        if(await User.findOneAndUpdate({ username: username }, {
+            UsersInfo
+        }))
+        res.send(200);
+    });
+
+    router.get('/users', async (req, res) => {
+        let result = await User.find().sort({'username': 'asc'});
+        res.json(result);
+        res.end();
+    });
 
     return router;
 };

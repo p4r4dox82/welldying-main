@@ -204,6 +204,8 @@ export interface UserData {
     kakaoId?: string;
     googleId?: string;
     bookname: string[];
+    DeathInfo: { agree: boolean, answer1: string, answer2: string, answer3: string, answer4: string, answer5: string };
+    UsersInfo: { give: string[], get: string[] }
 }
 
 
@@ -225,4 +227,27 @@ export const setBookName = async (username: string, bookname: string[]) => {
     }, { withCredentials: true });
 
     return response.status === 200;
+}
+
+export const setUserDeathInfo = async (username: string, DeathInfo: { answer1: string, answer2: string, answer3: string, answer4: string, answer5: string }) => {
+    let response = await Axios.put(`${apiAddress}/user/deathinfo`, {
+        username, DeathInfo
+    }, { withCredentials: true });
+
+    return response.status === 200;
+}
+
+export const setUsers = async (username: string, UsersInfo: { give: string[], get: string[] }) => {
+    let response = await Axios.put(`${apiAddress}/user/users`, {
+        username, UsersInfo
+    }, { withCredentials: true });
+
+    return response.status === 200;
+}
+
+export const getUsers = async () => {
+    let response = await Axios.get(`${apiAddress}/user/users`);
+    let data : UserData[] = response.data;
+
+    return data;
 }
