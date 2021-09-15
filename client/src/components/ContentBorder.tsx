@@ -170,7 +170,7 @@ function ContentBorder (props : Props) {
           </div>
           {show_comment && <div className = 'comment_container'>
               {comment_container}
-              <div className = 'comment_box'>
+              {user.loggedIn && <div className = 'comment_box'>
                   <div className = 'user_icon'>
                       <img className = 'user_icon' src = {imageUrl('user_login.png')}  alt = "profile"/>
                   </div>
@@ -187,7 +187,7 @@ function ContentBorder (props : Props) {
                       }
                       else setError('어딘가 문제가 생겼습니다.');
                   }}>확인</button>
-              </div>
+              </div>}
               {show_comments_number !== max_show_comments_number && <div className = 'more_border' onClick = {() => {setShow_comments_number(Math.min(show_comments_number + 4, max_show_comments_number))}}>
                   <div className = 'GB px18 bold op5'>더보기</div>
                   <img className = 'more_button' src = {imageUrl('ContentPage/more_button.png')} />

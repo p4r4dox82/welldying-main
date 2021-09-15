@@ -12,6 +12,10 @@ import usePromise from '../etc/usePromise';
 import useScroll from '../etc/useScroll';
 import { RootReducer } from '../store';
 
+
+import { MementoLogo } from '../img/Vectors';
+import { imageUrl } from '../etc/config';
+
 interface EntryType {
     name: string;
     body: JSX.Element;
@@ -323,6 +327,11 @@ function Mypage() {
     return (
         <>
             <Header additionalClass='grey borderBottom' />
+            <div className="block" style = {{overflow: 'hidden', height: '223px'}}>
+                <img src={imageUrl('NotePage/NoteMainBackground.png')} alt="" className="NoteMainBackground" style = {{position: 'absolute'}} />
+                <div className="mixblend" style = {{background: 'rgba(230, 229, 226, 1)',mixBlendMode: 'soft-light', width: '100%', height: '223px', position: 'absolute', top: '0px'}}></div>
+                <div className="MementoLogo">{MementoLogo}</div>
+            </div>
             <div className='content'>
                 <div className='row' style={{margin: 0}}>
                     <div className={'leftArea' + (scroll >= 138 ? ' fixed' : '')}>

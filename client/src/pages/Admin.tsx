@@ -24,8 +24,8 @@ function Admin() {
 
     let question = React.useMemo(() => {
         let section = sections?.find((section) => section.id === id);
-        if (!section) return <></>;
-        return (
+        if(!section) return <> </>;
+        else return (
             <>
                 <div className='row' style={{marginBottom: 0}}>
                     <h1>
@@ -37,13 +37,14 @@ function Admin() {
                 { section.questions.map((questionId) => {
                     let question = questions?.find((question) => question.id === questionId);
                     if (!question) return;
-
-                    <div className='row'>
-                        <h2> { `[질문 ID: ${question.id}] ` } { question.title } </h2>
-                        <ul> { question.message.split('\n').map((str) => <li> {str} </li>) } </ul>
-                        <div style={{marginBottom: '50px'}}/>
-                        <Link to={`/admin/question/${questionId}`}><button> 질문 내용 수정하기 </button></Link>
-                    </div>
+                    return (
+                        <div className='row'>
+                            <h2> { `[질문 ID: ${question.id}] ` } { question.title } </h2>
+                            <ul> { question.message.split('\n').map((str) => <li> {str} </li>) } </ul>
+                            <div style={{marginBottom: '50px'}}/>
+                            <Link to={`/admin/question/${questionId}`}><button> 질문 내용 수정하기 </button></Link>
+                        </div>
+                    );
                 })}
             </>
         );
@@ -68,9 +69,9 @@ function Admin() {
 
                         <div className='navigationMenu'>
                             { sections?.map((section) => (
-                                    <div className={ id ? (section.id === id ? 'link active' : 'link inactive') : 'link' } onClick={(e) => { e.preventDefault(); setId(section.id); }}>
-                                        { section.title }
-                                    </div>
+                                <div className={ id ? (section.id === id ? 'link active' : 'link inactive') : 'link' } onClick={(e) => { e.preventDefault(); setId(section.id);}}>
+                                    { section.title }
+                                </div>
                             ))}
                         </div>
                     </div>

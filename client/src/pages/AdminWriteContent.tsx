@@ -34,6 +34,7 @@ function AdminWriteContent({ match }: Props) {
     let [question, setQuestion] = React.useState<number>(1);
     let [source, setSource] = React.useState<string>('');
     let [summary, setSummary] = React.useState<string>('');
+    let [oneline, setOneline] = React.useState<string>('');
     let [tag, setTag] = React.useState<string>('');
     let [thumbnailUri, setThumbnailUri] = React.useState<string>('');
     let [update, setUpdate] = React.useState<number>(1);
@@ -62,6 +63,7 @@ function AdminWriteContent({ match }: Props) {
         setTag(content.tag);
         setSource(content.source);
         setSummary(content.detail.summary);
+        setOneline(content.detail.online);
         setQuestion(content.question);
         if(!content.imageData || !content.imageData.imageUrl) return;
         if (content.imageData.imageUrl !== '')
@@ -171,6 +173,10 @@ function AdminWriteContent({ match }: Props) {
                     <textarea value={summary} onChange={(e) => setSummary(e.target.value)}/>
                 </div>
                 <div className='row'>
+                    <div className='oneline'> 한줄 </div>
+                    <input value={oneline} onChange={(e) => setOneline(e.target.value)}/>
+                </div>
+                <div className='row'>
                     <div className='label'> 질문 목록 </div>
                     { questionForm }
                 </div>
@@ -189,8 +195,8 @@ function AdminWriteContent({ match }: Props) {
                 </div>
                 <button type='submit' className='signupButton' onClick={async (e) => {
                     e.preventDefault();
-                    if (!title || !category || !type || !source || !summary || !question || !thumbnailUri ) setError('모든 항목을 채워주세요.');
-                    else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, source, { summary: summary, }, [], question, { imageUrl: thumbnailUri, cropX: crop.x, cropY: crop.y })) {setEditDone(true);}
+                    if (!title || !category || !type || !source || !summary || !oneline || !question || !thumbnailUri ) setError('모든 항목을 채워주세요.');
+                    else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, source, { summary: summary, oneline: oneline }, [], question, { imageUrl: thumbnailUri, cropX: crop.x, cropY: crop.y })) {setEditDone(true);}
                     else setError('어딘가 문제가 생겼습니다.');
                 }}>
                     { !content ? '추가하기' : '수정하기' }
