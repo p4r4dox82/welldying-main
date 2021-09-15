@@ -445,10 +445,12 @@ div.main_display {
                 height: 3px;
                 background: rgba(39, 57, 47, 0.6);
                 margin-top: 17px;
+                transform: translateX(-162px);
               }
               div.title {
                 margin-top: 14px;
                 text-align: center;
+                transform: translateX(-162px);
               }
             }
             div.CoverContainer {

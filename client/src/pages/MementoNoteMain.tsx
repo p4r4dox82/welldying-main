@@ -147,7 +147,7 @@ function MementoNoteMain () {
                         <div>않은 감정이 있나요?죽기 전?죽기 전. 감정이 있나요</div>
                     </div>
                     <div className="more NS px12 line15 bold" style = {{marginTop: '27px', color: 'rgba(79, 84, 80, 0.6)'}}>{'나의 책갈피 전체보기>'}</div>
-                    <div className="content_container" style = {{textAlign: 'left', flexWrap: 'nowrap', overflow: 'hidden', padding: '20px 20px', left: '-20px', top: '-20px', width: '100%', boxSizing: 'content-box'}}>
+                    <div className="content_container" style = {{textAlign: 'left', flexWrap: 'nowrap', overflow: 'hidden', padding: '20px 20px', left: '-20px', top: '-20px', width: 'fit-content', boxSizing: 'content-box'}}>
                         {contents?.map((content) => <Contentbox additionalClass = 'big type2' content = {content}/>)}
                     </div>
                     <div className="buttoncontainer" style = {{display: 'flex', gap: '25px', top: '-23px', marginLeft: 'calc(1032px - 81px)'}}>

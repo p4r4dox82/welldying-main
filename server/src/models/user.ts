@@ -38,6 +38,8 @@ export const userSchema = new Schema<UserDocument>({
     kakaoId: String,
     googleId: String,
     bookname: [String],
+    DeathInfo: { agree: Boolean, answer1: String, answer2: String, answer3: String, answer4: String, answer5: String },
+    UsersInfo: { give: [String], get: [String] }
 });
 
 userSchema.set('timestamps', true);

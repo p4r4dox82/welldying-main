@@ -166,16 +166,17 @@ function Maincontent() {
                             <div className="title GB px16 bold">{`'${ContentCategorySelected.name}' 인기 컨텐츠`}</div>
                         </div>
                         <div className="contentContainer" style = {{marginTop: '30px', transform: `translateX(${(-412 * popularContentNumber) + 'px'})`}}>
+                            <div className="vector" style = {{width: '100vw', height: '1px', background: 'rgba(39, 57, 47, 0.2)', position: 'absolute', top: '281px', left: 'calc(50% - 50vw)', zIndex: -3}}></div>
                             {PopularContents && PopularContents.map((content, key) => {
                                 return (
-                                    <div className="contentElement">
-                                        <div className="vector" style = {{width: '100vw', height: '1px', background: 'rgba(39, 57, 47, 0.2)', position: 'absolute', top: '281px', left: 'calc(50% - 50vw)', zIndex: -1}}></div>
-                                        <div className="imageContainer" style = {{marginRight: (popularContentNumber === key ? '0px' : '58px')}}>
-                                            <img src = {imageUrl('content_slide.png')} alt="profile" className = 'thumbnail' style = {{opacity: (popularContentNumber === key ? '1' : '0.6')}} onClick = {() => PopularContentLinkClick()}/>
-                                            <div className="vector" style = {{opacity: (popularContentNumber === key ? '1' : '0.1')}}></div>
-                                            <div className="title NS px12 line15 bold op6" onClick = {() => PopularContentLinkClick()}>{content.title}</div>
+                                    <div className="contentElement" >
+                                        
+                                        <div className="imageContainer" style = {{marginRight: (popularContentNumber === key ? '0px' : '58px'), transition: 'all 1s ease-in-out', width: (popularContentNumber === key ? '678px' : '354px')}}>
+                                            <img src = {imageUrl('content_slide.png')} alt="profile" className = 'thumbnail' style = {{opacity: (popularContentNumber === key ? '1' : '0.6'), paddingRight: (popularContentNumber === key ? '324px' : '0px'), boxSizing: 'content-box', transition: 'all 1s ease-in-out'}} onClick = {() => PopularContentLinkClick()}/>
+                                            <div className="vector" style = {{opacity: (popularContentNumber === key ? '1' : '0.1'), transform: (popularContentNumber === key ? 'translateX(-162px)' : 'translateX(0px)'), transition: 'all 1s ease-in-out'}}></div>
+                                            <div className="title NS px12 line15 bold op6" onClick = {() => PopularContentLinkClick()} style ={{transform: (popularContentNumber === key ? 'translateX(-162px)' : 'translateX(0px)'), transition: 'all 1s ease-in-out'}}>{content.title}</div>
                                         </div>
-                                        {popularContentNumber === key && <div className="CoverContainer">           
+                                        {<div className="CoverContainer" style = {{position: 'absolute', zIndex: -1, transition: 'all 1s ease-in-out', left: (popularContentNumber === key ? '354px' : '0px'), opacity: (popularContentNumber === key ? '1' : '0')}}>           
                                             <div className="oneline GB px14 op6">컨텐츠 한줄</div>
                                             <div className="title GB px20 line35" onClick = {() => PopularContentLinkClick()}>{content?.title}</div>
                                             <div className="date GB px14 line15">{'컨텐츠 생성일 : ' + String(parseDate(new Date(Number(content?.date))))}</div>
