@@ -31,33 +31,34 @@ function Maincontent() {
         detail: string;
     }
 
-    let MementoSectionArray = React.useMemo(() => {
+    let  MementoSectionArray = React.useMemo(() => {
         let result: MementoSection[] = [];
         result.push({
             name: '메멘토 노트',
             vector: (MementoNoteVector),
-            detail: '어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 ',
+            detail: '메멘토가 제시하는 질문에 대한 나의 생각을 정리할 수 있는 프라이빗한 공간입니다.',
         });
         result.push({
-            name: '유언 자서전',
+            name: '메멘토 북',
             vector: (MementoBookVector),
-            detail: '어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 ',
+            detail: '메멘토 노트에 적은 답변을 온라인 책 형태로 엮어 소중한 이들에게 전달하는 공간입니다. ',
         });
         result.push({
             name: '함께쓰는 노트',
             vector: (MementoTogetherNoteVector),
-            detail: '어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 ',
+            detail: '생의 마지막까지 함께하고픈 이들과 함꼐 질문에 대해 답하고, 추억을 기록하는 공간입니다.  ',
         });
         result.push({
             name: '유언 자서전 제작',
             vector: (MementoMakeBookVector),
-            detail: '어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 어쩌구어쩌구 ',
+            detail: '온라인으로 제작한 유언 자서전을 오프라인 형태로 받아보실 수 있는 프리미엄 서비스입니다. ',  
         });
         return result;
     }, []);
 
     interface MementoContentCategory {
         name: string;
+        image: string;
         detail: string;
         tag: string;
         contents: Content[];
@@ -67,20 +68,23 @@ function Maincontent() {
         let result: MementoContentCategory[] = [];
         result.push({
             name: '후회 없을 우리의 시간.',
-            detail: '메멘토 노트는 당신의 죽음에 대해 작성하고 어쩌구 하는 공간입니다. 당신은 죽음에 대해 충분한 준비에 대한 이해가 충분히 되어있나요? 혹시 현재의 슬픔에 휩싸여 어쩌구 글을 작성하려 하지는 않았나요? 저희 메멘토는엄냐ㅓㅇ머ㅐㅁ너ㅑ처먀ㅐㄴ처ㅑㅁㄴ처ㅑㅁ냐ㅓㅁㄴ처ㅐ먄챰ㄴㅊ',
-            tag: '# 기록  # 추억 # 자서전 # 죽음의 이해 # 심적준비 # 편지',
+            image: 'Content1Image.png',
+            detail: '지난 삶을 돌아보며 추억의 순간들을 정리하고, 앞으로의 남은 삶에 대한 계획을 세우는 시간입니다. 삶의 의미와 가치관, 희로애락의 시간, 소중한 사람들에게 보내는 메세지, 삶의 계획, 버킷리스트 등에 대한 컨텐츠로 구성되어 있습니다.',
+            tag: '#기록 #추억 #자서전 #계획 #버킷리스트 #편지',
             contents: AllContents?.filter((content) => content.id < 10),
         });
         result.push({
             name: '삶의 마지막, 그 때.',
-            detail: '메멘토 노트는 당신의 죽음에 대해 작성하고 어쩌구 하는 공간입니다. 당신은 죽음에 대해 충분한 준비에 대한 이해가 충분히 되어있나요? 혹시 현재의 슬픔에 휩싸여 어쩌구 글을 작성하려 하지는 않았나요? 저희 메멘토는엄냐ㅓㅇ머ㅐㅁ너ㅑ처먀ㅐㄴ처ㅑㅁㄴ처ㅑㅁ냐ㅓㅁㄴ처ㅐ먄챰ㄴㅊ',
-            tag: '# 기록  # 추억 # 자서전 # 죽음의 이해 # 심적준비 # 편지',
+            image: 'Content2Image.png',
+            detail: '삶의 마지막 순간이 임박했을 때 꼭 해야 하는 선택들에 대해 고민하는 시간입니다. 죽음에 대한 철학적 이해, 호스피스&완화의료, 장례식&유언장, 장기기증 등에 대한 실질적인 의사결정과 마주하며 죽음을 포괄적으로 준비할 수 있는 컨텐츠로 구성되어 있습니다.',
+            tag: '#자기결정권 #치료 #장례 #법 #유산 #신탁 #죽음의 이해',
             contents: AllContents?.filter((content) => content.id < 10),
         });
         result.push({
             name: '죽음, 그 이후의 이야기.',
-            detail: '메멘토 노트는 당신의 죽음에 대해 작성하고 어쩌구 하는 공간입니다. 당신은 죽음에 대해 충분한 준비에 대한 이해가 충분히 되어있나요? 혹시 현재의 슬픔에 휩싸여 어쩌구 글을 작성하려 하지는 않았나요? 저희 메멘토는엄냐ㅓㅇ머ㅐㅁ너ㅑ처먀ㅐㄴ처ㅑㅁㄴ처ㅑㅁ냐ㅓㅁㄴ처ㅐ먄챰ㄴㅊ',
-            tag: '# 기록  # 추억 # 자서전 # 죽음의 이해 # 심적준비 # 편지',
+            image: 'Content3Image.png',
+            detail: '물리적인 죽음을 넘어섰을 때 일어나는 일들에 대한 사색의 시간입니다. 사별에 대한 대처, 애도의 방식, 유품 정리, 심적 준비, 종교관, 펫로스 등에 대한 컨텐츠로 구성되어 있습니다.',
+            tag: '#사별 #애도 #심적준비 #편지 #반려동물',
             contents: AllContents?.filter((content) => content.id < 10),
         });
         return result;
@@ -123,7 +127,7 @@ function Maincontent() {
                         {MementoContentCategoryArray.map((MementoContentCategory, key) => {
                             return (
                                 <div className="ContentCategoryContainer" onClick = {() => setContentCategory(key)}>
-                                    <div className="image"></div>
+                                    <div className="image"><img src={imageUrl(`ContentPage/${MementoContentCategory.image}`)} alt="" className="" style = {{opacity: (ContentCategory === key ? '1' : '0.5')}}/></div>
                                     <div className="title GB px16 line20">{MementoContentCategory.name}</div>
                                     <div className="vector" style = {{opacity: (ContentCategory === key ? '1' : '0')}}></div>
                                 </div>
@@ -239,67 +243,172 @@ function Maincontent() {
         );
     }, [Comment, AllContents,review_number])
 
+    interface MainTextInterface {
+        name: string;
+        mainText: JSX.Element;
+        subText: JSX.Element;
+        more: JSX.Element;
+        imageUrl: string;
+    }
+
+    let LinkAboutus = React.useRef<any>(null);
+    let LinkContent = React.useRef<any>(null);
+    let LinkNote = React.useRef<any>(null);
+    let LinkBook = React.useRef<any>(null);
+    let LinkAboutusClick = () => LinkAboutus.current.click();
+    let LinkContentClick = () => LinkContent.current.click();
+    let LinkNoteClick = () => LinkNote.current.click();
+    let LinkBookClick = () => LinkBook.current.click();
+
+    let MainText: MainTextInterface[] = React.useMemo(() => {
+        let result = [];
+        
+        result.push({
+            name: '메멘토는',
+            mainText: <>
+                <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', lineHeight: '35px', display: 'inline-block'}}>당신의 아름다운 이야기</div>를</div>
+                <div>소중하게 전달합니다</div>
+            </>,
+            subText: <>
+                <div>웰다잉 플랫폼 메멘토란, 남녀노소 누구나 자신의 죽음을 준비해보는 시간을 가질 수 있는 공간입니다.</div>
+                <div>메멘토에서 인생을 기록하고, 유언을 미리 작성하고, 다양한 컨텐츠를 통해 죽음에 대해 철학적으로 고민해보며 죽음 이면에 있는 삶의 축복을 발견하세요.</div>
+            </>,
+            more: <div className="more px12 line40 bold" onClick = {() => LinkAboutusClick()}>{`메멘토 소개 바로가기>`}</div>,
+            imageUrl: 'MainMementoImage.png'
+        });
+
+        result.push({
+            name: '메멘토 컨텐츠',
+            mainText: <>
+                <div>여러분은 <div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', lineHeight: '35px', display: 'inline-block'}}>죽음에 대해</div></div>
+                <div>얼만큼 알고 계신가요?</div>
+            </>,
+            subText: <>
+                <div>메멘토 컨텐츠란, 다양한 책, 영화, 강연을 통해 죽음에 대한 궁금증을 해소하고, 삶에 대한 나만의 철학을 완성해나가는 공간입니다. 컨텐츠 감상 후 제시되는 질문에 답하며 당신만의 삶과 죽음에 관한 생각을 정리해보세요.</div>
+                <div>메멘토 컨텐츠는 당신만의 프라이빗한 작성 공간인 메멘토 노트와 연동됩니다.</div>
+            </>,
+            more: <div className="more px12 line40 bold" onClick = {() => LinkContentClick()}>{`메멘토 컨텐츠 바로가기>`}</div>,
+            imageUrl: 'MainContentImage.png'
+        });
+
+        result.push({
+            name: '메멘토 노트 ',
+            mainText: <>
+                <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', lineHeight: '35px', display: 'inline-block'}}>당신의 야야기를 작성하는</div></div>
+                <div>당신만의 공간</div>
+            </>,
+            subText: <>
+                <div>메멘토가 제시하는 질문에 대한 나의 생각을 정리할 수 있는 프라이빗한 공간입니다. 질문은 삶과 죽음에 관한 총 6가지 카테고리로 구성되어 있으며, 질문에 대해 하나씩 답을 작성하면서 나만의 인생 기록이 담긴 특별한 유언을 완성할 수 있습니다. 질문에 관한 생각을 정리하는 데 어려움을 느끼신다면, 답변 작성에 도움을 받을 수 있는 '도움 컨텐츠'를 참고해주세요!</div>
+            </>,
+            more: <div className="more px12 line40 bold" onClick = {() => LinkNoteClick()}>{`메멘토 노트 바로가기>`}</div>,
+            imageUrl: 'MainNoteImage.png'
+        });
+
+        result.push({
+            name: '메멘토 북',
+            mainText: <>
+                <div>당신의 이야기를 엮어</div>
+                <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', lineHeight: '35px', display: 'inline-block'}}>소중한 사람에게 전달하세요.</div></div>
+            </>,
+            subText: <>
+                <div>메멘토 노트에 적은 답변을 온라인 책 형태로 엮어 소중한 이들에게 전달하는 공간입니다. 메멘토 노트의 답변 중 전달하고 싶은 답변을 선택하면 자동적으로 메멘토가 당신의 인생 기록이자 유언이 담긴 전자책을 만들어드립니다. 메멘토 북을 모두 완성하셨다면, 소중한 이들에게 이를 열람할 수 있는 초대 메세지를 보내주세요! 열람 가능한 시기는 나의 의사에 따라 지금으로 설정할 수도, 혹은 사후 나의 사망 사실이 확인된 이후로 설정할 수도 있습니다.</div>
+            </>,
+            more: <div className="more px12 line40 bold" onClick = {() => LinkBookClick()}>{`메멘토 북 바로가기>`}</div>,
+            imageUrl: 'MainBookImage.png'
+        });
+
+        result.push({
+            name: '자서전 제작',
+            mainText: <>
+                <div>여러분의 소중한 이야기를</div>
+                <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', lineHeight: '35px', display: 'inline-block'}}>책으로 남겨보세요</div></div>
+            </>,
+            subText: <>
+                <div>메멘토 북을 모두 완성하셨다면, 소중한 이들에게 남길 수 있는 책을 제작해보세요. 메멘토가 당신의 이야기를 섬세하게 엮어 보내드립니다. 당신을 그리워 할 소중한 사람들을 위해 당신의 빈자리에 위로와 온기를 남겨주세요.</div>
+            </>,
+            more: <div className="more px12 line40 bold">{`2021년 12월 출시 예정`}</div>,
+            imageUrl: 'MainMakeBookImage.png'
+        });
+        
+        return result;
+    }, []);
+
+    let [MainCoverNumber, setMainCoverNumber] = React.useState<number>(0);
+
+    let MainCover = React.useMemo(() => {
+        return (
+            <div className="main_block margin_base">
+                <div className="main_text GB px30 line55">
+                    {MainText[MainCoverNumber].mainText}
+                </div>
+                <div className="subtext GB px14 line30">
+                    {MainText[MainCoverNumber].subText}
+                </div>
+                {MainText[MainCoverNumber].more}
+                <div className="circle"></div>
+                <img src={imageUrl(`${MainText[0].imageUrl}`)} alt="" className="mainBlockImage" style = {{opacity: (MainCoverNumber === 0 ? '1' : '0')}}/>
+                <img src={imageUrl(`${MainText[1].imageUrl}`)} alt="" className="mainBlockImage" style = {{opacity: (MainCoverNumber === 1 ? '1' : '0')}}/>
+                <img src={imageUrl(`${MainText[2].imageUrl}`)} alt="" className="mainBlockImage" style = {{opacity: (MainCoverNumber === 2 ? '1' : '0')}}/>
+                <img src={imageUrl(`${MainText[3].imageUrl}`)} alt="" className="mainBlockImage" style = {{opacity: (MainCoverNumber === 3 ? '1' : '0')}}/>
+                <img src={imageUrl(`${MainText[4].imageUrl}`)} alt="" className="mainBlockImage" style = {{opacity: (MainCoverNumber === 4 ? '1' : '0')}}/>
+            </div>
+        );
+    }, [MainCoverNumber]);
+
     return (
         <div className='main_display'>
+            <Link to={'/aboutus'} ref = {LinkAboutus} style = {{display: 'none'}} />
+            <Link to={'/content/0'} ref = {LinkContent} style = {{display: 'none'}} />
+            <Link to={'/note/1'} ref = {LinkNote} style = {{display: 'none'}} />
+            <Link to={'/notebook/0'} ref = {LinkBook} style = {{display: 'none'}} />
             <div className="block" style = {{height: '601px'}}>
                 <img src={imageUrl('main_background.png')} alt="" className="background_main" style = {{width: '100vw', height: '601px', objectFit: 'none', position: 'absolute'}}/>
                 <div className="background_main_blend" style = {{width: '100vw', height: '601px', mixBlendMode: 'soft-light', background: '#E6E5E2', position: 'absolute', top: '0px'}}></div>
-                <div className="main_block margin_base">
-                    <div className="main_text GB px30 line55">
-                        <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', lineHeight: '35px', display: 'inline-block'}}>당신의 아름다운 이야기</div>를</div>
-                        <div>소중하게 전달합니다</div>
-                    </div>
-                    <div className="subtext GB px14 line30">
-                        메멘토 노트는 당신의 죽음에 대해 작성하고 어쩌구 하는 공간입니다. 당신은 죽음에 대해 충분한 준비에 대한 이해가 충분히 되어있나요? 혹시 현재의 슬픔에 휩싸여 어쩌구 글을 작성하려 하
-                    </div>
-                    <div className="more px12 line40 bold">{`메멘토 소개 바로가기>`}</div>
-                    <div className="circle"></div>
-                    <img src={imageUrl('main_block_image.svg')} alt="" className="mainBlockImage" />
-                </div>
+                {MainCover}
             </div>
             <div className="block">
                 <div className="introContainer">
-                    {LeftVector2}
+                    <div onClick = {() => setMainCoverNumber(MainCoverNumber - 1 === -1 ? 4 : MainCoverNumber - 1)}>{LeftVector2}</div>
                     <div className="introButtonContainer">
-                        <div className="Element">
-                            <div className="vector">{MementoNoteVector}</div>
+                        <div className="Element" onClick = {() => setMainCoverNumber(0)}>
+                            <div className={"vector" + (MainCoverNumber === 0 ? ' selected' : ' notselected')}>{MementoNoteVector}</div>
                             <div className = 'GB px15 line30 op3'>메멘토는</div>
                         </div>
                         {RightVector}
-                        <div className="Element">
-                            <div className="vector">{MementoContentVector}</div>
+                        <div className="Element" onClick = {() => setMainCoverNumber(1)}>
+                            <div className={"vector" + (MainCoverNumber === 1 ? ' selected' : ' notselected')}>{MementoContentVector}</div>
                             <div className = 'GB px15 line30 op3'>메멘토 컨텐츠</div>
                         </div>
                         {RightVector}
-                        <div className="Element">
-                            <div className="vector">{MementoNoteVector}</div>
+                        <div className="Element" onClick = {() => setMainCoverNumber(2)}>
+                            <div className={"vector" + (MainCoverNumber === 2 ? ' selected' : ' notselected')}>{MementoNoteVector}</div>
                             <div className = 'GB px15 line30 op3'>메멘토 노트</div>
                         </div>
                         {RightVector}
-                        <div className="Element">
-                            <div className="vector">{MementoBookVector}</div>
+                        <div className="Element" onClick = {() => setMainCoverNumber(3)}>
+                            <div className={"vector" + (MainCoverNumber === 3 ? ' selected' : ' notselected')}>{MementoBookVector}</div>
                             <div className = 'GB px15 line30 op3'>유언 자서전</div>
                         </div>
                         {RightVector}
-                        <div className="Element">
-                            <div className="vector">{MementoMakeBookVector}</div>
+                        <div className="Element" onClick = {() => setMainCoverNumber(4)}>
+                            <div className={"vector" + (MainCoverNumber === 4 ? ' selected' : ' notselected')}>{MementoMakeBookVector}</div>
                             <div className = 'GB px15 line30 op3'>자서전 제작</div>
                         </div>
                     </div>
-                    {RightVector2}
+                    <div onClick = {() => setMainCoverNumber((MainCoverNumber + 1)%5)}>{RightVector2}</div>
                 </div>
                 <div className="margin_base">
                     <div className="explain">
-                        <div className="title GB px30">memento note</div>
-                        <div className="subtitle GB px14">당신을 담아 보관하는 죽음에 대한 당신의 이야기</div>
-                        <div className="detail GB px15 line40">메멘토 노트는 당신의 죽음에 대해 작성하고 어쩌구 하는 공간입니다. 당신은 죽음에 대해 충분한 준비에 대한 이해가 충분히 되어있나요? 혹시 현재의 슬픔에 휩싸여 어쩌구 글을 작성하려 하지는 않았나요? 저희 메멘토는</div>
+                        <div className="title GB px30">나의 서재</div>
+                        <div className="subtitle GB px14">인생을 담은 당신만의 공간</div>
+                        <div className="detail GB px15 line40">'나의 서재'란, ‘메멘토 노트’를 통해 인생이 담긴 유언을 기록하고, 이를 바탕으로 ‘메멘토 북’을 제작해 소중한 이들에게 전달하는 공간입니다. 나의 서재에서 인생을 담은 당신만의 공간을 완성하세요. </div>
                         <div className="more"></div>
-                        <div className="more px12 line40 bold">{`작성 페이지 바로가기>`}</div>
+                        <div className="more px12 line40 bold" onClick = {() => LinkNoteClick()}>{`작성 페이지 바로가기>`}</div>
                     </div>
                     <div className="SectionContainer">
-                        {MementoSectionArray.map((MementoSection) => {
+                        {MementoSectionArray.map((MementoSection, key) => {
                             return (
-                                <div className="ElementContainer">
+                                <div className="ElementContainer" onClick = {key === 0 ? () => LinkNoteClick() : key === 1 ? () => LinkBookClick() : () => alert('준비중입니다.')}>
                                     <div className="vectorContainer">{MementoSection.vector}</div>
                                     <div className="title NS px14 line25 bold">{MementoSection.name}</div>
                                     <div className="detail NS px12 line25">{MementoSection.detail}</div>
@@ -312,10 +421,13 @@ function Maincontent() {
             <div className="block">
                 <div className="background" style = {{width: '100%', height: '678px', position: 'absolute', top: '0px', background: 'rgba(210, 217, 215, 0.3)', boxShadow: 'inset 0px 1px 4px rgba(0, 0, 0, 0.15)'}}></div>
                 <div className="MainContent margin_base">
-                    <div className="title GB px30" style = {{paddingTop: '130px'}}>memento contents</div>
-                    <div className="subtitle GB px14" style = {{borderBottom: '1px solid rgba(110, 118, 114, 0.3)'}}>ㄷㅏㅇ신ㄴㅇㅡㅣ ㅇㅓㅉㅓㄱㅜ ㅈㅓㅉㅓㄱㅜ ㅁㅏㄴㅅ</div>
-                    <div className="more NS px12 bold line15" style = {{marginTop: '14px', textAlign: 'right'}}>{`컨텐츠 페이지 바로가기>`}</div>
-                    <div className="detail GB px16 line40 op7" style = {{width: '796px', marginTop: '33px'}}>메멘토 노트는 당신의 죽음에 대해 작성하고 어쩌구 하는 공간입니다. 당신은 죽음에 대해 충분한 준비에 대한 이해가 충분히 되어있나요? 혹시 현재의 슬픔에 휩싸여 어쩌구 글을 작성하려 하지는 않았나요? 저희 메멘토는엄냐ㅓㅇ머ㅐㅁ너ㅑ처먀ㅐㄴ처ㅑㅁㄴ처ㅑㅁ냐ㅓㅁㄴ처ㅐ먄챰ㄴㅊ</div>
+                    <div className="title GB px30" style = {{paddingTop: '130px'}}>메멘토 컨텐츠</div>
+                    <div className="subtitle GB px14" style = {{borderBottom: '1px solid rgba(110, 118, 114, 0.3)'}}>삶과 죽음에 대해 생각하는 시간</div>
+                    <div className="more NS px12 bold line15" style = {{marginTop: '14px', textAlign: 'right'}} onClick = {() => LinkContentClick()}>{`컨텐츠 페이지 바로가기>`}</div>
+                    <div className="detail GB px16 line40 op7" style = {{width: '796px', marginTop: '33px'}}>
+                        <div>메멘토 컨텐츠란, 다양한 책, 영화, 강연을 통해 죽음에 대한 궁금증을 해소하고, 삶에 대한 나만의 철학을 완성해나가는 공간입니다. 컨텐츠 감상 후 제시되는 질문에 답하며 당신만의 삶과 죽음에 대한 생각을 정리해보세요. </div>
+                        <div>메멘토 컨텐츠는 당신만의 프라이빗한 작성 공간인 메멘토 노트와 연동됩니다.</div>
+                    </div>
                     {MementoContentCategoryElement}
                 </div>
             </div>
