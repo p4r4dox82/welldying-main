@@ -1,5 +1,6 @@
 import express from 'express';
 import config from './config';
+import cors from 'cors';
 import loader from './loaders';
 
 const startServer = async () => {
@@ -7,11 +8,7 @@ const startServer = async () => {
 
     await loader(app);
 
-    app.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Methods", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-    });
+    app.use(cors());
     
     app.listen(config.port, () => {
         console.log(`Listening on port ${config.port}!`);
