@@ -59,21 +59,6 @@ function SignupAgree({ proceed } : Props) {
                     { signupText2.split('\n').map((text) => <div> { text } </div>) }
                 </div>
 
-                <div className='checkForm' onClick={() => setCheck3(!check3)}>
-                    <div className='checkBox'>
-                        <div className={'checkSign' + (check3 ? ' active' : '')}/>
-                    </div>
-                    <div className='checkLabel NotoSans'>
-                        디지털 유언 약관 동의
-                    </div>
-                    <div className = 'more NotoSans'>
-                        {`전체보기 >`}
-                    </div>
-                </div>
-                <div className='textbox'>
-                    { signupText3.split('\n').map((text) => <div> { text } </div>) }
-                </div>
-
                 <div className='checkForm' onClick={() => setCheck4(!check4)}>
                     <div className='checkBox'>
                         <div className={'checkSign' + (check4 ? ' active' : '')}/>

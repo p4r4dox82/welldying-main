@@ -39,11 +39,6 @@ function Header({ additionalClass } : Props) {
                   </>
                 ) : (
                   <>
-                    <div className = 'button'>
-                      <div className = 'button_text'>
-                          서비스가 처음이신가요?
-                      </div>
-                    </div>
                     <div className = 'userContainer'>
                       <div><Link to = '/login'>로그인</Link></div>
                       <div><Link to ='/signup'>회원가입</Link></div>

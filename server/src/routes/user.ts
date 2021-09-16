@@ -403,7 +403,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         res.send(200);
     });
 
-    router.get('/users', async (req, res) => {
+    router.get('/usersInfo', async (req, res) => {
         let result = await User.find().sort({'username': 'asc'});
         res.json(result);
         res.end();
