@@ -93,9 +93,10 @@ header {
           }
         }
         div.userContainer {
+            width: 300px;
+            justify-content: end;
             top:0px;
             margin-left: 15px;
-            width:fit-content;
             font-family: GyeonggiBatang;
             font-style: normal;
             font-weight: bold;
