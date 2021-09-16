@@ -246,7 +246,7 @@ export const setUsers = async (username: string, UsersInfo: { give: string[], ge
 }
 
 export const getUsers = async () => {
-    let response = await Axios.get(`${apiAddress}/user/users`);
+    let response = await Axios.get(`${apiAddress}/user/usersInfo`);
     let data : UserData[] = response.data;
 
     return data;

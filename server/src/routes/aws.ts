@@ -27,7 +27,7 @@ export default ({ s3, sns }: AWSServices) => {
     // The image is stored in S3 link in response.data.location.
     router.post('/image', onlyAuthUser, (req, res, next) => {
         console.log(req.image?.size);
-        if (req.image && req.image.size > 5000000) res.sendStatus(413);
+        if (req.image && req.image.size > 50000000) res.sendStatus(413);
         else next();
     }, upload.single('image'), (req, res) => {
         res.json(req.file);

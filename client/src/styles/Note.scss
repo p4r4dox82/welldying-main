@@ -940,9 +940,14 @@ div.MementoNoteMain {
       display: flex;
       flex-wrap: nowrap;
       gap: 27px;
+      padding-bottom: 27px;
       div.BookElement {
         width: 236px;
         height: 296px;
+        background: #FAFAFA;
+        mix-blend-mode: normal;
+        box-shadow: inset 0px 1px 6px 2px rgba(0, 0, 0, 0.05);
+        border-radius: 5px;
         img.BookCover {
           position: absolute;
           width: 100%;
@@ -955,8 +960,123 @@ div.MementoNoteMain {
           width: 100%;
           height: 100%;
           background: #6E7672;
-        mix-blend-mode: multiply;
-        border-radius: 5px;
+          mix-blend-mode: multiply;
+          border-radius: 5px;          
+        }
+        div.MementoLogo {
+          position: absolute;
+          top: 31px;
+          left: 22px;
+          svg {  
+            width: 96px;
+            height: 22.5px;
+          }
+        }
+        div.bookname {
+          position: absolute;
+          top: 202px;
+          left: -2px;
+          width: 240px;
+          height: 49px;
+          display: flex;
+          align-items: center;
+          background: #FFFFFF;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          border-radius: 2px;
+          gap: 5px;
+          svg {
+            width: 3px;
+            height: 11.5px;
+            margin-left: 24px;
+            g {
+              opacity: 1;
+            }
+          }
+        }
+        div.more {
+          position: absolute;
+          top: 264px;
+          left: 23px;
+        }
+        button.plus {
+          width: 58px;
+          height: 58px;
+          background: #FBFBFB;
+          box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.15);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: 99px;
+          left: 89px;
+          border-radius: 50%;
+        }
+        div.text {
+          width: 130px;
+          position: absolute;
+          top: 180px;
+          left: calc(50% - 130px/2);
+          text-align: center;
+        }
+      }
+    }
+    div.open, div.date {
+      text-align: center;
+    } 
+    div.open {
+      padding-top: 133px;
+    }
+  }
+  div.GiveUsersContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px 30px;
+    min-height: 195px;
+    div.GiveUsersElement {
+      width: 324px;
+      height: 94px;
+      background: #FFFFFF;
+      mix-blend-mode: multiply;
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 5px;
+      padding: 22px 104px;
+      div {
+        width: 200px;
+        text-align: justify-all;
+      }
+      div.UserImage {
+        margin: 0px;
+        width: 54px;
+        height: 38px;
+        position: absolute;
+        top: 28px;
+        left: 28px;
+        background: #FFFFFF;
+        box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.15);
+        border-radius: 80px;
+        svg {
+          width: 26.6px;
+          height: 26px;
+          position: absolute;
+          top: 11.6px;
+          left: 13.8px;
+        }
+      }
+      div.plus {
+        width: 54px;
+        height: 38px;
+        position: absolute;
+        top: 28px;
+        left: 28px;
+        background: #FFFFFF;
+        box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.15);
+        border-radius: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        svg {
+          width: 14px;
+          height: 14px;
         }
       }
     }

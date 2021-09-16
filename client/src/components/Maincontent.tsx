@@ -5,7 +5,7 @@ import { getComments } from '../etc/api/comment';
 import usePromise from '../etc/usePromise';
 import { Link } from 'react-router-dom';
 
-import { MementoNoteVector, MementoBookVector, MementoContentVector, MementoMakeBookVector, MementoTogetherNoteVector, LeftVector2, RightVector2, RightVector, LeftArrowVector, RightArrowVector, Colon, like_vector, MementoDotVector, leftVector, rightVector } from '../img/Vectors';
+import { MementoMainVector, MementoNoteVector, MementoBookVector, MementoContentVector, MementoMakeBookVector, MementoTogetherNoteVector, LeftVector2, RightVector2, RightVector, LeftArrowVector, RightArrowVector, Colon, like_vector, MementoDotVector, leftVector, rightVector } from '../img/Vectors';
 import { parseDate } from '../etc';
 
 let content_type_eng = ['book', 'book', 'book'];
@@ -270,8 +270,7 @@ function Maincontent() {
                 <div>소중하게 전달합니다</div>
             </>,
             subText: <>
-                <div>웰다잉 플랫폼 메멘토란, 남녀노소 누구나 자신의 죽음을 준비해보는 시간을 가질 수 있는 공간입니다.</div>
-                <div>메멘토에서 인생을 기록하고, 유언을 미리 작성하고, 다양한 컨텐츠를 통해 죽음에 대해 철학적으로 고민해보며 죽음 이면에 있는 삶의 축복을 발견하세요.</div>
+                <div>웰다잉 플랫폼 메멘토는 남녀노소 누구나 자신의 죽음을 준비해보는 시간을 가질 수 있는 공간입니다. 메멘토에서 인생을 기록하고, 유언을 작성하고, 책과 영상을 통해 죽음에 대해 철학적으로 고민해보며 죽음 이면에 있는 삶의 축복을 발견하세요. </div>
             </>,
             more: <div className="more px12 line40 bold" onClick = {() => LinkAboutusClick()}>{`메멘토 소개 바로가기>`}</div>,
             imageUrl: 'MainMementoImage.png'
@@ -284,8 +283,7 @@ function Maincontent() {
                 <div>얼만큼 알고 계신가요?</div>
             </>,
             subText: <>
-                <div>메멘토 컨텐츠란, 다양한 책, 영화, 강연을 통해 죽음에 대한 궁금증을 해소하고, 삶에 대한 나만의 철학을 완성해나가는 공간입니다. 컨텐츠 감상 후 제시되는 질문에 답하며 당신만의 삶과 죽음에 관한 생각을 정리해보세요.</div>
-                <div>메멘토 컨텐츠는 당신만의 프라이빗한 작성 공간인 메멘토 노트와 연동됩니다.</div>
+                <div>메멘토 컨텐츠란, 다양한 책, 영화, 강연을 통해 죽음에 대한 궁금증을 해소하고, 삶에 대한 나만의 철학을 완성해나가는 공간입니다. 컨텐츠 감상 후 제시되는 질문에 답하며 당신만의 삶과 죽음에 관한 생각을 정리해보세요. </div>
             </>,
             more: <div className="more px12 line40 bold" onClick = {() => LinkContentClick()}>{`메멘토 컨텐츠 바로가기>`}</div>,
             imageUrl: 'MainContentImage.png'
@@ -298,7 +296,7 @@ function Maincontent() {
                 <div>당신만의 공간</div>
             </>,
             subText: <>
-                <div>메멘토가 제시하는 질문에 대한 나의 생각을 정리할 수 있는 프라이빗한 공간입니다. 질문은 삶과 죽음에 관한 총 6가지 카테고리로 구성되어 있으며, 질문에 대해 하나씩 답을 작성하면서 나만의 인생 기록이 담긴 특별한 유언을 완성할 수 있습니다. 질문에 관한 생각을 정리하는 데 어려움을 느끼신다면, 답변 작성에 도움을 받을 수 있는 '도움 컨텐츠'를 참고해주세요!</div>
+                <div>메멘토가 제시하는 질문에 대한 나의 생각을 정리할 수 있는 프라이빗한 공간입니다. 질문은 삶과 죽음에 관한 총 6가지 카테고리로 구성되어 있으며, 질문에 대해 하나씩 답을 작성하면서 나만의 인생 기록이 담긴 특별한 유언을 완성할 수 있습니다.  </div>
             </>,
             more: <div className="more px12 line40 bold" onClick = {() => LinkNoteClick()}>{`메멘토 노트 바로가기>`}</div>,
             imageUrl: 'MainNoteImage.png'
@@ -311,7 +309,7 @@ function Maincontent() {
                 <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', lineHeight: '35px', display: 'inline-block'}}>소중한 사람에게 전달하세요.</div></div>
             </>,
             subText: <>
-                <div>메멘토 노트에 적은 답변을 온라인 책 형태로 엮어 소중한 이들에게 전달하는 공간입니다. 메멘토 노트의 답변 중 전달하고 싶은 답변을 선택하면 자동적으로 메멘토가 당신의 인생 기록이자 유언이 담긴 전자책을 만들어드립니다. 메멘토 북을 모두 완성하셨다면, 소중한 이들에게 이를 열람할 수 있는 초대 메세지를 보내주세요! 열람 가능한 시기는 나의 의사에 따라 지금으로 설정할 수도, 혹은 사후 나의 사망 사실이 확인된 이후로 설정할 수도 있습니다.</div>
+                <div>메멘토 노트에 적은 답변을 온라인 책 형태로 엮어 소중한 이들에게 전달하는 공간입니다. 메멘토 노트의 답변 중 전달하고 싶은 답변을 선택하면 자동적으로 메멘토가 당신의 인생 기록이자 유언이 담긴 전자책을 만들어드립니다. </div>
             </>,
             more: <div className="more px12 line40 bold" onClick = {() => LinkBookClick()}>{`메멘토 북 바로가기>`}</div>,
             imageUrl: 'MainBookImage.png'
@@ -371,7 +369,7 @@ function Maincontent() {
                     <div onClick = {() => setMainCoverNumber(MainCoverNumber - 1 === -1 ? 4 : MainCoverNumber - 1)}>{LeftVector2}</div>
                     <div className="introButtonContainer">
                         <div className="Element" onClick = {() => setMainCoverNumber(0)}>
-                            <div className={"vector" + (MainCoverNumber === 0 ? ' selected' : ' notselected')}>{MementoNoteVector}</div>
+                            <div className={"vector" + (MainCoverNumber === 0 ? ' selected' : ' notselected')}>{MementoMainVector}</div>
                             <div className = 'GB px15 line30 op3'>메멘토는</div>
                         </div>
                         {RightVector}

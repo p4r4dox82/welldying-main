@@ -86,6 +86,13 @@ export const rightVector = (
     </svg>
 );
 
+export const MementoMainVector = (
+    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M30.6 0H3.4C1.53 0 0.017 1.53 0.017 3.4L0 34L6.8 27.2H30.6C32.47 27.2 34 25.67 34 23.8V3.4C34 1.53 32.47 0 30.6 0ZM6.8 11.9H27.2V15.3H6.8V11.9ZM20.4 20.4H6.8V17H20.4V20.4ZM27.2 10.2H6.8V6.8H27.2V10.2Z" fill="#616965"/>
+</svg>
+
+);
+
 export const MementoNoteVector = (
     <svg width="34" height="28" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'MementoNoteVector'>
     <path d="M18.5455 13.1765H29.3636V15.6471H18.5455V13.1765ZM18.5455 9.05882H29.3636V11.5294H18.5455V9.05882ZM18.5455 17.2941H29.3636V19.7647H18.5455V17.2941ZM30.9091 0H3.09091C1.39091 0 0 1.48235 0 3.29412V24.7059C0 26.5176 1.39091 28 3.09091 28H30.9091C32.6091 28 34 26.5176 34 24.7059V3.29412C34 1.48235 32.6091 0 30.9091 0ZM30.9091 24.7059H17V3.29412H30.9091V24.7059Z"/>
@@ -164,4 +171,12 @@ export const EditVector = (
     <path d="M13.6001 6.40002L1.6001 18.4" stroke="#939B97" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M13.6001 12.4H7.6001" stroke="#939B97" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
+);
+
+export const PlusVector = (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9999 0.315674C11.8429 0.315674 12.5263 1.27237 12.5263 2.45252V19.5473C12.5263 20.7274 11.8429 21.6841 10.9999 21.6841C10.157 21.6841 9.47363 20.7274 9.47363 19.5473V2.45252C9.47363 1.27237 10.157 0.315674 10.9999 0.315674Z" fill="#27392F"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.31543 10.9999C0.31543 10.157 1.27213 9.47363 2.45227 9.47363H19.547C20.7272 9.47363 21.6839 10.157 21.6839 10.9999C21.6839 11.8429 20.7272 12.5263 19.547 12.5263H2.45227C1.27213 12.5263 0.31543 11.8429 0.31543 10.9999Z" fill="#27392F"/>
+    </svg>
+
 );
