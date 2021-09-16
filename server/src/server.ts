@@ -7,8 +7,6 @@ const startServer = async () => {
     const app = express();
 
     await loader(app);
-
-    app.use(cors());
     
     app.listen(config.port, () => {
         console.log(`Listening on port ${config.port}!`);

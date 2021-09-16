@@ -147,7 +147,7 @@ function Maincontent() {
                             </div>
                         </div>
                         <div className="contentContainer">
-                            <img src = {imageUrl('content_slide.png')} alt="profile" className = 'thumbnail' onClick = {() => NewContentLinkClick()}/>
+                            <img src = {((newContent?.imageData && newContent?.imageData.imageUrl) ? newContent?.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} alt="profile" className = 'thumbnail' style = {{width: '708px', height: '296px', objectFit: 'cover'}} onClick = {() => NewContentLinkClick()}/>
                             <div className = 'image_selector_container'>
                                 {[...Array(total_content_number).keys()].map((i) => (
                                     <img className = {(newContentNumber === (i) ? 'selected' : 'notselected')}src = {imageUrl('content_selector.png')}  alt="profile"/>
@@ -176,7 +176,7 @@ function Maincontent() {
                                     <div className="contentElement" >
                                         
                                         <div className="imageContainer" style = {{marginRight: (popularContentNumber === key ? '0px' : '58px'), transition: 'all 1s ease-in-out', width: (popularContentNumber === key ? '678px' : '354px')}}>
-                                            <img src = {imageUrl('content_slide.png')} alt="profile" className = 'thumbnail' style = {{opacity: (popularContentNumber === key ? '1' : '0.6'), paddingRight: (popularContentNumber === key ? '324px' : '0px'), boxSizing: 'content-box', transition: 'all 1s ease-in-out'}} onClick = {() => PopularContentLinkClick()}/>
+                                            <img src = {((content?.imageData && content?.imageData.imageUrl) ? content?.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} alt="profile" className = 'thumbnail' style = {{width: '354px', height: '261px', objectFit: 'cover', opacity: (popularContentNumber === key ? '1' : '0.6'), paddingRight: (popularContentNumber === key ? '324px' : '0px'), boxSizing: 'content-box', transition: 'all 1s ease-in-out'}} onClick = {() => PopularContentLinkClick()}/>
                                             <div className="vector" style = {{opacity: (popularContentNumber === key ? '1' : '0.1'), transform: (popularContentNumber === key ? 'translateX(-162px)' : 'translateX(0px)'), transition: 'all 1s ease-in-out'}}></div>
                                             <div className="title NS px12 line15 bold op6" onClick = {() => PopularContentLinkClick()} style ={{transform: (popularContentNumber === key ? 'translateX(-162px)' : 'translateX(0px)'), transition: 'all 1s ease-in-out'}}>{content.title}</div>
                                         </div>

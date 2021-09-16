@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import { RootReducer } from '../store';
 import { like_vector } from '../img/Vectors';
 import { bookmark_vector } from '../img/bookmark_vector';
+import usePromise from '../etc/usePromise';
+import { getQuestions } from '../etc/api/question';
 
 interface Props {
     additionalClass: string;
@@ -39,6 +41,9 @@ function Contentbox(props: Props) {
   let LinkClick = () => {
     link_content.current.click();
   }
+
+  let [, questions] = usePromise(getQuestions);
+  let question = React.useMemo(() => questions?.find((question) => question.id === content?.question), [questions, content]);
 
   if(!content) return <></>;
   else return (
@@ -76,7 +81,7 @@ function Contentbox(props: Props) {
           {(user.loggedIn && content.userdata.bookmark.find((username) => username === user.user!.username)) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
       </div>}
       {(props.additionalClass === 'small' || props.additionalClass === 'small wide') && <div className = {'small_content ' + props.additionalClass}>
-          <img className = 'thumbnail' src = {imageUrl(props.additionalClass === 'small' ? 'ContentPage/small_content_image.png' : 'ContentPage/big_content_image.png')} onClick = {user.loggedIn ? async () => {
+          <img className = 'thumbnail' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} style = {{width: (props.additionalClass === 'small' ? '236px' : '324px')}} onClick = {user.loggedIn ? async () => {
             let new_userdata = userdata;
             if(userdata.read.find((username) => (username === user.user!.username)) === undefined) {
               new_userdata.read.push(user.user!.username);
@@ -133,14 +138,14 @@ function Contentbox(props: Props) {
               } : () => {LinkClick();}}>{'[' + content.type + ']' + content.title}</div>
               <div className = 'date'>{'2021.08.03'}</div>
           </div>
-          {(user.loggedIn && content.userdata.read.find((username) => username === user.user!.username)) && <div className = 'read'/>}
+          {(user.loggedIn && content.userdata.read.find((username) => username === user.user!.username)) && <div className = 'read' style = {{top: '134.5px'}}/>}
           {(user.loggedIn && content.userdata.bookmark.find((username) => username === user.user!.username)) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
       </div>}
       {props.additionalClass === 'question' && <div className = 'question_content'>
-          <img className = 'thumbnail' src = {imageUrl('ContentPage/question_content_image.png')} />
+          <img className = 'thumbnail' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} />
           <button className = 'question' disabled>
-              <div>당신의 삶에서</div>
-              <div>가장 중요한 사람은 누구인가요?</div>
+              <div>{question?.title.split('\n')[0]}</div>
+              <div>{question?.title.split('\n')[1]}</div>
           </button>
           <div className = 'cover' onClick = {() => LinkClick()}>
               <div className = 'title'>{'[' + content.type + ']' + content.title}</div>

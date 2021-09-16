@@ -414,7 +414,7 @@ div.contentslide, div.contentslide2 {
   }
   .slide_content_title {
     position: absolute;
-    left: 703px;
+    left: 708px;
     top: 27px;
     width: 235px;
     height: 469px;
@@ -451,18 +451,32 @@ div.contentslide, div.contentslide2 {
       left: 59px;
     }
   }
+  button {
+    width: 34.5px;
+    height: 34.5px;
+    border-radius: 50%;
+    display: flex;
+    padding: 0px;
+    justify-content: center;
+    align-items: center;
+    background: rgba(242, 242, 241, 0.8);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+    svg {
+      width: 12px;
+    }
+  }
   .slide_right_button {
     position: absolute;
-    top: 350px;
-    left: 954px;
+    top: 363px;
+    left: 974px;
     &:hover {
       opacity: 0.7;
     }
   }
   .slide_left_button {
     position: absolute;
-    top: 299px;
-    left: 954px;
+    top: 312px;
+    left: 974px;
     &:hover {
       opacity: 0.7;
     }
@@ -503,8 +517,8 @@ div.contentslide2 {
     position: absolute;
     width: 440px;
     height: 437px;
-    top: 42px;
-    background: rgba(250, 250, 250, 0.4);
+    top: 25px;
+    background: rgba(250, 250, 250, 0.8);
     &.left {
       left: calc(0px - #{$content-margin});
     }
@@ -516,7 +530,7 @@ div.contentslide2 {
   .slide_content_title {
     position: absolute;
     left: calc(1152px - #{$content-margin});
-    top: 34px;
+    top: 16px;
     width: 324px;
     height: 454px;
     border-radius: 5px;
@@ -673,10 +687,11 @@ div.big_content {
 }
 div.small_content {
   width: 236px;
-  height: 320px;
+  height: 268px;
   img.thumbnail {
-    width: 100%;
-    object-fit: fill;
+    width: 236px;
+    height: 138px;
+    object-fit: cover;
     border-radius: 5px;
   }
   .cover {
@@ -685,7 +700,7 @@ div.small_content {
     align-items: center;
     width: 232px;
     position: absolute;
-    top: calc(190px + 22px);
+    top: calc(138px + 22px);
     left: 2px;
   }
   div.title {
@@ -839,6 +854,7 @@ div.question_content {
   img.thumbnail {
     width: 324px;
     height: 191px;
+    object-fit: cover;
     border-radius: 5px;
     filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.25));
   }

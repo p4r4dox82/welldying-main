@@ -3,9 +3,11 @@ import { imageUrl } from '../etc/config';
 import { getContents } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
 import { Link } from 'react-router-dom';
+import { getQuestions } from '../etc/api/question';
 
 function ContentSlide2 () {
   let [, AllContents] = usePromise(getContents);
+  let [, questions] = usePromise(getQuestions);
   let contents = React.useMemo(() => AllContents?.filter((content) => content.id <= 5), [AllContents]);
   let [slide_number, setSlide_number] = React.useState<number>(1);
   let [content_id, setContent_id] = React.useState<number>(1);
@@ -119,6 +121,8 @@ function ContentSlide2 () {
     return content.id;
   }, [content]);
 
+  let question = React.useMemo(() => questions?.find((question_: any) => question_?.id === content?.question), [questions, content]);
+
   return (
     <>
       <Link to = {`/contentpage/${id}`} ref = {link_content} style = {{display: 'none'}} />
@@ -129,12 +133,12 @@ function ContentSlide2 () {
                       <img className = {i === start_number ? '' : 'opacity'} src = {imageUrl('ContentPage/selector_select.png')} />
                   ))}
               </div>
-              <div className = 'slide_content_container flex'>
+              <div className = 'slide_content_container flex' style ={{marginTop: '25px'}}>
                   <div className = 'container_1' ref = {slide_container_dom_1}>
                   {slide_contents_1?.map((content, key) => (
                     <div className = {'slide_content'} onClick = {() => LinkClick()}>
                         <div className = 'slide_image'>
-                            <img src = {imageUrl('ContentPage/video_content_image.png')}/>
+                            <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} style = {{width: '678px', height: '401px', objectFit: 'cover', borderRadius: '5px'}}/>
                         </div>
                     </div>
                   ))}
@@ -143,7 +147,7 @@ function ContentSlide2 () {
                   {slide_contents_2?.map((content, key) => (
                     <div className = {'slide_content'} onClick = {() => LinkClick()}>
                         <div className = 'slide_image'>
-                            <img src = {imageUrl('ContentPage/video_content_image.png')}/>
+                            <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} style = {{width: '678px', height: '401px', objectFit: 'cover', borderRadius: '5px'}}/>
                         </div>
                     </div>
                   ))}
@@ -152,8 +156,8 @@ function ContentSlide2 () {
               <div className = 'blur left' />
               <div className = 'blur right' />
               <div className = 'slide_content_title'>
-                  <div className = 'question' onClick = {() => LinkClick()}>
-                      {content?.title}
+                  <div className = 'question' onClick = {() => LinkClick()} style = {{width: '180px'}}>
+                      {question?.title}
                   </div>
                   <div className = 'tag'>
                       {content?.tag}

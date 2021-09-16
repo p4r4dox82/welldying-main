@@ -11,6 +11,7 @@ import { RootReducer } from '../store';
 import { uploadImage_formdata } from '../etc/api/image';
 import ReactCrop from 'react-image-crop';
 import { imageUrl } from '../etc/config';
+import { getCategorys } from '../etc/api/category';
 
 interface MatchParams {
     id: string;
@@ -26,6 +27,7 @@ function AdminWriteContent({ match }: Props) {
     let [contentLoading, content] = usePromise(() => getContent(id));
     let [allSectionsLoading, allSections] = usePromise(() => getSections());
     let [QuestionsLoading, Questions] = usePromise(getQuestions);
+    let [CategoryLoading, allCategorys] = usePromise(getCategorys);
     let [error, setError] = React.useState<string>();
 
     let [title, setTitle] = React.useState<string>('');
@@ -36,6 +38,7 @@ function AdminWriteContent({ match }: Props) {
     let [summary, setSummary] = React.useState<string>('');
     let [oneline, setOneline] = React.useState<string>('');
     let [tag, setTag] = React.useState<string>('');
+    let [tagId, setTagId] = React.useState<number>(0);
     let [thumbnailUri, setThumbnailUri] = React.useState<string>('');
     let [update, setUpdate] = React.useState<number>(1);
 
@@ -72,7 +75,7 @@ function AdminWriteContent({ match }: Props) {
     }, [content]);
 
     let categoryForm = React.useMemo(() => {
-        if (!allSections) return <></>;
+        if (!allCategorys) return <></>;
         else return (
           <div>
               <select style={{width: '888px'}} value={category} onChange={(e) => {
@@ -80,16 +83,37 @@ function AdminWriteContent({ match }: Props) {
                   let newCategory = category;
                   newCategory = newId;
                   setCategory(newCategory);
-                  let content_section = allSections?.find((section) => section.id === newCategory);
+                  let content_section = allCategorys?.find((section) => section.id === newCategory);
                   setTag(content_section ? content_section?.tag : 'nosection');
                   setUpdate(update+1);
               }}>
                   <option value={-1}> 카테고리를 골라주세요. </option>
-                  { allSections.map((section) => <option value={section.id}> {section.title} </option>)}
+                  { allCategorys.map((section) => <option value={section.id}> {section.title} </option>)}
               </select>
           </div>
         );
-    }, [update, allSectionsLoading, contentLoading]);
+    }, [update, CategoryLoading, contentLoading]);
+
+    let allTags = ['#기록 #추억 #자서전', '#계획 #버킷리스트', '#편지', '#자기경정권 #치료', '#장례', '#죽음의 이해 #심적준비', '#법 #유산 #신탁', '#반려동물', '#사별 #애도'];
+
+    let tagForm = React.useMemo(() => {
+        if (!allTags) return <></>;
+        else return (
+          <div>
+              <select style={{width: '888px'}} value={tagId} onChange={(e) => {
+                  let newId = Number.parseInt(e.target.value);
+                  let newTagId = tagId;
+                  newTagId = newId;
+                  setTagId(newTagId);
+                  setTag(allTags[newTagId]);
+                  setUpdate(update+1);
+              }}>
+                  <option value={-1}> 태그를 골라주세요. </option>
+                  { allTags.map((tag, key) => <option value={key}> {allTags[key]} </option>)}
+              </select>
+          </div>
+        );
+    }, [update]);
 
     let questionForm = React.useMemo(() => {
         if (!Questions) return <></>;
@@ -162,7 +186,7 @@ function AdminWriteContent({ match }: Props) {
                 </div>
                 <div className='row'>
                     <div className='label'> 태그 </div>
-                    <input value={tag} disabled/>
+                    {tagForm}
                 </div>
                 <div className='row'>
                     <div className='source'> 출처 </div>
@@ -195,7 +219,7 @@ function AdminWriteContent({ match }: Props) {
                 </div>
                 <button type='submit' className='signupButton' onClick={async (e) => {
                     e.preventDefault();
-                    if (!title || !category || !type || !source || !summary || !oneline || !question || !thumbnailUri ) setError('모든 항목을 채워주세요.');
+                    if (!title || !category || !type || !source || !summary || !question  ) setError('모든 항목을 채워주세요.');
                     else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, source, { summary: summary, oneline: oneline }, [], question, { imageUrl: thumbnailUri, cropX: crop.x, cropY: crop.y })) {setEditDone(true);}
                     else setError('어딘가 문제가 생겼습니다.');
                 }}>

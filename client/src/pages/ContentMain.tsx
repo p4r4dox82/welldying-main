@@ -41,8 +41,12 @@ function ContentMain({ match } : Props) {
         question_content_dom.current.style.transform = `translateX(${-353 * position + 'px'})`;
     }
 
+    let LinkNote = React.useRef<any>(null);
+    let LinkNoteClick = () => LinkNote.current.click();
+
     return (
     <>
+        <Link to = {'/note/1'} ref = {LinkNote} style = {{display: 'none'}} />
       <Header additionalClass = ' '/>
       <ContentCategory additionalClass = {String(id)}/>
       {id === 0 && <>
@@ -79,11 +83,12 @@ function ContentMain({ match } : Props) {
                 </div>
             </div>
         </div>
-        <div className = 'block contentpage overflow_hidden' >
+        <div className = 'block contentpage overflow_hidden' style = {{paddingBottom: '200px'}}>
             <div className = 'video_content_main'>
                 <div className = 'title'>
                 신규 영상 컨텐츠
                 </div>
+                <div style = {{width: '100vw', height: '437px', background: 'rgba(245, 245, 245, 1)', position: 'absolute', top: '48px', left: 'calc(50% - 50vw)', filter: 'blur(2px)'}}></div>
                 <ContentSlide2 />
             </div>
         </div>
@@ -118,7 +123,7 @@ function ContentMain({ match } : Props) {
                 </div>}
             </div>
         </div>
-        <div className = 'block contentpage flex' >
+        <div className = 'block contentpage flex' style = {{paddingBottom: '300px'}}>
             <div className = 'subject_content'>
                 <div className = 'title'>
                 생각이 깊어지는 이야기
