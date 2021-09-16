@@ -575,9 +575,6 @@ function Mypage() {
                     </div>
                 </div>
             </div>
-            <div className='content'>
-                { content }
-            </div>
             <Footer additionalClass= ' '/>
         </div>
         </>

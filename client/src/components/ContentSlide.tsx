@@ -4,8 +4,12 @@ import { getContents } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
 import { Link } from 'react-router-dom';
 
+import { leftVector, rightVector } from '../img/Vectors';
+import { getQuestions } from '../etc/api/question';
+
 function ContentSlide () {
   let [, contents] = usePromise(getContents);
+  let [, questions] = usePromise(getQuestions);
   let [slide_number, setSlide_number] = React.useState<number>(0);
   const maxslide_number = 5;
   let start_number = slide_number;
@@ -69,30 +73,33 @@ function ContentSlide () {
               </div>
               <div className = 'slide_content_container' onClick = {() => LinkClick()}>
                   <div className = 'left'>
-                  {slide_contents?.map((content, key) => (
-                    <div className = {('slide_content absolute' + ((key === slide_number || key === slide_after(slide_number, 1)) ? ' animate' : ''))} ref = {(key === slide_number ? slide_dom_left : (key === slide_after(slide_number, 1) ? slide_dom_right : (key === slide_before(slide_number, 1) ? slide_dom_left_hidden : (key === slide_before(slide_number, 2) ? slide_dom_right_hidden : other_slide_dom))))} style = {{left: ((key === 0 || key === 4) ? '0px' : '1062px'), zIndex: parseInt((slide_number === 4 && key < 3) ? `${-1 - key}` : `${0 - abs(key, slide_number)}`)}}>
-                        <div className = 'slide_image'>
-                            <img src = {imageUrl('ContentPage/slide_image.png')} />
-                        </div>
-                        <div className = {'title_background' + ((key === slide_number || key === slide_after(slide_number, 1)) ? ' shadow' : '')} />
-                        <div className = 'tag'>
-                        {content.tag.split('#').slice(1).map((tag) => <div>{'#' + tag}</div>)}
-                        </div>
-                        <div className = 'question'>
-                            <div>당신의 삶에서</div>
-                            <div>가장 중요한 사람은 누구인가요?</div>
-                        </div>
-                        <div className = 'title'>
-                        {content.title}
-                        </div>
-                        <div className = 'more'>
-                        {'컨텐츠 바로가기 >'}
-                        </div>
-                        <div className = 'source'>
-                        {'출처 : brunch.co.kr/@ssls1223/456'}
-                        </div>
-                    </div>
-                  ))}
+                  {slide_contents?.map((content, key) => {
+                    let question = questions?.find((question) => question.id === content.question);
+                    return (
+                      <div className = {('slide_content absolute' + ((key === slide_number || key === slide_after(slide_number, 1)) ? ' animate' : ''))} ref = {(key === slide_number ? slide_dom_left : (key === slide_after(slide_number, 1) ? slide_dom_right : (key === slide_before(slide_number, 1) ? slide_dom_left_hidden : (key === slide_before(slide_number, 2) ? slide_dom_right_hidden : other_slide_dom))))} style = {{left: ((key === 0 || key === 4) ? '0px' : '1062px'), zIndex: parseInt((slide_number === 4 && key < 3) ? `${-1 - key}` : `${0 - abs(key, slide_number)}`)}}>
+                          <div className = 'slide_image'>
+                              <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} style = {{width: '1032px', height: '458px', objectFit: 'cover', borderRadius: '5px'}} />
+                          </div>
+                          <div className = {'title_background' + ((key === slide_number || key === slide_after(slide_number, 1)) ? ' shadow' : '')} />
+                          <div className = 'tag'>
+                          {content.tag.split('#').slice(1).map((tag) => <div>{'#' + tag}</div>)}
+                          </div>
+                          <div className = 'question'>
+                              <div>{question?.title.split('\n')[0]}</div>
+                              <div>{question?.title.split('\n')[1]}</div>
+                          </div>
+                          <div className = 'title'>
+                          {content.title}
+                          </div>
+                          <div className = 'more'>
+                          {'컨텐츠 바로가기 >'}
+                          </div>
+                          <div className = 'source'>
+                          {'출처 : ' + content.source}
+                          </div>
+                      </div>
+                    );
+                  })}
                   </div>
               </div>
               <div className = 'slide_content_title'>
@@ -106,8 +113,8 @@ function ContentSlide () {
                   </div>
                   <img className = 'memento_logo' src = {imageUrl('ContentPage/mainLogo.png')} />
               </div>
-              <img className = 'slide_right_button' src = {imageUrl('ContentPage/slide_right_button.png')} onClick = {() => {let new_slide_number = slide_number === 0 ? (maxslide_number - 1) : ((slide_number - 1)%5); setSlide_number(new_slide_number); moveRight(slide_number); console.log(new_slide_number);}}/>
-              <img className = 'slide_left_button' src = {imageUrl('ContentPage/slide_left_button.png')} onClick = {() => {let new_slide_number = (slide_number + 1)%5; setSlide_number(new_slide_number); moveLeft(slide_number); console.log(new_slide_number);}}/>
+              <button className = 'slide_right_button' onClick = {() => {let new_slide_number = slide_number === 0 ? (maxslide_number - 1) : ((slide_number - 1)%5); setSlide_number(new_slide_number); moveRight(slide_number); console.log(new_slide_number);}}>{rightVector}</button>
+              <button className = 'slide_left_button' onClick = {() => {let new_slide_number = (slide_number + 1)%5; setSlide_number(new_slide_number); moveLeft(slide_number); console.log(new_slide_number);}}>{leftVector}</button>
           </div>
       </div>
     </>

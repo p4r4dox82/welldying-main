@@ -8,6 +8,7 @@ import Admin from './pages/Admin';
 import AdminWriteQuestion from './pages/AdminWriteQuestion';
 import AdminWriteSection from './pages/AdminWriteSection';
 import AdminWriteContent from './pages/AdminWriteContent';
+import AdminWriteCategory from './pages/AdminWriteCategory';
 import Console from './pages/Console';
 import Login from './pages/Login';
 import LoginConnect from './pages/LoginConnect';
@@ -43,6 +44,7 @@ function App() {
         <Route path='/admin/question/:id' component={AdminWriteQuestion} />
         <Route path='/admin/section/:id' component={AdminWriteSection} />
         <Route path='/admin/content/:id' component={AdminWriteContent} />
+        <Route path='/admin/category/:id' component={AdminWriteCategory} />
         <Route path='/admin' component={Admin} />
         <Route path='/login/connect/:service/:id/:token' component={LoginConnect} />
         <Route path='/login' component={Login} />

@@ -3,6 +3,8 @@ import { imageUrl } from '../etc/config';
 import { getSection } from '../etc/api/section';
 import usePromise from '../etc/usePromise';
 
+import { Link } from 'react-router-dom';
+
 interface Props {
     additionalClass: string;
     border: string;
@@ -11,8 +13,12 @@ interface Props {
 
 function ContentDetail (props : Props) {
   let [sectionLoading, section] = usePromise(() => getSection(parseInt(props.additionalClass)));
+
+  let LinkNote = React.useRef<any>(null);
+  let LinkNoteClick = () => LinkNote.current.click();
   return (
     <>
+    <Link to = {'/note/1'} ref = {LinkNote} style = {{display: 'none'}} />
     <div className = 'block'>
           <div className = {'contentdetail' + props.border + props.margin}>
               <img className = 'memento_colon' src={imageUrl('memento_colon.png')} />
@@ -24,7 +30,7 @@ function ContentDetail (props : Props) {
                   <div className = 'tag'>
                   {section?.tag}
                   </div>
-                  <div className = 'more'>
+                  <div className = 'more' onClick = {() => LinkNoteClick()}>
                   {'나의 메멘토 노트 바로가기 >'}
                   </div>
               </>}
