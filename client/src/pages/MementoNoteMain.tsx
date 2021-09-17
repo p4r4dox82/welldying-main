@@ -43,9 +43,9 @@ function MementoNoteMain () {
             case 2:
                 return '메멘토 노트에 적은 답변을 온라인 책 형태로 엮어 소중한 이들에게 전달하는 공간입니다. 메멘토 노트의 답변 중 전달하고 싶은 답변을 선택하면 자동적으로 메멘토가 당신의 인생 기록이자 유언이 담긴 전자책을 만들어드립니다. 메멘토 북을 모두 완성하셨다면, 소중한 이들에게 이를 열람할 수 있는 초대 메세지를 보내주세요! 열람 가능한 시기는 나의 의사에 따라 지금으로 설정할 수도, 혹은 사후 나의 사망 사실이 확인된 이후로 설정할 수도 있습니다.';
             case 3:
-                return '죽기 전, 어떤 감정을 느낄 것 같나요? 혹은 절대 느끼고 싶지 않은 감정이 있나요?죽기 전, 어떤 감을 느낄 것 같나요? 혹은 절대 느끼고 싶지 않은 감정이 있나요?죽기 전, 어떤 감정을 느낄 것 같낄 것 같나요?...  죽기 전, 어떤 감정을 느낄 것 같나요? 혹은 절대 느끼고 싶지 않은 감정이 있나요?죽기 전, 어떤 감을 느낄 것 같나요? 혹은 절대 느끼고 싶지 않은 감정이 있나요?죽기 전, 어떤 감정을 느낄 것 같낄 것 같나요?... ';
+                return '생의 마지막까지 함께하고픈 이들과 함께 질문에 대해 답하고, 추억을 기록하는 공간입니다.';
             case 4:
-                return '죽기 전, 어떤 감정을 느낄 것 같나요? 혹은 절대 느끼고 싶지 않은 감정이 있나요?죽기 전, 어떤 감을 느낄 것 같나요? 혹은 절대 느끼고 싶지 않은 감정이 있나요?죽기 전, 어떤 감정을 느낄 것 같낄 것 같나요?...  죽기 전, 어떤 감정을 느낄 것 같나요? 혹은 절대 느끼고 싶지 않은 감정이 있나요?죽기 전, 어떤 감을 느낄 것 같나요? 혹은 절대 느끼고 싶지 않은 감정이 있나요?죽기 전, 어떤 감정을 느낄 것 같낄 것 같나요?... ';
+                return '온라인으로 제작한 유언 자서전을 오프라인 형태로 받아보실 수 있는 프리미엄 서비스입니다.';
         }
     }, [select]);
     let explain_main = React.useMemo(() => {
@@ -103,6 +103,7 @@ function MementoNoteMain () {
                     <div className = 'category_container'>
                         <div className = {'category NS px12 line25 bold' + (id === 0 ? ' op7' : ' op4')} onClick = {() => {setId(0); setPosition(0);}}>{'전체'}</div>
                         {sections?.map((section, key) =>{
+                            if(key === 5) return <></>;
                             return (
                             <div className = {'category NS px12 line25 bold' + (id === (key + 1) ? ' op7' : ' op4')} onClick = {() => {setId(key + 1); setPosition(0);}}>{section.tag.split("#").slice(1).map((tag) => (<span>{tag}</span>))}</div>
                             );
@@ -136,9 +137,10 @@ function MementoNoteMain () {
                                     </div>
                                 )
                             })}
-                            <div className="BookElement" onClick = {() => LinkBookClick()}>
+                            <div className="BookElement" onClick = {(user.user?.bookname && user.user.bookname.length === 1) ? () => {} : () => LinkBookClick()}>
                                 <button className="plus">{PlusVector}</button>
                                 <div className="text NS px12">유언 자서전 추가하기</div>
+                                {(user.user?.bookname && user.user.bookname.length === 1) && <div className="notopen GB px20 whiteop10" style = {{width: '100%', height: '100%', background: 'rgba(96, 103, 99, 0.8)', boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: '0px', left: '0px', borderRadius: '5px'}}>오픈 준비중입니다</div>}
                             </div>
                         </div>
                         <div className="colorContainer">
@@ -197,7 +199,7 @@ function MementoNoteMain () {
                 <div className="explain">
                     <div className="title NS px14 line25">{`${user.user!.name}님의 메멘토 노트`}</div>
                     <div className="colon" style = {{marginTop: '88px'}}>{Colon}</div>
-                    <div className="maintext GB px20 line40" style = {{marginTop: '21px'}}>당신은 죽음을 받아들일 준비가 되어있는 사람인가요?</div>
+                    <div className="maintext GB px20 line40" style = {{marginTop: '21px'}}>건강한 서비스 이용을 위한 생명 존중 서약</div>
                     <div className="subtext GB px15 line40" style = {{marginTop: '54px', textAlign: 'justify'}}>
                         <div>나는 유언을 작성, 전달, 사용하는 과정에서 절대로 자해나 자살을 시도하지 않을 것을 서약합니다.</div>
                         <div>자살하고 싶은 생각이 들면 반드시 주위 사람에게 도움을 청하거나, 중앙자살예방센터(1393),</div>
@@ -225,7 +227,7 @@ function MementoNoteMain () {
                     {MementoNoteInfo}
                 </div>
             </div>
-            <div className="block">
+            {false && <div className="block">
                 <div className="contents_bookmark margin_base" style = {{marginTop: '192px', textAlign: 'center', paddingBottom: '105px'}}>
                     <div className="title GB px20 line40">당신을 의미있게 만들어준 책갈피</div>
                     <div className="message GB px14 line25 op5 " style = {{marginTop: '10px'}}>
@@ -241,7 +243,7 @@ function MementoNoteMain () {
                         <div className="right button">{rightVector}</div>
                     </div>
                 </div>
-            </div>
+            </div>}
             <Footer additionalClass = '' />
         </div>
     );

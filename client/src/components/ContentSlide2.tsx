@@ -15,10 +15,10 @@ function ContentSlide2 () {
   let start_number = slide_number;
   let end_number = ((slide_number + maxslide_number) <= maxslide_number ? slide_number + maxslide_number : slide_number + maxslide_number - maxslide_number);
   let new_slide_contents = (end_number > start_number ? contents?.slice(start_number, end_number) : contents?.slice(start_number, maxslide_number).concat(contents?.slice(0, end_number)));
-  let slide_contents_1 = contents?.filter((content, key) => key === 4);
-  slide_contents_1 = slide_contents_1?.concat(contents?.filter((content, key) => ((key >=0 && key <=1))));
-  let slide_contents_2 = contents?.filter((content, key) => (key >= 2 && key <= 4));
-  let content = React.useMemo(() => contents?.find((content, key) => key === slide_number), [slide_number, contents]);
+  let SlideContents = React.useMemo(() => AllContents?.filter((content) => [43, 42, 41, 35, 29].includes(content.id)), [AllContents]);
+  let slide_contents_1 = React.useMemo(() => SlideContents?.filter((content, key) => (key === 4 || ((key >=0 && key <=1)))), [SlideContents]);
+  let slide_contents_2 = React.useMemo(() => SlideContents?.filter((content, key) => (key >= 2 && key <= 4)), [SlideContents]);
+  let content = React.useMemo(() => SlideContents?.find((content, key) => key === slide_number), [slide_number, SlideContents]);
 
   let slide_container_dom_1 = React.useRef<any>(null);
   let slide_container_dom_2 = React.useRef<any>(null);

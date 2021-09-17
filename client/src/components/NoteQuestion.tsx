@@ -167,7 +167,10 @@ function NoteQuestion(props: Props) {
         </div>}
         {!props.written && <div className = 'questionBox unwritten' >
             <div className = 'click_area' style = {{width: '100%', height: '100%', borderRadius: '5px'}} onClick = {() => {setShow_answer(!show_answer); setAnswer_type('written');}}>
-                <div className = 'title GB px20 line40' style = {{margin: '0px'}}>{question.title}</div>
+                <div className = 'title GB px20 line40' style = {{margin: '0px'}}>
+                    <div>{question.title.split('\n')[0]}</div>
+                    <div>{question.title.split('\n')[1]}</div>
+                </div>
             </div>
             {question.contents.length !== 0 && <div className = 'content_button' onMouseOver = {() => setshowcontent(true)} onMouseLeave = {() => setshowcontent(false)}>
                 <Link to={`/contentpage/${question.contents[0]}`}><button className = 'white NS px12 op10'>대표 컨텐츠 바로가기</button></Link>
@@ -190,18 +193,21 @@ function NoteQuestion(props: Props) {
             </div>}
         </div>}
         {show_answer && <div className = {'note_question ' + answer_type + ' ' + props.type} style = {{marginLeft: (props.order !== -1 ? `${-30 -265 * (props.order % 3)}px` : '')}}>
-            <img className = 'background' src = {imageUrl('ContentPage/question_background.png')} />
+            <img className = 'background' src = {imageUrl('ContentPage/question_background.png')} style = {{height: '1052px'}}/>
             <div className = 'question_container'>
                 <textarea className = 'answer_area GB px15 line40 op7' value={message} onChange={(e) => {setMessage(checkline(e.target.value)); setCharacternumbers(e.target.value.length);}} />
                 <div className = 'characternumbers NS px12 bold op6'>
                 {Math.min(550, characternumbers) + ' / 550 자'}
                 </div>
                 <div className = 'image_uploader'>
-                    <div className = 'fileSelector' style = {{height: (imageUri === '' ? 150 : (crop.height + 60))}}>
+                    <div className = 'fileSelector' style = {{height: (imageUri === '' ? 150 : (400 + 60))}}>
                         <button className = 'image_input' onClick = {() => {handleClick(); setCropImage(true);}} >
-                            <div className = 'new_image' style = {{margin: 'auto', width: crop.width, height: (imageUri === '' ? 150 : crop.height), overflow: 'hidden'}}>
-                                <img className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (imageUri === '' ? '11px' : '0px')}}/>
+                            <div className = 'new_image' style = {{margin: 'auto', width: 400, height: (imageUri === '' ? 150 : 400), overflow: 'hidden'}}>
+                                <img className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{width: (imageUri === '' ? '67px' : '400px'), height: (imageUri === '' ? '67px' : '400px'), objectFit: (imageUri === '' ? 'none' : 'cover')}}/>
                             </div>
+                            {false && <div className = 'new_image' style = {{margin: 'auto', width: crop.width, height: (imageUri === '' ? 150 : crop.height), overflow: 'hidden'}}>
+                                <img className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (imageUri === '' ? '11px' : '0px')}}/>
+                            </div>}
                         </button>
                         <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
                     </div>
@@ -237,7 +243,7 @@ function NoteQuestion(props: Props) {
                 </div>
             </div>
         </div>}
-        {cropImage && <div className = 'crop_image_container'>
+        {(false && cropImage) && <div className = 'crop_image_container'>
             <div className = 'imageCrop'>
                 <img className = 'quit_button' src = {imageUrl('NotePage/quit_vector.svg')} onClick = {() => setCropImage(false)}/>
                 <div className = 'image_container'>

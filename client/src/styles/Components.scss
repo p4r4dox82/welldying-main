@@ -32,3 +32,81 @@ div.React_Crop {
   width: 796px;
   height: fit-content;
 }
+div.BookElement {
+  width: 236px;
+  height: 296px;
+  background: #FAFAFA;
+  mix-blend-mode: normal;
+  box-shadow: inset 0px 1px 6px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  img.BookCover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    border-radius: 5px;
+  }
+  div.BookCoverBlend {
+    width: 100%;
+    height: 100%;
+    background: #6E7672;
+    mix-blend-mode: multiply;
+    border-radius: 5px;          
+  }
+  div.MementoLogo {
+    position: absolute;
+    top: 31px;
+    left: 22px;
+    svg {  
+      width: 96px;
+      height: 22.5px;
+    }
+  }
+  div.bookname {
+    position: absolute;
+    top: 202px;
+    left: -2px;
+    width: 240px;
+    height: 49px;
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+    gap: 5px;
+    svg {
+      width: 3px;
+      height: 11.5px;
+      margin-left: 24px;
+      g {
+        opacity: 1;
+      }
+    }
+  }
+  div.more {
+    position: absolute;
+    top: 264px;
+    left: 23px;
+  }
+  button.plus {
+    width: 58px;
+    height: 58px;
+    background: #FBFBFB;
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 99px;
+    left: 89px;
+    border-radius: 50%;
+  }
+  div.text {
+    width: 130px;
+    position: absolute;
+    top: 180px;
+    left: calc(50% - 130px/2);
+    text-align: center;
+  }
+}

@@ -1,5 +1,12 @@
 @import 'Consts.scss';
 
+div.TopBar {
+  display: 'flex';
+  justify-content: space-between;
+  span {
+    transform: rotate(45deg);
+  }
+}
 div.signup_page {
   display: block;
   width:100%;
@@ -248,6 +255,9 @@ div.signup_page {
             color: #000000;
 
             opacity: 0.5;
+            &.mobiletext {
+              font-size: 10px;
+            }
             &.noborder {
               width: 467px;
               margin-left: 15px;
@@ -258,6 +268,10 @@ div.signup_page {
               background: rgba(0, 0, 0, 0);
               box-shadow: none;
               border-top: 1px solid rgba(39, 57, 47, 0.5);
+                
+              &.mobiletext {
+                font-size: 11px;
+              }
             }
         }
         .label {

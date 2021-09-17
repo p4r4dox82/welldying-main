@@ -322,7 +322,10 @@ function MementoNoteBook({ match } : Props) {
       container: '#kakao-link_btn',
       objectType: 'text',
       text:
-        `${user.user!.name}님께서 메멘토 북 수령 요청을 보내셨습니다. 메멘토에 가입 하셔서 ${user.user!.name}님이 남기신 이야기를 소중하게 보관하세요. (이미 가입중이신 경우 마이페이지를 확인해주세요.)`,
+        `${user.user!.name}님께서 메멘토 북 수령 요청을 보내셨습니다. 메멘토에 가입하셔서 ${user.user!.name}님이 남기신 이야기를 수령해주세요.
+(이미 가입중이신 경우 마이페이지를 확인해주세요.)
+당신의 이야기를 소중하게 보관합니다.
+Cherish your memories, memento`,
       link: {
         mobileWebUrl: 'https://mymemento.kr',
         webUrl:
@@ -394,11 +397,11 @@ function MementoNoteBook({ match } : Props) {
                 <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[1]}</div>
               </div>
             </div>
-            <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'end'}}>
+            <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'flex-end'}}>
                 <textarea name="" id="" cols = {52} rows = {(Number(pageanswer?.message.length)-210)/26} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(0, pageanswer?.message.length-210)} disabled ></textarea>
             </div>
           </div>
-          <div className="right page" style = {{padding: '20px 20px', display: 'flex', flexWrap: 'wrap'}}>
+          <div className="right page" style = {{padding: '20px 20px', display: 'flex', flexWrap: 'wrap', alignContent: ''}}>
               <div className="imageContainer" style ={{position: 'absolute', top: '86px', left: '125px'}}>
                 <img src={pageanswer?.imageData.imageUrl} alt="" style = {{width: '216px', height: '216px', objectFit: 'cover'}}/>
               </div> 
@@ -406,7 +409,7 @@ function MementoNoteBook({ match } : Props) {
                 <div className="tag GB px9 line25 bold">{section?.tag}</div>
                 <div className="date GB px9 line25 op7">{String(parseDate(new Date(Number(pageanswer?.updatedAt))))}</div>
               </div>
-              <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'end'}}>
+              <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'flex-end'}}>
                 <textarea name="" id="" cols = {52} rows = {(210)/26} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(pageanswer?.message.length-210, 551)} disabled ></textarea>
               </div>
           </div>  
@@ -425,7 +428,7 @@ function MementoNoteBook({ match } : Props) {
                 <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[1]}</div>
               </div>
             </div>
-            <div className="answerContainer" style = {{ margin: '0px 0px 49px 140px', alignSelf: 'end'}}>
+            <div className="answerContainer" style = {{ margin: '0px 0px 49px 140px', alignSelf: 'flex-end'}}>
                 <textarea name="" id="" cols = {34} rows = {(Number(pageanswer?.message.length)/2)/17} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(0, pageanswer?.message.length/2)} disabled ></textarea>
             </div>
           </div>
@@ -437,7 +440,7 @@ function MementoNoteBook({ match } : Props) {
               <div className="Colon" style = {{position: 'absolute', width: '7px', height: '27px', top: '73px', left: '390px'}}>
                 {Colon}
               </div>
-              <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'end'}}>
+              <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'flex-end'}}>
                 <textarea name="" id="" cols = {34} rows = {(Number(pageanswer?.message.length)/2)/17} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(pageanswer?.message.length/2, 551)} disabled ></textarea>
               </div>
           </div>  
@@ -456,7 +459,7 @@ function MementoNoteBook({ match } : Props) {
                 <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[1]}</div>
               </div>
             </div>
-            <div className="answerContainer" style = {{ margin: '0px 0px 140px 54px', alignSelf: 'end'}}>
+            <div className="answerContainer" style = {{ margin: '0px 0px 140px 54px', alignSelf: 'flex-end'}}>
                 <textarea name="" id="" cols = {34} rows = {(350/2)/17} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(0, 350/2)} disabled ></textarea>
             </div>
           </div>
@@ -468,7 +471,7 @@ function MementoNoteBook({ match } : Props) {
               <div className="Colon" style = {{position: 'absolute', width: '7px', height: '27px', top: '156px', left: '226px'}}>
                 {Colon}
               </div>
-              <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'end'}}>
+              <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'flex-end'}}>
                 <textarea name="" id="" cols = {52} rows = {(Number(pageanswer?.message.length) - (350/2))/26} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(350/2, 551)} disabled ></textarea>
               </div>
           </div>  
@@ -493,7 +496,7 @@ function MementoNoteBook({ match } : Props) {
                   <div className="tag GB px9 line25 bold">{section?.tag}</div>
                   <div className="date GB px9 line25 op7">{String(parseDate(new Date(Number(pageanswer?.updatedAt))))}</div>
                 </div>
-                <div className="answerContainer" style = {{ margin: '10px 0px 0px 53px', alignSelf: 'end'}}>
+                <div className="answerContainer" style = {{ margin: '10px 0px 0px 53px', alignSelf: 'flex-end'}}>
                   <textarea name="" id="" cols = {52} rows = {(Number(pageanswer?.message.length))/26} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(0, 551)} disabled ></textarea>
                 </div>
             </div>  
@@ -548,6 +551,7 @@ function MementoNoteBook({ match } : Props) {
                   <div className = 'category_container'>
                       <Link to={`/notebook/0`}><div className = {'category NS px12 line25 bold' + (id === 0 ? ' op7' : ' op4')}>{'전체'}</div></Link>
                       {sections?.map((section, key) =>{
+                        if(key === 5) return <></>;
                         return (
                           <Link to={`/notebook/${key + 1}`}><div className = {'category NS px12 line25 bold' + (id === (key + 1) ? ' op7' : ' op4')}>{section.tag.split("#").slice(1).map((tag) => (<span>{tag}</span>))}</div></Link>
                         );
@@ -694,7 +698,7 @@ function MementoNoteBook({ match } : Props) {
                     if(UsersGive.find((UserInfo) => UserInfo.phonenumber === ('+82' + giveuserphonenumber.slice(1, 11)))) alert('이미 등록된 사용자입니다.');
                     else {
                       if(giveuser) {
-                        let newUsersGive = UsersGive.concat([{username: giveuser.username, name: giveuser.name, phonenumber: giveuser.cellphone}]);
+                        let newUsersGive = UsersGive.concat([{username: giveuser.username, name: giveuser.name, phonenumber: giveuser.cellphone, accept: 0}]);
                         setUsersGive(newUsersGive);
                         if(method === 0) {
                           if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) console.log('asd');
@@ -702,10 +706,10 @@ function MementoNoteBook({ match } : Props) {
                           if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) console.log('asd');
                         }
                         
-                        if (await setUsers(giveuser.username, {...giveuser.UsersInfo, get: giveuser.UsersInfo.get.concat([{username: user.user!.username, name: user.user!.name, phonenumber: user.user!.cellphone}])}, 0, false, name)) console.log('dfgh');
+                        if (await setUsers(giveuser.username, {...giveuser.UsersInfo, get: giveuser.UsersInfo.get.concat([{username: user.user!.username, name: user.user!.name, phonenumber: user.user!.cellphone, accept: 0}])}, 0, false, name)) console.log('dfgh');
                       }
                       else {
-                        let newUsersGive = UsersGive.concat([{username: '', name: giveusername, phonenumber: ('+82' + giveuserphonenumber.slice(1, 11))}]);
+                        let newUsersGive = UsersGive.concat([{username: '', name: giveusername, phonenumber: ('+82' + giveuserphonenumber.slice(1, 11)), accept: 0}]);
                         setUsersGive(newUsersGive);
                         if(method === 0) {
                           if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) console.log('qwe');
@@ -718,7 +722,7 @@ function MementoNoteBook({ match } : Props) {
                         setTimeout(() => kakaobuttonClick(), 1000);
                       }
                       if(method === 1) {
-                        send('service_cp2012s', 'template_zdplcw4', {to_name: 'asd', from_name: 'asd', message: 'asd', toEmail: 'p4r4dox82@gmail.com', reply_to: 'asd'});
+                        send('service_cp2012s', 'template_zdplcw4', {toname: String(giveuser?.name), fromname: String(user.user?.name), toEmail: String(giveuser?.email) });
                       }
                     } 
                   }}>전송</button>

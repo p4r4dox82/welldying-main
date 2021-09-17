@@ -195,6 +195,7 @@ export interface UserGiveInfo {
     username: string;
     name: string;
     phonenumber: string;
+    accept: number;
 }
 
 export interface UserData {

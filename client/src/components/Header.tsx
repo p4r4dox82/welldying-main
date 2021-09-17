@@ -51,13 +51,14 @@ function Header({ additionalClass } : Props) {
             <div className = 'vector' />
             <div className={"submenuContainerBar" + ((expanded_1 || expanded_2 || expanded_4) ? ' active' : '')} style = {{display: 'flex', width: '500px'}}>
               <div className = {'submenuContainer' + (expanded_1 ? ' active' : '')} onMouseLeave = {() => (setExpanded_1(false))}>
-                  <div className = 'menuItem_1'><Link to='/aboutus'>메멘토 소개</Link></div>
-                  <div className = 'dot' />
+                  <div className = 'menuItem_1' onClick = {() => window.open('https://www.notion.so/Team-Memento-480ba51aeb3a43f6ad18d19a05bba5ad', '_blank')}>메멘토 소개</div>
+                  {false && <><div className = 'dot' />
                   <div><Link to='/aboutus'>대표의 말</Link></div>
                   <div><Link to='/aboutus'>팀 소개</Link></div>
                   <div><Link to='/aboutus'>팀 연혁</Link></div>
                   <div><Link to='/aboutus'>브랜드 소개</Link></div>
                   <div><Link to='/aboutus'>서비스 소개</Link></div>
+                  </>}
               </div>
               <div style = {{padding: '0px 1px', opacity: '0', fontSize: '15px'}}>|</div>
               <div className = {'submenuContainer' + (expanded_2 ? ' active' : '')} onMouseLeave = {() => (setExpanded_2(false))}>

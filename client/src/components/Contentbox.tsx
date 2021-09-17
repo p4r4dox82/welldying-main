@@ -70,7 +70,7 @@ function Contentbox(props: Props) {
                   await content_userdata(id, new_userdata);
                 }
                 LinkClick();
-              } : () => {LinkClick();}}>{'[' + content.type + ']' + content.title}</div>
+              } : () => {LinkClick();}}>{'[' + content.type + ']' + content.title.slice(0, 39) + (content.title.length > 39 ? '...' : '')}</div>
               <div className = 'tag'>{content.tag}</div>
               <div className = 'likes_container'>
                   <img className = 'likes_image' src = {imageUrl('content_like.png')} />
@@ -135,7 +135,7 @@ function Contentbox(props: Props) {
                   await content_userdata(id, new_userdata);
                 }
                 LinkClick();
-              } : () => {LinkClick();}}>{'[' + content.type + ']' + content.title}</div>
+              } : () => {LinkClick();}}>{'[' + content.type + ']' + content.title.slice(0, 30) + (content.title.length > 30 ? '...' : '')}</div>
               <div className = 'date'>{'2021.08.03'}</div>
           </div>
           {(user.loggedIn && content.userdata.read.find((username) => username === user.user!.username)) && <div className = 'read' style = {{top: (props.additionalClass === 'small' ? '134.5px' : '186.5px')}}/>}

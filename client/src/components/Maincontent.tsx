@@ -61,7 +61,8 @@ function Maincontent() {
         image: string;
         detail: string;
         tag: string;
-        contents: Content[];
+        newcontents: Content[];
+        allcontents: Content[];
     }
 
     let MementoContentCategoryArray = React.useMemo(() => {
@@ -71,34 +72,41 @@ function Maincontent() {
             image: 'Content1Image.png',
             detail: '지난 삶을 돌아보며 추억의 순간들을 정리하고, 앞으로의 남은 삶에 대한 계획을 세우는 시간입니다. 삶의 의미와 가치관, 희로애락의 시간, 소중한 사람들에게 보내는 메세지, 삶의 계획, 버킷리스트 등에 대한 컨텐츠로 구성되어 있습니다.',
             tag: '#기록 #추억 #자서전 #계획 #버킷리스트 #편지',
-            contents: AllContents?.filter((content) => content.id < 10),
+            newcontents: AllContents?.filter((content) => [2, 45, 23, 46].includes(content.id)),
+            allcontents: AllContents?.filter((content) => content.category.includes(1)),
         });
         result.push({
             name: '삶의 마지막, 그 때.',
             image: 'Content2Image.png',
             detail: '삶의 마지막 순간이 임박했을 때 꼭 해야 하는 선택들에 대해 고민하는 시간입니다. 죽음에 대한 철학적 이해, 호스피스&완화의료, 장례식&유언장, 장기기증 등에 대한 실질적인 의사결정과 마주하며 죽음을 포괄적으로 준비할 수 있는 컨텐츠로 구성되어 있습니다.',
             tag: '#자기결정권 #치료 #장례 #법 #유산 #신탁 #죽음의 이해',
-            contents: AllContents?.filter((content) => content.id < 10),
+            newcontents: AllContents?.filter((content) => [20, 35, 48, 18].includes(content.id)),
+            allcontents: AllContents?.filter((content) => content.category.includes(2)),
         });
         result.push({
             name: '죽음, 그 이후의 이야기.',
             image: 'Content3Image.png',
             detail: '물리적인 죽음을 넘어섰을 때 일어나는 일들에 대한 사색의 시간입니다. 사별에 대한 대처, 애도의 방식, 유품 정리, 심적 준비, 종교관, 펫로스 등에 대한 컨텐츠로 구성되어 있습니다.',
             tag: '#사별 #애도 #심적준비 #편지 #반려동물',
-            contents: AllContents?.filter((content) => content.id < 10),
+            newcontents: AllContents?.filter((content) => [37, 42, 22, 50].includes(content.id)),
+            allcontents: AllContents?.filter((content) => content.category.includes(3)),
         });
         return result;
     }, [AllContents]);
 
     let [newContentNumber, setNewContentNumber] = React.useState<number>(0);
     let [popularContentNumber, setPopularContentNumber] = React.useState<number>(0);
+    React.useEffect(() => {
+        setNewContentNumber(0);
+        setPopularContentNumber(0);
+    }, [ContentCategory]);
     let ContentCategorySelected = React.useMemo(() => MementoContentCategoryArray[ContentCategory], [ContentCategory, MementoContentCategoryArray]);
-    let newContents = React.useMemo(() => ContentCategorySelected.contents?.filter((content, key) => key < 6), [ContentCategorySelected]);
+    let newContents = React.useMemo(() => ContentCategorySelected.newcontents?.filter((content, key) => key < 4), [ContentCategorySelected]);
     let newContent = React.useMemo(() => {
         if(!newContents) return;
         return newContents[newContentNumber];
     }, [newContents, newContentNumber]);
-    let PopularContents = React.useMemo(() => ContentCategorySelected.contents?.filter((content, key) => key < 10), [ContentCategorySelected]);
+    let PopularContents = React.useMemo(() => ContentCategorySelected.allcontents?.filter((content, key) => key < 9), [ContentCategorySelected]);
     let PopularContent = React.useMemo(() => {
         if(!PopularContents) return;
         return PopularContents[popularContentNumber];
@@ -142,14 +150,14 @@ function Maincontent() {
                         <div className="titleContainer">
                             <div className="title GB px16 bold">{`'${ContentCategorySelected.name}' 신규 컨텐츠`}</div>
                             <div className="buttonContainer">
-                                <button className="left Button" onClick = {() => {setNewContentNumber((newContentNumber - 1) === -1 ? 5 : (newContentNumber - 1));}}>{LeftArrowVector}</button>
-                                <button className="right Button" onClick = {() => {setNewContentNumber((newContentNumber + 1)%6)}}>{RightArrowVector}</button>
+                                <button className="left Button" onClick = {() => {setNewContentNumber((newContentNumber - 1) === -1 ? 3 : (newContentNumber - 1));}}>{LeftArrowVector}</button>
+                                <button className="right Button" onClick = {() => {setNewContentNumber((newContentNumber + 1)%4)}}>{RightArrowVector}</button>
                             </div>
                         </div>
                         <div className="contentContainer">
-                            <img src = {((newContent?.imageData && newContent?.imageData.imageUrl) ? newContent?.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} alt="profile" className = 'thumbnail' style = {{width: '708px', height: '296px', objectFit: 'cover'}} onClick = {() => NewContentLinkClick()}/>
+                            <img src = {((newContent?.imageData && newContent?.imageData.imageUrl) ? newContent?.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} alt="profile" className = 'thumbnail' style = {{width: '708px', height: '296px', objectFit: 'cover'}} onClick = {() => NewContentLinkClick()}/>
                             <div className = 'image_selector_container'>
-                                {[...Array(total_content_number).keys()].map((i) => (
+                                {[...Array(4).keys()].map((i) => (
                                     <img className = {(newContentNumber === (i) ? 'selected' : 'notselected')}src = {imageUrl('content_selector.png')}  alt="profile"/>
                                 ))}
                             </div>
@@ -176,7 +184,7 @@ function Maincontent() {
                                     <div className="contentElement" >
                                         
                                         <div className="imageContainer" style = {{marginRight: (popularContentNumber === key ? '0px' : '58px'), transition: 'all 1s ease-in-out', width: (popularContentNumber === key ? '678px' : '354px')}}>
-                                            <img src = {((content?.imageData && content?.imageData.imageUrl) ? content?.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} alt="profile" className = 'thumbnail' style = {{width: '354px', height: '261px', objectFit: 'cover', opacity: (popularContentNumber === key ? '1' : '0.6'), paddingRight: (popularContentNumber === key ? '324px' : '0px'), boxSizing: 'content-box', transition: 'all 1s ease-in-out'}} onClick = {() => PopularContentLinkClick()}/>
+                                            <img src = {((content?.imageData && content?.imageData.imageUrl) ? content?.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} alt="profile" className = 'thumbnail' style = {{width: '354px', height: '261px', objectFit: 'cover', opacity: (popularContentNumber === key ? '1' : '0.6'), paddingRight: (popularContentNumber === key ? '324px' : '0px'), boxSizing: 'content-box', transition: 'all 1s ease-in-out'}} onClick = {() => PopularContentLinkClick()}/>
                                             <div className="vector" style = {{opacity: (popularContentNumber === key ? '1' : '0.1'), transform: (popularContentNumber === key ? 'translateX(-162px)' : 'translateX(0px)'), transition: 'all 1s ease-in-out'}}></div>
                                             <div className="title NS px12 line15 bold op6" onClick = {() => PopularContentLinkClick()} style ={{transform: (popularContentNumber === key ? 'translateX(-162px)' : 'translateX(0px)'), transition: 'all 1s ease-in-out'}}>{content.title}</div>
                                         </div>
@@ -429,7 +437,7 @@ function Maincontent() {
                     {MementoContentCategoryElement}
                 </div>
             </div>
-            <div className="block" style = {{minHeight: '521px'}}> 
+            {false && <div className="block" style = {{minHeight: '521px'}}> 
                 <div className="BackgroundContainer" style = {{opacity: '0.2', filter: 'drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.1))'}}>
                     <img src={imageUrl('CommentMainBackground.png')} alt="" className="MainCommentBackground" style = {{position: 'absolute', top: '0px'}}/>
                     <div className="MainCommentBackgroundBlend" style = {{width: '100vw', height: '521px', position: 'absolute',top: '0px', background: 'rgba(253, 252, 252, 1)', mixBlendMode: 'multiply'}}></div>
@@ -441,7 +449,7 @@ function Maincontent() {
                     <button className = 'left_button' onClick = {() => {setreview_number((review_number - 1) === 0 ? total_review_number : (review_number - 1));}}>{LeftArrowVector}</button>
                     <button className = 'right_button' onClick = {() => {setreview_number((review_number + 1)%total_review_number === 0 ? total_review_number : (review_number + 1)%total_review_number); }} >{RightArrowVector}</button>
                 </div>
-            </div>
+            </div>}
         </div>
     );
 }
