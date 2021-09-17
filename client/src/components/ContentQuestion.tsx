@@ -128,11 +128,14 @@ function ContentQuestion (props : Props) {
                 {Math.min(550, characternumbers) + ' / 550 자'}
                 </div>
                 <div className = 'image_uploader'>
-                    <div className = 'fileSelector' style = {{height: (imageUri === '' ? 150 : (crop.height + 60))}}>
+                    <div className = 'fileSelector' style = {{height: (imageUri === '' ? 150 : (400 + 60))}}>
                         <button className = 'image_input' onClick = {() => {handleClick(); setCropImage(true);}} >
-                            <div className = 'new_image' style = {{margin: 'auto', width: crop.width, height: (imageUri === '' ? 150 : crop.height), overflow: 'hidden'}}>
-                                <img className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (imageUri === '' ? '11px' : '0px')}}/>
+                            <div className = 'new_image' style = {{margin: 'auto', width: 400, height: (imageUri === '' ? 150 : 400), overflow: 'hidden'}}>
+                                <img className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{width: (imageUri === '' ? '67px' : '400px'), height: (imageUri === '' ? '67px' : '400px'), objectFit: (imageUri === '' ? 'none' : 'cover')}}/>
                             </div>
+                            {false && <div className = 'new_image' style = {{margin: 'auto', width: crop.width, height: (imageUri === '' ? 150 : crop.height), overflow: 'hidden'}}>
+                                <img className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (imageUri === '' ? '11px' : '0px')}}/>
+                            </div>}
                         </button>
                         <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
                     </div>
@@ -169,7 +172,7 @@ function ContentQuestion (props : Props) {
             </div>
           </div>
       </div>
-      {cropImage && <div className = 'crop_image_container'>
+      {(false && cropImage) && <div className = 'crop_image_container'>
             <div className = 'imageCrop'>
                 <img className = 'quit_button' src = {imageUrl('NotePage/quit_vector.svg')} onClick = {() => setCropImage(false)}/>
                 <div className = 'image_container'>

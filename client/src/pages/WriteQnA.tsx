@@ -177,7 +177,7 @@ function WriteQnA({ match }: Props) {
                         {characternumbers + ' / 3000 자'}
                         </div>
                     </div>
-                    <div className = 'write_box'>
+                    {false && <div className = 'write_box'>
                         <div className = 'dot' />
                         <div className = 'title'>첨부파일</div>
                         <input className = 'white short' disabled/>
@@ -188,7 +188,7 @@ function WriteQnA({ match }: Props) {
                             <div>첨부파일은 파일당 최대 5MB까지 첨부 가능합니다.</div>
                             <div>* 첨부파일 추가는 선택사항입니다.</div>
                         </div>
-                    </div>
+                    </div>}
                     <div className = 'write_box margin_150px'>
                         <div className = 'dot' />
                         <div className = 'title'>유의사항</div>

@@ -6,11 +6,12 @@ import { Link, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { getSections } from '../etc/api/section';
-import { modifyUserInfo, oauthConnect, setUserDeathInfo } from '../etc/api/user';
+import { getUsers, modifyUserInfo, oauthConnect, setUserDeathInfo } from '../etc/api/user';
 import { googleClientId, kakaoJskey } from '../etc/config';
 import usePromise from '../etc/usePromise';
 import useScroll from '../etc/useScroll';
 import { RootReducer } from '../store';
+import MementoBook from '../components/MementoBook';
 
 
 import { MementoLogo, UserImage, EditVector, leftVector, rightVector } from '../img/Vectors';
@@ -28,6 +29,7 @@ interface EntryType {
 
 function Mypage() {
     let user = useSelector((state: RootReducer) => state.user);
+    let [, AllUsers] = usePromise(getUsers);
     let [, sections] = usePromise(getSections);
     let scroll = useScroll();
 
@@ -482,7 +484,58 @@ function Mypage() {
     let LinkNote = React.useRef<any>(null);
     let LinkNoteClick = () => LinkNote.current.click();
 
-    if (!user.loggedIn) return <Redirect to='/login' />;
+    let GiveBookContainer = React.useMemo(() => {
+        if(!AllUsers) return<></>;
+        return (
+            <div className="BookContainer" style = {{paddingTop: '37px'}}>
+                <MementoBook bookname = {String(user.user?.bookname[0])} mine = {true} accept = {false} name = ''/>
+                <div className="vector"></div>
+                <div className="giveuserscontainer">
+                    {user.user?.UsersInfo.give.map((UserInfo) => {
+                        let giveuser = AllUsers.find((user_) => user_.username === UserInfo.username);
+                        return (
+                            <div className="GiveUsersElement">
+                                <div className="UserImage">{UserImage}</div>
+                                {UserInfo.accept ? <div>
+                                    <div className="namephone NS px15 line25 bold op6">{giveuser?.name + ' / 0' + giveuser?.cellphone.slice(3, 5) + '-' + giveuser?.cellphone.slice(5, 9) + '-' + giveuser?.cellphone.slice(9, 13)}</div>
+                                    <div className="email NS px15 line25 bold op6">{giveuser?.email}</div>
+                                </div> : <>
+                                    <div className="email NS px15 line25 bold op6" style ={{width: '230px'}}>{giveuser?.name + '의 승인을 대기중입니다.'}</div>
+                                </>}
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    }, [user, AllUsers]);
+
+    let GetBookContainer = React.useMemo(() => {
+        if(!AllUsers) return<></>;
+        return (
+            <div className="BookContainer" style = {{paddingTop: '37px'}}>
+                {user.user?.UsersInfo.get.map((UserInfo) => {
+                    let getuser = AllUsers.find((user_) => user_.cellphone === UserInfo.phonenumber);
+                    console.log(getuser);
+                    return (
+                        <div style = {{width: '236px'}}>
+                            <MementoBook bookname = {String(getuser?.bookname[0])} mine = {false} accept = {false} name = {String(getuser?.name)}/>
+                            <div className="GiveUsersElement" style ={{width: '236px', padding: '0px', justifyContent: 'center', boxShadow: '0px 0px 0px rgba(0, 0, 0, 0)', background: 'rgba(0, 0, 0, 0)', height: '60px', marginTop: '20px'}}>
+                                <div style ={{textAlign: 'center'}}>
+                                    <div className="namephone NS px15 line25 bold op6">{getuser?.name + ' / ' + getuser?.birthYear + '.' + getuser?.birthMonth + '.' + getuser?.birthDate}</div>
+                                    <div className="email NS px15 line25 bold op6">{getuser?.email}</div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
+                
+            </div>
+        );
+    }, [user, AllUsers]);
+    
+
+    if (!user.loggedIn) return <Redirect to='/login' />; 
     return (
         <>
         <Link to = {'/note/1'} ref = {LinkNote} style = {{display: 'none'}} />
@@ -503,7 +556,9 @@ function Mypage() {
                             <button className="Edit" onClick = {() => setEditing(true)}>{EditVector}</button>
                         </div>
                     </div>
-                    <div className="text GB px20 line40" style = {{marginTop: '94px', textAlign: 'center'}}>당신은 죽음을 받아들일 준비 되어있는 사람인가요?</div>
+                    <div className="element">
+                        <div className="text GB px20 line40" style = {{marginTop: '94px', textAlign: 'center'}}>건강한 서비스 이용을 위한 생명 존중 서약</div>
+                    </div>
                     <div className="text GB px15 line40 op7" style = {{marginTop: '54px', textAlign: 'center'}}>
                         <div>나는 유언을 작성, 전달, 사용하는 과정에서 절대로 자해나 자살을 시도하지 않을 것을 서약합니다. </div>
                         <div>자살하고 싶은 생각이 들면 반드시 주위 사람에게 도움을 청하거나, 중앙자살예방센터(1393), </div>
@@ -542,7 +597,7 @@ function Mypage() {
                     }}>저장하기</button>
                 </div>
             </div>
-            <div className="block">
+            <div className="block" style = {{overflow: 'hidden'}}>
                 <div className="UsersInfo margin_base">
                     <div className="element">
                         <div className="title GB px20 line40">나에게 남긴, 그리고 내가 남긴 기록들</div>
@@ -556,9 +611,21 @@ function Mypage() {
                     <div className="element" style ={{marginTop: '27px'}}>
                         <div className="more NS px12 bold" onClick = {() => LinkNoteClick()}>{`작성페이지 바로가기>`}</div>
                     </div>
+                    <div className="userscontainer" style = {{paddingTop: '78px'}}>
+                        <div>
+                            <div className="title GB px16 line20 bold">나의 유언 자서전 전달</div>
+                            {GiveBookContainer}
+                        </div>
+                        <div style = {{marginTop: '104px', width: '1032px', paddingBottom: '30px'}}>
+                            <div className="title GB px16 line20 bold">나에게 기록을 남겨놓은 사람들</div>
+                            <div style ={{width: '100vw', height: '441px', background: 'rgba(248, 247, 246, 1)', position: 'absolute', top: '46px', left: 'calc(50% - 50vw)'}}></div>
+                            {GetBookContainer}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className="block">
+            
+            {false && <div className="block" style = {{overflow: 'hidden'}}>
                 <div className="contents_bookmark margin_base" style = {{marginTop: '115px', textAlign: 'center', paddingBottom: '105px'}}>
                     <div className="title GB px20 line40">당신을 의미있게 만들어준 책갈피</div>
                     <div className="message GB px14 line25 op5 " style = {{marginTop: '10px'}}>
@@ -574,7 +641,7 @@ function Mypage() {
                         <div className="right button">{rightVector}</div>
                     </div>
                 </div>
-            </div>
+            </div>}
             <Footer additionalClass= ' '/>
         </div>
         </>

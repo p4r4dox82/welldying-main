@@ -4,6 +4,7 @@ export interface UserGiveInfo {
     username: string;
     name: string;
     phonenumber: string;
+    accept: number;
 }
 
 export interface UserType {
@@ -45,7 +46,7 @@ export const userSchema = new Schema<UserDocument>({
     googleId: String,
     bookname: [String],
     DeathInfo: { agree: Boolean, answer1: String, answer2: String, answer3: String, answer4: String, answer5: String },
-    UsersInfo: { give: [{ username: String, name: String, phonenumber: String }], get: [{ username: String, name: String, phonenumber: String }] }
+    UsersInfo: { give: [{ username: String, name: String, phonenumber: String, accept: Number }], get: [{ username: String, name: String, phonenumber: String, accept: Number }] }
 });
 
 userSchema.set('timestamps', true);

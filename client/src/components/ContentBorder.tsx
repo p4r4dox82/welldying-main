@@ -131,7 +131,7 @@ function ContentBorder (props : Props) {
   return (
     <>
       <div className = 'contentborder margin_base'>
-          <div className = 'border_container' style = {{marginTop: '87px', height: '56px'}}>
+          <div className = 'border_container' style = {{marginTop: (content?.question !== -1 ? '87px' : '37px'), height: '56px'}}>
               <div style = {{width: '100%', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />
               {false && <>
                 <div style = {{width: '443px', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />

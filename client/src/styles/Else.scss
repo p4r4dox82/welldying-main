@@ -204,7 +204,86 @@ div.MyPage {
             display: flex;
             justify-content: center;
         }
-        
+        .userscontainer {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            .title {
+                width: 100%;
+                text-align: start;
+                padding-bottom: 25px;
+                border-bottom: 1px dashed #939C97;
+            }
+            .BookContainer {
+                display: flex;
+                gap: 7px 30px;
+                align-items: center;
+                .vector {
+                    width: 1px;
+                    height: 229px;
+                    background: rgba(147, 156, 151, 0.3);
+                }
+                .giveuserscontainer {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 7px 30px;
+                    width: 738px;
+                    height: 296px;
+                    align-content: flex-start;
+                }
+                div.GiveUsersElement {
+                    width: 354px;
+                    height: 94px;
+                    background: #FFFFFF;
+                    mix-blend-mode: multiply;
+                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+                    border-radius: 5px;
+                    padding: 0px 0px 0px 104px;
+                    display: flex;
+                    align-items: center;
+                    div {
+                      width: 200px;
+                      text-align: justify-all;
+                    }
+                    div.UserImage {
+                      margin: 0px;
+                      width: 54px;
+                      height: 38px;
+                      position: absolute;
+                      top: 28px;
+                      left: 28px;
+                      background: #FFFFFF;
+                      box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.15);
+                      border-radius: 80px;
+                      svg {
+                        width: 26.6px;
+                        height: 26px;
+                        position: absolute;
+                        top: 11.6px;
+                        left: 13.8px;
+                      }
+                    }
+                    div.plus {
+                      width: 54px;
+                      height: 38px;
+                      position: absolute;
+                      top: 28px;
+                      left: 28px;
+                      background: #FFFFFF;
+                      box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.15);
+                      border-radius: 80px;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      svg {
+                        width: 14px;
+                        height: 14px;
+                      }
+                    }
+                  }
+            }
+        }
     }
     div.contents_bookmark {
         div.button {

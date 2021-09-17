@@ -1,6 +1,7 @@
 import React from 'react';
 import { register, checkUsernameDuplicate, verifyPhone, verifyPhoneCheck, checkCellphoneDuplicate } from '../etc/api/user';
 import { SignupInfo1, SignupInfo2 } from '../pages/Signup';
+import { isMobile } from 'react-device-detect';
 
 interface EntryType {
     name: string;
@@ -213,7 +214,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
             body: (
                 <div style={{display: 'flex'}}>
                     <input className = {usernameMessage ? 'error' : ''} autoComplete='username' onChange={(e) => { setUsernameValidated(false); setUsername(e.target.value) } } value={(usernameMessage ? usernameMessage : username)} placeholder = '아이디를 입력해주세요.' onClick = {() => {setUsernameMessage('');}}/>
-                    <button style={{flex: '0 0 150px', margin:'0px 0px 0px 30px'}} className={usernameValidated ? 'inactive' : undefined} onClick={(e) => { e.preventDefault(); validateUsername(); } }>
+                    <button style={{flex: (isMobile ? '0 0 100px' : '0 0 150px'), margin:'0px 0px 0px 10px', fontSize: (isMobile ? '12px' : '')}} className={usernameValidated ? 'inactive' : undefined} onClick={(e) => { e.preventDefault(); validateUsername(); } }>
                         { usernameValidated ? '중복 확인 완료' : '중복 확인' }
                     </button>
                 </div>
@@ -287,9 +288,9 @@ function SignupFill({ givenInfo, proceed } : Props) {
            name: '생년월일',
            body: (
                 <>
-                    <input style={{width: '164px', textAlign: 'left', margin: '0px 16px 0px 0px'}} type='number' autoComplete='bday-year' onChange={(e) => setBirthYear(Math.min((new Date()).getFullYear(), Number.parseInt(e.target.value)))} value={birthYear} placeholder = '출생년도(4자)'/>
-                    <input style={{width: '156px', textAlign: 'left', margin: '0px 16px 0px 0px'}} type='number' autoComplete='bday-month' onChange={(e) => setBirthMonth(Math.min(12, Math.max(1, Number.parseInt(e.target.value))))} value={birthMonth} placeholder = '월'/>
-                    <input style={{width: '147px', textAlign: 'left'}} type='number' autoComplete='bday-day' onChange={(e) => setBirthDate(Math.min(31, Math.max(1, Number.parseInt(e.target.value))))} value={birthDate} placeholder = '일'/>
+                    <input style={{width: '100px', textAlign: 'left', margin: '0px 16px 0px 0px'}} type='number' autoComplete='bday-year' onChange={(e) => setBirthYear(Math.min((new Date()).getFullYear(), Number.parseInt(e.target.value)))} value={birthYear} placeholder = '출생년도(4자)'/>
+                    <input style={{width: '80px', textAlign: 'left', margin: '0px 16px 0px 0px'}} type='number' autoComplete='bday-month' onChange={(e) => setBirthMonth(Math.min(12, Math.max(1, Number.parseInt(e.target.value))))} value={birthMonth} placeholder = '월'/>
+                    <input style={{width: '70px', textAlign: 'left'}} type='number' autoComplete='bday-day' onChange={(e) => setBirthDate(Math.min(31, Math.max(1, Number.parseInt(e.target.value))))} value={birthDate} placeholder = '일'/>
                 </>
            ),
            message: birthMessage,
@@ -313,7 +314,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
               <>
                 <div style={{display: 'flex'}}>
                     <input className = {cellPhoneMessage ? 'error' : ''} onChange={(e) => { setPhoneVerifyStarted(false); setCellPhoneNumber(e.target.value); setCellPhoneMiddle(e.target.value.slice(3, 7)); setCellPhoneRear(e.target.value.slice(7, 11));} } value={(cellPhoneMessage ? cellPhoneMessage : cellPhoneNumber)} placeholder = '- 없이 번호만 입락해주세요.' onClick = {() => {setCellPhoneMessage('');}}/>
-                    <button style={{flex: '0 0 150px', margin:'0px 0px 0px 30px'}} onClick={(e) => { e.preventDefault(); startPhoneVerify(); } }>
+                    <button style={{flex: '0 0 100px', margin:'0px 0px 0px 10px', fontSize: '12px', padding: '0px'}} onClick={(e) => { e.preventDefault(); startPhoneVerify(); } }>
                         { phoneVerifyStarted ? '전송 완료' : '인증번호전송' }
                     </button>
                 </div>
@@ -328,8 +329,8 @@ function SignupFill({ givenInfo, proceed } : Props) {
             body: (
                 <div style={{display: 'flex'}}>
                     <input type='text' className = {phoneCodeMessage ? 'error' : ''} onChange={(e) => setPhoneCode(Number.parseInt(e.target.value))} value={phoneCodeMessage ? phoneCodeMessage : phoneCode} placeholder = '전송된 인증번호를 입력해주세요.' onClick = {() => {setPhoneCodeMessage('');}}/>
-                    <button style={{flex: '0 0 150px', margin:'0px 0px 0px 30px'}} className={(phoneVerified ? 'inactive' : '')} onClick={(e) => { e.preventDefault(); endPhoneVerify(); } }>
-                        { phoneVerified ? '인증 완료' : '인증확인' }
+                    <button style={{flex: '0 0 100px', margin:'0px 0px 0px 10px', fontSize: '12px'}} className={(phoneVerified ? 'inactive' : '')} onClick={(e) => { e.preventDefault(); endPhoneVerify(); } }>
+                        { phoneVerified ? '인증완료' : '인증확인' }
                     </button>
                 </div>
             ),
@@ -348,6 +349,38 @@ function SignupFill({ givenInfo, proceed } : Props) {
         }
 
         return result;
+    }
+
+    if(isMobile) {
+        return (
+            <form className='signupForm margin_72px' style = {{width: '291px'}}>
+                { entries.map(({name, body, message}) => (
+                    <>
+                        <div className={'row'} style={{width: (name === '성명' ? '265px' : (name === '성별' ? '190px' : '100%')), margin: (name === '성별' ? '20px 0px 0px 0px' : '20px 0px 0px 0px')}}>
+                            <div className='label'> { name } </div>
+                            { body }
+                            { (message && name === '생년월일') && <div className='message'> { message } </div> }
+                        </div>
+                    </>
+                ))}
+
+                <button type='submit' className='signupButton' onClick={async (e) => {
+                    e.preventDefault();
+                    if (!await validateAll()) return false;
+                    if (await register({
+                        username, password, name, birthYear, birthMonth, birthDate, sex, email,
+                        cellphone: `+82${cellPhoneFront.slice(1)}${cellPhoneMiddle}${cellPhoneRear}`,
+                        agreeMessage: givenInfo.agreeMessage,
+                        phoneCodeDigest,
+                        showContent,
+                    })) {
+                        proceed({ name });
+                    }
+                }}>
+                    가입 완료
+                </button>
+            </form>
+        )
     }
 
     return (

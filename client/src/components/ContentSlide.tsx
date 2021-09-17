@@ -9,13 +9,14 @@ import { getQuestions } from '../etc/api/question';
 
 function ContentSlide () {
   let [, contents] = usePromise(getContents);
+  let SlideContents = React.useMemo(() => contents?.filter((content) => [1, 13, 21, 23, 47].includes(content.id)), [contents]);
   let [, questions] = usePromise(getQuestions);
   let [slide_number, setSlide_number] = React.useState<number>(0);
   const maxslide_number = 5;
   let start_number = slide_number;
   let end_number = ((slide_number + 3) <= maxslide_number ? slide_number + 3 : slide_number + 3 - maxslide_number);
   let new_slide_contents = (end_number > start_number ? contents?.slice(start_number, end_number) : contents?.slice(start_number, maxslide_number).concat(contents?.slice(0, end_number)));
-  let slide_contents = contents?.filter((content, key) => key < 5);
+  let slide_contents = React.useMemo(() => SlideContents?.filter((content, key) => key < 5), [SlideContents]);
 
   const slide_dom_left = React.useRef<any>();
   const slide_dom_left_hidden = React.useRef<any>();

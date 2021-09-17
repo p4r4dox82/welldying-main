@@ -25,6 +25,7 @@ function ContentPage ({ match } : Props) {
     let id = Number.parseInt(match.params.id);
     let [, contents] = usePromise(() => getContents());
     let content = React.useMemo(() => contents?.find((content) => content.id === id), [id, contents]);
+    let maxContentId = React.useMemo(() => contents ? Math.max(...contents.map(content => content.id)) : 0, [contents]);
     let [title, setTitle] = React.useState<string>('');
     let [tag, setTag] = React.useState<string>('');
     let [type, setType] = React.useState<string>('');
@@ -66,14 +67,14 @@ function ContentPage ({ match } : Props) {
                     </div>
                 </div>
             </div>
-            <div className = 'block contentpage'>
+            {content.question !== -1 && <div className = 'block contentpage'>
                 <div className = 'contentquestion margin_large'>
                     <div className = 'title GB px20'>
                     메멘토 질문
                     </div>
                     <ContentQuestion additionalClass = {type} content = {content} />
                 </div>
-            </div>
+            </div>}
             <ContentBorder content = {content}/>
             <div className = 'block contentpage overflow_hidden'style = {{paddingTop: '115px', paddingBottom: '150px'}}>
                 <div className = 'more_content margin_base'>
@@ -85,7 +86,7 @@ function ContentPage ({ match } : Props) {
                         {more_contents?.map((content) =>
                         <Contentbox additionalClass = 'small wide' content = {content}/>)}
                     </div>
-                    {more_contents_count !== 8 && <div className = 'more_border' onClick = {() => {setMore_contents_count(Math.min(more_contents_count + 6, 8))}}>
+                    {more_contents_count !== maxContentId && <div className = 'more_border' onClick = {() => {setMore_contents_count(Math.min(more_contents_count + 6, maxContentId))}}>
                         <div className = 'GB px18 bold op5'>더보기</div>
                         <img className = 'more_button' src = {imageUrl('ContentPage/more_button.png')} />
                     </div>}

@@ -60,6 +60,7 @@ function NoteLeftBar (props: Props) {
                 <div className = 'category_container'>
                     <div className = 'title NS px12 bold op7 line25'>작성 카테고리</div>
                     {sections?.map((section, key) =>{
+                      if(key === 5) return <></>;
                       return (
                         <Link to={`/note/${key + 1}`}><div className = {'category NS px14 whiteop9 line25' + (props.id === (key + 1) ? ' bold' : '')}>{section.tag.split("#").slice(1).map((tag) => (<span>{tag}</span>))}</div></Link>
                       );
