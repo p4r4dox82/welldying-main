@@ -78,7 +78,7 @@ function ContentSlide () {
                     return (
                       <div className = {('slide_content absolute' + ((key === slide_number || key === slide_after(slide_number, 1)) ? ' animate' : ''))} ref = {(key === slide_number ? slide_dom_left : (key === slide_after(slide_number, 1) ? slide_dom_right : (key === slide_before(slide_number, 1) ? slide_dom_left_hidden : (key === slide_before(slide_number, 2) ? slide_dom_right_hidden : other_slide_dom))))} style = {{left: ((key === 0 || key === 4) ? '0px' : '1062px'), zIndex: parseInt((slide_number === 4 && key < 3) ? `${-1 - key}` : `${0 - abs(key, slide_number)}`)}}>
                           <div className = 'slide_image'>
-                              <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} style = {{width: '1032px', height: '458px', objectFit: 'cover', borderRadius: '5px'}} />
+                              <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '1032px', height: '458px', objectFit: 'cover', borderRadius: '5px'}} />
                           </div>
                           <div className = {'title_background' + ((key === slide_number || key === slide_after(slide_number, 1)) ? ' shadow' : '')} />
                           <div className = 'tag'>

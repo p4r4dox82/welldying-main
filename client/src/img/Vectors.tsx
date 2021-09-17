@@ -180,3 +180,11 @@ export const PlusVector = (
     </svg>
 
 );
+
+export const EmailVector = (
+    <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.2 1H11.8C12.46 1 13 1.5625 13 2.25V9.75C13 10.4375 12.46 11 11.8 11H2.2C1.54 11 1 10.4375 1 9.75V2.25C1 1.5625 1.54 1 2.2 1Z" stroke="#636F68" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 2L7 7L1 2" stroke="#636F68" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+);

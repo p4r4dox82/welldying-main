@@ -12,6 +12,7 @@ interface Props {
   id: number;
   book: boolean;
   category: boolean;
+  setAddUserGive: any;
 }
 
 function NoteLeftBar (props: Props) {
@@ -24,13 +25,14 @@ function NoteLeftBar (props: Props) {
       <div className="usersgive">
         <div className="title NS px12 bold line25">사후 노트 수령인</div>
         <div className="userscontainer">
-          {(user && users) && user.user?.UsersInfo.give.map((username) => {
-            let user = users.find((user_) => user_.username === username);
-            return (
-              <div className="username NS px12 line30">{user?.name}</div>
+          {(user && users) && user.user?.UsersInfo.give.map((userinfo) => {
+            let giveuser = users.find((user_) => user_.username === userinfo.username);
+            if(giveuser) return (
+              <div className="username NS px12 line30">{giveuser?.name}</div>
             );
           })}
         </div>
+        <div className="adduser NS px12 bold line25" onClick = {() => props.setAddUserGive(true)}>{'+ 수정하기'}</div>
       </div>
     );
   }, [user, users]);
@@ -47,7 +49,7 @@ function NoteLeftBar (props: Props) {
                 <div className = 'add note'>
                     <img className = 'add_image' src = {imageUrl('ContentPage/add_button.png')} />
                 </div>
-                {UsersGive}
+                {props.book && UsersGive}
             </div>
             {props.category && <div className = 'CategoryBar'>
                 <div className = 'category_container'>

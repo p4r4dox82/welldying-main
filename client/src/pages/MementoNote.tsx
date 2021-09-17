@@ -122,7 +122,7 @@ function MementoNote({ match } : Props) {
       <Header additionalClass = '' />
       <div>
           <div className = 'leftbar_container'>
-              <NoteLeftBar additionalClass = {(scroll > 112 ? ' fixed' : '')} id = {id} book = {false} category = {true}/>
+              <NoteLeftBar additionalClass = {(scroll > 112 ? ' fixed' : '')} id = {id} book = {false} category = {true} setAddUserGive = {() => {}}/>
           </div>
           <div className = 'block note_page'>
               <div className = 'written_question margin_note border'>

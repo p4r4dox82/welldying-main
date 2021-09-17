@@ -312,6 +312,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
     })
 
     const sendSMS = async (message: string, phoneNumber: string) => {
+        console.log('asd');
         await sns.publish({
             Message: message,
             PhoneNumber: phoneNumber,
@@ -387,19 +388,29 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         res.send(200);
     });
 
-    router.put('/users', onlyAuthUser, async (req, res, next) => {
-        let user = req.user!;
+    router.put('/users', onlyAuthUser, SNSRateLimiter, async (req, res, next) => {
         let username = req.body.username;
+        let name = req.body.name;
+        let code = Math.floor(Math.random() * 900000) + 100000;
 
         if (!await User.findOne({ username })) return res.sendStatus(500);
 
         let UsersInfo = req.body.UsersInfo;
-
-        if(user.username !== username) return res.sendStatus(401);
-
+        let sendmessage: boolean = req.body.sendmessage;
+        let status = 0;
+        
         if(await User.findOneAndUpdate({ username: username }, {
             UsersInfo
-        }))
+        })) status = 200;   
+        
+        if(sendmessage) {
+            let position = Number.parseInt(req.body.userposition);
+            let phoneNumber: string = UsersInfo.give[position - 1].phonenumber;
+            try {await sendSMS(`${name}님께서 메멘토 북 수령 요청을 보내셨습니다. 메멘토에 가입 하셔서 ${name}님이 남기신 이야기를 소중하게 보관하세요. (이미 가입중이신 경우 마이페이지를 확인해주세요.)`, phoneNumber)} catch (err) {
+                status = 400;
+            }
+        }
+        
         res.send(200);
     });
 

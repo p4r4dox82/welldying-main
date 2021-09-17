@@ -151,8 +151,8 @@ function MementoNoteMain () {
                     </div>
                     <div className="text NS px12 bold line25" style = {{marginBottom: '14px'}}>기본형</div>
                     <div className = 'GiveUsersContainer'>
-                        {user.user?.UsersInfo.give.map((username) => {
-                        let giveuser = AllUsers.find((user_) => user_.username === username);
+                        {user.user?.UsersInfo.give.map((userinfo) => {
+                        let giveuser = AllUsers.find((user_) => user_.username === userinfo.username);
                         return (
                             <div className="GiveUsersElement">
                                 <div className="UserImage">{UserImage}</div>
