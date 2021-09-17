@@ -37,7 +37,7 @@ export const getAnswerTime = async () => {
 
 export const writeAnswer = async (questionId: number, message: string, length: number, imageData: { imageUrl: string, cropX: number, cropY: number }) => {
     let response = await Axios.put(`${apiAddress}/answer`, {
-        questionId, message, length, imageData, book: 0,
+        questionId, message, length, imageData, 
     }, { withCredentials: true });
 
     return response.status < 300;

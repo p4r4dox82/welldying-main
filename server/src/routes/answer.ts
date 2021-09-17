@@ -38,14 +38,13 @@ export default (Answer: Model<AnswerDocument>) => {
         let user = req.user!;
 
 
-        let data: AnswerType = {
+        let data = {
             username: user.username,
             questionId: Number.parseInt(req.body.questionId),
             message: req.body.message,
             length: req.body.length,
             updatedAt: new Date().getTime(),
             imageData: req.body.imageData,
-            book: Number.parseInt(req.body.book),
         };
 
         if (data.message.length === 0 && data.imageData.imageUrl === undefined) {
@@ -56,7 +55,7 @@ export default (Answer: Model<AnswerDocument>) => {
         }
 
         if (!await Answer.findOneAndUpdate({ username: data.username, questionId: data.questionId },
-                                           { message: data.message, length: data.length, updatedAt: data.updatedAt, imageData: data.imageData, book:data.book })) {
+                                           { message: data.message, length: data.length, updatedAt: data.updatedAt, imageData: data.imageData })) {
             const answer = new Answer(data);
             await answer.save();
 

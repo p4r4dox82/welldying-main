@@ -138,7 +138,7 @@ function ContentSlide2 () {
                   {slide_contents_1?.map((content, key) => (
                     <div className = {'slide_content'} onClick = {() => LinkClick()}>
                         <div className = 'slide_image'>
-                            <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} style = {{width: '678px', height: '401px', objectFit: 'cover', borderRadius: '5px'}}/>
+                            <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '678px', height: '401px', objectFit: 'cover', borderRadius: '5px'}}/>
                         </div>
                     </div>
                   ))}
@@ -147,7 +147,7 @@ function ContentSlide2 () {
                   {slide_contents_2?.map((content, key) => (
                     <div className = {'slide_content'} onClick = {() => LinkClick()}>
                         <div className = 'slide_image'>
-                            <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} style = {{width: '678px', height: '401px', objectFit: 'cover', borderRadius: '5px'}}/>
+                            <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '678px', height: '401px', objectFit: 'cover', borderRadius: '5px'}}/>
                         </div>
                     </div>
                   ))}

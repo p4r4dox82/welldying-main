@@ -62,6 +62,24 @@ div.NoteLeftBar {
       }
       div.userscontainer {
         margin-top: 13px;
+        margin-left: 5px;
+        div {
+          margin-left: 15px;
+          &::before {
+            content: '';
+            position: absolute;
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(35, 52, 42, 0.7);
+            left: -10px;
+            top: 13px;
+          }
+        }
+      }
+      div.adduser {
+        margin-top: 10px;
       }
     }
   }
@@ -680,6 +698,124 @@ div.book_container {
       background: #FFFFFF;
       box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
       border-radius: 5px;
+      .questioncontainer {
+        display: flex;
+        margin-top: 481px;
+        div.Colon {
+          display: inline-block;
+          width: 3px;
+          height: 25px;
+          margin-right: 15px;
+          margin-top: 3px;
+        }
+        svg.Colon {
+          width: 3px;
+          height: 10.7px;
+          display: inline-block;
+          fill: rgba(39, 57, 47, 1);
+          g {
+            opacity: 1;
+          }
+        }
+      }
+      .topContainer {
+        width: 100%;
+        height: 26px;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px dashed rgba(147, 156, 151, 1);
+        .tag {
+          padding-left: 84px;
+        }
+        .date {
+          padding-right: 12px;
+        }
+      }
+      .answerContainer {
+        display: flex;
+        margin: 94px 0px 0px 84px;
+        div.Colon {
+          width: 3px;
+          height: 25px;
+          margin-right: 7.2px;
+          margin-top: 3px;
+          svg {
+            width: 3px;
+            height: 10.7px;
+            display: inline-block;
+            fill: rgba(39, 57, 47, 1);
+            g {
+              opacity: 0.8;
+            }
+          }
+        }
+        textarea {
+          resize: none;
+          width: 237px;
+          height: 350px;
+          border: none;
+          outline: none;
+          background: rgba(0, 0, 0, 0);
+          padding: 0px;
+        }
+      }
+    }
+  }
+  div.bottomContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 17px;
+    padding-right: 44px;
+    height: 28px;
+    .circle {
+      width: 6px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(147, 155, 151, 0.3);
+      &.Big {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: rgba(103, 116, 109, 1);
+      }
+    }
+    .pageBar {
+      display: flex;
+      align-items: center;
+      height: 28px;
+      gap: 199px;
+      .bar {
+        height: 1px;
+        width: 407px;
+        position: absolute;
+        background: rgba(147, 155, 151, 0.3);
+        top: calc(50% - 1px/2);
+        left: 7px;
+      }
+    }
+    .buttonContainer {
+      display: flex;
+      gap: 20px;
+      margin-left: 31px;
+    }
+    button {
+      width: 28px;
+      height: 28px;
+      background: #FFFFFF;
+      opacity: 0.5;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+      padding: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        width: 10px;
+        height: 18px;
+        path {
+          opacity: 0.5;
+          stroke-width: 4;
+        }
+      }
     }
   }
   padding-bottom: 80px;
@@ -788,7 +924,7 @@ div.crop_image_container {
       min-width: 760px;
       max-width: 1440px;
       min-height: 430px;
-      max-height: 700px;
+      max-height: 650px;
       object-fit: none;
       overflow: auto;
       background: #FFFFFF;
@@ -1161,5 +1297,45 @@ div.margin_base {
 input {
   &::placeholder {
     opacity: 0.5;
+  }
+}
+
+.addUserGive {
+  .addUserGiveContainer {
+    .methodContainer {
+      display: flex;
+      gap: 14px;
+      div {
+        margin-left: -7px;
+      }
+    }
+    .UserDataContainer {
+      color: rgba(99, 111, 104, 0.8);
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 15px;
+      gap: 15px 17px;
+      align-items: flex-end;
+      .UserDataElement {
+        input {
+          background: #F9F9F9;
+          box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+          border-radius: 5px;
+          border: none;
+          outline: none;
+          font-size: 14px;
+          color: rgba(122, 121, 120, 1);
+        }
+      }
+      button {
+        width: 141px;
+        height: 61px;
+        background: #27392F;
+        box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+        font-size: 16px;
+        color: rgba(243, 242, 240, 1);
+      }
+    }
   }
 }

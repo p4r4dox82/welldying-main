@@ -1,5 +1,11 @@
 import { Schema, Document } from "mongoose";
 
+export interface UserGiveInfo {
+    username: string;
+    name: string;
+    phonenumber: string;
+}
+
 export interface UserType {
     username: string;
     passwordHash: string;
@@ -39,7 +45,7 @@ export const userSchema = new Schema<UserDocument>({
     googleId: String,
     bookname: [String],
     DeathInfo: { agree: Boolean, answer1: String, answer2: String, answer3: String, answer4: String, answer5: String },
-    UsersInfo: { give: [String], get: [String] }
+    UsersInfo: { give: [{ username: String, name: String, phonenumber: String }], get: [{ username: String, name: String, phonenumber: String }] }
 });
 
 userSchema.set('timestamps', true);

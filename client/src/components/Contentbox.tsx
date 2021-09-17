@@ -50,7 +50,7 @@ function Contentbox(props: Props) {
     <>
       <Link to={`/contentpage/${id}`} ref = {link_content} style = {{display: 'none'}} />
       {(props.additionalClass === 'big' || props.additionalClass === 'big type2') && <div className = 'big_content'>
-          <img className = 'thumbnail' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} onClick = {user.loggedIn ? async () => {
+          <img className = 'thumbnail' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} onClick = {user.loggedIn ? async () => {
             let new_userdata = userdata;
             if(userdata.read.find((username) => (username === user.user!.username)) === undefined) {
               new_userdata.read.push(user.user!.username);
@@ -58,7 +58,7 @@ function Contentbox(props: Props) {
               await content_userdata(id, new_userdata);
             }
             LinkClick();
-          } : () => {LinkClick();}} style = {{objectFit: 'cover', width: '100%', height: '190px'}}/>
+          } : () => {LinkClick();}} style = {{objectFit: 'cover', width: '100%', height: '190px', borderRadius: '5px'}}/>
           <div className = 'cover'>
               {!big_type2 && <img className = 'memento_colon' src = {imageUrl('memento_colon.png')} />}
               <div className = 'type'>{content.type === '책' ? 'book' : (content.type === '동영상' ? 'video' : '')}</div>
@@ -81,7 +81,7 @@ function Contentbox(props: Props) {
           {(user.loggedIn && content.userdata.bookmark.find((username) => username === user.user!.username)) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
       </div>}
       {(props.additionalClass === 'small' || props.additionalClass === 'small wide') && <div className = {'small_content ' + props.additionalClass}>
-          <img className = 'thumbnail' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} style = {{width: (props.additionalClass === 'small' ? '236px' : '324px')}} onClick = {user.loggedIn ? async () => {
+          <img className = 'thumbnail' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: (props.additionalClass === 'small' ? '236px' : '324px'), height: (props.additionalClass === 'small' ? '138px' : '190px')}} onClick = {user.loggedIn ? async () => {
             let new_userdata = userdata;
             if(userdata.read.find((username) => (username === user.user!.username)) === undefined) {
               new_userdata.read.push(user.user!.username);
@@ -138,11 +138,11 @@ function Contentbox(props: Props) {
               } : () => {LinkClick();}}>{'[' + content.type + ']' + content.title}</div>
               <div className = 'date'>{'2021.08.03'}</div>
           </div>
-          {(user.loggedIn && content.userdata.read.find((username) => username === user.user!.username)) && <div className = 'read' style = {{top: '134.5px'}}/>}
+          {(user.loggedIn && content.userdata.read.find((username) => username === user.user!.username)) && <div className = 'read' style = {{top: (props.additionalClass === 'small' ? '134.5px' : '186.5px')}}/>}
           {(user.loggedIn && content.userdata.bookmark.find((username) => username === user.user!.username)) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
       </div>}
       {props.additionalClass === 'question' && <div className = 'question_content'>
-          <img className = 'thumbnail' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/big_content_image.png'))} />
+          <img className = 'thumbnail' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} />
           <button className = 'question' disabled>
               <div>{question?.title.split('\n')[0]}</div>
               <div>{question?.title.split('\n')[1]}</div>

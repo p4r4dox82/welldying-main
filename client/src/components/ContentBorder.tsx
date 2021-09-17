@@ -111,8 +111,7 @@ function ContentBorder (props : Props) {
 
   let comment_container = React.useMemo(() => show_comments?.map((comment) => (
     <div className = 'comment_box'>
-        <div className = 'user_icon'>
-            <img className = 'user_icon' src = {imageUrl('user_login.png')}  alt = "profile"/>
+        <div className = 'user_icon' style = {{background: 'rgba(0, 0, 0, 0)', boxShadow: '0px 0px 0px'}}>
         </div>
         <div className = 'writer NS px13 bold'>
         {comment.writer + ' 님'}
@@ -132,9 +131,9 @@ function ContentBorder (props : Props) {
   return (
     <>
       <div className = 'contentborder margin_base'>
-          <div className = 'border_container'>
+          <div className = 'border_container' style = {{marginTop: '87px'}}>
               <div style = {{width: '443px', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />
-              <img src = {imageUrl('ContentPage/comment_border_image.png')} />
+              <img src = {imageUrl('ContentPage/comment_border_image.png')} style = {{opacity: 0}}/>
               <div style = {{width: '443px', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />
           </div>
           <div className = 'button_container'>
@@ -171,8 +170,7 @@ function ContentBorder (props : Props) {
           {show_comment && <div className = 'comment_container'>
               {comment_container}
               {user.loggedIn && <div className = 'comment_box'>
-                  <div className = 'user_icon'>
-                      <img className = 'user_icon' src = {imageUrl('user_login.png')}  alt = "profile"/>
+                  <div className = 'user_icon' style = {{background: 'rgba(0, 0, 0, 0)', boxShadow: '0px 0px 0px'}}>
                   </div>
                   <div className = 'writer NS px13 bold'>
                   {user.user!.name + ' 님'}

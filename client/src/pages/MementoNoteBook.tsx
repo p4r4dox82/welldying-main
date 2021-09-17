@@ -10,10 +10,24 @@ import useScroll from '../etc/useScroll';
 import { getQuestions, Question } from '../etc/api/question';
 import { getSection, getSections } from '../etc/api/section';
 import { getAnswers, addBook } from '../etc/api/answer';
-import { setBookName } from '../etc/api/user';
+import { getUsers, setBookName, setUsers, UserGiveInfo } from '../etc/api/user';
 import usePromise from '../etc/usePromise';
+import { kakaoJskey } from '../etc/config';
 
 import { imageUrl } from '../etc/config';
+import { parseDate } from '../etc/index';
+
+import { EmailVector, Colon, leftVector, rightVector } from '../img/Vectors';
+import { isObjectBindingPattern } from 'typescript';
+
+declare global {
+  interface Window {
+    Kakao: any;
+    ClipboardJS: any;
+  }
+}
+
+const { Kakao, ClipboardJS } = window;
 
 interface MatchParams {
     id: string;
@@ -57,6 +71,8 @@ function MementoNoteBook({ match } : Props) {
   let [update, setUpdate] = React.useState<number>(0);
   let [bookname, setBookname] = React.useState<string>('');
   let [booknameupload, setBooknameupload] = React.useState<string>('');
+  let [UsersGive, setUsersGive] = React.useState<UserGiveInfo[]>([]);
+  let [UsersGet, setUsersGet] = React.useState<UserGiveInfo[]>([]);
 
   let [answers_booked, ] = React.useState<{ questionId: number, book: number }[]>([]);
 
@@ -70,6 +86,8 @@ function MementoNoteBook({ match } : Props) {
   React.useEffect(() => {
     if(!user.user?.bookname) return;
     setBooknameupload(user.user.bookname[0]);
+    setUsersGive(user.user.UsersInfo.give);
+    setUsersGet(user.user.UsersInfo.get);
   }, [user]);
 
   let written_questions = React.useMemo(() => {
@@ -105,6 +123,26 @@ function MementoNoteBook({ match } : Props) {
       })
     );
   }, [section, questions, answers, update]);
+
+  let section_questions_written_added = React.useMemo(() => {
+    if(!answers || !answers_booked) {
+      console.log(answers_booked);
+      return;
+    }
+    else return (
+      section?.questions?.filter((questionId) => {
+        let question = questions.find((question) => question.id === questionId);
+        let answer = answers?.find((answer) => answer.questionId === questionId);
+        let answer_booked = answers_booked?.find((answer) => answer?.questionId === questionId);
+        if (!answer || answer.book === 0 || answer_booked?.book === 0) {
+          return false
+        }
+        else return (
+          true
+        );
+      })
+    );
+  }, [section, questions, answers, update, answers_booked])
 
   let section_questions_written = React.useMemo(() => {
     return (id === undefined) ? undefined : (
@@ -190,6 +228,28 @@ function MementoNoteBook({ match } : Props) {
     );
   }, [questions, answers, update, answers_booked]);
 
+  let written_questions_added = React.useMemo(() => {
+    if(!answers || !answers_booked) {
+      console.log(answers_booked);
+      return;
+    }
+    else if(id === 0) return (
+      questions?.filter((question) => {
+        let answer = answers?.find((answer) => answer.questionId === question.id);
+        let answer_booked = answers_booked?.find((answer) => answer?.questionId === question.id);
+        if (!answer || answer.book === 0 || answer_booked?.book === 0) {
+          return false;
+        }
+        else return (
+          true
+        );
+      })
+    );
+    else return (
+      questions.filter((question) => section_questions_written_added?.includes(question.id))
+    );
+  }, [questions, answers, update, answers_booked, section_questions_written_added, id]);
+
   let empty_section = React.useMemo(() => {
     console.log(section_written_questions_add);
     return (
@@ -245,6 +305,231 @@ function MementoNoteBook({ match } : Props) {
     );
   }, [booknameupload, bookname]);
 
+  let [addUserGive, setAddUserGive] = React.useState<boolean>(false);
+  let [method, setMethod] = React.useState<number>(0);
+  let [giveusername, setgiveusername] = React.useState<string>('');
+  let [giveuserphonenumber, setgiveuserphonenumber] = React.useState<string>('');
+  let [giveuseremail, setgiveuseremail] = React.useState<string>('');
+  let [, users] = usePromise(getUsers);
+
+  React.useEffect(() => {
+    if(!Kakao.isInitialized())
+      Kakao.init(kakaoJskey);
+  }, []);
+
+  let kakaoShare = () => {
+    Kakao.Link.createDefaultButton({
+      container: '#kakao-link_btn',
+      objectType: 'text',
+      text:
+        `${user.user!.name}님께서 메멘토 북 수령 요청을 보내셨습니다. 메멘토에 가입 하셔서 ${user.user!.name}님이 남기신 이야기를 소중하게 보관하세요. (이미 가입중이신 경우 마이페이지를 확인해주세요.)`,
+      link: {
+        mobileWebUrl: 'https://mymemento.kr',
+        webUrl:
+          'https://mymemento.kr',
+      },
+    });
+  }
+
+  let [pageNumber, setPageNumber] = React.useState<number>(0);
+  React.useEffect(() => {
+    setPageNumber(0);
+  }, [id]);
+
+  let MementoBookPage = React.useMemo(() => {
+    if(!written_questions_added) return (
+      <></>
+    );
+    if(written_questions_added.length === 0) return (
+      <div className="noquestion" style = {{width: '942px', height: '603px', marginTop: '15px', marginLeft: '13px', background: 'rgba(255, 255, 255, 0)', boxShadow: '0px 1px 4px 2px rgba(0, 0, 0, 0.05)', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap'}}>
+        <div>
+          <div className="NS px16 line20 bold" style = {{width: '100%', textAlign: 'center'}}>아직 답변하신 질문이 존재하지 않습니다.</div>
+          <div className="NS px15 line20 op7" style = {{width: '100%', textAlign: 'center'}}>좌측의 ‘ + 버튼 ’으로 답변하신 질문들을 이곳에 추가해주세요</div>
+        </div>
+      </div>
+    );
+    let pagequestion = written_questions_added[pageNumber];
+    if(!pagequestion) return<></>;
+    let pageanswer = answers?.find((answer) => answer.questionId === pagequestion.id);
+    let section = sections?.find((section) => section.questions.includes(pagequestion.id));
+    if(pageanswer?.imageData.imageUrl !== '' && pageanswer!.message.length <= 350) {
+      return (
+        <>
+          <div className="left page" style = {{padding: '20px 20px'}}>
+            <div className="imageContainer" style ={{position: 'absolute', top: '20px', paddingBottom: '11px', borderBottom: '1px dashed rgba(147, 156, 151, 1)'}}>
+              <img src={pageanswer?.imageData.imageUrl} alt="" style = {{width: '424px', height: '424px', objectFit: 'cover'}}/>
+            </div>
+            <div className="questioncontainer">
+              <div className="Colon">
+                {Colon}
+              </div>
+              <div className="question">
+                <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[0]}</div>
+                <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[1]}</div>
+              </div>
+            </div>
+          </div>
+          <div className="right page" style = {{padding: '20px 20px'}}>
+              <div className="topContainer">
+                <div className="tag GB px9 line25 bold">{section?.tag}</div>
+                <div className="date GB px9 line25 op7">{String(parseDate(new Date(Number(pageanswer?.updatedAt))))}</div>
+              </div>
+              <div className="answerContainer">
+                <div className="Colon">{Colon}</div>
+                <textarea name="" id="" className = 'GB px12 line25' value = {pageanswer?.message} disabled ></textarea>
+              </div>
+          </div>  
+        </>
+      )
+    } else if(pageanswer?.imageData.imageUrl !== '' && pageanswer!.message.length <= 550) {
+      return (
+        <>
+          <div className="left page" style = {{padding: '20px 20px', display: 'flex', flexWrap: 'wrap'}}>
+            <div className="questioncontainer" style = {{margin: '35px 0px 0px 53px'}}>
+              <div className="Colon">
+                {Colon}
+              </div>
+              <div className="question">
+                <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[0]}</div>
+                <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[1]}</div>
+              </div>
+            </div>
+            <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'end'}}>
+                <textarea name="" id="" cols = {52} rows = {(Number(pageanswer?.message.length)-210)/26} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(0, pageanswer?.message.length-210)} disabled ></textarea>
+            </div>
+          </div>
+          <div className="right page" style = {{padding: '20px 20px', display: 'flex', flexWrap: 'wrap'}}>
+              <div className="imageContainer" style ={{position: 'absolute', top: '86px', left: '125px'}}>
+                <img src={pageanswer?.imageData.imageUrl} alt="" style = {{width: '216px', height: '216px', objectFit: 'cover'}}/>
+              </div> 
+              <div className="topContainer">
+                <div className="tag GB px9 line25 bold">{section?.tag}</div>
+                <div className="date GB px9 line25 op7">{String(parseDate(new Date(Number(pageanswer?.updatedAt))))}</div>
+              </div>
+              <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'end'}}>
+                <textarea name="" id="" cols = {52} rows = {(210)/26} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(pageanswer?.message.length-210, 551)} disabled ></textarea>
+              </div>
+          </div>  
+        </> 
+      )
+    } else if(pageanswer?.imageData.imageUrl === '' && pageanswer!.message.length <= 350) {
+      return (
+        <>
+          <div className="left page" style = {{padding: '20px 20px', display: 'flex', flexWrap: 'wrap'}}>
+            <div className="questioncontainer" style = {{margin: '45px 0px 0px 35px'}}>
+              <div className="Colon">
+                {Colon}
+              </div>
+              <div className="question">
+                <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[0]}</div>
+                <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[1]}</div>
+              </div>
+            </div>
+            <div className="answerContainer" style = {{ margin: '0px 0px 49px 140px', alignSelf: 'end'}}>
+                <textarea name="" id="" cols = {34} rows = {(Number(pageanswer?.message.length)/2)/17} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(0, pageanswer?.message.length/2)} disabled ></textarea>
+            </div>
+          </div>
+          <div className="right page" style = {{padding: '20px 20px', display: 'flex', flexWrap: 'wrap'}}>  
+              <div className="topContainer">
+                <div className="tag GB px9 line25 bold">{section?.tag}</div>
+                <div className="date GB px9 line25 op7">{String(parseDate(new Date(Number(pageanswer?.updatedAt))))}</div>
+              </div>
+              <div className="Colon" style = {{position: 'absolute', width: '7px', height: '27px', top: '73px', left: '390px'}}>
+                {Colon}
+              </div>
+              <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'end'}}>
+                <textarea name="" id="" cols = {34} rows = {(Number(pageanswer?.message.length)/2)/17} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(pageanswer?.message.length/2, 551)} disabled ></textarea>
+              </div>
+          </div>  
+        </> 
+      )
+    } else if(pageanswer?.imageData.imageUrl === '' && pageanswer!.message.length <= 420) {
+      return (
+        <>
+          <div className="left page" style = {{padding: '20px 20px', display: 'flex', flexWrap: 'wrap'}}>
+            <div className="questioncontainer" style = {{margin: '35px 0px 0px 53px'}}>
+              <div className="Colon">
+                {Colon}
+              </div>
+              <div className="question">
+                <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[0]}</div>
+                <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[1]}</div>
+              </div>
+            </div>
+            <div className="answerContainer" style = {{ margin: '0px 0px 140px 54px', alignSelf: 'end'}}>
+                <textarea name="" id="" cols = {34} rows = {(350/2)/17} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(0, 350/2)} disabled ></textarea>
+            </div>
+          </div>
+          <div className="right page" style = {{padding: '20px 20px', display: 'flex', flexWrap: 'wrap'}}>  
+              <div className="topContainer">
+                <div className="tag GB px9 line25 bold">{section?.tag}</div>
+                <div className="date GB px9 line25 op7">{String(parseDate(new Date(Number(pageanswer?.updatedAt))))}</div>
+              </div>
+              <div className="Colon" style = {{position: 'absolute', width: '7px', height: '27px', top: '156px', left: '226px'}}>
+                {Colon}
+              </div>
+              <div className="answerContainer" style = {{ margin: '0px 0px 49px 48px', alignSelf: 'end'}}>
+                <textarea name="" id="" cols = {52} rows = {(Number(pageanswer?.message.length) - (350/2))/26} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(350/2, 551)} disabled ></textarea>
+              </div>
+          </div>  
+        </> 
+      )
+    } else if(pageanswer?.imageData.imageUrl === '' && pageanswer!.message.length <= 550) {
+        return (
+          <>
+            <div className="left page" style = {{padding: '20px 20px', display: 'flex', flexWrap: 'wrap'}}>
+              <div className="questioncontainer" style = {{margin: '35px 0px 0px 53px'}}>
+                <div className="Colon">
+                  {Colon}
+                </div>
+                <div className="question">
+                  <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[0]}</div>
+                  <div className = 'GB px14 line25'>{pagequestion.title.split('\n')[1]}</div>
+                </div>
+              </div>
+            </div>
+            <div className="right page" style = {{padding: '20px 20px', display: 'flex', flexWrap: 'wrap'}}>  
+                <div className="topContainer">
+                  <div className="tag GB px9 line25 bold">{section?.tag}</div>
+                  <div className="date GB px9 line25 op7">{String(parseDate(new Date(Number(pageanswer?.updatedAt))))}</div>
+                </div>
+                <div className="answerContainer" style = {{ margin: '10px 0px 0px 53px', alignSelf: 'end'}}>
+                  <textarea name="" id="" cols = {52} rows = {(Number(pageanswer?.message.length))/26} style = {{width: 'fit-content', height: 'fit-content', textAlign: 'justify'}} className = 'GB px12 line25' value = {pageanswer?.message.slice(0, 551)} disabled ></textarea>
+                </div>
+            </div>  
+          </> 
+        )
+    }
+  }, [written_questions_added, pageNumber]);
+
+  let bottomContainer = React.useMemo(() => {
+    return (
+      <div className="bottomContainer">
+        {written_questions_added?.length !== 0 && <>
+            <div className="number NS px12 bold line25 op3" style = {{margin: '2px 13px 0px 0px'}} >{1}</div>
+            <div className="pageBar">
+              <div className="circle" style = {{marginLeft: '4px', boxSizing: 'content-box'}}></div>
+              <div className="circle"></div>
+              <div className="circle" style = {{marginRight: '4px', boxSizing: 'content-box'}}></div>
+              <div className="pageContainer" style ={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '14px', top: '7px', position: 'absolute', left: `${pageNumber/(Number(written_questions_added?.length) - 1) * 407+ 'px'}`}}>
+                <div className="Big circle"></div>
+                <div className="number NS px12 bold line25 op3" style = {{margin: '4px', color: 'rgba(103, 116, 109, 1)', textAlign: 'center'}} >{pageNumber + 1}</div>
+              </div>
+              <div className="bar"></div>
+            </div>
+            <div className="number NS px12 bold line25 op3" style = {{margin: '2px 0px 0px 15px'}}>{written_questions_added?.length}</div>
+          <div className="buttonContainer">
+            <button className="left" onClick = {() => setPageNumber(Math.max(0, pageNumber - 1))}>{leftVector}</button>
+            <button className="right" onClick = {() => setPageNumber(Math.min(Number(written_questions_added?.length) - 1, pageNumber + 1))}>{rightVector}</button>
+          </div>
+        </>}
+      </div>
+    );
+  }, [written_questions_added, pageNumber]);
+
+  let kakaobutton = React.useRef<any>(null);
+  let kakaobuttonClick = () => kakaobutton.current.click();
+
   if (!user.loggedIn) return <Redirect to='/login' />;
   else return (
     <>
@@ -252,7 +537,7 @@ function MementoNoteBook({ match } : Props) {
       <Header additionalClass = '' />
       <div className = 'MementoNoteBook'>
           <div className = {'leftbar_container short'}>
-              <NoteLeftBar additionalClass = {(scroll > 112 ? ' fixed' : '')} id = {id} book = {true} category = {false}/>
+              <NoteLeftBar additionalClass = {(scroll > 112 ? ' fixed' : '')} id = {id} book = {true} category = {false} setAddUserGive = {setAddUserGive}/>
           </div>
           <div className = 'block note_book_page'>
               <div className = 'book_container margin_base'>
@@ -271,13 +556,9 @@ function MementoNoteBook({ match } : Props) {
                           <div className = 'title GB px13 line30'>{booknameupload ? booknameupload : ''}</div>
                           <img className = 'edit_button' style = {{margin: '483px 0px 0px 0px'}} src = {imageUrl('NotePage/edit_image.png')} />
                       </div>
-                      <div className = 'left page'>
-
-                      </div>
-                      <div className = 'right page'>
-
-                      </div>
+                      {MementoBookPage}
                   </div>
+                  {bottomContainer}
               </div>
           </div>
           <div className = 'block note_book_page'>
@@ -378,6 +659,65 @@ function MementoNoteBook({ match } : Props) {
               </div>
           </div>}
       </div>
+      {addUserGive && <div className="addUserGive" style = {{position: 'fixed', width: '100vw', height: '100vh', background: 'rgba(0, 0, 0, 0.6)', zIndex: 200, top: '0px'}}>
+          <div className="addUserGiveContainer" style = {{width: '837px', height: 'fit-content', margin: 'calc(50vh - 283px/2) 0px 0px calc(50% - 837px/2)', background: 'rgba(255, 255, 255, 1)', borderRadius: '5px', padding: '36px 0px 38px 55px'}}>
+              <img src = {imageUrl('NotePage/quit_vector.svg')} style = {{position: 'absolute', right: '0px', top: '-30px'}} onClick = {() => setAddUserGive(false)}/>
+              <div className="methodContainer NS px12 line25 bold"> 
+                  <button className="imagecontainer" style = {{width: '28px', height: '28px', display: 'flex', justifyContent:'center', alignItems: 'center', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', padding: '0px', border: (method === 0 ? '2px solid rgba(99, 111, 104, 0.9)' : ''), boxSizing: 'content-box'}} onClick = {() => setMethod(0)}>{EmailVector}</button>
+                  <div className="" style = {{color: (method === 0 ? 'rgba(99, 111, 104, 0.8)' : 'rgba(99, 111, 104, 0.4)')}} onClick = {() => setMethod(0)}>문자 메시지</div>
+                  <button className="imagecontainer" style = {{width: '28px', height: '28px', display: 'flex', justifyContent:'center', alignItems: 'center', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', padding: '0px', border: (method === 1 ? '2px solid rgba(99, 111, 104, 0.9)' : ''), boxSizing: 'content-box'}} onClick = {() => setMethod(1)}>
+                    <img src={imageUrl('NotePage/GoogleImage.png')} alt="" className="" />
+                  </button>
+                  <div className="" style = {{color: (method === 1 ? 'rgba(99, 111, 104, 0.8)' : 'rgba(99, 111, 104, 0.4)')}} onClick = {() => setMethod(1)}>이메일</div>
+                  <button className="imagecontainer" style = {{width: '28px', height: '28px', display: 'flex', justifyContent:'center', alignItems: 'center', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', padding: '0px', border: (method === 2 ? '2px solid rgba(99, 111, 104, 0.9)' : ''), boxSizing: 'content-box'}} onClick = {() => setMethod(2)}><img src={imageUrl('NotePage/KakaoImage.png')} alt="" className="" style = {{top: '1px'}}/></button>
+                  <div className="" style = {{color: (method === 2 ? 'rgba(99, 111, 104, 0.8)' : 'rgba(99, 111, 104, 0.4)')}} onClick = {() => setMethod(2)}>카카오톡</div>
+              </div>
+              <div className="UserDataContainer NS px12 line25 bold">
+                  <div className="UserDataElement">
+                    <div className="text">희망 수령인의 성함</div>
+                    <input type="text" style = {{width: '202px', height: '61px', padding: '18px 30px'}} value = {giveusername} onChange = {(e) => setgiveusername(e.target.value)} placeholder = '성함을 입력해주세요.'/>
+                  </div>
+                  <div className="UserDataElement">
+                    <div className="text">희망 수령인의 전화번호</div>
+                    <input type="text" style = {{width: '362px', height: '61px', padding: '18px 30px'}} value = {giveuserphonenumber} onChange = {(e) => setgiveuserphonenumber(e.target.value)} placeholder = {`'-'없이 전화번호를 입력해주세요.`}/>
+                  </div>
+                  {method === 1 && <div className="UserDataElement">
+                    <input type="text" style = {{width: '581px', height: '61px', padding: '18px 30px'}} value = {giveuseremail} onChange = {(e) => setgiveuseremail(e.target.value)} placeholder = {`희망 수령인의 이메일 주소를 입력해주세요.`}/>
+                  </div>}
+                  <button className="submit" id = 'kakao-link_button' onClick = {async () => {
+                    let giveuser = users.find((user_) => user_.cellphone === ('+82' + giveuserphonenumber.slice(1, 11)));
+                    let name = user.user!.name;
+                    if(giveuser) {
+                      let newUsersGive = UsersGive.concat([{username: giveuser.username, name: giveuser.name, phonenumber: giveuser.cellphone}]);
+                      setUsersGive(newUsersGive);
+                      if(method === 0) {
+                        if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) console.log('asd');
+                      } else {
+                        if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) console.log('asd');
+                      }
+                      
+                      if (await setUsers(giveuser.username, {...giveuser.UsersInfo, get: giveuser.UsersInfo.get.concat([{username: user.user!.username, name: user.user!.name, phonenumber: user.user!.cellphone}])}, 0, false, name)) console.log('dfgh');
+                    }
+                    else {
+                      let newUsersGive = UsersGive.concat([{username: '', name: giveusername, phonenumber: ('+82' + giveuserphonenumber.slice(1, 11))}]);
+                      setUsersGive(newUsersGive);
+                      if(method === 0) {
+                        if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) console.log('qwe');
+                      } else {
+                        if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) console.log('qwe');
+                      }
+                    }
+                    if(method === 2) {
+                      kakaobuttonClick();
+                      setTimeout(() => kakaobuttonClick(), 1000);
+                    } 
+                  }}>전송</button>
+                  {method === 2 && <button className="submit" id = 'kakao-link_btn' ref = {kakaobutton} style = {{display: 'none'}} onClick = {async () => {
+                      kakaoShare();
+                  }}>전송</button>}
+              </div>
+          </div>
+      </div>} 
     </>
   );
 }

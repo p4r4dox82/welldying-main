@@ -191,6 +191,12 @@ export const verifyPhoneCheck = async (cellphoneFront: string, cellphoneMiddle: 
     };
 }
 
+export interface UserGiveInfo {
+    username: string;
+    name: string;
+    phonenumber: string;
+}
+
 export interface UserData {
     username: string;
     password: string;
@@ -205,7 +211,7 @@ export interface UserData {
     googleId?: string;
     bookname: string[];
     DeathInfo: { agree: boolean, answer1: string, answer2: string, answer3: string, answer4: string, answer5: string };
-    UsersInfo: { give: string[], get: string[] }
+    UsersInfo: { give: UserGiveInfo[], get: UserGiveInfo[] };
 }
 
 
@@ -237,9 +243,9 @@ export const setUserDeathInfo = async (username: string, DeathInfo: { answer1: s
     return response.status === 200;
 }
 
-export const setUsers = async (username: string, UsersInfo: { give: string[], get: string[] }) => {
+export const setUsers = async (username: string, UsersInfo: { give: UserGiveInfo[], get: UserGiveInfo[] }, userposition: number, sendmessage: boolean, name: string) => {
     let response = await Axios.put(`${apiAddress}/user/users`, {
-        username, UsersInfo
+        username, UsersInfo, userposition, sendmessage, name
     }, { withCredentials: true });
 
     return response.status === 200;
