@@ -39,7 +39,7 @@ export default (Content: Model<ContentDocument>) => {
             tag: req.body.tag,
             date: new Date().getTime(),
             source: req.body.source,
-            detail: { summary: req.body.detail.summary, oneline: req.body.detail.oneline },
+            detail: req.body.detail,
             comments: req.body.coments,
             question: Number.parseInt(req.body.question),
             imageData: req.body.imageData,

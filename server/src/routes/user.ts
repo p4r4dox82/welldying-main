@@ -328,7 +328,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
             createdAt: new Date().getTime(),
         };
 
-        await sendSMS(`[웰다잉] 가입해주셔서 감사합니다. 인증번호는 ${code}입니다.`, phoneNumber);
+        await sendSMS(`[메멘토] 가입해주셔서 감사합니다. 인증번호는 ${code}입니다.`, phoneNumber);
 
         res.sendStatus(200);
     });
@@ -406,7 +406,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         if(sendmessage) {
             let position = Number.parseInt(req.body.userposition);
             let phoneNumber: string = UsersInfo.give[position - 1].phonenumber;
-            try {await sendSMS(`${name}님께서 메멘토 북 수령 요청을 보내셨습니다. 메멘토에 가입 하셔서 ${name}님이 남기신 이야기를 소중하게 보관하세요. (이미 가입중이신 경우 마이페이지를 확인해주세요.)`, phoneNumber)} catch (err) {
+            try {await sendSMS(`${name}님께서 메멘토 북 수령 요청을 보내셨습니다. 메멘토에 가입하신 후 ${name}님의 이야기를 확인해보세요!`, phoneNumber)} catch (err) {
                 status = 400;
             }
         }

@@ -67,7 +67,7 @@ img.background {
 }
 div.contentcategory {
   width: $content-width;
-  height: 460px;
+  height: 436px;
   margin: auto;
   font-family: GyeonggiBatang;
   font-style: normal;
@@ -183,8 +183,8 @@ div.contentcategory {
         border-radius: 0px;
         border: 1px solid #D4D7D5;
         box-sizing: border-box;
-        width: 129px;
-        height: 130px;
+        width: 344px;
+        height: 106px;
       }
       button:not(:last-child) {
         border-right: none;
@@ -999,7 +999,7 @@ div.videocontent {
   width: $content-width;
   height: 432px;
   margin: auto;
-  margin-top: 61px;
+  padding-top: 61px;
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
@@ -1068,17 +1068,24 @@ div.videocontent {
       top: 383px;
       left: 183px;
     }
-    img.bookmark {
+    div.bookmark {
       position: absolute;
       top: -8px;
-      right: 29px;
+      left: 176px;
+      &.bookmarked {
+        svg {
+          path {
+            fill: rgba(105, 117, 110, 1);
+          }
+        }
+      }
     }
   }
   div.share_container {
     width: 239px;
     height: 106px;
     position: absolute;
-    top: calc(432px + 18px);
+    top: calc(432px + 18px + 61px);
     left: calc(769px + 24px);
     background: #FFFFFF;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
@@ -1127,7 +1134,7 @@ div.videocontent {
   }
 }
 div.bookcontent {
-  margin-top: 61px;
+  padding-top: 61px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
@@ -1180,15 +1187,94 @@ div.bookcontent {
       top: 392px;
       left: $margin-left;
     }
-    img.like_button {
+    div.vector_container {
+      width: 32px;
+      height: 32px;
       position: absolute;
       top: 339px;
       left: 209px;
+      background: rgba(247, 247, 246, 0.5);
+      box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+      border-radius: 50%;
+      padding: 8px 8.75px;
+      svg {
+        width: 14.5px;
+        height: 12.9px;
+        fill: rgba(196, 196, 196, 1);
+      }
+      &.liked {
+        svg {
+          fill: rgba(105, 117, 110, 1);
+        }
+      }
     }
     img.share_button {
       position: absolute;
       top: 383px;
       left: 209px;
+    }
+    div.bookmark {
+      position: absolute;
+      top: -8px;
+      left: 205px;
+      &.bookmarked {
+        svg {
+          path {
+            fill: rgba(105, 117, 110, 1);
+          }
+        }
+      }
+    }
+  }
+  div.share_container {
+    width: 239px;
+    height: 106px;
+    position: absolute;
+    top: calc(432px + 18px + 61px);
+    left: 27px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 12px;
+    gap: 15px 10px;
+    img {
+      opacity: 0.6;
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    }
+    div.shareLink {
+      width: 206px;
+      height: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      input {
+        font-size: 11px;
+        width: 126px;
+        height: 30px;
+        border: none;
+        outline: none;
+        color: rgba(0, 0, 0, 1);
+        background: #FFFFFF;
+        mix-blend-mode: darken;
+        opacity: 0.7;
+        box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.15);
+        border-radius: 5px;
+      }
+      button {
+        width: 72px;
+        height: 30px;
+        padding: 0px;
+        background: #23342A;
+        mix-blend-mode: darken;
+        opacity: 0.7;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+      }
     }
   }
   div.vector {
@@ -1196,6 +1282,58 @@ div.bookcontent {
     height: 241px;
     background: rgba(39, 57, 47, 0.1);
     margin: 0px 26px;
+  }
+  .pageContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 23px;
+  }
+  .page {
+    width: 339px;
+    height: 433px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 5px;
+    padding: 50px 38px 0px 72px;
+    input, textarea {
+      padding: 0px;
+    }
+    textarea {
+      width: 100%;
+      padding: 0px;
+      border: none;
+      outline: none;
+      resize: none;
+      text-align: justify;
+    }
+  }
+  .buttonContainer {
+    position: absolute;
+    top: 506px;
+    left: 916px;
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    button {
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.5);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+      padding: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        width: 10px;
+        path {
+          opacity: 0.5;
+          stroke-width: 4;
+        }
+      }
+      &:hover {
+        background: rgba(255, 255, 255, 0.8);
+      }
+    }
   }
 }
 
@@ -1264,7 +1402,7 @@ div.content_question {
         width: 241px;
         height: 40px;
       }
-      div.save_container, div.upload_container {
+      div.save_container, div.upload_container, div.save_success{
         position: absolute;
         top: -106px;
         left: 607px;
@@ -1280,6 +1418,21 @@ div.content_question {
         button {
           width: 93px;
           height: 26px;
+        }
+      }
+      div.save_success {
+        width: 265px;
+        height: 79px;
+        top: -91px;
+        left: 583px;
+        padding: 27px 23px;
+        div {
+          margin-right: 5px;
+        }
+        button {
+          padding: 0px;
+          width: 47px;
+          height: 25px;
         }
       }
       div.upload_container {

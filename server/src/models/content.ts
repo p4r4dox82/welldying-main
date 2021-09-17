@@ -15,7 +15,7 @@ export interface ContentType {
     tag: string;
     date: number;
     source: string;
-    detail: { summary: string; oneline: string; };
+    detail: { summary: string; oneline: string; subtitle: string; bookdetail: string[]; };
     comments: number[];
     question: number;
     imageData: imageData;
@@ -32,7 +32,7 @@ export const contentSchema = new Schema<ContentDocument>({
     tag: String,
     date: { type: Number, default: new Date(), },
     source: String,
-    detail: { summary: String, oneline: String },
+    detail: { summary: String, oneline: String, subtitle: String, bookdetail: [String] },
     comments: [Number],
     question: Number,
     imageData: { imageUrl: String, cropX: Number, cropY: Number },

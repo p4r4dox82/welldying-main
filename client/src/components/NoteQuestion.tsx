@@ -43,7 +43,7 @@ function NoteQuestion(props: Props) {
   let contentid = React.useMemo(() => question?.contents[0], [question]);
   let [message, setMessage] = React.useState<string>('');
   let [characternumbers, setCharacternumbers] = React.useState<number>(0);
-  let [imageUri, setImageUri] = React.useState<string>('https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png');
+  let [imageUri, setImageUri] = React.useState<string>('');
 
   let [save, setSave] = React.useState<boolean>(false);
   let [save_success, setSave_success] = React.useState<boolean>(false);
@@ -68,8 +68,8 @@ function NoteQuestion(props: Props) {
     unit: "px",
     x: 0,
     y: 0,
-    width: 500,
-    height: 300,
+    width: 0,
+    height: 0,
   });
 
   React.useEffect(() => {
@@ -105,7 +105,7 @@ function NoteQuestion(props: Props) {
     console.log(s3Uri);
     setImageUri(s3Uri);
     if(s3Uri === undefined) {
-      setImageUri('https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png');
+      setImageUri('');
     }
     return s3Uri;
   }
@@ -197,10 +197,10 @@ function NoteQuestion(props: Props) {
                 {Math.min(550, characternumbers) + ' / 550 자'}
                 </div>
                 <div className = 'image_uploader'>
-                    <div className = 'fileSelector' style = {{height: (imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? 150 : (crop.height + 60))}}>
+                    <div className = 'fileSelector' style = {{height: (imageUri === '' ? 150 : (crop.height + 60))}}>
                         <button className = 'image_input' onClick = {() => {handleClick(); setCropImage(true);}} >
-                            <div className = 'new_image' style = {{margin: 'auto', width: crop.width, height: (imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? 150 : crop.height), overflow: 'hidden'}}>
-                                <img className = 'new_image' src = {imageUri} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? '11px' : '0px')}}/>
+                            <div className = 'new_image' style = {{margin: 'auto', width: crop.width, height: (imageUri === '' ? 150 : crop.height), overflow: 'hidden'}}>
+                                <img className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (imageUri === '' ? '11px' : '0px')}}/>
                             </div>
                         </button>
                         <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
@@ -209,7 +209,7 @@ function NoteQuestion(props: Props) {
                 <div className = 'bottom_container'>
                     <div className = 'more'>
                         <div className = 'NS px12 op9'>같은 질문에 사람들은 어떻게 답변했을까요?</div>
-                        <div className = 'NS px12 op9 bold'>{'소통공간 바로가기>'}</div>
+                        <div className = 'NS px12 op9 bold'>{'소통공간 오픈 준비중입니다. 많은 기대 부탁드립니다.'}</div>
                     </div>
                     <button className = 'white NS px13 op9' onClick = {() => setUpload(!upload)}>소통공간에 게시하기</button>
                     <button className = 'green NS px13 op9' onClick = {() => setSave(!save)}>저장하기</button>
@@ -232,6 +232,7 @@ function NoteQuestion(props: Props) {
                         <div className = 'text GB px14'>이대로 게시하시겠습니까?</div>
                         <button className = 'rec white NS px12' onClick = {() => setUpload(false)}>돌아가기</button>
                         <button className = 'rec green NS px12' >게시하기</button>
+                        <div className="notopen GB px15 whiteop10" style = {{width: '100%', height: '100%', background: 'rgba(96, 103, 99, 0.8)', boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: '0px', left: '0px', borderRadius: '5px'}}>오픈 준비중입니다.</div>
                     </div>}
                 </div>
             </div>
@@ -240,11 +241,11 @@ function NoteQuestion(props: Props) {
             <div className = 'imageCrop'>
                 <img className = 'quit_button' src = {imageUrl('NotePage/quit_vector.svg')} onClick = {() => setCropImage(false)}/>
                 <div className = 'image_container'>
-                    <ReactCrop className = 'Crop' src = {(imageUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? '' : imageUri)} crop = {crop} onChange = {(newCrop) => {
+                    <ReactCrop className = 'Crop' src = {(imageUri)} crop = {crop} onChange = {(newCrop) => {
                         let changeCrop = newCrop;
-                        setCrop(changeCrop);
+                        setCrop({...changeCrop, height: changeCrop.width});
 
-                    }} style = {{width: 'fit-content', height: 'fit-content', objectFit: 'none', minHeight: '410px'}} locked />
+                    }} style = {{width: 'fit-content', height: 'fit-content', objectFit: 'none', minHeight: '410px'}} />
                 </div>
                 <div className = 'bottom_container'>
                     <div className = 'text GB px14'>드래그하여 삽입될 사진을 조절해주세요.</div>

@@ -188,3 +188,24 @@ export const EmailVector = (
 </svg>
 
 );
+
+export const BookMarkVector = (
+    <svg width="42" height="54" viewBox="0 0 42 54" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'BookMarkVector'>
+<g filter="url(#filter0_d)">
+<path d="M33.1429 3H8.85714C6.18571 3 4.02429 5.3 4.02429 8.11111L4 49L21 41.3333L38 49V8.11111C38 5.3 35.8143 3 33.1429 3Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d" x="0" y="0" width="42" height="54" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+</defs>
+</svg>
+
+);

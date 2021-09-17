@@ -22,7 +22,7 @@ export interface Content {
     tag: string,
     date: number,
     source: string,
-    detail: { summary: string, online: string },
+    detail: { summary: string, oneline: string, subtitle: string, bookdetail: string[] },
     comments: number[],
     question: number,
     imageData: { imageUrl: string, cropX: number, cropY: number };
@@ -42,7 +42,7 @@ export const getContent = async (id: number) => {
     return data;
 }
 
-export const writeContent = async (id: number, title: string, type: string, category: number[], userdata: { likes: string[], bookmark: string[], read: string[], }, tag: string, date: number, source: string, detail: {summary: string, oneline: string}, comments: number[], question: number, imageData: imageData) => {
+export const writeContent = async (id: number, title: string, type: string, category: number[], userdata: { likes: string[], bookmark: string[], read: string[], }, tag: string, date: number, source: string, detail: {summary: string, oneline: string, subtitle: string, bookdetail: string[] }, comments: number[], question: number, imageData: imageData) => {
     let response = await Axios.post(`${apiAddress}/content`, {
         id, title, type, category, userdata, tag, date, source, detail, comments, question, imageData
     }, { withCredentials: true });
