@@ -34,7 +34,7 @@ export default (Content: Model<ContentDocument>) => {
             id: Number.parseInt(req.body.id),
             title: req.body.title,
             type: req.body.type,
-            category: Number.parseInt(req.body.category),
+            category: req.body.category,
             userdata: { likes: req.body.userdata.likes, bookmark: req.body.userdata.bookmark, read: req.body.userdata.read, },
             tag: req.body.tag,
             date: new Date().getTime(),

@@ -32,7 +32,7 @@ function AdminWriteContent({ match }: Props) {
 
     let [title, setTitle] = React.useState<string>('');
     let [type, setType] = React.useState<string>('');
-    let [category, setCategory] = React.useState<number>(1);
+    let [category, setCategory] = React.useState<number[]>([1]);
     let [question, setQuestion] = React.useState<number>(1);
     let [source, setSource] = React.useState<string>('');
     let [summary, setSummary] = React.useState<string>('');
@@ -74,44 +74,45 @@ function AdminWriteContent({ match }: Props) {
         setCrop({ ...crop, x: content.imageData.cropX, y: content.imageData.cropY });
     }, [content]);
 
-    let categoryForm = React.useMemo(() => {
-        if (!allCategorys) return <></>;
-        else return (
-          <div>
-              <select style={{width: '888px'}} value={category} onChange={(e) => {
-                  let newId = Number.parseInt(e.target.value);
-                  let newCategory = category;
-                  newCategory = newId;
-                  setCategory(newCategory);
-                  let content_section = allCategorys?.find((section) => section.id === newCategory);
-                  setTag(content_section ? content_section?.tag : 'nosection');
-                  setUpdate(update+1);
-              }}>
-                  <option value={-1}> 카테고리를 골라주세요. </option>
-                  { allCategorys.map((section) => <option value={section.id}> {section.title} </option>)}
-              </select>
-          </div>
-        );
-    }, [update, CategoryLoading, contentLoading]);
-
     let allTags = ['#기록 #추억 #자서전', '#계획 #버킷리스트', '#편지', '#자기경정권 #치료', '#장례', '#죽음의 이해 #심적준비', '#법 #유산 #신탁', '#반려동물', '#사별 #애도'];
 
     let tagForm = React.useMemo(() => {
         if (!allTags) return <></>;
         else return (
-          <div>
-              <select style={{width: '888px'}} value={tagId} onChange={(e) => {
-                  let newId = Number.parseInt(e.target.value);
-                  let newTagId = tagId;
-                  newTagId = newId;
-                  setTagId(newTagId);
-                  setTag(allTags[newTagId]);
-                  setUpdate(update+1);
-              }}>
-                  <option value={-1}> 태그를 골라주세요. </option>
-                  { allTags.map((tag, key) => <option value={key}> {allTags[key]} </option>)}
-              </select>
-          </div>
+            <div>
+                <select style={{width: '888px'}} value={tagId} onChange={(e) => {
+                    let newId = Number.parseInt(e.target.value);
+                    let newTagId = tagId;
+                    newTagId = newId;
+                    setTagId(newTagId);
+                    setTag(allTags[newTagId]);
+                    switch(newTagId) {
+                        case 0: 
+                        case 1:
+                            setCategory([1]);
+                            break;
+                        case 3:
+                        case 4:
+                        case 6:
+                            setCategory([2]);
+                            break;
+                        case 8:
+                            setCategory([3]);
+                            break;
+                        case 2:
+                            setCategory([1, 3]);
+                            break;
+                        case 5:
+                        case 7:
+                            setCategory([2, 3]);
+                            break;
+                    }
+                    setUpdate(update+1);
+                }}>
+                    <option value={-1}> 태그를 골라주세요. </option>
+                    { allTags.map((tag, key) => <option value={key}> {allTags[key]} </option>)}
+                </select>
+            </div>
         );
     }, [update]);
 
@@ -182,7 +183,7 @@ function AdminWriteContent({ match }: Props) {
                 </div>
                 <div className='row'>
                     <div className='label'> 카테고리 목록 </div>
-                    { categoryForm }
+                    <input value={category.map((category) => String(category))} disabled/>
                 </div>
                 <div className='row'>
                     <div className='label'> 태그 </div>
