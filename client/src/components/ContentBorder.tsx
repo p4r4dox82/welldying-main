@@ -131,10 +131,13 @@ function ContentBorder (props : Props) {
   return (
     <>
       <div className = 'contentborder margin_base'>
-          <div className = 'border_container' style = {{marginTop: '87px'}}>
-              <div style = {{width: '443px', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />
-              <img src = {imageUrl('ContentPage/comment_border_image.png')} style = {{opacity: 0}}/>
-              <div style = {{width: '443px', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />
+          <div className = 'border_container' style = {{marginTop: '87px', height: '56px'}}>
+              <div style = {{width: '100%', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />
+              {false && <>
+                <div style = {{width: '443px', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />
+                <img src = {imageUrl('ContentPage/comment_border_image.png')} style = {{opacity: 0}}/>
+                <div style = {{width: '443px', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />
+              </>}
           </div>
           <div className = 'button_container'>
               <button className = {'like_button white NS px12 bold op9' + (contentliked ? ' liked' : '')} onClick = {user.loggedIn ? async () => {

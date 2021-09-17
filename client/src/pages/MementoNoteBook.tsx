@@ -18,7 +18,7 @@ import { imageUrl } from '../etc/config';
 import { parseDate } from '../etc/index';
 
 import { EmailVector, Colon, leftVector, rightVector } from '../img/Vectors';
-import { isObjectBindingPattern } from 'typescript';
+import { init, send } from 'emailjs-com';
 
 declare global {
   interface Window {
@@ -258,7 +258,7 @@ function MementoNoteBook({ match } : Props) {
             <div className = 'text NS px14 line25 whiteop10'>현재 카테고리에 남은 질문이 존재하지 않습니다.</div>
             <div className = 'text NS px14 line25 whiteop10'>{(section_unwritten_questions_add?.length !== 0 ? '아래의 질문에 대해 답변한 후, 유언 자서전에 추가해보는 것은 어떨까요?' : `추가 질문은 매주 '월요일'에 업로드 됩니다. 감사합니다!`)}</div>
         </div>
-        <div className = 'questions_container' style = {{marginTop: '66px', marginLeft: '0px'}}>
+        <div className = 'questions_container' style = {{marginTop: '66px', marginLeft: '0px', gap: '30px 30px'}}>
             {section_questions_add_unwritten}
         </div>
     </>
@@ -530,6 +530,10 @@ function MementoNoteBook({ match } : Props) {
   let kakaobutton = React.useRef<any>(null);
   let kakaobuttonClick = () => kakaobutton.current.click();
 
+  React.useEffect(() => {
+    init('user_efVYvnzs9Sl5DA3GNmTO5');
+  })
+
   if (!user.loggedIn) return <Redirect to='/login' />;
   else return (
     <>
@@ -687,29 +691,35 @@ function MementoNoteBook({ match } : Props) {
                   <button className="submit" id = 'kakao-link_button' onClick = {async () => {
                     let giveuser = users.find((user_) => user_.cellphone === ('+82' + giveuserphonenumber.slice(1, 11)));
                     let name = user.user!.name;
-                    if(giveuser) {
-                      let newUsersGive = UsersGive.concat([{username: giveuser.username, name: giveuser.name, phonenumber: giveuser.cellphone}]);
-                      setUsersGive(newUsersGive);
-                      if(method === 0) {
-                        if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) console.log('asd');
-                      } else {
-                        if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) console.log('asd');
-                      }
-                      
-                      if (await setUsers(giveuser.username, {...giveuser.UsersInfo, get: giveuser.UsersInfo.get.concat([{username: user.user!.username, name: user.user!.name, phonenumber: user.user!.cellphone}])}, 0, false, name)) console.log('dfgh');
-                    }
+                    if(UsersGive.find((UserInfo) => UserInfo.phonenumber === ('+82' + giveuserphonenumber.slice(1, 11)))) alert('이미 등록된 사용자입니다.');
                     else {
-                      let newUsersGive = UsersGive.concat([{username: '', name: giveusername, phonenumber: ('+82' + giveuserphonenumber.slice(1, 11))}]);
-                      setUsersGive(newUsersGive);
-                      if(method === 0) {
-                        if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) console.log('qwe');
-                      } else {
-                        if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) console.log('qwe');
+                      if(giveuser) {
+                        let newUsersGive = UsersGive.concat([{username: giveuser.username, name: giveuser.name, phonenumber: giveuser.cellphone}]);
+                        setUsersGive(newUsersGive);
+                        if(method === 0) {
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) console.log('asd');
+                        } else {
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) console.log('asd');
+                        }
+                        
+                        if (await setUsers(giveuser.username, {...giveuser.UsersInfo, get: giveuser.UsersInfo.get.concat([{username: user.user!.username, name: user.user!.name, phonenumber: user.user!.cellphone}])}, 0, false, name)) console.log('dfgh');
                       }
-                    }
-                    if(method === 2) {
-                      kakaobuttonClick();
-                      setTimeout(() => kakaobuttonClick(), 1000);
+                      else {
+                        let newUsersGive = UsersGive.concat([{username: '', name: giveusername, phonenumber: ('+82' + giveuserphonenumber.slice(1, 11))}]);
+                        setUsersGive(newUsersGive);
+                        if(method === 0) {
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) console.log('qwe');
+                        } else {
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) console.log('qwe');
+                        }
+                      }
+                      if(method === 2) {
+                        kakaobuttonClick();
+                        setTimeout(() => kakaobuttonClick(), 1000);
+                      }
+                      if(method === 1) {
+                        send('service_cp2012s', 'template_zdplcw4', {to_name: 'asd', from_name: 'asd', message: 'asd', toEmail: 'p4r4dox82@gmail.com', reply_to: 'asd'});
+                      }
                     } 
                   }}>전송</button>
                   {method === 2 && <button className="submit" id = 'kakao-link_btn' ref = {kakaobutton} style = {{display: 'none'}} onClick = {async () => {

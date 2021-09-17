@@ -13,6 +13,8 @@ import ReactCrop from 'react-image-crop';
 import { imageUrl } from '../etc/config';
 import { getCategorys } from '../etc/api/category';
 
+import { leftVector, rightVector } from '../img/Vectors';
+
 interface MatchParams {
     id: string;
 };
@@ -37,6 +39,8 @@ function AdminWriteContent({ match }: Props) {
     let [source, setSource] = React.useState<string>('');
     let [summary, setSummary] = React.useState<string>('');
     let [oneline, setOneline] = React.useState<string>('');
+    let [subtitle, setSubtitle] = React.useState<string>('');
+    let [bookdetail, setBookdetail] = React.useState<string[]>([]);
     let [tag, setTag] = React.useState<string>('');
     let [tagId, setTagId] = React.useState<number>(0);
     let [thumbnailUri, setThumbnailUri] = React.useState<string>('');
@@ -58,6 +62,9 @@ function AdminWriteContent({ match }: Props) {
         height: 720,
     });
 
+    let [pagenumber, setPagenumber] = React.useState<number>(0);
+    let [pagetotalnumber, setPagetotalnumber] = React.useState<number>(0);
+
     React.useEffect(() => {
         if (!content) return;
         setTitle(content.title);
@@ -66,7 +73,11 @@ function AdminWriteContent({ match }: Props) {
         setTag(content.tag);
         setSource(content.source);
         setSummary(content.detail.summary);
-        setOneline(content.detail.online);
+        setOneline(content.detail.oneline);
+        setSubtitle(content.detail.subtitle);
+        setBookdetail(content.detail.bookdetail);
+        if(content.detail.bookdetail)
+            setPagetotalnumber(content.detail.bookdetail.length);
         setQuestion(content.question);
         if(!content.imageData || !content.imageData.imageUrl) return;
         if (content.imageData.imageUrl !== '')
@@ -158,6 +169,48 @@ function AdminWriteContent({ match }: Props) {
         input_file.current.click();
     };
 
+    let bookdetailhtml = React.useMemo(() => {
+        return(
+            <div className='bookcontent' style = {{padding: '0px', paddingBottom: '100px'}}>
+                <div className="buttonContainer" style = {{top: '450px'}}>
+                    <button className="left" onClick = {() => setPagenumber(Math.max(pagenumber - 1, 0))}>{leftVector}</button>
+                    <div className="pagenumber NS px14 bold">{(pagenumber + 1) + '/' + pagetotalnumber}</div>
+                    <button className="right" onClick = {() => setPagenumber(Math.min(pagenumber + 1, pagetotalnumber - 1))}>{rightVector}</button>
+                </div>
+                <div className="pageContainer" style = {{transition: 'all 0.8s ease-in-out', transform: `translateX(${-362 * pagenumber + 'px'})`}}>
+                    {[...Array(pagetotalnumber).keys()].map((key) => {
+                        if(key === 0) {
+                            return (
+                                <div className="page">
+                                    <div className="number GB px20 px45 bold">#1</div>
+                                    <input className="subtitle GB px20 line40" style = {{marginTop: '5px', outline: 'none', border: 'none', background: 'rgba(0, 0, 0, 0)'}} value = {subtitle} onChange = {(e) => setSubtitle(e.target.value)} placeholder = '입력해주세요'/>
+                                    <textarea name="" id="" rows={7} className="detail GB px13 line30" value = {bookdetail[0]} onChange = {(e) => {
+                                        let newBookdetail = bookdetail;
+                                        newBookdetail[0] = e.target.value;
+                                        setBookdetail(newBookdetail);
+                                        setUpdate(update + 1);
+                                        console.log(newBookdetail);
+                                    }} style  = {{marginTop: '40px'}} placeholder = '입력해주세요'></textarea>
+                                </div>
+                            );
+                        } else {
+                            return (
+                                <div className="page" style = {{padding: '62px 56px 0px 58px'}}>
+                                    <textarea name="" id="" rows={10} className="detail GB px13 line30" value = {bookdetail[key]} onChange = {(e) => {
+                                        let newBookdetail = bookdetail;
+                                        newBookdetail[key] = e.target.value;
+                                        setBookdetail(newBookdetail);
+                                        setUpdate(update + 1);
+                                    }} placeholder = '입력해주세요' ></textarea>
+                                </div>
+                            );
+                        }
+                    })}
+                </div>
+            </div>
+        )
+    }, [pagenumber, pagetotalnumber, bookdetail, subtitle, update]);
+
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
     else if (editDone) return <Redirect to='/admin'/>
     else return (
@@ -201,6 +254,14 @@ function AdminWriteContent({ match }: Props) {
                     <div className='oneline'> 한줄 </div>
                     <input value={oneline} onChange={(e) => setOneline(e.target.value)}/>
                 </div>
+                <div className="row">
+                    <button onClick = {() => {
+                        setPagetotalnumber(pagetotalnumber + 1);
+                        console.log(pagetotalnumber);
+                    }}>페이지 추가</button>
+                    
+                </div>
+                {bookdetailhtml}
                 <div className='row'>
                     <div className='label'> 질문 목록 </div>
                     { questionForm }
@@ -221,7 +282,7 @@ function AdminWriteContent({ match }: Props) {
                 <button type='submit' className='signupButton' onClick={async (e) => {
                     e.preventDefault();
                     if (!title || !category || !type || !source || !summary || !question  ) setError('모든 항목을 채워주세요.');
-                    else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, source, { summary: summary, oneline: oneline }, [], question, { imageUrl: thumbnailUri, cropX: crop.x, cropY: crop.y })) {setEditDone(true);}
+                    else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, source, { summary: summary, oneline: oneline, subtitle: subtitle, bookdetail: bookdetail }, [], question, { imageUrl: thumbnailUri, cropX: crop.x, cropY: crop.y })) {setEditDone(true);}
                     else setError('어딘가 문제가 생겼습니다.');
                 }}>
                     { !content ? '추가하기' : '수정하기' }

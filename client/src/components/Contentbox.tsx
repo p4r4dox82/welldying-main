@@ -80,7 +80,7 @@ function Contentbox(props: Props) {
           {(user.loggedIn && content.userdata.read.find((username) => username === user.user!.username)) && <div className = 'read'/>}
           {(user.loggedIn && content.userdata.bookmark.find((username) => username === user.user!.username)) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
       </div>}
-      {(props.additionalClass === 'small' || props.additionalClass === 'small wide') && <div className = {'small_content ' + props.additionalClass}>
+      {(props.additionalClass === 'small' || props.additionalClass === 'small wide') && <div className = {'small_content ' + props.additionalClass} style = {{height: (props.additionalClass === 'small' ? '268px' : '320px')}}>
           <img className = 'thumbnail' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: (props.additionalClass === 'small' ? '236px' : '324px'), height: (props.additionalClass === 'small' ? '138px' : '190px')}} onClick = {user.loggedIn ? async () => {
             let new_userdata = userdata;
             if(userdata.read.find((username) => (username === user.user!.username)) === undefined) {
@@ -90,7 +90,7 @@ function Contentbox(props: Props) {
             }
             LinkClick();
           } : () => {LinkClick();}}/>
-          <div className = 'cover'>
+          <div className = 'cover' style = {{top: (props.additionalClass === 'small' ? 'calc(138px + 22px)' : 'calc(190px + 22px)')}}>
               <div className = 'tag'>{content.tag}</div>
               <div className = 'more' onClick = {() => {setSmall_more(!small_more);}}>
                   {[...Array(3).keys()].map((i) => (<div className = 'dot' />))}

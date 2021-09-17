@@ -3,6 +3,7 @@ import { imageUrl } from '../etc/config';
 import { getSections } from '../etc/api/section';
 import usePromise from '../etc/usePromise';
 import { Link } from 'react-router-dom';
+import { getCategorys } from '../etc/api/category';
 
 interface Props {
     additionalClass: string;
@@ -10,6 +11,7 @@ interface Props {
 
 function ContentCategory (props : Props) {
   let [, sections] = usePromise(getSections);
+  let [, categorys] = usePromise(getCategorys);
   let [search_word, setSearch_word] = React.useState<string>('');
   let [mouseover, setMouseover] = React.useState<number>(-1);
   let next_page_id = (parseInt(props.additionalClass) + 1)%8;
@@ -17,8 +19,8 @@ function ContentCategory (props : Props) {
   return (
     <>
       <div className = 'block'>
-          <img className = 'background' src = {imageUrl('ContentPage/content_background.png')} />
-          <div className = 'background' />
+          <img className = 'background' src = {imageUrl('ContentPage/content_background.png')} style = {{height: '436px', objectFit: 'cover'}}/>
+          <div className = 'background' style = {{height: '436px'}}/>
           <div className = 'contentcategory'>
               <div className = 'main_title'>
                   <div>죽음을 대면하고</div>
@@ -39,15 +41,11 @@ function ContentCategory (props : Props) {
                   <Link to={`${next_page_id}`}><img className = 'right_button' src = {imageUrl('ContentPage/right_button.png')} /></Link>
                   <div className = 'vector' />
                   <div className = 'category_container_main'>
-                      <Link to='/content/0'>
-                          <button className = {'category' + ((0 === parseInt(props.additionalClass) && mouseover === -1)||mouseover === 0 ? ' selected' : '')} onMouseOver = {() => {setMouseover(0);}} onMouseLeave = {() => {setMouseover(-1);}}>
-                          {'#전체'}
-                          </button>
-                      </Link>
-                      { sections?.map((section, key)=> (
-                        <Link to={`/content/${section.id}`}>
+                      { categorys?.map((category, key)=> (
+                        <Link to={`/content/${category.id}`}>
                             <button className = {'category' + (((key + 1) === parseInt(props.additionalClass) && mouseover === -1)||mouseover === (key + 1) ? ' selected' : '')} onMouseOver = {() => {setMouseover(key + 1);}} onMouseLeave = {() => {setMouseover(-1);}}>
-                            {section.tag.split('#').slice(1).map((tag) => <div>{'#' + tag}</div>)}
+                                <div className="name GB px16 line25">{category.title}</div>
+                                <div className="tag NS px12 line25 op4">{key === 1 ? category.tag.slice(0, 21) + category.tag.slice(25, 35) : category.tag}</div>
                             </button>
                         </Link>
                       ))}
