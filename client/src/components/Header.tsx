@@ -32,7 +32,8 @@ function Header({ additionalClass } : Props) {
                 </div>
                 { user.loggedIn ? (
                   <>
-                  <div className = 'userContainer'>
+                  <div className = {'userContainer' + (user.user?.username === 'admin' ? ' admin' : '')}>
+                    {user.user?.username === 'admin' && <div className="admin"><Link to = '/admin'>admin</Link></div>}
                     <div><Link to = '/mypage'>{user.user!.name + `님의 메멘토 공간`}</Link></div>
                     <div><Link to ='/logout'>로그아웃</Link></div>
                   </div>

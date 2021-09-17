@@ -3,6 +3,9 @@ import { imageUrl } from '../etc/config';
 import { Link } from 'react-router-dom';
 import { getSections } from '../etc/api/section';
 import usePromise from '../etc/usePromise';
+import { RootReducer } from '../store';
+import { useSelector } from 'react-redux';
+import { getUsers } from '../etc/api/user';
 
 interface Props {
   additionalClass: string;
@@ -13,6 +16,24 @@ interface Props {
 
 function NoteLeftBar (props: Props) {
   let [, sections] = usePromise(getSections);
+  let user = useSelector((state: RootReducer) => state.user);
+  let [,users] = usePromise(getUsers);
+
+  let UsersGive = React.useMemo(() => {
+    return (
+      <div className="usersgive">
+        <div className="title NS px12 bold line25">사후 노트 수령인</div>
+        <div className="userscontainer">
+          {(user && users) && user.user?.UsersInfo.give.map((username) => {
+            let user = users.find((user_) => user_.username === username);
+            return (
+              <div className="username NS px12 line30">{user?.name}</div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }, [user, users]);
 
   return (
     <>
@@ -26,6 +47,7 @@ function NoteLeftBar (props: Props) {
                 <div className = 'add note'>
                     <img className = 'add_image' src = {imageUrl('ContentPage/add_button.png')} />
                 </div>
+                {UsersGive}
             </div>
             {props.category && <div className = 'CategoryBar'>
                 <div className = 'category_container'>

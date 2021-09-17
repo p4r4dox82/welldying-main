@@ -50,6 +50,20 @@ div.NoteLeftBar {
         top: calc(50% - 22px/2);
       }
     }
+    div.usersgive {
+      margin-top: 125px;
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: calc(100% - 147px);
+      div {
+        margin: 0px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      div.userscontainer {
+        margin-top: 13px;
+      }
+    }
   }
   div.CategoryBar {
     width: 177px;

@@ -10,7 +10,7 @@ export interface ContentType {
     id: number;
     title: string;
     type: string;
-    category: number;
+    category: number[];
     userdata: { likes: string[]; bookmark: string[]; read: string[]; };
     tag: string;
     date: number;
@@ -27,7 +27,7 @@ export const contentSchema = new Schema<ContentDocument>({
     id: { type: Number, unique: true, required: true},
     title: String,
     type: String,
-    category: Number,
+    category: [Number],
     userdata: { likes: [String], bookmark: [String], read: [String], },
     tag: String,
     date: { type: Number, default: new Date(), },
