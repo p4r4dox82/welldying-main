@@ -9,6 +9,7 @@ import { RootReducer } from '../store';
 import { useSelector } from 'react-redux';
 import { parseDate } from '../etc';
 import { getrevNewses, writeNews } from '../etc/api/news';
+import { useWindowScroll } from 'react-use';
 
 interface MatchParams {
     id: string;
@@ -55,15 +56,15 @@ function News ({ match }: Props) {
                   <div className = 'news_info'>뉴스 주요 정보</div>
                   <div className = 'tag'>태그 카테고리</div>
               </div>
-              {listnewses?.map((news) => (
+              {listnewses?.map((news, key) => (
                 <>
-                    <div className = 'list_content'>
-                        <img className = 'archive' src = {imageUrl('content_3.png')} />
+                    <div className = 'list_content' onClick = {() => window.open((key === 0 ? 'https://www.newswire.co.kr/newsRead.php?no=919731' : 'https://www.sedaily.com/NewsVIew/22L3E5TQVJ'), '_blank')}>
+                        <img className = 'archive' src = {imageUrl(key === 0 ? 'news2.png' : 'news1.png')} />
                         <div className = 'news_info'>
                             <div className = 'company'>{news?.company}</div>
                             <div className = 'title'>{news?.title}</div>
                             <div className = 'detail'>{news?.detail}</div>
-                            <div className = 'date'>{news?.date}</div>
+                            <div className = 'date' style ={{marginTop: '20px'}}>{news?.date}</div>
                         </div>
                         <div className = 'tag each'>
                             {news?.tag.split("#").slice(1).map((tag_) => (
