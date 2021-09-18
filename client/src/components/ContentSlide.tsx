@@ -107,10 +107,10 @@ function ContentSlide () {
                   <div className = 'title' onClick = {() => LinkClick()}>
                       <div>당신의</div>
                       <div>행복한 이야기를</div>
-                      <div>영상에 담다.</div>
+                      <div>상상해봅시다</div>
                   </div>
                   <div className = 'date'>
-                  {'2021.07'}
+                  {'2021.09'}
                   </div>
                   <img className = 'memento_logo' src = {imageUrl('ContentPage/mainLogo.png')} />
               </div>

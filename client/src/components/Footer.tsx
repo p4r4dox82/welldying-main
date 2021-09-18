@@ -10,11 +10,11 @@ function Footer({ additionalClass } : Props) {
     return (
         <footer className={additionalClass}>
             <div className = 'menu_container'>
-                <div className = 'item'><Link to='/aboutus'>회사소개</Link></div>
-                <div className = 'item'><Link to='/aboutus'>메멘토 파트너쉽</Link></div>
-                <div className = 'item'><Link to='/aboutus'>이용약관</Link></div>
-                <div className = 'item'><Link to='/aboutus'>개인정보처리방침</Link></div>
-                <div className = 'item'><Link to='/aboutus'>사업자정보 확인</Link></div>
+                <div className = 'item'>회사소개</div>
+                <div className = 'item'>메멘토 파트너쉽</div>
+                <div className = 'item'>이용약관</div>
+                <div className = 'item'>개인정보처리방침</div>
+                <div className = 'item'>사업자정보 확인</div>
             </div>
             <div className = 'about_company_container_1'>
                 <div className = 'item'>회사명 : memento</div>

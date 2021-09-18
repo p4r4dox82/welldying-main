@@ -192,8 +192,8 @@ function NoteQuestion(props: Props) {
                 <div className = 'content_writer NS px12 line15'>{content?.title.split('_')[1]}</div>
             </div>}
         </div>}
-        {show_answer && <div className = {'note_question ' + answer_type + ' ' + props.type} style = {{marginLeft: (props.order !== -1 ? `${-30 -265 * (props.order % 3)}px` : '')}}>
-            <img className = 'background' src = {imageUrl('ContentPage/question_background.png')} style = {{height: '1052px'}}/>
+        {show_answer && <div className = {'note_question ' + answer_type + ' ' + props.type} style = {{marginLeft: (props.order !== -1 ? `${-30 -265 * (props.order % 3)}px` : ''), height: 'fit-content'}}>
+            <img className = 'background' src = {imageUrl('ContentPage/question_background.png')} style = {{height: '100%'}}/>
             <div className = 'question_container'>
                 <textarea className = 'answer_area GB px15 line40 op7' value={message} onChange={(e) => {setMessage(checkline(e.target.value)); setCharacternumbers(e.target.value.length);}} />
                 <div className = 'characternumbers NS px12 bold op6'>
@@ -212,7 +212,7 @@ function NoteQuestion(props: Props) {
                         <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
                     </div>
                 </div>
-                <div className = 'bottom_container'>
+                <div className = 'bottom_container' style = {{paddingBottom: '50px'}}>
                     <div className = 'more'>
                         <div className = 'NS px12 op9'>같은 질문에 사람들은 어떻게 답변했을까요?</div>
                         <div className = 'NS px12 op9 bold'>{'소통공간 오픈 준비중입니다. 많은 기대 부탁드립니다.'}</div>

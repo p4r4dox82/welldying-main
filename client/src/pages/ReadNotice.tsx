@@ -59,7 +59,7 @@ function ReadNotice({ match }: Props) {
                     </div>
                     <div className = 'list_content answer'>
                         <div className = 'block'>
-                            <textarea className = 'detail answer' value = {notice?.detail} disabled/>
+                            <textarea className = 'detail answer' style = {{height: '550px'}}value = {notice?.detail} disabled/>
                         </div>
                     </div>
                 </div>

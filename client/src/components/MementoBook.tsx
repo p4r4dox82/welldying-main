@@ -21,12 +21,12 @@ function MementoBook (props: Props) {
     return (
         <>
         <Link to = {`/notebook/1`} ref = {LinkBook} style = {{display: 'none'}} />
-        <div className="BookElement">
+        <div className="BookElement" onClick = {props.mine ? () => LinkBookClick() : () => {}}>
             <img src={imageUrl('NotePage/BookCoverImage.png')} alt="" className="BookCover" />
             <div className="BookCoverBlend"></div>
             <div className="MementoLogo">{MementoLogo}</div>
             <div className="bookname GB px13">{Colon}{props.bookname}</div> 
-            {props.mine ? <div className="more NS px12 whiteop5" onClick = {() => LinkBookClick()}>{`메멘토 북 수정하기 >`}</div> : <></>}
+            {props.mine ? <div className="more NS px12 whiteop5">{`메멘토 북 수정하기 >`}</div> : <></>}
             {(!props.mine && !props.accept) && <div className = 'acceptContainer' style = {{width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.7)', position: 'absolute', top: '0px', left: '0px', borderRadius: '5px'}}>
                 <div className="text GB px15 line25 whiteop10" style = {{position: 'absolute', top: '71px', left: 'calc(50% - 80px)', width: '160px', textAlign: 'center'}}>
                     <div>{props.name}님의 메멘토 북을</div>

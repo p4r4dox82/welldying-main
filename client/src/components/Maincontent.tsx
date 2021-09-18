@@ -280,7 +280,7 @@ function Maincontent() {
             subText: <>
                 <div>웰다잉 플랫폼 메멘토는 남녀노소 누구나 자신의 죽음을 준비해보는 시간을 가질 수 있는 공간입니다. 메멘토에서 인생을 기록하고, 유언을 작성하고, 책과 영상을 통해 죽음에 대해 철학적으로 고민해보며 죽음 이면에 있는 삶의 축복을 발견하세요. </div>
             </>,
-            more: <div className="more px12 line40 bold" onClick = {() => LinkAboutusClick()}>{`메멘토 소개 바로가기>`}</div>,
+            more: <div className="more px12 line40 bold" onClick = {() => window.open('https://www.notion.so/Team-Memento-480ba51aeb3a43f6ad18d19a05bba5ad', '_blank')}>{`메멘토 소개 바로가기>`}</div>,
             imageUrl: 'MainMementoImage.png'
         });
 

@@ -12,6 +12,7 @@ import { getContents } from '../etc/api/content';
 import { getUsers } from '../etc/api/user';
 import Contentbox from '../components/Contentbox';
 import usePromise from '../etc/usePromise';
+import MementoBook from '../components/MementoBook';
 
 function MementoNoteMain () {
     let user = useSelector((state: RootReducer) => state.user);
@@ -29,7 +30,7 @@ function MementoNoteMain () {
             case 1: 
                 return '메멘토 노트는';
             case 2:
-                return '유언 자서전은';
+                return '메멘토 북은';
             case 3:
                 return '함께쓰는 노트는';
             case 4:
@@ -41,7 +42,7 @@ function MementoNoteMain () {
             case 1: 
                 return `메멘토가 제시하는 질문에 대한 나의 생각을 정리할 수 있는 프라이빗한 공간입니다. 질문은 삶과 죽음에 관한 총 6가지 카테고리로 구성되어 있으며, 질문에 대해 하나씩 답을 작성하면서 나만의 인생 기록이 담긴 특별한 유언을 완성할 수 있습니다. 질문에 관한 생각을 정리하는 데 어려움을 느끼신다면, 답변 작성에 도움을 받을 수 있는 '도움 컨텐츠'를 참고해주세요!`;
             case 2:
-                return '메멘토 노트에 적은 답변을 온라인 책 형태로 엮어 소중한 이들에게 전달하는 공간입니다. 메멘토 노트의 답변 중 전달하고 싶은 답변을 선택하면 자동적으로 메멘토가 당신의 인생 기록이자 유언이 담긴 전자책을 만들어드립니다. 메멘토 북을 모두 완성하셨다면, 소중한 이들에게 이를 열람할 수 있는 초대 메세지를 보내주세요! 열람 가능한 시기는 나의 의사에 따라 지금으로 설정할 수도, 혹은 사후 나의 사망 사실이 확인된 이후로 설정할 수도 있습니다.';
+                return '메멘토 노트에 적은 답변을 온라인 책 형태로 엮어 소중한 이들에게 전달하는 공간입니다. 메멘토 노트의 답변 중 전달하고 싶은 답변을 선택하면 자동적으로 메멘토가 당신의 인생 기록이자 유언이 담긴 전자책을 만들어드립니다. 메멘토 북을 모두 완성하셨다면, 소중한 이들에게 이를 열람할 수 있는 초대 메세지를 보내주세요! 전달된 메멘토 북은 작성인의 사망사실이 확인된 이후 열람가능한 상태로 바뀝니다.';
             case 3:
                 return '생의 마지막까지 함께하고픈 이들과 함께 질문에 대해 답하고, 추억을 기록하는 공간입니다.';
             case 4:
@@ -89,12 +90,12 @@ function MementoNoteMain () {
             case 1: 
                 return (
                     <>
-                    <div className="block Info" style = {{paddingBottom: '323px', borderBottom: '1px solid rgba(99, 106, 102, 0.2)'}}>
+                    <div className="block Info" style = {{paddingBottom: '323px', borderBottom: '1px solid rgba(99, 106, 102, 0.2)'}} onClick = {() => LinkNoteClick()}>
                         <img src={imageUrl('NotePage/backgroundImage.png')} alt="" className="background" style = {{width: '100%', height: '296px', objectFit: 'none', position: 'absolute', borderRadius: '5px'}}/>
                         <div className="mixblend" style = {{width: '100%', height: '296px', position: 'absolute', background: 'rgba(110, 118, 114, 1)', mixBlendMode: 'multiply', borderRadius: '5px'}}></div>
-                        <div className="text GB px13 line20" style = {{position: 'absolute', top: '-30px', left: '620px'}}>메멘토 노트에 작성된 답변은을 유언 자서전으로 옮겨야 전달이 어쩌구</div>
+                        <div className="text GB px13 line20" style = {{position: 'absolute', top: '-30px', left: '620px'}}>메멘토 노트에 작성된 답변을 메멘토 북으로 옮겨야 전달이 됩니다.</div>
                         <div className="MementoLogo">{MementoLogo}</div>
-                        <div className="more NS px14 whiteop10" onClick = {() => LinkNoteClick()}>{`나의 메멘토 노트 작성하기 >`}</div>
+                        <div className="more NS px14 whiteop10">{`나의 메멘토 노트 작성하기 >`}</div>
                     </div>
                     <div className="detail" style = {{margin: '101px 15px 62px 15px '}}>
                         <div className="title GB px20 line40 ">{explain_main}</div>
@@ -113,7 +114,7 @@ function MementoNoteMain () {
                         <div className="questions" style = {{left: `${(-530 * position) + 'px'}`, display: 'flex', gap: '30px'}}>
                             {section_questions.map((question) => <div className="questionBox" style = {{width: '501px', height: '188px'}}>
                                 <div className="question GB px18 line40">{question.title}</div>
-                                <div style = {{position: 'absolute', top: '129px', left: 'calc(50% - 155px/2)'}}><Link to ={`/contentpage/${question.contents[0]}`}><button className="gocontent NS px12 whiteop10" style = {{background: 'rgba(141, 151, 145, 1)', boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)', borderRadius: '20px', width: '155px', height: '27px', padding: '0px'}}>대표 컨텐츠 바로가기</button></Link></div>
+                                {question.contents.length !== 0 && <div style = {{position: 'absolute', top: '129px', left: 'calc(50% - 155px/2)'}}><Link to ={`/contentpage/${question.contents[0]}`}><button className="gocontent NS px12 whiteop10" style = {{background: 'rgba(141, 151, 145, 1)', boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)', borderRadius: '20px', width: '155px', height: '27px', padding: '0px'}}>대표 컨텐츠 바로가기</button></Link></div>}
                             </div>)}
                         </div>
                         <div className="left Button" onClick = {() => setPosition(Math.max(position - 2, 0))}>{leftVector}</div>
@@ -128,13 +129,7 @@ function MementoNoteMain () {
                         <div className="BookContainer" style = {{borderBottom: '1px solid rgba(99, 106, 102, 0.2)'}}>
                             {user.user?.bookname.map((bookname) => {
                                 return (
-                                    <div className="BookElement">
-                                        <img src={imageUrl('NotePage/BookCoverImage.png')} alt="" className="BookCover" />
-                                        <div className="BookCoverBlend"></div>
-                                        <div className="MementoLogo">{MementoLogo}</div>
-                                        <div className="bookname GB px13">{Colon}{user.user?.bookname[0]}</div> 
-                                        <div className="more NS px12 whiteop5" onClick = {() => LinkBookClick()}>{`메멘토 북 수정하기 >`}</div>
-                                    </div>
+                                    <MementoBook bookname = {String(user.user?.bookname)} name = {String(user.user?.name)} mine = {true} accept = {false} />
                                 )
                             })}
                             <div className="BookElement" onClick = {(user.user?.bookname && user.user.bookname.length === 1) ? () => {} : () => LinkBookClick()}>
@@ -175,13 +170,12 @@ function MementoNoteMain () {
                 return (
                     <div className="block Info" style = {{height: '323px'}}>
                         <div className="mixblend" style = {{width: '100%', height: '296px', position: 'absolute', background: 'rgba(96, 103, 99, 0.8)', borderRadius: '5px'}}></div>
-                        <div className="text GB px13 line20" style = {{position: 'absolute', top: '-30px', left: '620px'}}>메멘토 노트에 작성된 답변은을 유언 자서전으로 옮겨야 전달이 어쩌구</div>
                         <div className="open GB px25 line25 whiteop10">오픈준비중입니다.</div>
                         <div className="date NS px15 line30 whiteop5">출시 예정일: 2021년 12월 예정</div>
                     </div>
                 );
         }
-    }, [select, sections, section_questions, user]);
+    }, [select, sections, section_questions, user, position]);
 
     if(!user.loggedIn) return <Redirect to='/login'/>
     return (
@@ -227,6 +221,7 @@ function MementoNoteMain () {
                     {MementoNoteInfo}
                 </div>
             </div>
+            <div style = {{height: '150px'}}></div>
             {false && <div className="block">
                 <div className="contents_bookmark margin_base" style = {{marginTop: '192px', textAlign: 'center', paddingBottom: '105px'}}>
                     <div className="title GB px20 line40">당신을 의미있게 만들어준 책갈피</div>
