@@ -19,6 +19,7 @@ import { imageUrl } from '../etc/config';
 import { getContents } from '../etc/api/content';
 import Contentbox from '../components/Contentbox';
 
+
 interface EntryType {
     name: string;
     body: JSX.Element;
@@ -29,6 +30,7 @@ interface EntryType {
 
 function Mypage() {
     let user = useSelector((state: RootReducer) => state.user);
+    let [accept, setAccept] = React.useState<number>(0);
     let [, AllUsers] = usePromise(getUsers);
     let [, sections] = usePromise(getSections);
     let scroll = useScroll();
@@ -499,15 +501,15 @@ function Mypage() {
         if(!AllUsers) return<></>;
         return (
             <div className="BookContainer" style = {{paddingTop: '37px'}}>
-                <MementoBook bookname = {String(user.user?.bookname[0])} mine = {true} accept = {false} name = ''/>
+                <MementoBook bookname = {String(user.user?.bookname[0])} mine = {true} accept = {0} name = '' giveusername = '' getusername = ''/>
                 <div className="vector"></div>
                 <div className="giveuserscontainer">
                     {user.user?.UsersInfo.give.map((UserInfo) => {
                         let giveuser = AllUsers.find((user_) => user_.username === UserInfo.username);
                         return (
-                            <div className="GiveUsersElement">
+                            (UserInfo.accept !== 2) && <div className="GiveUsersElement">
                                 <div className="UserImage">{UserImage}</div>
-                                {UserInfo.accept ? <div>
+                                {(UserInfo.accept === 1) ? <div>
                                     <div className="namephone NS px15 line25 bold op6">{giveuser?.name + ' / 0' + giveuser?.cellphone.slice(3, 5) + '-' + giveuser?.cellphone.slice(5, 9) + '-' + giveuser?.cellphone.slice(9, 13)}</div>
                                     <div className="email NS px15 line25 bold op6">{giveuser?.email}</div>
                                 </div> : <>
@@ -529,21 +531,15 @@ function Mypage() {
                     let getuser = AllUsers.find((user_) => user_.cellphone === UserInfo.phonenumber);
                     console.log(getuser);
                     return (
-                        <div style = {{width: '236px'}}>
-                            <MementoBook bookname = {String(getuser?.bookname[0])} mine = {false} accept = {false} name = {String(getuser?.name)}/>
-                            <div className="GiveUsersElement" style ={{width: '236px', padding: '0px', justifyContent: 'center', boxShadow: '0px 0px 0px rgba(0, 0, 0, 0)', background: 'rgba(0, 0, 0, 0)', height: '60px', marginTop: '20px'}}>
-                                <div style ={{textAlign: 'center'}}>
-                                    <div className="namephone NS px15 line25 bold op6">{getuser?.name + ' / ' + getuser?.birthYear + '.' + getuser?.birthMonth + '.' + getuser?.birthDate}</div>
-                                    <div className="email NS px15 line25 bold op6">{getuser?.email}</div>
-                                </div>
-                            </div>
+                        <div style = {{width: '236px', height: '441px'}}>
+                            <MementoBook bookname = {String(getuser?.bookname[0])} mine = {false} accept = {accept} name = {String(getuser?.name)} giveusername = {String(getuser?.username)} getusername = {String(user.user?.username)} />
                         </div>
                     )
                 })}
                 
             </div>
         );
-    }, [user, AllUsers]);
+    }, [user, AllUsers, accept]);
     
 
     if (!user.loggedIn) return <Redirect to='/login' />; 
