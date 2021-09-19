@@ -129,7 +129,7 @@ function MementoNoteMain () {
                         <div className="BookContainer" style = {{borderBottom: '1px solid rgba(99, 106, 102, 0.2)'}}>
                             {user.user?.bookname.map((bookname) => {
                                 return (
-                                    <MementoBook bookname = {String(user.user?.bookname)} name = {String(user.user?.name)} mine = {true} accept = {false} />
+                                    <MementoBook bookname = {String(user.user?.bookname)} name = {String(user.user?.name)} mine = {true} accept = {0} giveusername = '' getusername = ''/>
                                 )
                             })}
                             <div className="BookElement" onClick = {(user.user?.bookname && user.user.bookname.length === 1) ? () => {} : () => LinkBookClick()}>
