@@ -424,5 +424,27 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         res.end();
     });
 
+    router.put('/profile', async (req, res) => {
+        let user = req.user!;
+        let username: string = req.body.username;
+
+        if (!await User.findOne({ username })) return res.sendStatus(500);
+
+        let imageUri = req.body.imageUri;
+        let name = req.body.name;
+        let sex = req.body.sex;
+        let birthYear = req.body.birthYear;
+        let birthMonth = req.body.birthMonth;
+        let birthDate = req.body.birthDate;
+
+        if (user.username !== username) return res.sendStatus(401);
+
+        await User.findOneAndUpdate({ username: username }, {
+            imageUri, name, sex, birthYear, birthMonth, birthDate
+        })
+
+        res.send(200);
+    })
+
     return router;
 };

@@ -66,6 +66,69 @@ div.MyPage {
             }
         }
     }
+    div.ModifyContainer {
+        width: 1032px;
+        height: 470px;
+        margin-top: 60px;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+        img.background {
+            position: absolute;
+            opacity: 1;
+        }
+        div.ModifySelectContainer {
+            display: flex;
+            width: 100%;
+            height: 65px;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px dashed rgba(147, 156, 151, 1);
+            div {
+                &:not(:last-child)::after {
+                    content: '|';
+                    padding: 0px 40px;
+                    opacity: 0.3;
+                }
+            }
+        }
+        div.ModifyContent {
+            div.imageContainer {
+                margin: 86px 0px 0px 147px;
+                width: 266px;
+                height: 184px;
+                border-radius: 92px;
+                background: #FFFEFE;
+                box-shadow: inset 0px 2px 10px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                img {
+                    border: none;
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                div.addContainer {
+                    margin: 53px 0px 0px 104px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 58px;
+                    height: 58px;
+                    border-radius: 50%;
+                    background: #FFFEFE;
+                    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.15);
+                    svg {
+                        width: 21px;
+                        height: 21px;
+                        fill: rgba(39, 57, 47, 1);
+                    }
+                }
+                div.text {
+                    margin-top: 20px;
+                    text-align: center;
+                }
+            }
+        }
+    }
     div.DeathInfo {
         margin-top: 123px;
         img.background {
