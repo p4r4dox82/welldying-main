@@ -514,7 +514,7 @@ Cherish your memories, memento`,
               <div className="circle" style = {{marginLeft: '4px', boxSizing: 'content-box'}}></div>
               <div className="circle"></div>
               <div className="circle" style = {{marginRight: '4px', boxSizing: 'content-box'}}></div>
-              <div className="pageContainer" style ={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '14px', top: '7px', position: 'absolute', left: `${pageNumber/(Number(written_questions_added?.length) - 1) * 407+ 'px'}`}}>
+              <div className="pageContainer" style ={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '14px', top: '7px', position: 'absolute', left: `${pageNumber/(Number(written_questions_added?.length) - 1) * 407+ 'px'}`, transition: 'all 0.5s ease-in-out'}}>
                 <div className="Big circle"></div>
                 <div className="number NS px12 bold line25 op3" style = {{margin: '4px', color: 'rgba(103, 116, 109, 1)', textAlign: 'center'}} >{pageNumber + 1}</div>
               </div>

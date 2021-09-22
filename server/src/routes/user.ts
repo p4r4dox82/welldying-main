@@ -52,7 +52,7 @@ const signupRateLimiter2 = rateLimiter({
 // Allow 20 message queries per 1 day
 const SNSRateLimiter = rateLimiter({
     windowMs: 24 * 60 * 1000,
-    max: 20,
+    max: 100,
     message: "Cannot send more than 20 messages with SNS in a day",
 });
 
@@ -312,7 +312,6 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
     })
 
     const sendSMS = async (message: string, phoneNumber: string) => {
-        console.log('asd');
         await sns.publish({
             Message: message,
             PhoneNumber: phoneNumber,
@@ -328,7 +327,12 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
             createdAt: new Date().getTime(),
         };
 
-        await sendSMS(`[메멘토] 가입해주셔서 감사합니다. 인증번호는 ${code}입니다.`, phoneNumber);
+        try {
+            let data = await sendSMS(`[메멘토] 가입해주셔서 감사합니다. 인증번호는 ${code}입니다.`, phoneNumber);
+            console.log("Success", data);
+        } catch (err: any) {
+            console.log("Failed", err.stack);
+        }
 
         res.sendStatus(200);
     });

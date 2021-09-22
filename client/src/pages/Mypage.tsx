@@ -28,6 +28,16 @@ interface EntryType {
 }
 
 
+let checkBatchim = (word: string) => {
+    let lastLetter = word[word.length - 1];
+    let uni = lastLetter.charCodeAt(0);
+
+    if((uni < 44032) || (uni > 55203)) return;
+
+    return ((uni - 44032) % 28 !== 0);
+};
+
+
 function Mypage() {
     let user = useSelector((state: RootReducer) => state.user);
     let [accept, setAccept] = React.useState<number>(0);
@@ -513,7 +523,7 @@ function Mypage() {
                                     <div className="namephone NS px15 line25 bold op6">{giveuser?.name + ' / 0' + giveuser?.cellphone.slice(3, 5) + '-' + giveuser?.cellphone.slice(5, 9) + '-' + giveuser?.cellphone.slice(9, 13)}</div>
                                     <div className="email NS px15 line25 bold op6">{giveuser?.email}</div>
                                 </div> : <>
-                                    <div className="email NS px15 line25 bold op6" style ={{width: '230px'}}>{giveuser?.name + '의 승인을 대기중입니다.'}</div>
+                                    <div className="email NS px15 line25 bold op6" style ={{width: '230px', letterSpacing: '0em'}}>{giveuser?.name + '님의 승인을 대기중입니다.'}</div>
                                 </>}
                             </div>
                         );
@@ -587,7 +597,7 @@ function Mypage() {
                                     <div className="NS px12 bold">네 이해하고 동의합니다.</div>
                                     <button className="agree"></button>
                                 </>}
-                                {agree && <div className="NS px12 bold op3">{`네, 저 ${user.user?.name}은(는) 위와 같이 서약합니다.`}</div>}
+                                {agree && <div className="NS px12 bold op3">{`네, 저 ${user.user?.name + ((!(!user || !user.user) && checkBatchim(String(user.user.name))) ? '은' : '는')} 위와 같이 서약합니다.`}</div>}
                             </div>
                         </div>
                     </div>

@@ -14,6 +14,15 @@ import Contentbox from '../components/Contentbox';
 import usePromise from '../etc/usePromise';
 import MementoBook from '../components/MementoBook';
 
+let checkBatchim = (word: string) => {
+    let lastLetter = word[word.length - 1];
+    let uni = lastLetter.charCodeAt(0);
+
+    if((uni < 44032) || (uni > 55203)) return;
+
+    return ((uni - 44032) % 28 !== 0);
+};
+
 function MementoNoteMain () {
     let user = useSelector((state: RootReducer) => state.user);
     let [check, setCheck] = React.useState<boolean>(false);
@@ -24,6 +33,10 @@ function MementoNoteMain () {
     let [, AllUsers] = usePromise(getUsers);
     let [id, setId] = React.useState<number>(0);
     let [position, setPosition] = React.useState<number>(0);
+    React.useEffect(() => {
+        if(!user || !user.user) return;
+        setCheck(user.user?.DeathInfo.agree);
+    }, [user]);
     
     let title = React.useMemo(() => {
         switch(select) {
@@ -199,7 +212,7 @@ function MementoNoteMain () {
                         <div>자살하고 싶은 생각이 들면 반드시 주위 사람에게 도움을 청하거나, 중앙자살예방센터(1393),</div>
                         <div>한국 생명의 전화(1588-9191) 등으로 전화를 걸어 도움을 요청하겠습니다.</div>
                     </div>
-                    <div className="agreeCheck px12 line25 op3 bold" style = {{marginTop: '47px'}}>{(check ? <>{`네, 저 ${user.user?.name}은(는) 메멘토의 이야기에 공감합니다.`}</> : <>네 이해하고 동의합니다
+                    <div className="agreeCheck px12 line25 op3 bold" style = {{marginTop: '47px'}}>{(check ? <>{`네, 저 ${user.user?.name + ((!(!user || !user.user) && checkBatchim(String(user.user.name))) ? '은' : '는')} 메멘토의 이야기에 공감합니다.`}</> : <>네 이해하고 동의합니다
                     <div className={"checkbox" + (check ? ' checked' : '')} style = {{width: '14px', height: '14px'}} onClick = {() => setCheck(!check)}></div></>)}</div>
                 </div>
             </div>
