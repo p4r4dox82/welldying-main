@@ -1,7 +1,7 @@
 import Axios, { AxiosRequestConfig } from "axios";
 import { ShowContentType } from "../../components/SignupFill";
 import store from "../../store";
-import { setUser, clearUser } from "../../store/user";
+import user, { setUser, clearUser } from "../../store/user";
 import { apiAddress } from "../config";
 
 interface UserPost {
@@ -61,6 +61,7 @@ interface UserPut {
     birthDate: number;
     sex: 'male' | 'female';
     email: string;
+    imageUri: string;
 }
 
 interface UserPassword {
@@ -213,6 +214,7 @@ export interface UserData {
     bookname: string[];
     DeathInfo: { agree: boolean, answer1: string, answer2: string, answer3: string, answer4: string, answer5: string };
     UsersInfo: { give: UserGiveInfo[], get: UserGiveInfo[] };
+    imageUri: string;
 }
 
 
@@ -257,4 +259,25 @@ export const getUsers = async () => {
     let data : UserData[] = response.data;
 
     return data;
+}
+
+export interface UserProfile {
+    username: string;
+    imageUri: string;
+    name: string;
+    birthYear: number;
+    birthMonth: number;
+    birthDate: number;
+    sex: 'male' | 'female';
+}
+
+export const setProfile = async (data: UserProfile) => {
+    let response = await Axios.put(`${apiAddress}/user/profile`, {
+        data
+    }, { withCredentials: true});
+    
+    await setUserInfo();
+
+    if (response.status !== 200) throw response.data;
+    else return response.data;
 }

@@ -14,7 +14,7 @@ import { RootReducer } from '../store';
 import MementoBook from '../components/MementoBook';
 
 
-import { MementoLogo, UserImage, EditVector, leftVector, rightVector } from '../img/Vectors';
+import { MementoLogo, UserImage, EditVector, leftVector, rightVector, PlusVector } from '../img/Vectors';
 import { imageUrl } from '../etc/config';
 import { getContents } from '../etc/api/content';
 import Contentbox from '../components/Contentbox';
@@ -26,6 +26,16 @@ interface EntryType {
     message: string;
     validate: () => boolean | PromiseLike<boolean>;
 }
+
+
+let checkBatchim = (word: string) => {
+    let lastLetter = word[word.length - 1];
+    let uni = lastLetter.charCodeAt(0);
+
+    if((uni < 44032) || (uni > 55203)) return;
+
+    return ((uni - 44032) % 28 !== 0);
+};
 
 
 function Mypage() {
@@ -131,6 +141,8 @@ function Mypage() {
         setEmailMessage('');
         return true;
     }
+
+    let [imageUri, setImageUri] = React.useState<string>('');
 
 
     let validateAll = async () => {
@@ -305,7 +317,7 @@ function Mypage() {
                         if (await modifyUserInfo({
                             username: user.user!.username, 
                             password: password, 
-                            name, birthYear, birthMonth, birthDate, sex, email, 
+                            name, birthYear, birthMonth, birthDate, sex, email, imageUri 
                         })) {
                             setEditing(false);
                         }
@@ -487,6 +499,191 @@ function Mypage() {
         )
     }, [DeathInfo]);
 
+    let [modifynumber, setModifyNumber] = React.useState<number>(0);
+
+    let ModifyContent = React.useMemo(() => {
+        switch(modifynumber) {
+            case 0:
+                return  (
+                    <div className="ModifyContent">
+                        <div className="imageContainer">
+                            <img src={user.user?.imageUri} alt="" className="profile" />
+                            {user.user?.imageUri === '' && <>
+                                <div className="addContainer">
+                                    {PlusVector}
+                                </div>
+                                <div className="text NS px12 ">나의 기본 사진 추가하기</div>
+                            </>}
+                        </div>
+                        <div className="InfoContainer">
+                            <div className="element">
+                                <div className="title">성함</div>
+                                <input type="text" value = {name} onChange = {(e) => setName(e.target.value)} style = {{width: '177px'}}/>
+                            </div>
+                            <div className="element" style = {{marginLeft: '27px'}}>
+                                <div className="checkbox" onClick = {() => setSex('male')}>
+                                    <div className={sex === 'male' ? "checked" : ''}></div>
+                                </div>
+                                <span className="subtitle">남성</span>
+                                <div className="checkbox" onClick = {() => setSex('female')}>
+                                    <div className={sex === 'female' ? "checked" : ''}></div>
+                                </div>
+                                <span className="subtitle">여성</span>
+                            </div>
+                            <div className="element">
+                                <div className="title">생년월일</div>
+                                <input type="text" className="name" value = {birthYear} onChange = {(e) => setBirthYear(Number.parseInt(e.target.value))} style = {{width: '89px'}}/>  
+                                <div className="subtitle">년</div>
+                                <input type="text" className="name" value = {birthMonth} onChange = {(e) => setBirthMonth(Number.parseInt(e.target.value))} style = {{width: '51px'}}/>  
+                                <div className="subtitle">월</div>
+                                <input type="text" className="name" value = {birthDate} onChange = {(e) => setBirthDate(Number.parseInt(e.target.value))} style = {{width: '51px'}}/>  
+                                <div className="subtitle">일</div>
+                            </div>
+                        </div>
+                        <button className="submit" onClick={async (e) => { 
+                            e.preventDefault();
+                            if (!await validateAll()) {
+                                console.log('asd');
+                                return false;
+                            }
+                            if (await modifyUserInfo({
+                                username: user.user!.username, 
+                                password: password, 
+                                name, birthYear, birthMonth, birthDate, sex, email, imageUri
+                            })) {
+                                setEditing(false);
+                            }
+                        }}>저장하기</button>
+                    </div>
+                )
+            case 1:
+                return (
+                    <div className="ModifyContent"style = {{justifyContent: 'center'}}>
+                        <div className="InfoContainer type2" style = {{marginTop: '92px'}}>
+                            <div className="element">
+                                <div className="title" >아이디</div>
+                                <input type="text" value = {user.user?.username} readOnly style = {{width: '130px'}}/>
+                            </div>
+                            <div className="element">
+                                { user.user?.kakaoId 
+                                    ? <button className = 'connected'>카카오 연동됨</button>
+                                    : <KakaoLogin 
+                                        token={kakaoJskey}
+                                        onSuccess={async (result) => {
+                                            const token = result.response.access_token;
+                                            const id = result.profile?.id;
+                                            if (!id) return;
+                                            
+                                            await oauthConnect('kakao', id.toString(), token);
+                                        }}
+                                        onFail={(result) => console.log(result)}     
+                                        onLogout={(result) => console.log(result)}   
+                                        render={(props) => <button onClick={(e) => { e.preventDefault(); props.onClick(); }}> 카카오 연동 </button>}
+                                    />
+                                }
+                            </div>
+                            <div className="element">
+                                { user.user?.googleId 
+                                    ? <button className = 'connected'>구글 연동됨</button> 
+                                    : <GoogleLogin
+                                        clientId={googleClientId}
+                                        onSuccess={async (result) => {
+                                            if (result.code) return;
+                                            
+                                            const token = (result as GoogleLoginResponse).tokenId;
+                                            const id = (result as GoogleLoginResponse).googleId;
+                    
+                                            await oauthConnect('google', id, token);
+                                        }}
+                                        onFailure={(result) => console.log(result)}
+                                        render={(props) => <button onClick={(e) => { e.preventDefault(); props.onClick(); }}> 구글 연동 </button>}
+                                    />
+                                }
+                            </div>
+                            <div className="element">
+                                <div className="title">휴대폰 번호</div>
+                                <input type="text" value = {'0' + user.user?.cellphone.slice(3)} readOnly style = {{width: '410px'}}/>
+                            </div>
+                            <div className="element">
+                                <div className="title">이메일 주소</div>
+                                <input type="text" value = {email} onChange = {(e) => setEmail(e.target.value)}style = {{width: '410px'}} />
+                            </div>
+                        </div>
+                        <button className="submit" onClick={async (e) => { 
+                            e.preventDefault();
+                            if (!await validateAll()) {
+                                console.log('asd');
+                                return false;
+                            }
+                            if (await modifyUserInfo({
+                                username: user.user!.username, 
+                                password: password, 
+                                name, birthYear, birthMonth, birthDate, sex, email, imageUri
+                            })) {
+                                setEditing(false);
+                            }
+                        }}>저장하기</button>
+                    </div>
+                )
+            case 2: 
+                return (
+                    <div className="ModifyContent"style = {{justifyContent: 'center'}}>
+                        <div className="InfoContainer type2" style = {{marginTop: '92px'}}>
+                            <div className="element">
+                                <div className="title" >현재 비밀번호</div>
+                                <input type="password" value = {oldPassword} onChange = {(e) => setOldPassword(e.target.value)} style = {{width: '410px'}} placeholder = '현재 비밀번호를 입력해주십시오'/>
+                            </div>
+                            <div className="element">
+                                <div className="title">변경할 비밀번호</div>
+                                <input type="password" value = {password} onChange = {(e) => setPassword(e.target.value)} style = {{width: '410px'}} placeholder = '변경하고 싶은 비밀번호를 입력해주세요.'/>
+                            </div>
+                            <div className="element">
+                                <div className="title">비밀번호 확인</div>
+                                <input type="password" value = {passwordConfirm} onChange = {(e) => setPasswordConfirm(e.target.value)}style = {{width: '410px'}} placeholder = '위의 비밀번호와 동일한 비밀번호를 입력해주세요.'/>
+                            </div>
+                        </div>
+                        <button className="submit" onClick={async (e) => { 
+                            e.preventDefault();
+                            if (!await validateAll()) {
+                                console.log('asd');
+                                return false;
+                            }
+                            if (await modifyUserInfo({
+                                username: user.user!.username, 
+                                password: password, 
+                                name, birthYear, birthMonth, birthDate, sex, email, imageUri
+                            })) {
+                                setEditing(false);
+                            }
+                        }}>저장하기</button>
+                    </div>
+                )
+        }
+    }, [modifynumber, name, sex, birthYear, birthMonth, birthDate, email, oldPassword, password, passwordConfirm]);
+    
+
+    let ModifyInfo = React.useMemo(() => {
+        return (
+            <>
+            <div className="ModifyContainer margin_base">
+                <img src={imageUrl('ModifyBackground.png')} alt="" className = 'background'/>
+                <div className="ModifySelectContainer NS px15 line25 op8 bold">
+                    <div>
+                        <span style = {{opacity: (modifynumber === 0 ? '0.8' : '0.3')}}onClick = {() => setModifyNumber(0)}>기본정보</span>
+                    </div>
+                    <div>
+                        <span style = {{opacity: (modifynumber === 1 ? '0.8' : '0.3')}}onClick = {() => setModifyNumber(1)}>계정정보</span>
+                    </div>
+                    <div>
+                        <span style = {{opacity: (modifynumber === 2 ? '0.8' : '0.3')}}onClick = {() => setModifyNumber(2)}>비밀번호 변경</span>
+                    </div>
+                </div>
+                {ModifyContent}
+            </div>
+            </>
+        )
+    }, [modifynumber, ModifyContent]);
+
     React.useEffect(() => {
         if(!user) return;
         if(!user.user?.DeathInfo) return;
@@ -513,7 +710,7 @@ function Mypage() {
                                     <div className="namephone NS px15 line25 bold op6">{giveuser?.name + ' / 0' + giveuser?.cellphone.slice(3, 5) + '-' + giveuser?.cellphone.slice(5, 9) + '-' + giveuser?.cellphone.slice(9, 13)}</div>
                                     <div className="email NS px15 line25 bold op6">{giveuser?.email}</div>
                                 </div> : <>
-                                    <div className="email NS px15 line25 bold op6" style ={{width: '230px'}}>{giveuser?.name + '의 승인을 대기중입니다.'}</div>
+                                    <div className="email NS px15 line25 bold op6" style ={{width: '230px', letterSpacing: '0em'}}>{giveuser?.name + '님의 승인을 대기중입니다.'}</div>
                                 </>}
                             </div>
                         );
@@ -553,68 +750,69 @@ function Mypage() {
                 <div className="mixblend" style = {{background: 'rgba(230, 229, 226, 1)',mixBlendMode: 'soft-light', width: '100%', height: '223px', position: 'absolute', top: '0px'}}></div>
                 <div className="MementoLogo" style = {{margin: '88px 0px 0px calc(50% - 205px/2)'}}>{MementoLogo}</div>
             </div>
-            {!editing && <>
-                <div className="block">
-                    <div className="UserInfo margin_base">
-                        <div className="element"><div className="UserImage">{UserImage}</div></div>
-                        <div className="element">
-                            <div className="UserData">
-                                <div className="namephone NS px15 line25 bold op6">{user.user?.name + ' / 0' + user.user?.cellphone.slice(3, 5) + '-' + user.user?.cellphone.slice(5, 9) + '-' + user.user?.cellphone.slice(9, 13)}</div>
-                                <div className="email NS px15 line25 bold op6">{user.user?.email}</div>
-                                <button className="Edit" onClick = {(e) => {
-                                    e.preventDefault(); 
-                                    setEditing(true);
-                                    setBirthYear(user.user!.birthYear);
-                                    setBirthMonth(user.user!.birthMonth);
-                                    setBirthDate(user.user!.birthDate);
-                                    setEmail(user.user!.email);
-                                    setName(user.user!.name);
-                                    setSex(user.user!.sex);
-                                }}>{EditVector}</button>
-                            </div>
+            <div className="block">
+                <div className="UserInfo margin_base">
+                    <div className="element"><div className="UserImage">{UserImage}</div></div>
+                    <div className="element">
+                        <div className="UserData">
+                            <div className="namephone NS px15 line25 bold op6">{user.user?.name + ' / 0' + user.user?.cellphone.slice(3, 5) + '-' + user.user?.cellphone.slice(5, 9) + '-' + user.user?.cellphone.slice(9, 13)}</div>
+                            <div className="email NS px15 line25 bold op6">{user.user?.email}</div>
+                            <button className="Edit" onClick = {(e) => {
+                                e.preventDefault(); 
+                                setEditing(!editing);
+                                setBirthYear(user.user!.birthYear);
+                                setBirthMonth(user.user!.birthMonth);
+                                setBirthDate(user.user!.birthDate);
+                                setEmail(user.user!.email);
+                                setName(user.user!.name);
+                                setSex(user.user!.sex);
+                                setImageUri(user.user!.imageUri);
+                            }}>{EditVector}</button>
                         </div>
-                        <div className="element">
-                            <div className="text GB px20 line40" style = {{marginTop: '94px', textAlign: 'center'}}>건강한 서비스 이용을 위한 생명 존중 서약</div>
-                        </div>
-                        <div className="text GB px15 line40 op7" style = {{marginTop: '54px', textAlign: 'center'}}>
-                            <div>나는 유언을 작성, 전달, 사용하는 과정에서 절대로 자해나 자살을 시도하지 않을 것을 서약합니다. </div>
-                            <div>자살하고 싶은 생각이 들면 반드시 주위 사람에게 도움을 청하거나, 중앙자살예방센터(1393), </div>
-                            <div>한국생명의 전화(1588-9191) 등으로 전화를 걸어 도움을 요청하겠습니다.</div>
-                        </div>
-                        <div className="element">
-                            <div className="AgreeContainer" onClick = {() => {setAgree(true); setDeathInfo({...DeathInfo, agree: true})}}>
-                                {!agree && <>
-                                    <div className="NS px12 bold">네 이해하고 동의합니다.</div>
-                                    <button className="agree"></button>
-                                </>}
-                                {agree && <div className="NS px12 bold op3">{`네, 저 ${user.user?.name}은(는) 위와 같이 서약합니다.`}</div>}
-                            </div>
+                    </div>
+                    {editing && ModifyInfo}
+                    <div className="element">
+                        <div className="text GB px20 line40" style = {{marginTop: '94px', textAlign: 'center'}}>건강한 서비스 이용을 위한 생명 존중 서약</div>
+                    </div>
+                    <div className="text GB px15 line40 op7" style = {{marginTop: '54px', textAlign: 'center'}}>
+                        <div>나는 유언을 작성, 전달, 사용하는 과정에서 절대로 자해나 자살을 시도하지 않을 것을 서약합니다. </div>
+                        <div>자살하고 싶은 생각이 들면 반드시 주위 사람에게 도움을 청하거나, 중앙자살예방센터(1393), </div>
+                        <div>한국생명의 전화(1588-9191) 등으로 전화를 걸어 도움을 요청하겠습니다.</div>
+                    </div>
+                    <div className="element">
+                        <div className="AgreeContainer" onClick = {() => {setAgree(true); setDeathInfo({...DeathInfo, agree: true})}}>
+                            {!agree && <>
+                                <div className="NS px12 bold">네 이해하고 동의합니다.</div>
+                                <button className="agree"></button>
+                            </>}
+                            {agree && <div className="NS px12 bold op3">{`네, 저 ${user.user?.name + ((!(!user || !user.user) && checkBatchim(String(user.user.name))) ? '은' : '는')} 위와 같이 서약합니다.`}</div>}
                         </div>
                     </div>
                 </div>
-                <div className="block">
-                    <div className="DeathInfo margin_base">
-                        <img src={imageUrl('MyPageBackground.png')} alt="" className = 'background'/>
-                        <div className="title GB px25 line40">나의 사전 장례 & 연명의료, 장기기증 의향서</div>
-                        <div className="detail NS px15 line30">
-                            <div>급박한 상황이 생겼을 때, 스스로의 자기결정권을 실현할 수 있는 질문들입니다. </div>
-                            <div>작성하신 답변은 사망 전에도 열람할 수 있는 오픈프로필에 반영됩니다.</div>
-                        </div>
-                        <div className="vector" style = {{marginTop: '43px'}}></div>
-                        <div className = 'type_container'>
-                        </div>
-                        {Questions}
-                        <div className="vector" style = {{marginTop: '70px'}}></div>
-                        <button className="submit NS px18 bold" onClick = {async () => {
-                            console.log(DeathInfo);
-                            if(DeathInfo.answer1 === '' || DeathInfo.answer2 === '' || DeathInfo.answer3 === '' || DeathInfo.answer4 === '' || DeathInfo.answer5 === '') alert('모든 항목을 채워주세요');
-                            else if(await setUserDeathInfo(user.user!.username, DeathInfo))
-                                alert('저장되었습니다');
-                            else alert('실패하였습니다');
-                        }}>저장하기</button>
+            </div>
+            <div className="block">
+                <div className="DeathInfo margin_base">
+                    <img src={imageUrl('MyPageBackground.png')} alt="" className = 'background'/>
+                    <div className="title GB px25 line40">나의 사전 장례 & 연명의료, 장기기증 의향서</div>
+                    <div className="detail NS px15 line30">
+                        <div>급박한 상황이 생겼을 때, 스스로의 자기결정권을 실현할 수 있는 질문들입니다. </div>
+                        <div>작성하신 답변은 사망 전에도 열람할 수 있는 오픈프로필에 반영됩니다.</div>
                     </div>
+                    <div className="vector" style = {{marginTop: '43px'}}></div>
+                    <div className = 'type_container'>
+                    </div>
+                    {Questions}
+                    <div className="vector" style = {{marginTop: '70px'}}></div>
+                    <button className="submit NS px18 bold" onClick = {async () => {
+                        console.log(DeathInfo);
+                        if(DeathInfo.answer1 === '' || DeathInfo.answer2 === '' || DeathInfo.answer3 === '' || DeathInfo.answer4 === '' || DeathInfo.answer5 === '') alert('모든 항목을 채워주세요');
+                        else if(await setUserDeathInfo(user.user!.username, DeathInfo))
+                            alert('저장되었습니다');
+                        else alert('실패하였습니다');
+                    }}>저장하기</button>
                 </div>
-                <div className="block" style = {{overflow: 'hidden'}}>
+            </div>
+            <div className="block" style = {{overflow: 'hidden'}}>
                 <div className="UsersInfo margin_base">
                     <div className="element">
                         <div className="title GB px20 line40">나에게 남긴, 그리고 내가 남긴 기록들</div>
@@ -641,7 +839,6 @@ function Mypage() {
                     </div>
                 </div>
             </div>
-            </>}{ editing && content }
             {false && <div className="block" style = {{overflow: 'hidden'}}>
                 <div className="contents_bookmark margin_base" style = {{marginTop: '115px', textAlign: 'center', paddingBottom: '105px'}}>
                     <div className="title GB px20 line40">당신을 의미있게 만들어준 책갈피</div>

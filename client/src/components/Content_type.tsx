@@ -178,8 +178,8 @@ function Content_type (props : Props) {
               <div className = 'cover'>
                   <img className = 'cover_image' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '266px', height: '432px', objectFit: 'cover', borderRadius: '5px'}}/>
                   <div className = 'cover_blur' />
-                  <div className = 'detail GB px14 op6'>책의 한줄</div>
-                  <div className = 'title GB px20 op9 line40'>{content.detail.oneline}</div>
+                  <div className = 'detail GB px14 op6'>책의 제목</div>
+                  <div className = 'title GB px20 op9 line40'>{content.title}</div>
                   <div className = 'date GB px14 op9'>{'영상제작일 : ' + String(parseDate(new Date(Number(content.date))))}</div>
                   <div className = 'tag GB px14 op6'>{content.tag}</div>
                   <div className={"vector_container like" + (liked ? ' liked' : '')} onClick = {user.loggedIn ? async () => {

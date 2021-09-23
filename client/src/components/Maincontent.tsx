@@ -1,27 +1,23 @@
 import React from 'react';
 import { imageUrl } from '../etc/config';
-import { getContents, Content } from '../etc/api/content';
+import { getContents, Content, content_userdata } from '../etc/api/content';
 import { getComments } from '../etc/api/comment';
 import usePromise from '../etc/usePromise';
 import { Link } from 'react-router-dom';
 
 import { MementoMainVector, MementoNoteVector, MementoBookVector, MementoContentVector, MementoMakeBookVector, MementoTogetherNoteVector, LeftVector2, RightVector2, RightVector, LeftArrowVector, RightArrowVector, Colon, like_vector, MementoDotVector, leftVector, rightVector } from '../img/Vectors';
 import { parseDate } from '../etc';
-
-let content_type_eng = ['book', 'book', 'book'];
-let content_name = ['어쩌구 저쩌구 어쩌구 저쩌구 어쩌구 저쩌구어쩌구 저쩌저쩌구어쩌구저쩌구어쩌구', 'ㅂㅈㄷ', 'ㅋㅌㅍ'];
-let content_tag = ['1', '2', '3'];
-let content_like = ['12', '3', '123'];
-let content_detail = [`어쩌구 저쩌구`,`어쩌구 저쩌구`,`어쩌구 저쩌구`,`어쩌구 저쩌구`,`어쩌구 저쩌구`,`어쩌구 저쩌구`,`어쩌구 저쩌구`];
-let memento_brand_text = `메멘토는 단순하고 쉬운 솔루션과 가이드를 통한, 유언 작성 및 전달 서비스를 제공하는 브랜드로
-‘모든 사람이 죽음을 준비할 수 있는 사회와 문화’를 만들어 나갑니다.`;
+import { useSelector } from 'react-redux';
+import { RootReducer } from '../store';
 
 function Maincontent() {
+    let user = useSelector((state: RootReducer) => state.user);
     let [, AllContents] = usePromise(getContents);
     let [, AllComments] = usePromise(getComments);
-    let [total_content_number, settotal_content_number] = React.useState<number>(6);
     let [review_number, setreview_number] = React.useState<number>(1);
     let [total_review_number, settotal_review_number] = React.useState<number>(6);
+    let [userdata, setUserdata] = React.useState<{ likes: string[], bookmark: string[], read: string[] }>({ likes: [], bookmark: [], read: [] });
+    let [liked, setLiked] = React.useState<boolean>(false);
 
     let [ContentCategory, setContentCategory] = React.useState<number>(0);
 
@@ -106,6 +102,17 @@ function Maincontent() {
         if(!newContents) return;
         return newContents[newContentNumber];
     }, [newContents, newContentNumber]);
+
+    React.useEffect(() => {
+        if(!newContent) return;
+        setUserdata(newContent.userdata);
+        if(user.loggedIn) {
+            setLiked(newContent?.userdata.likes.find((username) => (username === user.user!.username)) ? true : false );
+          } else {
+            setLiked(false);
+          }
+    }, [newContent]);
+
     let PopularContents = React.useMemo(() => ContentCategorySelected.allcontents?.filter((content, key) => key < 9), [ContentCategorySelected]);
     let PopularContent = React.useMemo(() => {
         if(!PopularContents) return;
@@ -163,7 +170,17 @@ function Maincontent() {
                             </div>
                             <div className="CoverContainer">
                                 {Colon}
-                                <button className="likeContainer">
+                                <button className={"likeContainer" + (liked ? ' liked' : '')} onClick = {user.loggedIn ? async () => {    let new_userdata = userdata;
+                                        if(userdata.likes.find((username) => (username === user.user!.username))) {
+                                        new_userdata.likes.splice(Number(userdata.likes.find((username) => (username === user.user!.username))), 1);
+                                        }
+                                        else {
+                                        new_userdata.likes.push(user.user!.username);
+                                        }
+                                        setUserdata(new_userdata);
+                                        setLiked(!liked);
+                                        await content_userdata(Number(newContent?.id), new_userdata);
+                                    } : () => {}}>
                                     {like_vector}
                                     <div className="text NS px12 bold">{newContent?.userdata.likes.length}</div>
                                 </button>
@@ -177,8 +194,8 @@ function Maincontent() {
                         <div className="titleContainer">
                             <div className="title GB px16 bold">{`'${ContentCategorySelected.name}' 인기 컨텐츠`}</div>
                         </div>
-                        <div className="contentContainer" style = {{marginTop: '30px', transform: `translateX(${(-412 * popularContentNumber) + 'px'})`}}>
-                            <div className="vector" style = {{width: '100vw', height: '1px', background: 'rgba(39, 57, 47, 0.2)', position: 'absolute', top: '281px', left: 'calc(50% - 50vw)', zIndex: -3}}></div>
+                        <div className="contentContainer" style = {{marginTop: '30px', transform: `translateX(${(-412 * popularContentNumber) + 'px'})`, width: `${(412 * PopularContents?.length + 1000) + 'px'}`}}>
+                            <div className="vector" style = {{width: '100%', height: '1px', background: 'rgba(39, 57, 47, 0.2)', position: 'absolute', top: '281px', left: 'calc((678px - 412px) - 1000px)', zIndex: -3}}></div>
                             {PopularContents && PopularContents.map((content, key) => {
                                 return (
                                     <div className="contentElement" >
@@ -207,7 +224,7 @@ function Maincontent() {
                 </div>
             </>
         );
-    }, [ContentCategory, MementoContentCategoryArray, newContentNumber, newContent, PopularContents, PopularContent]);
+    }, [ContentCategory, MementoContentCategoryArray, newContentNumber, newContent, PopularContents, PopularContent, userdata, liked]);
 
     let comment_content = React.useRef<any>(null);
     let LinkCommentContent = () => {comment_content.current.click()};

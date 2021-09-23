@@ -514,7 +514,7 @@ Cherish your memories, memento`,
               <div className="circle" style = {{marginLeft: '4px', boxSizing: 'content-box'}}></div>
               <div className="circle"></div>
               <div className="circle" style = {{marginRight: '4px', boxSizing: 'content-box'}}></div>
-              <div className="pageContainer" style ={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '14px', top: '7px', position: 'absolute', left: `${pageNumber/(Number(written_questions_added?.length) - 1) * 407+ 'px'}`}}>
+              <div className="pageContainer" style ={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '14px', top: '7px', position: 'absolute', left: `${pageNumber/(Number(written_questions_added?.length) - 1) * 407+ 'px'}`, transition: 'all 0.5s ease-in-out'}}>
                 <div className="Big circle"></div>
                 <div className="number NS px12 bold line25 op3" style = {{margin: '4px', color: 'rgba(103, 116, 109, 1)', textAlign: 'center'}} >{pageNumber + 1}</div>
               </div>
@@ -701,9 +701,9 @@ Cherish your memories, memento`,
                         let newUsersGive = UsersGive.concat([{username: giveuser.username, name: giveuser.name, phonenumber: giveuser.cellphone, accept: 0}]);
                         setUsersGive(newUsersGive);
                         if(method === 0) {
-                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) console.log('asd');
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) alert('죄송합니다. 현재 메세지 전송이 원할하지 않습니다. 이메일 전송 혹은 카카오톡 전송을 이용해주세요.');
                         } else {
-                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) console.log('asd');
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) alert('전송이 완료되었습니다');
                         }
                         
                         if (await setUsers(giveuser.username, {...giveuser.UsersInfo, get: giveuser.UsersInfo.get.concat([{username: user.user!.username, name: user.user!.name, phonenumber: user.user!.cellphone, accept: 0}])}, 0, false, name)) console.log('dfgh');
@@ -712,9 +712,9 @@ Cherish your memories, memento`,
                         let newUsersGive = UsersGive.concat([{username: '', name: giveusername, phonenumber: ('+82' + giveuserphonenumber.slice(1, 11)), accept: 0}]);
                         setUsersGive(newUsersGive);
                         if(method === 0) {
-                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) console.log('qwe');
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) alert('죄송합니다. 현재 메세지 전송이 원할하지 않습니다. 이메일 전송 혹은 카카오톡 전송을 이용해주세요.');
                         } else {
-                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) console.log('qwe');
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) alert('전송이 완료되었습니다');
                         }
                       }
                       if(method === 2) {

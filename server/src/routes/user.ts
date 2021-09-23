@@ -52,7 +52,7 @@ const signupRateLimiter2 = rateLimiter({
 // Allow 20 message queries per 1 day
 const SNSRateLimiter = rateLimiter({
     windowMs: 24 * 60 * 1000,
-    max: 20,
+    max: 100,
     message: "Cannot send more than 20 messages with SNS in a day",
 });
 
@@ -312,7 +312,6 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
     })
 
     const sendSMS = async (message: string, phoneNumber: string) => {
-        console.log('asd');
         await sns.publish({
             Message: message,
             PhoneNumber: phoneNumber,
@@ -328,7 +327,12 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
             createdAt: new Date().getTime(),
         };
 
-        await sendSMS(`[메멘토] 가입해주셔서 감사합니다. 인증번호는 ${code}입니다.`, phoneNumber);
+        try {
+            let data = await sendSMS(`[메멘토] 가입해주셔서 감사합니다. 인증번호는 ${code}입니다.`, phoneNumber);
+            console.log("Success", data);
+        } catch (err: any) {
+            console.log("Failed", err.stack);
+        }
 
         res.sendStatus(200);
     });
@@ -419,6 +423,28 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         res.json(result);
         res.end();
     });
+
+    router.put('/profile', async (req, res) => {
+        let user = req.user!;
+        let username: string = req.body.username;
+
+        if (!await User.findOne({ username })) return res.sendStatus(500);
+
+        let imageUri = req.body.imageUri;
+        let name = req.body.name;
+        let sex = req.body.sex;
+        let birthYear = req.body.birthYear;
+        let birthMonth = req.body.birthMonth;
+        let birthDate = req.body.birthDate;
+
+        if (user.username !== username) return res.sendStatus(401);
+
+        await User.findOneAndUpdate({ username: username }, {
+            imageUri, name, sex, birthYear, birthMonth, birthDate
+        })
+
+        res.send(200);
+    })
 
     return router;
 };

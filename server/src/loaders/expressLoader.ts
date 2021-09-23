@@ -6,14 +6,14 @@ import rateLimiter from 'express-rate-limit';
 // Allow 300 requests per IP per 10 minutes
 const globalRateLimiter = rateLimiter({
     windowMs: 10 * 60 * 1000,
-    max: 300,
+    max: 3000,
     message: "This IP has been temporally inactivated in order to prevent DOS attack.",
 });
 
 // Allow 5 POST requests per IP per 30 seconds
 const postRateLimiter = rateLimiter({
     windowMs: 30 * 1000,
-    max: 5,
+    max: 50,
     message: "This IP has been temporally inactivated in order to prevent DOS attack.",
 });
 

@@ -60,6 +60,9 @@ function Main() {
                     <div style = {{width: '50px', height: '30px'}}> </div>
                     <div>메멘토를 향한 여러분의 관심에</div>
                     <div>더욱 편리한 서비스로 보답하겠습니다. 감사합니다.</div>
+                    <div>죄송합니다. 현재 회원가입시 인증번호 전송에</div>
+                    <div>오류가 발생하였습니다.</div>
+                    <div>빠른 시일 내에 고치도록 하겠습니다.</div>
                 </div>
                 <Link to ={'/signup'}><button className = 'NS bold px14 whiteop10'>회원가입</button></Link>
             </div>
@@ -70,6 +73,11 @@ function Main() {
             <Header additionalClass='' />
             {!quit && <div className="TopBar white NS px13 bold whiteop10" style = {{width: '100vw', height: '56px', background: 'rgba(191, 196, 193, 1)', display: 'flex', alignItems: 'center'}}>
                 <div style = {{width: '1032px', left: 'calc(50% - 1032px/2)'}}>{'최적화된 서비스를 위하여 크롬(Chrome) 브라우저를 이용해주세요!'}
+                <img src = {imageUrl('NotePage/quit_vector.svg')} style = {{position: 'absolute', right: '0px', top: '0px', width: '12.5px', height: '12.5px'}} onClick = {() => setQuit(true)}/>
+                </div>
+            </div>}
+            {!quit && <div className="TopBar white NS px13 bold whiteop10" style = {{width: '100vw', height: '56px', background: 'rgba(191, 196, 193, 1)', display: 'flex', alignItems: 'center'}}>
+                <div style = {{width: '1032px', left: 'calc(50% - 1032px/2)'}}>{'죄송합니다. 현재 회원가입 시 인증번호 전송에 오류가 발생하였습니다. 빠른 시일 내에 고치도록 하겠습니다.'}
                 <img src = {imageUrl('NotePage/quit_vector.svg')} style = {{position: 'absolute', right: '0px', top: '0px', width: '12.5px', height: '12.5px'}} onClick = {() => setQuit(true)}/>
                 </div>
             </div>}

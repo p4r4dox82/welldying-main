@@ -443,6 +443,11 @@ div.main_display {
               div {
                 width: 30px;
               }
+              &.liked {
+                svg {
+                  fill: rgba(39, 57, 47, 1);
+                }
+              }
             }
             div.type {
               margin-top: 10px;

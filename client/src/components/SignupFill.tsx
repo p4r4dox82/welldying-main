@@ -1,7 +1,9 @@
 import React from 'react';
-import { register, checkUsernameDuplicate, verifyPhone, verifyPhoneCheck, checkCellphoneDuplicate } from '../etc/api/user';
+import { register, checkUsernameDuplicate, verifyPhone, verifyPhoneCheck, checkCellphoneDuplicate, setUsers, getUsers, UserGiveInfo } from '../etc/api/user';
 import { SignupInfo1, SignupInfo2 } from '../pages/Signup';
 import { isMobile } from 'react-device-detect';
+import usePromise from '../etc/usePromise';
+import { UserInfo, userInfo } from 'os';
 
 interface EntryType {
     name: string;
@@ -19,6 +21,7 @@ const contentShower = ['아버지', '어머니', '조부모님', '형제/자매'
 export type ShowContentType = { [k in typeof contentShower[number]]: boolean };
 
 function SignupFill({ givenInfo, proceed } : Props) {
+    let [, allUsers] = usePromise(getUsers);
 
     React.useEffect(() => {
         window.scrollTo(0, 0);
@@ -118,8 +121,8 @@ function SignupFill({ givenInfo, proceed } : Props) {
     let [emailMessage, setEmailMessage] = React.useState('');
     let validateEmail = () => {
         if (!email) {
-            setEmailMessage('');
-            return true;
+            setEmailMessage('이메일을 입력해주세요');
+            return false;
         }
 
         const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -406,6 +409,19 @@ function SignupFill({ givenInfo, proceed } : Props) {
                     showContent,
                 })) {
                     proceed({ name });
+                }
+                let giveUsers = allUsers.filter((user) => user.UsersInfo.give.find((userInfo) => userInfo.phonenumber === `+82${cellPhoneFront.slice(1)}${cellPhoneMiddle}${cellPhoneRear}`));
+                console.log(giveUsers);
+                if (giveUsers.length !== 0) {
+                    let getUserInfo: UserGiveInfo[] = [];
+                    giveUsers.forEach(async (user) => {
+                        getUserInfo.concat({ username: user.username, name: user.name, phonenumber: user.cellphone, accept: 0})
+                        let newgiveUserInfo = user.UsersInfo;
+                        let newgiveUserIndex = newgiveUserInfo.give.findIndex((UserInfo) => UserInfo.phonenumber === `+82${cellPhoneFront.slice(1)}${cellPhoneMiddle}${cellPhoneRear}`);
+                        newgiveUserInfo.give[newgiveUserIndex] = {...newgiveUserInfo.give[newgiveUserIndex], username: username };
+                        await setUsers(user.username, newgiveUserInfo, 0, false, '')
+                    })
+                    await setUsers(username, { give: [], get: getUserInfo }, 0, false, '')
                 }
             }}>
                 가입 완료
