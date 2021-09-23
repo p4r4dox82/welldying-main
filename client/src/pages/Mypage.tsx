@@ -142,6 +142,8 @@ function Mypage() {
         return true;
     }
 
+    let [imageUri, setImageUri] = React.useState<string>('');
+
 
     let validateAll = async () => {
         let result = true;
@@ -315,7 +317,7 @@ function Mypage() {
                         if (await modifyUserInfo({
                             username: user.user!.username, 
                             password: password, 
-                            name, birthYear, birthMonth, birthDate, sex, email, 
+                            name, birthYear, birthMonth, birthDate, sex, email, imageUri 
                         })) {
                             setEditing(false);
                         }
@@ -514,28 +516,150 @@ function Mypage() {
                             </>}
                         </div>
                         <div className="InfoContainer">
-                            
+                            <div className="element">
+                                <div className="title">성함</div>
+                                <input type="text" value = {name} onChange = {(e) => setName(e.target.value)} style = {{width: '177px'}}/>
+                            </div>
+                            <div className="element" style = {{marginLeft: '27px'}}>
+                                <div className="checkbox" onClick = {() => setSex('male')}>
+                                    <div className={sex === 'male' ? "checked" : ''}></div>
+                                </div>
+                                <span className="subtitle">남성</span>
+                                <div className="checkbox" onClick = {() => setSex('female')}>
+                                    <div className={sex === 'female' ? "checked" : ''}></div>
+                                </div>
+                                <span className="subtitle">여성</span>
+                            </div>
+                            <div className="element">
+                                <div className="title">생년월일</div>
+                                <input type="text" className="name" value = {birthYear} onChange = {(e) => setBirthYear(Number.parseInt(e.target.value))} style = {{width: '89px'}}/>  
+                                <div className="subtitle">년</div>
+                                <input type="text" className="name" value = {birthMonth} onChange = {(e) => setBirthMonth(Number.parseInt(e.target.value))} style = {{width: '51px'}}/>  
+                                <div className="subtitle">월</div>
+                                <input type="text" className="name" value = {birthDate} onChange = {(e) => setBirthDate(Number.parseInt(e.target.value))} style = {{width: '51px'}}/>  
+                                <div className="subtitle">일</div>
+                            </div>
                         </div>
+                        <button className="submit" onClick={async (e) => { 
+                            e.preventDefault();
+                            if (!await validateAll()) {
+                                console.log('asd');
+                                return false;
+                            }
+                            if (await modifyUserInfo({
+                                username: user.user!.username, 
+                                password: password, 
+                                name, birthYear, birthMonth, birthDate, sex, email, imageUri
+                            })) {
+                                setEditing(false);
+                            }
+                        }}>저장하기</button>
                     </div>
                 )
             case 1:
                 return (
-                    <div className="ModifyContent">
-                        <div className="imageContainer">
-                            <img src={user.user?.imageUri} alt="" className="Profile" />
+                    <div className="ModifyContent"style = {{justifyContent: 'center'}}>
+                        <div className="InfoContainer type2" style = {{marginTop: '92px'}}>
+                            <div className="element">
+                                <div className="title" >아이디</div>
+                                <input type="text" value = {user.user?.username} readOnly style = {{width: '130px'}}/>
+                            </div>
+                            <div className="element">
+                                { user.user?.kakaoId 
+                                    ? <button className = 'connected'>카카오 연동됨</button>
+                                    : <KakaoLogin 
+                                        token={kakaoJskey}
+                                        onSuccess={async (result) => {
+                                            const token = result.response.access_token;
+                                            const id = result.profile?.id;
+                                            if (!id) return;
+                                            
+                                            await oauthConnect('kakao', id.toString(), token);
+                                        }}
+                                        onFail={(result) => console.log(result)}     
+                                        onLogout={(result) => console.log(result)}   
+                                        render={(props) => <button onClick={(e) => { e.preventDefault(); props.onClick(); }}> 카카오 연동 </button>}
+                                    />
+                                }
+                            </div>
+                            <div className="element">
+                                { user.user?.googleId 
+                                    ? <button className = 'connected'>구글 연동됨</button> 
+                                    : <GoogleLogin
+                                        clientId={googleClientId}
+                                        onSuccess={async (result) => {
+                                            if (result.code) return;
+                                            
+                                            const token = (result as GoogleLoginResponse).tokenId;
+                                            const id = (result as GoogleLoginResponse).googleId;
+                    
+                                            await oauthConnect('google', id, token);
+                                        }}
+                                        onFailure={(result) => console.log(result)}
+                                        render={(props) => <button onClick={(e) => { e.preventDefault(); props.onClick(); }}> 구글 연동 </button>}
+                                    />
+                                }
+                            </div>
+                            <div className="element">
+                                <div className="title">휴대폰 번호</div>
+                                <input type="text" value = {'0' + user.user?.cellphone.slice(3)} readOnly style = {{width: '410px'}}/>
+                            </div>
+                            <div className="element">
+                                <div className="title">이메일 주소</div>
+                                <input type="text" value = {email} onChange = {(e) => setEmail(e.target.value)}style = {{width: '410px'}} />
+                            </div>
                         </div>
+                        <button className="submit" onClick={async (e) => { 
+                            e.preventDefault();
+                            if (!await validateAll()) {
+                                console.log('asd');
+                                return false;
+                            }
+                            if (await modifyUserInfo({
+                                username: user.user!.username, 
+                                password: password, 
+                                name, birthYear, birthMonth, birthDate, sex, email, imageUri
+                            })) {
+                                setEditing(false);
+                            }
+                        }}>저장하기</button>
                     </div>
                 )
             case 2: 
                 return (
-                    <div className="ModifyContent">
-                        <div className="imageContainer">
-                            <img src={user.user?.imageUri} alt="" className="Profile" />
+                    <div className="ModifyContent"style = {{justifyContent: 'center'}}>
+                        <div className="InfoContainer type2" style = {{marginTop: '92px'}}>
+                            <div className="element">
+                                <div className="title" >현재 비밀번호</div>
+                                <input type="password" value = {oldPassword} onChange = {(e) => setOldPassword(e.target.value)} style = {{width: '410px'}} placeholder = '현재 비밀번호를 입력해주십시오'/>
+                            </div>
+                            <div className="element">
+                                <div className="title">변경할 비밀번호</div>
+                                <input type="password" value = {password} onChange = {(e) => setPassword(e.target.value)} style = {{width: '410px'}} placeholder = '변경하고 싶은 비밀번호를 입력해주세요.'/>
+                            </div>
+                            <div className="element">
+                                <div className="title">비밀번호 확인</div>
+                                <input type="password" value = {passwordConfirm} onChange = {(e) => setPasswordConfirm(e.target.value)}style = {{width: '410px'}} placeholder = '위의 비밀번호와 동일한 비밀번호를 입력해주세요.'/>
+                            </div>
                         </div>
+                        <button className="submit" onClick={async (e) => { 
+                            e.preventDefault();
+                            if (!await validateAll()) {
+                                console.log('asd');
+                                return false;
+                            }
+                            if (await modifyUserInfo({
+                                username: user.user!.username, 
+                                password: password, 
+                                name, birthYear, birthMonth, birthDate, sex, email, imageUri
+                            })) {
+                                setEditing(false);
+                            }
+                        }}>저장하기</button>
                     </div>
                 )
         }
-    }, [modifynumber]);
+    }, [modifynumber, name, sex, birthYear, birthMonth, birthDate, email, oldPassword, password, passwordConfirm]);
     
 
     let ModifyInfo = React.useMemo(() => {
@@ -558,7 +682,7 @@ function Mypage() {
             </div>
             </>
         )
-    }, [modifynumber]);
+    }, [modifynumber, ModifyContent]);
 
     React.useEffect(() => {
         if(!user) return;
@@ -642,6 +766,7 @@ function Mypage() {
                                 setEmail(user.user!.email);
                                 setName(user.user!.name);
                                 setSex(user.user!.sex);
+                                setImageUri(user.user!.imageUri);
                             }}>{EditVector}</button>
                         </div>
                     </div>

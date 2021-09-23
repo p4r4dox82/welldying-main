@@ -61,6 +61,7 @@ interface UserPut {
     birthDate: number;
     sex: 'male' | 'female';
     email: string;
+    imageUri: string;
 }
 
 interface UserPassword {
