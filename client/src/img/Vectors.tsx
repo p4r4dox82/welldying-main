@@ -209,3 +209,24 @@ export const BookMarkVector = (
 </svg>
 
 );
+
+export const MainImageVector = (
+    <svg width="161" height="165" viewBox="0 0 161 165" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d)">
+<path d="M157.929 53.9187L157.928 53.9333V53.9479V77.5948C155.574 107.064 145.002 127.636 130.078 140.845C115.145 154.061 95.8053 159.948 75.8457 159.948C36.0118 159.948 3.20117 127.04 3.20117 87.0814C3.20117 67.1652 14.2953 50.1325 30.1643 36.2787C46.0275 22.4298 66.6085 11.8077 85.4466 4.72066C104.194 -1.15193 122.909 1.20999 136.628 9.99385C150.337 18.7709 159.098 33.9817 157.929 53.9187Z" stroke="#E6E5E2" shape-rendering="crispEdges"/>
+</g>
+<defs>
+<filter id="filter0_d" x="0.701172" y="0.992188" width="159.832" height="163.456" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="1"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.4 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+</defs>
+</svg>
+
+);
