@@ -571,10 +571,10 @@ Cherish your memories, memento`,
           </div>
           <div className = 'block note_book_page'>
               <div className = 'submenu_container'>
-                  <div className = 'searchContainer'>
+                  {false && <div className = 'searchContainer'>
                       <img src = {imageUrl('search_image.png')} />
                       <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)감동'/>
-                  </div>
+                  </div>}
                   <div className = 'button_container'>
                       <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} onClick = {() => setBlock(!block)}/>
                       <img className = 'order_button' src = {imageUrl('NotePage/sort_image.png')} onClick = {() => setOrderContainer(!orderContainer)}/>
@@ -701,7 +701,7 @@ Cherish your memories, memento`,
                         let newUsersGive = UsersGive.concat([{username: giveuser.username, name: giveuser.name, phonenumber: giveuser.cellphone, accept: 0}]);
                         setUsersGive(newUsersGive);
                         if(method === 0) {
-                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) alert('죄송합니다. 현재 메세지 전송이 원할하지 않습니다. 이메일 전송 혹은 카카오톡 전송을 이용해주세요.');
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) alert('전송이 완료되었습니다');
                         } else {
                           if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) alert('전송이 완료되었습니다');
                         }
@@ -712,7 +712,7 @@ Cherish your memories, memento`,
                         let newUsersGive = UsersGive.concat([{username: '', name: giveusername, phonenumber: ('+82' + giveuserphonenumber.slice(1, 11)), accept: 0}]);
                         setUsersGive(newUsersGive);
                         if(method === 0) {
-                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) alert('죄송합니다. 현재 메세지 전송이 원할하지 않습니다. 이메일 전송 혹은 카카오톡 전송을 이용해주세요.');
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) alert('전송이 완료되었습니다');
                         } else {
                           if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) alert('전송이 완료되었습니다');
                         }

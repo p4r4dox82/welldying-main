@@ -32,10 +32,10 @@ function ReadNotice({ match }: Props) {
             <div className = 'readnotice_page'>
                 <div className = 'submenu_container'>
                     <SubmenuContainer additionalClass = 'notice'/>
-                    <div className = 'searchContainer'>
+                    {false && <div className = 'searchContainer'>
                         <img src = {imageUrl('search_image.png')} alt = "profile"/>
                         <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)메멘토 이벤트'/>
-                    </div>
+                    </div>}
                 </div>
                 <div className = 'main_title'>
                 공지사항

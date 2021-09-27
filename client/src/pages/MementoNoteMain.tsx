@@ -161,19 +161,23 @@ function MementoNoteMain () {
                     </div>
                     <div className="text NS px12 bold line25" style = {{marginBottom: '14px'}}>기본형</div>
                     <div className = 'GiveUsersContainer'>
-                        {user.user?.UsersInfo.give.map((userinfo) => {
-                        let giveuser = AllUsers.find((user_) => user_.username === userinfo.username);
+                        {user.user?.UsersInfo.give.map((UserInfo) => {
+                        let giveuser = AllUsers.find((user_) => user_.username === UserInfo.username);
                         return (
-                            <div className="GiveUsersElement">
+                            (UserInfo.accept !== 2) && <div className="GiveUsersElement">
                                 <div className="UserImage">{UserImage}</div>
-                                <div className="namephone NS px15 line25 bold op6">{giveuser?.name + ' / 0' + giveuser?.cellphone.slice(3, 5) + '-' + giveuser?.cellphone.slice(5, 9) + '-' + giveuser?.cellphone.slice(9, 13)}</div>
-                                <div className="email NS px15 line25 bold op6">{giveuser?.email}</div>
+                                {(UserInfo.accept === 1) ? <div>
+                                    <div className="namephone NS px15 line25 bold op6">{giveuser?.name + ' / 0' + giveuser?.cellphone.slice(3, 5) + '-' + giveuser?.cellphone.slice(5, 9) + '-' + giveuser?.cellphone.slice(9, 13)}</div>
+                                    <div className="email NS px15 line25 bold op6">{giveuser?.email}</div>
+                                </div> : <>
+                                    <div className="email NS px13 line25 bold op6" style ={{width: '200px', letterSpacing: '0em'}}>{(giveuser?.name === undefined ? UserInfo.name : giveuser?.name )+ '님의 승인을 대기중입니다.'}</div>
+                                </>}
                             </div>
                         );
                         })}
-                        <div className="GiveUsersElement" style = {{padding: '35px 104px'}}>
+                        <div className="GiveUsersElement" style = {{padding: '0px 0px 0px 104px'}}>
                             <div className="plus">{PlusVector}</div>
-                            <div className="NS px15 line25 bold op6">노트 수령인 추가하기</div>
+                            <div className="NS px13 line25 bold op6" style = {{width: '200px'}}>노트 수령인 추가하기</div>
                         </div>
                     </div>
                     </>

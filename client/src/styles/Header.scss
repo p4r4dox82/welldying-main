@@ -368,8 +368,15 @@ footer {
         div.share_container {
           display: flex;
           justify-content: space-between;
-          margin-top:14px;
+          margin-top:6px;
           width:112px;
+        }
+        svg.MementoLogo {
+          width: 147px;
+          height: 34px;
+          path {
+            fill: rgba(255, 255, 255, 1);
+          }
         }
     }
     &.no_background {

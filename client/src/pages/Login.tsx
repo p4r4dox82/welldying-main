@@ -5,6 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { login, oauthLogin } from '../etc/api/user';
 import { googleClientId, imageUrl, kakaoJskey } from '../etc/config';
 import Footer from '../components/Footer';
+import { MementoLogo } from '../img/Vectors';
 
 
 function Login() {
@@ -37,7 +38,9 @@ function Login() {
             <div className = 'login_background_2' />
             <div className='loginForm'>
                 <Link to ='/'>
-                <img src = {imageUrl('mainLogo.png')} alt="profile"/>
+                    <div className="MementoLogo">
+                        {MementoLogo}
+                    </div>
                 </Link>
                 <form>
                     <input className='id' placeholder='아이디' autoComplete='username' onChange={(e) => setUsername(e.target.value)} value={username}/>

@@ -6,6 +6,7 @@ import { SignupInfo1, SignupInfo2 } from '../pages/Signup';
 import Footer from '../components/Footer';
 import { getUserid, getUser, modifyUserPassword } from '../etc/api/user';
 import usePromise from '../etc/usePromise';
+import { MementoLogo } from '../img/Vectors';
 
 interface EntryType {
     name: string;
@@ -164,7 +165,9 @@ function Findpassword() {
                     <div className = 'signup_form'>
                         <div className='signupLogo'>
                             <Link to ='/'>
-                                <img src = {imageUrl('mainLogo.png')} />
+                                <div className="MementoLogo">
+                                    {MementoLogo}
+                                </div>
                             </Link>
                         </div>
                         <div className = 'info'>

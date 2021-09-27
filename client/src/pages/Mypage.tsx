@@ -710,7 +710,7 @@ function Mypage() {
                                     <div className="namephone NS px15 line25 bold op6">{giveuser?.name + ' / 0' + giveuser?.cellphone.slice(3, 5) + '-' + giveuser?.cellphone.slice(5, 9) + '-' + giveuser?.cellphone.slice(9, 13)}</div>
                                     <div className="email NS px15 line25 bold op6">{giveuser?.email}</div>
                                 </div> : <>
-                                    <div className="email NS px15 line25 bold op6" style ={{width: '230px', letterSpacing: '0em'}}>{giveuser?.name + '님의 승인을 대기중입니다.'}</div>
+                                    <div className="email NS px15 line25 bold op6" style ={{width: '230px', letterSpacing: '0em'}}>{(giveuser?.name === undefined ? UserInfo.name : giveuser?.name) + '님의 승인을 대기중입니다.'}</div>
                                 </>}
                             </div>
                         );

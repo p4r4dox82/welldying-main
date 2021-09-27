@@ -26,6 +26,19 @@ div.loginForm {
     height: fit-content;
     left: calc(50% - 500px/2);
     top: calc(50vh - 432px/2);
+    div.MementoLogo {
+      display: flex;
+      justify-content: center;
+      padding-bottom: 50px;
+    }
+    svg.MementoLogo {
+      width: 260px;
+      height: 60px;
+      viewport-fit: 0 0 260 60;
+      path {
+        fill: rgba(39, 57, 47, 1);
+      }
+    }
 
     img {
         left:calc(50% - 280px/2);

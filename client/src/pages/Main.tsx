@@ -37,6 +37,7 @@ function Main() {
     }, [scroll]);
 
     let [quit, setQuit] = React.useState<boolean>(false);
+    let [quit2, setQuit2] = React.useState<boolean>(false);
     if(isMobile) return(
         <>
             <img src={imageUrl('mobileImage.png')} alt="" style = {{width: '100vw', objectFit: 'cover'}}/>
@@ -55,14 +56,11 @@ function Main() {
                     <div>‘<span className = 'bold'>회원가입</span>’ 기능만을 제공하고 있습니다.</div>
                     <div style = {{width: '50px', height: '30px'}}></div>
                     <div>이외의 모든 서비스는</div>
-                    <div>‘<span className = 'bold'>{'크롬(Crome)'}</span>’을 통한 웹 환경에서 이용이 가능하며</div>
+                    <div>‘<span className = 'bold'>{'크롬(Chrome)'}</span>’을 통한 웹 환경에서 이용이 가능하며</div>
                     <div>11월 2차 오픈을 통해 최적화를 진행할 예정입니다.</div>
                     <div style = {{width: '50px', height: '30px'}}> </div>
                     <div>메멘토를 향한 여러분의 관심에</div>
                     <div>더욱 편리한 서비스로 보답하겠습니다. 감사합니다.</div>
-                    <div>죄송합니다. 현재 회원가입시 인증번호 전송에</div>
-                    <div>오류가 발생하였습니다.</div>
-                    <div>빠른 시일 내에 고치도록 하겠습니다.</div>
                 </div>
                 <Link to ={'/signup'}><button className = 'NS bold px14 whiteop10'>회원가입</button></Link>
             </div>
@@ -73,11 +71,6 @@ function Main() {
             <Header additionalClass='' />
             {!quit && <div className="TopBar white NS px13 bold whiteop10" style = {{width: '100vw', height: '56px', background: 'rgba(191, 196, 193, 1)', display: 'flex', alignItems: 'center'}}>
                 <div style = {{width: '1032px', left: 'calc(50% - 1032px/2)'}}>{'최적화된 서비스를 위하여 크롬(Chrome) 브라우저를 이용해주세요!'}
-                <img src = {imageUrl('NotePage/quit_vector.svg')} style = {{position: 'absolute', right: '0px', top: '0px', width: '12.5px', height: '12.5px'}} onClick = {() => setQuit(true)}/>
-                </div>
-            </div>}
-            {!quit && <div className="TopBar white NS px13 bold whiteop10" style = {{width: '100vw', height: '56px', background: 'rgba(191, 196, 193, 1)', display: 'flex', alignItems: 'center'}}>
-                <div style = {{width: '1032px', left: 'calc(50% - 1032px/2)'}}>{'죄송합니다. 현재 회원가입 시 인증번호 전송에 오류가 발생하였습니다. 빠른 시일 내에 고치도록 하겠습니다.'}
                 <img src = {imageUrl('NotePage/quit_vector.svg')} style = {{position: 'absolute', right: '0px', top: '0px', width: '12.5px', height: '12.5px'}} onClick = {() => setQuit(true)}/>
                 </div>
             </div>}

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { imageUrl } from '../etc/config';
 
+import { MementoLogo } from '../img/Vectors';
+
 interface Props {
     additionalClass: string;
 }
@@ -29,7 +31,7 @@ function Footer({ additionalClass } : Props) {
             Copyright © 2016 Hanwha Corporation All rights reserved
             </div>
             <div className = 'footer_logo'>
-                <img className = 'logo' src = {imageUrl(('footer_logo_color.png'))} alt = "profile"/>
+                {MementoLogo}
                 <div className = 'share_container'>
                     {[...Array(4).keys()].map((i, key) => (
                       <img src={imageUrl(`share_image_${i+1}.png`)} alt = "profile" key = {key}/>

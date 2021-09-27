@@ -24,14 +24,13 @@ interface Props {
 };
 
 function ContentMain({ match } : Props) {
-    let id = Number.parseInt(match.params.id);
+    let id = React.useMemo(() => Number.parseInt(match.params.id), [match]);    
     let [, contents] = usePromise(getContents);
     let [, categorys] = usePromise(getCategorys);
     let popular_contents = React.useMemo(() => contents?.filter((content) => [44, 34, 39].includes(content.id)), [contents]);
-    let subject_contents1 = React.useMemo(() => contents?.filter((content) => [2, 45, 23, 46].includes(content.id)), [contents]);
+    let subject_contents1 = React.useMemo(() => contents?.filter((content) => [2, 43, 23, 46].includes(content.id)), [contents]);
     let subject_contents2 = React.useMemo(() => contents?.filter((content) => [20, 35, 48, 18].includes(content.id)), [contents]);
     let subject_contents3 = React.useMemo(() => contents?.filter((content) => [37, 42, 22, 50].includes(content.id)), [contents]);
-    let subject_contents_8 = contents?.slice(0, 8);
     let [categoryContentsNumber, setcategoryContentNumber] = React.useState<number>(8);
     let categoryContents = React.useMemo(() => {
         if(!contents) return;
@@ -48,7 +47,6 @@ function ContentMain({ match } : Props) {
         else return true;
     }).length, [categoryContents]);
     let maxcategoryContents = React.useMemo(() => contents?.filter((content) => content.category.includes(id)).length, [contents, id]);
-    const maxquestion_contents = 8;
     let [position, setPosition] = React.useState<number>(0);
         
     let question_content_dom = React.useRef<any>(null);
@@ -64,6 +62,7 @@ function ContentMain({ match } : Props) {
     let LinkNoteClick = () => LinkNote.current.click();
 
     let html = React.useMemo(() => {
+        if(!subject_contents1 || !subject_contents2 || !subject_contents3) return;
         return (
             <>
             <Link to = {'/note/1'} ref = {LinkNote} style = {{display: 'none'}} />

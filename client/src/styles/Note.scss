@@ -101,6 +101,10 @@ div.NoteLeftBar {
       span:not(:last-child)::after {
         content: '/';
       }
+      &.checked {
+        color: rgba(35, 52, 42, 0.6);
+        font-weight: 800;
+      }
     }
   }
   &.fixed {
@@ -1187,9 +1191,11 @@ div.MementoNoteMain {
       height: 94px;
       background: #FFFFFF;
       mix-blend-mode: multiply;
-      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
       border-radius: 5px;
-      padding: 22px 104px;
+      padding: 0px 0px 0px 104px;
+      display: flex;
+      align-items: center;
       div {
         width: 200px;
         text-align: justify-all;

@@ -6,6 +6,7 @@ import { imageUrl } from '../etc/config';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { isMobile } from 'react-device-detect';
+import { MementoLogo } from '../img/Vectors';
 
 export interface SignupInfo1 {
     agreeMessage: boolean;
@@ -33,7 +34,9 @@ function Signup() {
                             <div className = 'signup_form'>
                                 <div className='signupLogo' style = {{width: '291px', left: 'calc(50vw - 291px/2)'}}>
                                     <Link to ='/'>
-                                        <img src = {imageUrl('mainLogo.png')} />
+                                        <div className="MementoLogo">
+                                            {MementoLogo}
+                                        </div>
                                     </Link>
                                 </div>
                                 { (state === 1) && <SignupAgree proceed={(info: SignupInfo1) => { setInfo1(info); setState(2); } } /> }
