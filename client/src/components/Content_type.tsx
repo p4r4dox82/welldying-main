@@ -195,7 +195,7 @@ function Content_type (props : Props) {
                     await content_userdata(id, new_userdata);
                   } : () => {}}>{like_vector}</div>
                   <img className = 'share_button' src = {imageUrl('ContentPage/share_button.png')} onClick = { () => {setShare_container(!share_container);}} />
-                  <div className = 'more NS px12 bold op6'>{'책 구매하기>'}</div> 
+                  <div className = 'more NS px12 bold op6' onClick = {() => window.open(content?.source, '_blank')}>{'책 구매하기>'}</div> 
                   <div className={"bookmark" + (bookmarked ? ' bookmarked' : '')} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;
                     if(userdata.bookmark.find((username) => (username === user.user!.username))) {
