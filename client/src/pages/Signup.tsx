@@ -57,7 +57,9 @@ function Signup() {
                         <div className = 'signup_form'>
                             <div className='signupLogo'>
                                 <Link to ='/'>
-                                    <img src = {imageUrl('mainLogo.png')} />
+                                    <div className="MementoLogo">
+                                        {MementoLogo}
+                                    </div>
                                 </Link>
                             </div>
                             { (state === 1) && <SignupAgree proceed={(info: SignupInfo1) => { setInfo1(info); setState(2); } } /> }
