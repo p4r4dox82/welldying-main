@@ -120,8 +120,8 @@ function Main() {
 
     if(isMobile) return(
         <div className = 'mobile'>
-            {mobileMainNumber !== 5 && MobileMainContent}
-            {mobileMainNumber === 5 && <>
+            {!user.loggedIn && MobileMainContent}
+            {user.loggedIn && <>
             <img src={imageUrl('mobileImage.png')} alt="" style = {{width: '100vw', objectFit: 'cover'}}/>
             <div className = 'notification' style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center',background: 'rgba(0, 0, 0, 0.8)', position: 'fixed', top: '0px', height: '100vh', alignContent: 'flex-start'}}>
                 <div className="GB px25 line40 whiteop10" style = {{paddingTop: '97px'}}>메멘토 모바일 서비스는</div>

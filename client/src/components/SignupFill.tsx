@@ -377,7 +377,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
                         phoneCodeDigest,
                         showContent,
                     })) {
-                        proceed({ name });
+                        proceed({ name, username, password });
                     }
                 }}>
                     가입 완료
@@ -408,7 +408,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
                     phoneCodeDigest,
                     showContent,
                 })) {
-                    proceed({ name });
+                    proceed({ name, username, password });
                 }
                 let giveUsers = allUsers.filter((user) => user.UsersInfo.give.find((userInfo) => userInfo.phonenumber === `+82${cellPhoneFront.slice(1)}${cellPhoneMiddle}${cellPhoneRear}`));
                 console.log(giveUsers);

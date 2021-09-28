@@ -14,6 +14,8 @@ export interface SignupInfo1 {
 
 export interface SignupInfo2 {
     name: string;
+    username: string;
+    password: string;
 }
 
 function Signup() {

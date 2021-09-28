@@ -1,8 +1,11 @@
 import React from 'react';
 import { match, Redirect } from 'react-router-dom';
+import { login } from '../etc/api/user';
 
 interface MatchParams {
     name: string;
+    username: string;
+    password: string;
 }
 
 interface Props {
@@ -10,18 +13,27 @@ interface Props {
     location: any;
 }
 
+
+
 function SignupDone({ match, location }: Props) {
     let [redirectToMain, setRedirectToMain] = React.useState(false);
     let name = location.state.name;
+    let username = location.state.username;
+    let password = location.state.password;
+    let [redirectTo, setRedirectTo] = React.useState<string>();
+
+    let trylogin = async () => {
+        if (await login(username, password)) setRedirectTo('/');
+    }
 
     React.useEffect(() => {
         if (!name) setRedirectToMain(true);
         setTimeout(() => {
-            setRedirectToMain(true);
-        }, 3000);
+            trylogin();
+        }, 1000);
     });
 
-    if (redirectToMain) return <Redirect push to='/' />;
+    if (redirectTo) return <Redirect to={ redirectTo }/>;
 
     return (
         <>
