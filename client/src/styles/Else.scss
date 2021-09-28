@@ -487,3 +487,21 @@ div.MyPage {
         }
     }
 }
+div.ConfirmBook {
+    div.block {
+        text-align: center;
+    }
+    .titleBlock {
+        .title {
+            margin-top: 86px;
+        }
+        .subtitle {
+            margin-top: 2px;
+        }
+        .detail {
+            margin-top: 27px;
+            padding-bottom: 146px;
+            letter-spacing: 0em;
+        }
+    }
+}
