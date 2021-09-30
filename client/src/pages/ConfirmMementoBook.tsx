@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
+import { match, Redirect } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import MementoBook from '../components/MementoBook';
@@ -12,11 +12,24 @@ import { answer1_1, answer1_2, answer1_3, answer2_1, answer2_2, answer3_1, answe
 import { RootReducer } from '../store';
 import MementoNote from './MementoNote';
 
-function ConfirmMementoBook() {
+interface MatchParams {
+    id?: string;
+};
+
+interface Props {
+    match: match<MatchParams>;
+};
+
+function ConfirmMementoBook({match} : Props) {
+    let id = Number.parseInt(match.params.id || '0');
     let user = useSelector((state: RootReducer) => state.user);
     let [, allUsers] = usePromise(getUsers);
     let [giveusername, setGiveusername] = React.useState<string>('');
-    let giveUser = React.useMemo(() => allUsers?.find((user) => user.username === giveusername), [giveusername]);
+    React.useEffect(() => {
+        console.log(id);
+        setGiveusername(String(user.user?.UsersInfo.get[id].username));
+    }, [id, user]);
+    let giveUser = React.useMemo(() => allUsers?.find((user) => user.username === giveusername), [giveusername, allUsers]);
 
     let input_file = React.useRef<any>(null);
     let [imageUri, setImageUri] = React.useState<string>('');
@@ -55,6 +68,92 @@ function ConfirmMementoBook() {
             return answer_else;
     }
 
+    let DeathInfoContainer = React.useMemo(() => {
+        console.log(giveusername);
+        console.log(giveUser);
+        return (
+            <div className="DeathInfo">
+                <img className = 'Background' src={imageUrl('MyPageBackground.png')} alt="" style = {{opacity: '0.4', objectFit: 'none', overflow: 'hidden', height: '100%', width: '100%'}}/>
+                <div className="titleContainer">
+                    <div className="title GB px25 line40">{giveUser?.name + "님의 사전 장례 & 연명의료, 장기기증 의향서"}</div>
+                    <div className="subtitle NS px15 line30 op5">
+                        <div>메멘토는 2020년 4월을 시작으로 현재까지 다양한 어쩌구를 이루었으며</div>
+                        <div>신뢰할 수 있는 브랜드로 성장해 나갈 것입니다.</div>
+                    </div>
+                </div>
+                <div className="deathInfoContainer" style = {{width: '269px', gap: '13px', marginTop: '61px', height: '132px'}}>
+                    <div className="answer" style = {{opacity: (giveUser?.DeathInfo.answer5 == '예, 희망합니다.' ? '1' : '0' )}}>
+                        <div className="image">
+                            <div className="agree"></div>
+                        </div>
+                        <div className="name NS px12 op5 bold">연명 치료 희망</div>
+                    </div>
+                    <div className="answer" style = {{opacity: (giveUser?.DeathInfo.answer5 == '예, 희망합니다.' ? '1' : '0' )}}>
+                        <div className="image">
+                            <div className="agree"></div>
+                        </div>
+                        <div className="name NS px12 op5 bold">장기 기증 희망</div>
+                    </div>
+                </div>
+                <div className="deathInfoContainer" style = {{width: '915px', borderTop: '1px dashed rgba(147, 156, 151, 1)', borderBottom: '1px dashed rgba(147, 156, 151, 1)', margin: '41px 0px 0px calc(50% - 915px/2)', gap: '27px', padding: '17px 27px'}}>
+                    <div className="answer big">
+                        <div className="name GB px16">{giveUser?.name + '님의 희망 장례 진행 방법'}</div>
+                        <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answer1 ? giveUser?.DeathInfo.answer1 : ''}</div>
+                        <div className="image">
+                            <div className="imageinset">
+                                {deathInfoVector(giveUser?.DeathInfo.answer1 ? giveUser?.DeathInfo.answer1 : '')}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="answer big">
+                        <div className="name GB px16">{giveUser?.name + '님의 희망 장법'}</div>
+                        <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answer2 ? giveUser?.DeathInfo.answer2 : ''}</div>
+                        <div className="image">
+                            <div className="imageinset">
+                                {deathInfoVector(giveUser?.DeathInfo.answer2 ? giveUser?.DeathInfo.answer2 : '')}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="answer big">
+                        <div className="name GB px16">{giveUser?.name + '님의 희망 장례 규모'}</div>
+                        <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answer3 ? giveUser?.DeathInfo.answer3 : ''}</div>
+                        <div className="image">
+                            <div className="imageinset">
+                                {deathInfoVector(giveUser?.DeathInfo.answer3 ? giveUser?.DeathInfo.answer3 : '')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+        )
+    }, [giveusername, giveUser]);
+
+    let [pagenumber, setPagenumber] = React.useState<number>(0);
+
+    let BookContainer = React.useMemo(() => {
+        return (
+            <>
+            <div className="BookContainerOverflow">
+                <div className="BookContainer" style = {{left: `${pagenumber * -266 + 'px'}`}}>
+                    {user.user?.UsersInfo.get.map((userInfo) => {
+                        let giveuser = allUsers?.find((user) => user.username === userInfo.username);
+                        if(!giveuser) return;
+                        else return (
+                            <div onClick = {() => setGiveusername(userInfo.username)}>
+                                <MementoBook name = {userInfo.name} bookname = {giveuser?.bookname[0]} mine = {false} accept = {userInfo.accept} giveusername = {giveuser?.username} getusername = {String(user.user?.username)}></MementoBook>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+            {Number(user.user?.UsersInfo.get.length) > 4 && <div className="buttonContainer margin_base">
+                <button className="leftButton" onClick = {() => setPagenumber(Math.max(0, pagenumber - 1))}>{LeftArrowVector}</button>
+                <button className="rightButton" onClick = {() => setPagenumber(Math.min(Number(user.user?.UsersInfo.get.length) - 4, pagenumber + 1))}>{RightArrowVector}</button>
+            </div>}
+            </>       
+        )
+    }, [pagenumber, giveUser, giveusername]);
+
     if(!user.loggedIn) return <Redirect to ='/login'></Redirect>;
     else return (
         <>
@@ -69,19 +168,7 @@ function ConfirmMementoBook() {
                     </div>
                 </div>
                 <div className="block BookBlock">
-                    <div className="BookContainer margin_base">
-                        {user.user?.UsersInfo.get.map((userInfo) => {
-                            let giveuser = allUsers?.find((user) => user.username === userInfo.username);
-                            if(!giveuser) return;
-                            else return (
-                                <div onClick = {() => setGiveusername(userInfo.username)}>
-                                    <MementoBook name = {userInfo.name} bookname = {giveuser?.bookname[0]} mine = {false} accept = {userInfo.accept} giveusername = {giveuser?.username} getusername = {String(user.user?.username)}></MementoBook>
-                                </div>
-                            )
-                        })}
-                        <button className="leftButton">{LeftArrowVector}</button>
-                        <button className="rightButton">{RightArrowVector}</button>
-                    </div>
+                    {BookContainer}    
                 </div>
                 <div className="block BookContent margin_base">
                     <div className="GB px20 line40" style = {{marginTop: '111px'}}>아직 확인할 수 없는 기록입니다.</div>
@@ -100,59 +187,7 @@ function ConfirmMementoBook() {
                         <div>2. 제출하신 서류는 3일 이내에 확인 후 작성해주신 연락처를 통해 열람 가능 여부를 회신 드릴 예정입니다.</div>
                         <div>3. 추가적인 문의 사항이 있다면 memento.welldying@gmail.com으로 연락주세요!</div>
                     </div>
-                    <div className="DeathInfo">
-                        <img className = 'Background' src={imageUrl('MyPageBackground.png')} alt="" style = {{opacity: '0.4', objectFit: 'none', overflow: 'hidden', height: '100%', width: '100%'}}/>
-                        <div className="titleContainer">
-                            <div className="title GB px25 line40">{giveUser?.name + "님의 사전 장례 & 연명의료, 장기기증 의향서"}</div>
-                            <div className="subtitle NS px15 line30 op5">
-                                <div>메멘토는 2020년 4월을 시작으로 현재까지 다양한 어쩌구를 이루었으며</div>
-                                <div>신뢰할 수 있는 브랜드로 성장해 나갈 것입니다.</div>
-                            </div>
-                        </div>
-                        <div className="deathInfoContainer" style = {{width: '269px', gap: '13px', marginTop: '61px', height: '132px'}}>
-                            <div className="answer">
-                                <div className="image">
-                                    <div className="agree"></div>
-                                </div>
-                                <div className="name NS px12 op5 bold">연명 치료 희망</div>
-                            </div>
-                            <div className="answer">
-                                <div className="image">
-                                    <div className="agree"></div>
-                                </div>
-                                <div className="name NS px12 op5 bold">장기 기증 희망</div>
-                            </div>
-                        </div>
-                        <div className="deathInfoContainer" style = {{width: '915px', borderTop: '1px dashed rgba(147, 156, 151, 1)', borderBottom: '1px dashed rgba(147, 156, 151, 1)', margin: '41px 0px 0px calc(50% - 915px/2)', gap: '27px', padding: '17px 27px'}}>
-                            <div className="answer big">
-                                <div className="name GB px16">{giveUser?.name + '님의 희망 장례 진행 방법'}</div>
-                                <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answer1 ? giveUser?.DeathInfo.answer1 : ''}</div>
-                                <div className="image">
-                                    <div className="imageinset">
-                                        {deathInfoVector(giveUser?.DeathInfo.answer1 ? giveUser?.DeathInfo.answer1 : '')}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="answer big">
-                                <div className="name GB px16">{giveUser?.name + '님의 희망 장법'}</div>
-                                <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answer2 ? giveUser?.DeathInfo.answer2 : ''}</div>
-                                <div className="image">
-                                    <div className="imageinset">
-                                        {deathInfoVector(giveUser?.DeathInfo.answer2 ? giveUser?.DeathInfo.answer2 : '')}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="answer big">
-                                <div className="name GB px16">{giveUser?.name + '님의 희망 장례 규모'}</div>
-                                <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answer3 ? giveUser?.DeathInfo.answer3 : ''}</div>
-                                <div className="image">
-                                    <div className="imageinset">
-                                        {deathInfoVector(giveUser?.DeathInfo.answer3 ? giveUser?.DeathInfo.answer3 : '')}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {DeathInfoContainer}
                     <input type="file" ref = {input_file} style = {{display: 'none'}} />
                 </div>
             </div>

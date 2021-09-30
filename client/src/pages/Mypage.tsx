@@ -724,13 +724,15 @@ function Mypage() {
         if(!AllUsers) return<></>;
         return (
             <div className="BookContainer" style = {{paddingTop: '37px'}}>
-                {user.user?.UsersInfo.get.map((UserInfo) => {
+                {user.user?.UsersInfo.get.map((UserInfo, key) => {
                     let getuser = AllUsers.find((user_) => user_.cellphone === UserInfo.phonenumber);
                     console.log(getuser);
                     return (
+                        <Link to ={`/confirmbook/${key}`}>
                         <div style = {{width: '236px', height: '441px'}}>
                             <MementoBook bookname = {String(getuser?.bookname[0])} mine = {false} accept = {accept} name = {String(getuser?.name)} giveusername = {String(getuser?.username)} getusername = {String(user.user?.username)} />
                         </div>
+                        </Link>
                     )
                 })}
                 

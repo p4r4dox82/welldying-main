@@ -74,7 +74,7 @@ function App() {
         <Route path='/notebook/:id' component = {MementoNoteBook} />
         <Route path='/note/:id' component = {MementoNote} />
         <Route path='/note' component = {MementoNoteMain} />
-        <Route path='/confirmbook' component = {ConfirmMementoBook} />
+        <Route path='/confirmbook/:id' component = {ConfirmMementoBook} />
         <Route path='/survey' component = {Survey} />
         <Route path='/' component={Main} />
       </Switch>

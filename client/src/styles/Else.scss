@@ -508,9 +508,26 @@ div.ConfirmBook {
         background: rgba(248, 247, 246, 1);
         box-shadow: inset 0px 1px 10px rgba(0, 0, 0, 0.1);
         height: 441px;
+        .BookContainerOverflow {
+            width: calc(1032px + 56px);
+            height: 441px;
+            margin: auto;
+            padding: 0px 28px;
+            overflow: hidden;
+        }
         .BookContainer {
+            margin: auto;
+            display: flex;
+            flex-wrap: nowrap;
             padding-top: 37px;
             border-top: 1px dashed #939C97;
+            gap: 30px;
+            transition: all 1s ease-in-out;
+        }
+        .buttonContainer {
+            position: absolute;
+            top: 0px;
+            left: calc(50% - 1032px/2);
         }
         button {
             width: 48px;
