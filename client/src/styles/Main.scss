@@ -397,6 +397,7 @@ div.main_display {
           height: 58px;
           border-radius: 50%;
           display: flex;
+          background: rgba(255, 255, 255, 1);
           justify-content: center;
           align-items: center;
           box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.15);
@@ -417,6 +418,7 @@ div.main_display {
           }
         }
         &:hover {
+          background: rgba(250, 250, 250, 1);
           svg {
             fill: rgba(97, 105, 101, 1);
             path {

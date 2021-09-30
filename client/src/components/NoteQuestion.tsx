@@ -117,7 +117,7 @@ function NoteQuestion(props: Props) {
   if(!question) return <></>;
   else return (
     <div style = {{width: (props.type === 'small' ? '235px' : '')}}>
-        {props.written && <div className = {'questionBox ' + props.type + ' ' + String(props.order)} >
+        {props.written && <div className = {'questionBox ' + props.type + ' ' + String(props.order)}  style = {{cursor: 'pointer'}}>
             <div className = 'click_area' style = {{width: '100%', height: '100%', borderRadius: '5px'}} onClick = {() => {setShow_answer(!show_answer); setAnswer_type('written');}}>
                 {props.type === 'small' && <div className = 'cover' style = {{background: 'rgba(255, 255, 255, 1)', width: '100%', height: '100px', top: '230px'}} />}
                 <div className = 'title GB px20 line40' style = {{margin: '0px'}} >
@@ -165,7 +165,7 @@ function NoteQuestion(props: Props) {
             <div className = 'content_writer NS px12 line15'>{content?.title.split('_')[1]}</div>
             </div>}
         </div>}
-        {!props.written && <div className = 'questionBox unwritten' >
+        {!props.written && <div className = 'questionBox unwritten'  style = {{cursor: 'pointer'}}>
             <div className = 'click_area' style = {{width: '100%', height: '100%', borderRadius: '5px'}} onClick = {() => {setShow_answer(!show_answer); setAnswer_type('written');}}>
                 <div className = 'title GB px20 line40' style = {{margin: '0px'}}>
                     <div>{question.title.split('\n')[0]}</div>

@@ -85,7 +85,7 @@ function MementoBook (props: Props) {
     let MyBook = React.useMemo(() => {
         console.log(giveuser);
         return (
-            props.mine ? <div className="more NS px12 whiteop5">{`메멘토 북 수정하기 >`}</div> : <div className="GiveUsersElement" style ={{width: '236px', padding: '0px', justifyContent: 'center', boxShadow: '0px 0px 0px rgba(0, 0, 0, 0)', background: 'rgba(0, 0, 0, 0)', height: '60px', marginTop: '20px'}}>
+            props.mine ? <div className="more NS px12 whiteop5" style = {{cursor: 'pointer'}}>{`메멘토 북 수정하기 >`}</div> : <div className="GiveUsersElement" style ={{width: '236px', padding: '0px', justifyContent: 'center', boxShadow: '0px 0px 0px rgba(0, 0, 0, 0)', background: 'rgba(0, 0, 0, 0)', height: '60px', marginTop: '20px'}}>
                 <div style ={{textAlign: 'center'}}>
                     <div className="namephone NS px15 line25 bold op6">{giveuser?.name + ' / ' + giveuser?.birthYear + '.' + giveuser?.birthMonth + '.' + giveuser?.birthDate}</div>
                     <div className="email NS px15 line25 bold op6">{giveuser?.email}</div>
@@ -99,9 +99,9 @@ function MementoBook (props: Props) {
         <Link to = {`/notebook/1`} ref = {LinkBook} style = {{display: 'none'}} />
         {accept !== 2 && <div className="BookElement" onClick = {props.mine ? () => LinkBookClick() : () => {}}>
             <img src={imageUrl('NotePage/BookCoverImage.png')} alt="" className="BookCover" />
-            <div className="BookCoverBlend"></div>
-            <div className="MementoLogo">{MementoLogo}</div>
-            <div className="bookname GB px13">{Colon}{props.bookname}</div> 
+            <div className="BookCoverBlend" style = {{cursor: 'pointer'}}></div>
+            <div className="MementoLogo" style = {{cursor: 'pointer'}}>{MementoLogo}</div>
+            <div className="bookname GB px13" style = {{cursor: 'pointer'}}>{Colon}{props.bookname}</div> 
             {MyBook}
             {BookAccept}
         </div>}

@@ -128,10 +128,10 @@ function Content_type (props : Props) {
   if(!content) return <></>;
   else return (
     <>
-      <div className = 'block'>
+      <div className = 'block'style = {{overflow: 'hidden', height: '630px', marginBottom: '-130px'}}>
           {props.additionalClass === '동영상' && <div className = 'videocontent'>
               <ReactPlayer width = {'769px'} height = {'432px'} url = {content.source} controls />
-              <div className="donotplay"  style = {{width: '769px', height: '432px', position: 'absolute', top: '61px', left: '0px'}} onClick = {() => window.open(content?.source, '_blank')}></div>
+              <div className="donotplay"  style = {{width: '769px', height: '432px', position: 'absolute', top: '61px', left: '0px', cursor: 'pointer'}} onClick = {() => window.open(content?.source, '_blank')}></div>
               <div className = 'cover'>
                   <div className = 'detail GB px14 op6'>영상의 한줄</div>
                   <div className = 'title GB px20 op9 line40'>{content.title}</div>
@@ -148,9 +148,9 @@ function Content_type (props : Props) {
                     setUserdata(new_userdata);
                     setLiked(!liked);
                     await content_userdata(id, new_userdata);
-                  } : () => {}}>{like_vector}</div>
-                  <img className = 'share_button' src = {imageUrl('ContentPage/share_button.png')} onClick = { () => {setShare_container(!share_container);}} />
-                  <div className = 'more NS px12 bold op6' onClick = {() => window.open(content?.source, '_blank')}>{'원본파일 보기>'}</div>
+                  } : () => {}} style = {{cursor: 'pointer'}}>{like_vector}</div>
+                  <img className = 'share_button' src = {imageUrl('ContentPage/share_button.png')} onClick = { () => {setShare_container(!share_container);}}  style = {{cursor: 'pointer'}}/>
+                  <div className = 'more NS px12 bold op6' onClick = {() => window.open(content?.source, '_blank')} style = {{cursor: 'pointer'}}>{'원본파일 보기>'}</div>
                   <div className={"bookmark" + (bookmarked ? ' bookmarked' : '')} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;
                     if(userdata.bookmark.find((username) => (username === user.user!.username))) {
@@ -162,11 +162,11 @@ function Content_type (props : Props) {
                     setUserdata(new_userdata);
                     setBookmarked(!bookmarked);
                     await content_userdata(id, new_userdata);
-                  } : () => {}}>{BookMarkVector}</div>
+                  } : () => {}} style = {{cursor: 'pointer'}}>{BookMarkVector}</div>
               </div>
               {share_container && <div className = 'share_container'>
-                  <img id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} />
-                  <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} />
+                  <img id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} style = {{cursor: 'pointer'}} />
+                  <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} style = {{cursor: 'pointer'}} />
                   <div className="shareLink">
                       <input type="text NS px11" value = {`mymemento.kr/contentpage/${id}`} disabled/>
                       <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} onClick = {() => alert('링크가 복사되었습니다.')}>링크 복사</button>
@@ -193,9 +193,9 @@ function Content_type (props : Props) {
                     setUserdata(new_userdata);
                     setLiked(!liked);
                     await content_userdata(id, new_userdata);
-                  } : () => {}}>{like_vector}</div>
-                  <img className = 'share_button' src = {imageUrl('ContentPage/share_button.png')} onClick = { () => {setShare_container(!share_container);}} />
-                  <div className = 'more NS px12 bold op6' onClick = {() => window.open(content?.source, '_blank')}>{'책 구매하기>'}</div> 
+                  } : () => {}} style = {{cursor: 'pointer'}}>{like_vector}</div>
+                  <img className = 'share_button' src = {imageUrl('ContentPage/share_button.png')} onClick = { () => {setShare_container(!share_container);}} style = {{cursor: 'pointer'}} />
+                  <div className = 'more NS px12 bold op6' onClick = {() => window.open(content?.source, '_blank')} style = {{cursor: 'pointer'}}>{'책 구매하기>'}</div> 
                   <div className={"bookmark" + (bookmarked ? ' bookmarked' : '')} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;
                     if(userdata.bookmark.find((username) => (username === user.user!.username))) {
@@ -207,11 +207,11 @@ function Content_type (props : Props) {
                     setUserdata(new_userdata);
                     setBookmarked(!bookmarked);
                     await content_userdata(id, new_userdata);
-                  } : () => {}}>{BookMarkVector}</div>
+                  } : () => {}} style = {{cursor: 'pointer'}}>{BookMarkVector}</div>
               </div>
               {share_container && <div className = 'share_container'>
-                  <img id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} />
-                  <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} />
+                  <img id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} style = {{cursor: 'pointer'}} />
+                  <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} style = {{cursor: 'pointer'}} />
                   <div className="shareLink">
                       <input type="text NS px11" value = {`mymemento.kr/contentpage/${id}`} disabled/>
                       <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} onClick = {() => alert('링크가 복사되었습니다.')}>링크 복사</button>

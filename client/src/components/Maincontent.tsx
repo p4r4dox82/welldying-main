@@ -142,8 +142,8 @@ function Maincontent() {
                         {MementoContentCategoryArray.map((MementoContentCategory, key) => {
                             return (
                                 <div className="ContentCategoryContainer" onClick = {() => setContentCategory(key)}>
-                                    <div className="image"><img src={imageUrl(`ContentPage/${MementoContentCategory.image}`)} alt="" className="" style = {{opacity: (ContentCategory === key ? '1' : '0.5')}}/></div>
-                                    <div className="title GB px16 line20">{MementoContentCategory.name}</div>
+                                    <div className="image" style = {{cursor: 'pointer'}}><img src={imageUrl(`ContentPage/${MementoContentCategory.image}`)} alt="" className="" style = {{opacity: (ContentCategory === key ? '1' : '0.5')}}/></div>
+                                    <div className="title GB px16 line20" style = {{cursor: 'pointer'}}>{MementoContentCategory.name}</div>
                                     <div className="vector" style = {{opacity: (ContentCategory === key ? '1' : '0')}}></div>
                                 </div>
                             )
@@ -162,7 +162,7 @@ function Maincontent() {
                             </div>
                         </div>
                         <div className="contentContainer">
-                            <img src = {((newContent?.imageData && newContent?.imageData.imageUrl) ? newContent?.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} alt="profile" className = 'thumbnail' style = {{width: '708px', height: '296px', objectFit: 'cover'}} onClick = {() => NewContentLinkClick()}/>
+                            <img src = {((newContent?.imageData && newContent?.imageData.imageUrl) ? newContent?.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} alt="profile" className = 'thumbnail' style = {{width: '708px', height: '296px', objectFit: 'cover', cursor: 'pointer'}} onClick = {() => NewContentLinkClick()}/>
                             <div className = 'image_selector_container'>
                                 {[...Array(4).keys()].map((i) => (
                                     <img className = {(newContentNumber === (i) ? 'selected' : 'notselected')}src = {imageUrl('content_selector.png')}  alt="profile"/>
@@ -186,7 +186,7 @@ function Maincontent() {
                                 </button>
                                 <div className="type NS px18 line25 bold">{newContent?.type === '동영상' ? 'video' : 'book'}</div>
                                 <div className="tag NS px14 op6 line15">{newContent?.tag}</div>
-                                <div className="title NS px16 line25 bold" onClick = {() => NewContentLinkClick()}>{'[' + newContent?.type + ']' + newContent?.title}</div>
+                                <div className="title NS px16 line25 bold" onClick = {() => NewContentLinkClick()} style = {{cursor: 'pointer'}}>{'[' + newContent?.type + ']' + newContent?.title}</div>
                             </div>
                         </div>
                     </div>
@@ -199,19 +199,18 @@ function Maincontent() {
                             {PopularContents && PopularContents.map((content, key) => {
                                 return (
                                     <div className="contentElement" >
-                                        
                                         <div className="imageContainer" style = {{marginRight: (popularContentNumber === key ? '0px' : '58px'), transition: 'all 1s ease-in-out', width: (popularContentNumber === key ? '678px' : '354px')}}>
-                                            <img src = {((content?.imageData && content?.imageData.imageUrl) ? content?.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} alt="profile" className = 'thumbnail' style = {{width: '354px', height: '261px', objectFit: 'cover', opacity: (popularContentNumber === key ? '1' : '0.6'), paddingRight: (popularContentNumber === key ? '324px' : '0px'), boxSizing: 'content-box', transition: 'all 1s ease-in-out'}} onClick = {() => PopularContentLinkClick()}/>
+                                            <img src = {((content?.imageData && content?.imageData.imageUrl) ? content?.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} alt="profile" className = 'thumbnail' style = {{width: '354px', height: '261px', objectFit: 'cover', opacity: (popularContentNumber === key ? '1' : '0.6'), paddingRight: (popularContentNumber === key ? '324px' : '0px'), boxSizing: 'content-box', transition: 'all 1s ease-in-out', cursor: 'pointer'}} onClick = {() => PopularContentLinkClick()}/>
                                             <div className="vector" style = {{opacity: (popularContentNumber === key ? '1' : '0.1'), transform: (popularContentNumber === key ? 'translateX(-162px)' : 'translateX(0px)'), transition: 'all 1s ease-in-out'}}></div>
                                             <div className="title NS px12 line15 bold op6" onClick = {() => PopularContentLinkClick()} style ={{transform: (popularContentNumber === key ? 'translateX(-162px)' : 'translateX(0px)'), transition: 'all 1s ease-in-out'}}>{content.title}</div>
                                         </div>
                                         {<div className="CoverContainer" style = {{position: 'absolute', zIndex: -1, transition: 'all 1s ease-in-out', left: (popularContentNumber === key ? '354px' : '0px'), opacity: (popularContentNumber === key ? '1' : '0')}}>           
                                             <div className="oneline GB px14 op6">컨텐츠 한줄</div>
-                                            <div className="title GB px20 line35" onClick = {() => PopularContentLinkClick()}>{content?.title}</div>
+                                            <div className="title GB px20 line35" onClick = {() => PopularContentLinkClick()} style = {{cursor: 'pointer'}}>{content?.title}</div>
                                             <div className="date GB px14 line15">{'컨텐츠 생성일 : ' + String(parseDate(new Date(Number(content?.date))))}</div>
                                             <div className="tag GB px14 op6 line15">{content?.tag}</div>
                                             <div className="vector" style = {{width: '100%', height: '1px', background: 'rgba(110, 118, 114, 0.4)', marginTop: '18px'}}></div>
-                                            <div className="title NS px13 bold" onClick = {() => PopularContentLinkClick()}>{`컨텐츠 확인하러 가기>`}</div>
+                                            <div className="title NS px13 bold" onClick = {() => PopularContentLinkClick()} style = {{cursor: 'pointer'}}>{`컨텐츠 확인하러 가기>`}</div>
                                         </div>}
                                     </div>
                                 );
@@ -367,7 +366,7 @@ function Maincontent() {
                 <div className="subtext GB px14 line30">
                     {MainText[MainCoverNumber].subText}
                 </div>
-                {MainText[MainCoverNumber].more}
+                <div style = {{cursor: 'pointer'}}>{MainText[MainCoverNumber].more}</div>
                 <div className="circle"></div>
                 <img src={imageUrl(`${MainText[0].imageUrl}`)} alt="" className="mainBlockImage" style = {{opacity: (MainCoverNumber === 0 ? '1' : '0')}}/>
                 <img src={imageUrl(`${MainText[1].imageUrl}`)} alt="" className="mainBlockImage" style = {{opacity: (MainCoverNumber === 1 ? '1' : '0')}}/>
@@ -391,34 +390,34 @@ function Maincontent() {
             </div>
             <div className="block">
                 <div className="introContainer">
-                    <div onClick = {() => setMainCoverNumber(MainCoverNumber - 1 === -1 ? 4 : MainCoverNumber - 1)}>{LeftVector2}</div>
+                    <div onClick = {() => setMainCoverNumber(MainCoverNumber - 1 === -1 ? 4 : MainCoverNumber - 1)} style = {{cursor: 'pointer'}}>{LeftVector2}</div>
                     <div className="introButtonContainer">
-                        <div className="Element" onClick = {() => setMainCoverNumber(0)}>
+                        <div className="Element" onClick = {() => setMainCoverNumber(0)} style = {{cursor: 'pointer'}}>
                             <div className={"vector" + (MainCoverNumber === 0 ? ' selected' : ' notselected')}>{MementoMainVector}</div>
                             <div className = 'GB px15 line30 op3'>메멘토는</div>
                         </div>
                         {RightVector}
-                        <div className="Element" onClick = {() => setMainCoverNumber(1)}>
+                        <div className="Element" onClick = {() => setMainCoverNumber(1)} style = {{cursor: 'pointer'}}>
                             <div className={"vector" + (MainCoverNumber === 1 ? ' selected' : ' notselected')}>{MementoContentVector}</div>
                             <div className = 'GB px15 line30 op3'>메멘토 컨텐츠</div>
                         </div>
                         {RightVector}
-                        <div className="Element" onClick = {() => setMainCoverNumber(2)}>
+                        <div className="Element" onClick = {() => setMainCoverNumber(2)} style = {{cursor: 'pointer'}}>
                             <div className={"vector" + (MainCoverNumber === 2 ? ' selected' : ' notselected')}>{MementoNoteVector}</div>
                             <div className = 'GB px15 line30 op3'>메멘토 노트</div>
                         </div>
                         {RightVector}
-                        <div className="Element" onClick = {() => setMainCoverNumber(3)}>
+                        <div className="Element" onClick = {() => setMainCoverNumber(3)} style = {{cursor: 'pointer'}}>
                             <div className={"vector" + (MainCoverNumber === 3 ? ' selected' : ' notselected')}>{MementoBookVector}</div>
                             <div className = 'GB px15 line30 op3'>유언 자서전</div>
                         </div>
                         {RightVector}
-                        <div className="Element" onClick = {() => setMainCoverNumber(4)}>
+                        <div className="Element" onClick = {() => setMainCoverNumber(4)} style = {{cursor: 'pointer'}}>
                             <div className={"vector" + (MainCoverNumber === 4 ? ' selected' : ' notselected')}>{MementoMakeBookVector}</div>
                             <div className = 'GB px15 line30 op3'>자서전 제작</div>
                         </div>
                     </div>
-                    <div onClick = {() => setMainCoverNumber((MainCoverNumber + 1)%5)}>{RightVector2}</div>
+                    <div onClick = {() => setMainCoverNumber((MainCoverNumber + 1)%5)} style = {{cursor: 'pointer'}}>{RightVector2}</div>
                 </div>
                 <div className="margin_base">
                     <div className="explain">
@@ -426,12 +425,12 @@ function Maincontent() {
                         <div className="subtitle GB px14">인생을 담은 당신만의 공간</div>
                         <div className="detail GB px15 line40">'나의 서재'란, ‘메멘토 노트’를 통해 인생이 담긴 유언을 기록하고, 이를 바탕으로 ‘메멘토 북’을 제작해 소중한 이들에게 전달하는 공간입니다. 나의 서재에서 인생을 담은 당신만의 공간을 완성하세요. </div>
                         <div className="more"></div>
-                        <div className="more px12 line40 bold" onClick = {() => LinkNoteClick()}>{`작성 페이지 바로가기>`}</div>
+                        <div className="more px12 line40 bold" onClick = {() => LinkNoteClick()} style = {{cursor: 'pointer'}}>{`작성 페이지 바로가기>`}</div>
                     </div>
                     <div className="SectionContainer">
                         {MementoSectionArray.map((MementoSection, key) => {
                             return (
-                                <div className="ElementContainer" onClick = {key === 0 ? () => LinkNoteClick() : key === 1 ? () => LinkBookClick() : () => alert('준비중입니다.')}>
+                                <div className="ElementContainer" onClick = {key === 0 ? () => LinkNoteClick() : key === 1 ? () => LinkBookClick() : () => alert('준비중입니다.')} style = {{cursor: 'pointer'}}>
                                     <div className="vectorContainer">{MementoSection.vector}</div>
                                     <div className="title NS px14 line25 bold">{MementoSection.name}</div>
                                     <div className="detail NS px12 line25">{MementoSection.detail}</div>
@@ -446,7 +445,7 @@ function Maincontent() {
                 <div className="MainContent margin_base">
                     <div className="title GB px30" style = {{paddingTop: '130px'}}>메멘토 컨텐츠</div>
                     <div className="subtitle GB px14" style = {{borderBottom: '1px solid rgba(110, 118, 114, 0.3)'}}>삶과 죽음에 대해 생각하는 시간</div>
-                    <div className="more NS px12 bold line15" style = {{marginTop: '14px', textAlign: 'right'}} onClick = {() => LinkContentClick()}>{`컨텐츠 페이지 바로가기>`}</div>
+                    <div className="more NS px12 bold line15" style = {{marginTop: '14px', textAlign: 'right', cursor: 'pointer'}} onClick = {() => LinkContentClick()}>{`컨텐츠 페이지 바로가기>`}</div>
                     <div className="detail GB px16 line40 op7" style = {{width: '796px', marginTop: '33px'}}>
                         <div>메멘토 컨텐츠란, 다양한 책, 영화, 강연을 통해 죽음에 대한 궁금증을 해소하고, 삶에 대한 나만의 철학을 완성해나가는 공간입니다. 컨텐츠 감상 후 제시되는 질문에 답하며 당신만의 삶과 죽음에 대한 생각을 정리해보세요. </div>
                         <div>메멘토 컨텐츠는 당신만의 프라이빗한 작성 공간인 메멘토 노트와 연동됩니다.</div>

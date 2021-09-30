@@ -158,8 +158,8 @@ function ContentBorder (props : Props) {
                   공유하기
               </button>
               {share_container && <div className = 'share_container' style = {{zIndex: 10}}>
-                  <img id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} />
-                  <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} />
+                  <img id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} style = {{cursor: 'pointer'}} />
+                  <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} style = {{cursor: 'pointer'}} />
                   <div className="shareLink">
                       <input type="text NS px11" value = {`mymemento.kr/contentpage/${id}`} disabled/>
                       <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} onClick = {() => alert('링크가 복사되었습니다.')}>링크 복사</button>

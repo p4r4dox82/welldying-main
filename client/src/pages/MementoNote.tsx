@@ -129,12 +129,12 @@ function MementoNote({ match } : Props) {
                   <div className = 'title GB px16 bold line30'>
                   {section?.title}
                   </div>
-                  <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} onClick = {() => setBlock(!block)}/>
-                  <img className = 'order_button' src = {imageUrl('ContentPage/order_button.svg')} onClick = {() => setOrderContainer(!orderContainer)}/>
+                  <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} onClick = {() => setBlock(!block)} style = {{cursor: 'pointer'}}/>
+                  <img className = 'order_button' src = {imageUrl('ContentPage/order_button.svg')} onClick = {() => setOrderContainer(!orderContainer)} style = {{cursor: 'pointer'}}/>
                   {orderContainer && <div className="orderContainer">
-                      <div className={"NS px12 bold " + (order !== 1 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered); setUpdate(update + 1); console.log(questions); setOrder(1);}}>최근 답변순</div>
-                      <div className={"NS px12 bold " + (order !== 2 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered_reverse); setUpdate(update + 1); console.log(questions); setOrder(2);}}>과거 답변순</div>
-                      <div className={"NS px12 bold " + (order !== 0 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_made); setUpdate(update + 1); setOrder(0);}}>질문 생성일</div>
+                      <div className={"NS px12 bold " + (order !== 1 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered); setUpdate(update + 1); console.log(questions); setOrder(1);}} style = {{cursor: 'pointer'}}>최근 답변순</div>
+                      <div className={"NS px12 bold " + (order !== 2 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered_reverse); setUpdate(update + 1); console.log(questions); setOrder(2);}} style = {{cursor: 'pointer'}}>과거 답변순</div>
+                      <div className={"NS px12 bold " + (order !== 0 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_made); setUpdate(update + 1); setOrder(0);}} style = {{cursor: 'pointer'}}>질문 생성일</div>
                   </div>}
                   <div className = 'questions_container'>
                       {section_questions}

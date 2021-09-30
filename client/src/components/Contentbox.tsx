@@ -58,7 +58,7 @@ function Contentbox(props: Props) {
               await content_userdata(id, new_userdata);
             }
             LinkClick();
-          } : () => {LinkClick();}} style = {{objectFit: 'cover', width: '100%', height: '190px', borderRadius: '5px'}}/>
+          } : () => {LinkClick();}} style = {{objectFit: 'cover', width: '100%', height: '190px', borderRadius: '5px', cursor: 'pointer'}}/>
           <div className = 'cover'>
               {!big_type2 && <img className = 'memento_colon' src = {imageUrl('memento_colon.png')} />}
               <div className = 'type'>{content.type === '책' ? 'book' : (content.type === '동영상' ? 'video' : '')}</div>
@@ -70,7 +70,7 @@ function Contentbox(props: Props) {
                   await content_userdata(id, new_userdata);
                 }
                 LinkClick();
-              } : () => {LinkClick();}}>{'[' + content.type + ']' + content.title.slice(0, 39) + (content.title.length > 39 ? '...' : '')}</div>
+              } : () => {LinkClick();}} style = {{cursor: 'pointer'}}>{'[' + content.type + ']' + content.title.slice(0, 39) + (content.title.length > 39 ? '...' : '')}</div>
               <div className = 'tag'>{content.tag}</div>
               <div className = 'likes_container'>
                   <img className = 'likes_image' src = {imageUrl('content_like.png')} />
@@ -81,7 +81,7 @@ function Contentbox(props: Props) {
           {(user.loggedIn && content.userdata.bookmark.find((username) => username === user.user!.username)) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
       </div>}
       {(props.additionalClass === 'small' || props.additionalClass === 'small wide') && <div className = {'small_content ' + props.additionalClass} style = {{height: (props.additionalClass === 'small' ? '268px' : '320px')}}>
-          <img className = 'thumbnail' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: (props.additionalClass === 'small' ? '236px' : '324px'), height: (props.additionalClass === 'small' ? '138px' : '190px')}} onClick = {user.loggedIn ? async () => {
+          <img className = 'thumbnail' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: (props.additionalClass === 'small' ? '236px' : '324px'), height: (props.additionalClass === 'small' ? '138px' : '190px'), cursor: 'pointer'}} onClick = {user.loggedIn ? async () => {
             let new_userdata = userdata;
             if(userdata.read.find((username) => (username === user.user!.username)) === undefined) {
               new_userdata.read.push(user.user!.username);
@@ -92,7 +92,7 @@ function Contentbox(props: Props) {
           } : () => {LinkClick();}}/>
           <div className = 'cover' style = {{top: (props.additionalClass === 'small' ? 'calc(138px + 22px)' : 'calc(190px + 22px)')}}>
               <div className = 'tag'>{content.tag}</div>
-              <div className = 'more' onClick = {() => {setSmall_more(!small_more);}}>
+              <div className = 'more' onClick = {() => {setSmall_more(!small_more);}} style = {{cursor: 'pointer'}}>
                   {[...Array(3).keys()].map((i) => (<div className = 'dot' />))}
               </div>
               {small_more && <div className = {'more_container' + ' ' + props.additionalClass}>
@@ -135,7 +135,7 @@ function Contentbox(props: Props) {
                   await content_userdata(id, new_userdata);
                 }
                 LinkClick();
-              } : () => {LinkClick();}}>{'[' + content.type + ']' + content.title.slice(0, 30) + (content.title.length > 30 ? '...' : '')}</div>
+              } : () => {LinkClick();}} style = {{cursor: 'pointer'}}>{'[' + content.type + ']' + content.title.slice(0, 30) + (content.title.length > 30 ? '...' : '')}</div>
               <div className = 'date'>{'2021.08.03'}</div>
           </div>
           {(user.loggedIn && content.userdata.read.find((username) => username === user.user!.username)) && <div className = 'read' style = {{top: (props.additionalClass === 'small' ? '134.5px' : '186.5px')}}/>}

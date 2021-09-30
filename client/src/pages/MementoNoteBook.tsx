@@ -559,10 +559,10 @@ Cherish your memories, memento`,
                   </div>
                   <div className = 'book_main'>
                       <div className = 'side_bar_container'>
-                          <img className = 'zoom_button' src = {imageUrl('NotePage/zoom_image.png')} />
-                          <img className = 'add_button' src = {imageUrl('NotePage/add_image.png')} onClick = {() => {setAddQuestions(true); setUpdate(update + 1);}}/>
+                          <img className = 'zoom_button' src = {imageUrl('NotePage/zoom_image.png')} style = {{cursor: 'pointer'}} />
+                          <img className = 'add_button' src = {imageUrl('NotePage/add_image.png')} onClick = {() => {setAddQuestions(true); setUpdate(update + 1);}} style = {{cursor: 'pointer'}}/>
                           <div className = 'title GB px13 line30'>{booknameupload ? booknameupload : ''}</div>
-                          <img className = 'edit_button' style = {{margin: '483px 0px 0px 0px'}} src = {imageUrl('NotePage/edit_image.png')} />
+                          <img className = 'edit_button' style = {{margin: '483px 0px 0px 0px', cursor: 'pointer'}} src = {imageUrl('NotePage/edit_image.png')} />
                       </div>
                       {MementoBookPage}
                   </div>
@@ -576,14 +576,14 @@ Cherish your memories, memento`,
                       <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)감동'/>
                   </div>}
                   <div className = 'button_container'>
-                      <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} onClick = {() => setBlock(!block)}/>
-                      <img className = 'order_button' src = {imageUrl('NotePage/sort_image.png')} onClick = {() => setOrderContainer(!orderContainer)}/>
+                      <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} onClick = {() => setBlock(!block)} style = {{cursor: 'pointer'}}/>
+                      <img className = 'order_button' src = {imageUrl('NotePage/sort_image.png')} onClick = {() => setOrderContainer(!orderContainer)} style = {{cursor: 'pointer'}}/>
                   {orderContainer && <div className="orderContainer">
-                      <div className={"NS px12 bold " + (order !== 1 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered); setUpdate(update + 1); console.log(questions); setOrder(1);}}>최근 답변순</div>
-                      <div className={"NS px12 bold " + (order !== 2 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered_reverse); setUpdate(update + 1); console.log(questions); setOrder(2);}}>과거 답변순</div>
-                      <div className={"NS px12 bold " + (order !== 0 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_made); setUpdate(update + 1); setOrder(0);}}>질문 생성일</div>
+                      <div className={"NS px12 bold " + (order !== 1 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered); setUpdate(update + 1); console.log(questions); setOrder(1);}} style = {{cursor: 'pointer'}}>최근 답변순</div>
+                      <div className={"NS px12 bold " + (order !== 2 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered_reverse); setUpdate(update + 1); console.log(questions); setOrder(2);}} style = {{cursor: 'pointer'}}>과거 답변순</div>
+                      <div className={"NS px12 bold " + (order !== 0 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_made); setUpdate(update + 1); setOrder(0);}} style = {{cursor: 'pointer'}}>질문 생성일</div>
                   </div>}
-                      <img src = {imageUrl('NotePage/add_image_.png')} onClick = {() => {setAddQuestions(true); window.scrollTo(0, 0);}}/>
+                      <img src = {imageUrl('NotePage/add_image_.png')} onClick = {() => {setAddQuestions(true); window.scrollTo(0, 0);}} style = {{cursor: 'pointer'}}/>
                   </div>
               </div>
               <div className = 'written_question margin_note' style = {{marginTop: '-23px'}}>

@@ -25,7 +25,7 @@ function ContentName (props : Props) {
               <div className = 'date'>
                   {'date : ' + props.date}
               </div>
-              <div className = 'source'>
+              <div className = 'source' onClick = {() => window.open(props.source, '_blank')} style = {{cursor: 'pointer'}}>
                   {'출처 : ' + props.source}
               </div>
           </div>

@@ -1,5 +1,9 @@
 @import 'Consts.scss';
 
+div.checkbox {
+    cursor: pointer;
+}
+
 div.MyPage {
     div.UserInfo {
         display: flex;
@@ -157,6 +161,7 @@ div.MyPage {
                         margin-right: 20px;
                     }
                     div.checkbox {
+                        cursor: pointer;
                         width: 24px;
                         height: 24px;
                         border-radius: 50%;
@@ -320,6 +325,7 @@ div.MyPage {
                     display: flex;
                     align-items: center;
                     div.checkbox {
+                        cursor: pointer;
                         width:24px;
                         height:24px;
                         border-radius: 50%;

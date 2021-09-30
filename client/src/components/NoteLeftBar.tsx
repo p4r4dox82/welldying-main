@@ -34,7 +34,7 @@ function NoteLeftBar (props: Props) {
             )
           })}
         </div>
-        <div className="adduser NS px12 bold line25" onClick = {() => props.setAddUserGive(true)}>{'+ 수정하기'}</div>
+        <div className="adduser NS px12 bold line25" onClick = {() => props.setAddUserGive(true)} style = {{cursor: 'pointer'}}>{'+ 추가하기'}</div>
       </div>
     );
   }, [user, users]);

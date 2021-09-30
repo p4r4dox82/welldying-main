@@ -53,7 +53,7 @@ function Login() {
                     <Link to='/findpassword'><span className='left'> 비밀번호 찾기 </span></Link>
                     <Link to='/signup'><span className='right'> {`회원가입 >`} </span></Link>
                 </div>
-                <div className = 'other_login'>
+                <div className = 'other_login' style = {{cursor: 'pointer'}}>
                     <KakaoLogin
                         token={kakaoJskey}
                         onSuccess={async (result) => {
