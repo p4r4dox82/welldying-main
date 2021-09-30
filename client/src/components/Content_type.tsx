@@ -104,13 +104,13 @@ function Content_type (props : Props) {
                 <div className="page">
                   <div className="number GB px20 px45 bold">#1</div>
                   <div className="subtitle GB px20 line40" style = {{marginTop: '5px'}}>{content?.detail.subtitle}</div>
-                  <textarea name="" id="" rows={7} className="detail GB px13 line30" value = {content?.detail.bookdetail[0]} style  = {{marginTop: '40px'}} readOnly></textarea>
+                  <textarea name="" id="" cols = {36} rows={7} className="detail GB px13 line30" value = {content?.detail.bookdetail[0]} style  = {{marginTop: '40px', textAlign: 'justify'}} readOnly></textarea>
                 </div>
             );
           } else {
               return (
                 <div className="page" style = {{padding: '62px 56px 0px 58px'}}>
-                  <textarea name="" id="" rows={10} className="detail GB px13 line30" value = {content?.detail.bookdetail[key]} readOnly></textarea>
+                  <textarea name="" id="" cols = {36} rows={10} className="detail GB px13 line30" value = {content?.detail.bookdetail[key]} readOnly></textarea>
                 </div>
               );
           }
