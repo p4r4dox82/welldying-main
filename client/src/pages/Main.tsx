@@ -85,6 +85,7 @@ function Main() {
     let SignupLinkClick = () => signupLink.current.click();
 
     let MobileMainContent = React.useMemo(() => {
+        if(mobileMainNumber === 5) return <></>;
         return (
             <>
             <Link to ='/signup' ref = {signupLink} style = {{display: 'none'}}></Link>
@@ -112,7 +113,10 @@ function Main() {
                         )
                     })}
                 </div>
-                <button className="Next NS px16 bold whiteop10" onClick = {mobileMainNumber === 4 ? () => SignupLinkClick() : () => setMobileMainNumber(mobileMainNumber + 1)} style = {{background: (mobileMainNumber === 4 ? 'rgba(35, 52, 42, 1)': '')}}>{(mobileMainNumber === 4 ? '회원가입': '다음>')}</button>
+                <div className="buttonContainer">
+                    {mobileMainNumber !== 0 && <button className="Before NS px16 bold" style = {{color: 'rgba(35, 52, 42, 1)', background: 'rgba(255, 255, 255, 1)'}} onClick = {() => setMobileMainNumber(mobileMainNumber - 1)}>{'<이전'}</button>}
+                    <button className="Next NS px16 bold whiteop10" onClick = {() => setMobileMainNumber(mobileMainNumber + 1)} style = {{width: (mobileMainNumber === 0 ? '291px' : '140px')}}>{'다음>'}</button>
+                </div>
             </div>
             </>
         )
@@ -120,13 +124,13 @@ function Main() {
 
     if(isMobile) return(
         <div className = 'mobile'>
-            {!user.loggedIn && MobileMainContent}
-            {user.loggedIn && <>
+            {(!user.loggedIn && mobileMainNumber !== 5) && MobileMainContent}
+            {(user.loggedIn || mobileMainNumber === 5) && <>
             <img src={imageUrl('mobileImage.png')} alt="" style = {{width: '100vw', objectFit: 'cover'}}/>
             <div className = 'notification' style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center',background: 'rgba(0, 0, 0, 0.8)', position: 'fixed', top: '0px', height: '100vh', alignContent: 'flex-start'}}>
-                <div className="GB px25 line40 whiteop10" style = {{paddingTop: '97px'}}>메멘토 모바일 서비스는</div>
-                <div className="GB px25 line40 whiteop10">오픈 준비중 입니다.</div>
-                <div className = 'px14 line30 whiteop7'>2021년 11월 초 출시 예정</div>
+                <div className="GB px25 line40 whiteop10" style = {{paddingTop: '97px'}}>회원가입 후, 웹 환경에서</div>
+                <div className="GB px25 line40 whiteop10">서비스를 이용해주세요.</div>
+                <div className = 'px14 line30 whiteop7'>모바일 서비스 2021년 10월 출시 예정</div>
                 <div className="dot" style = {{display: 'flex', gap: '7px', width: '30px', marginTop: '34px'}}>
                     <div>{MementoDotVector}</div>
                     <div>{MementoDotVector}</div>
@@ -139,12 +143,12 @@ function Main() {
                     <div style = {{width: '50px', height: '30px'}}></div>
                     <div>이외의 모든 서비스는</div>
                     <div>‘<span className = 'bold'>{'크롬(Chrome)'}</span>’을 통한 웹 환경에서 이용이 가능하며</div>
-                    <div>11월 2차 오픈을 통해 최적화를 진행할 예정입니다.</div>
+                    <div>10월 2차 오픈을 통해 최적화를 진행할 예정입니다.</div>
                     <div style = {{width: '50px', height: '30px'}}> </div>
                     <div>메멘토를 향한 여러분의 관심에</div>
                     <div>더욱 편리한 서비스로 보답하겠습니다. 감사합니다.</div>
                 </div>
-                <Link to ={'/signup'}><button className = 'NS bold px14 whiteop10'>회원가입</button></Link>
+                {!user?.loggedIn ? <Link to ={'/signup'}><button className = 'NS bold px14 whiteop10'>회원가입 하기</button></Link> : <button className = 'NS bold px14 whiteop10'>확인</button>}
             </div>
             </>
             }
