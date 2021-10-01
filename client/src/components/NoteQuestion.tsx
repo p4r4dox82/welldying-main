@@ -52,6 +52,7 @@ function NoteQuestion(props: Props) {
   let [del, setDel] = React.useState<boolean>(false);
   let [add, setAdd] = React.useState<boolean>(false);
   let [showcontent, setshowcontent] = React.useState<boolean>(false);
+  let [smallHover, setSmallHover] = React.useState<boolean>((props.type === 'small' ? false : true));
 
   let [, answers] = usePromise(getAnswers);
   let [, contents] = usePromise(getContents);
@@ -73,6 +74,10 @@ function NoteQuestion(props: Props) {
     width: 0,
     height: 0,
   });
+
+  React.useEffect(() => {
+    setSmallHover((props.type === 'small' ? false : true));
+  }, [props])
 
   React.useEffect(() => {
     if(!answer) return;
@@ -119,12 +124,17 @@ function NoteQuestion(props: Props) {
   if(!question) return <></>;
   else return (
     <div style = {{width: (props.type === 'small' ? '235px' : '')}}>
-        {props.written && <div className = {'questionBox ' + props.type + ' ' + String(props.order)}  style = {{cursor: 'pointer'}}>
+        {props.written && <div className = {'questionBox ' + props.type + ' ' + String(props.order)}  style = {{cursor: 'pointer'}} onMouseOver = {props.type === 'small' ? () => setSmallHover(true) : () => {}} onMouseLeave = {props.type === 'small' ? () => {setSmallHover(false); setDel(false); setAdd(false)} : () => {}}>
             <div className = 'click_area' style = {{width: '100%', height: '100%', borderRadius: '5px'}} onClick = {() => {setShow_answer(!show_answer); setAnswer_type('written');}}>
                 {props.type === 'small' && <div className = 'cover' style = {{background: 'rgba(255, 255, 255, 1)', width: '100%', height: '100px', top: '230px'}} />}
-                <div className = 'title GB px20 line40' style = {{margin: '0px'}} >
-                    <div>{question.title.split('\n')[0]}</div>
-                    <div>{question.title.split('\n')[1]}</div>
+                <div className = {'title GB ' + (props.type === 'small' ? 'px15 line30' : 'px20 line40')} style = {{margin: '0px'}} >
+                    {props.type === 'small' ? <div style = {{marginTop: '18px'}}>
+                        {question.title}
+                    </div>
+                    : <>
+                        <div>{question.title.split('\n')[0]}</div>
+                        <div>{question.title.split('\n')[1]}</div>
+                    </>}
                 </div>
                 <div className = 'answerdate GB px13'>{'답변일 : ' + (answer?.updatedAt === undefined ? String(parseDate(new Date())) : String(parseDate(new Date(Number(answer?.updatedAt)))))}</div>
                 {!(props.type === 'type2') && <div className = 'write_button NS px12' >
@@ -133,7 +143,7 @@ function NoteQuestion(props: Props) {
                 </div>}
             </div>
             {!(props.type === 'add') && <>
-                {!(props.type === 'small') && <>
+                {smallHover && <>
                     <div className="delButton" onClick = {() => {setDel(!del);}}>
                         {PlusVector}
                     </div>
@@ -148,7 +158,7 @@ function NoteQuestion(props: Props) {
                     <div className = 'angle' />
                     <div className = 'round' />
                 </div>
-                {del && <div className = 'del_container' style = {{zIndex: 10}}>
+                {del && smallHover && <div className = 'del_container' style = {{zIndex: 10}}>
                     <div className = 'text GB px14'>해당 질문을 삭제하시겠습니까?</div>
                     <button className = 'rec white NS px12' onClick = {() => setDel(false)}>돌아가기</button>
                     <button className = 'rec green NS px12' onClick = {async () => {
@@ -158,7 +168,7 @@ function NoteQuestion(props: Props) {
                             alert('질문이 삭제되었습니다.');
                     }}>삭제하기</button>
                 </div>}
-                {add && <div className = 'add_container' style = {{zIndex: 10}}>
+                {add && smallHover && <div className = 'add_container' style = {{zIndex: 10}}>
                     <div className = 'text GB px14 line20'>해당 질문을 메멘토 북에 추가하시겠습니까?</div>
                     <button className = 'rec white NS px12' onClick = {() => setAdd(false)}>돌아가기</button>
                     <button className = 'rec green NS px12' onClick = {async () => {
