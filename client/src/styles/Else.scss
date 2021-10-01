@@ -516,7 +516,7 @@ div.ConfirmBook {
         height: 441px;
         .BookContainerOverflow {
             width: calc(1032px + 56px);
-            height: 441px;
+            height: 446px;
             margin: auto;
             padding: 0px 28px;
             overflow: hidden;
@@ -529,6 +529,18 @@ div.ConfirmBook {
             border-top: 1px dashed #939C97;
             gap: 30px;
             transition: all 1s ease-in-out;
+            div.vectorContainer {
+                position: absolute;
+                top: 440px;
+                width: 236px;
+                transition: all 1s ease-in-out;
+                .vector {
+                    left: calc(50% - 147px/2);
+                    width: 147px;
+                    height: 4px;
+                    background: rgba(39, 57, 47, 0.6);
+                }
+            }
         }
         .buttonContainer {
             position: absolute;
@@ -588,11 +600,19 @@ div.ConfirmBook {
         }
         div.vector {
             margin-top: 69px;
-            width: 738px;
+            width: 915px;
             height: 1px;
-            margin-left: calc(50% - 738px/2);
+            margin-left: calc(50% - 915px/2);
             box-sizing: border-box;
             border-top: 1px dashed #939C97;
+        }
+        button.submit {
+            width: 501px;
+            height: 84px;
+            margin-top: 71px;
+            background: rgba(103, 116, 109, 1);
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+            border-radius: 5px;
         }
         div.detail {
             width: 858px;
