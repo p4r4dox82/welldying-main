@@ -12,7 +12,7 @@ import { uploadImage_formdata } from '../etc/api/image';
 import ReactCrop from 'react-image-crop';
 import { RootReducer } from '../store';
 import { useSelector } from 'react-redux';
-import { halfColon, PlusVector } from '../img/Vectors';
+import { halfColon, leftVector, PlusVector } from '../img/Vectors';
 
 interface Props {
   question: Question | undefined;
@@ -123,7 +123,7 @@ function NoteQuestion(props: Props) {
 
   if(!question) return <></>;
   else return (
-    <div style = {{width: (props.type === 'small' ? '235px' : '')}}>
+    <div style = {{width: (props.type === 'small' ? '235px' : ''), height: ((props.type === 'small' && !show_answer) ? '360px' : '')}}>
         {props.written && <div className = {'questionBox ' + props.type + ' ' + String(props.order)}  style = {{cursor: 'pointer'}} onMouseOver = {props.type === 'small' ? () => setSmallHover(true) : () => {}} onMouseLeave = {props.type === 'small' ? () => {setSmallHover(false); setDel(false); setAdd(false)} : () => {}}>
             <div className = 'click_area' style = {{width: '100%', height: '100%', borderRadius: '5px'}} onClick = {() => {setShow_answer(!show_answer); setAnswer_type('written');}}>
                 {props.type === 'small' && <div className = 'cover' style = {{background: 'rgba(255, 255, 255, 1)', width: '100%', height: '100px', top: '230px'}} />}
@@ -228,6 +228,13 @@ function NoteQuestion(props: Props) {
         </div>}
         {show_answer && <div className = {'note_question ' + answer_type + ' ' + props.type} style = {{marginLeft: (props.order !== -1 ? `${-30 -265 * (props.order % 3)}px` : ''), height: 'fit-content', marginTop: (props.type === 'add' ? '-121px' : '')}}>
             <img className = 'background' src = {imageUrl('ContentPage/question_background.png')} style = {{height: '100%'}}/>
+            {props.type === 'small' && <div className="question GB px18 line30">
+                <div>{question.title.split('\n')[0]}</div>
+                <div>{question.title.split('\n')[1]}</div>    
+            </div>}
+            <div className="closeQuestion" style = {{top: (props.type === 'small' ? '54px' : '174px')}} onClick = {() => setShow_answer(false)}>
+                {leftVector}
+            </div>
             <div className = 'question_container'>
                 <textarea className = 'answer_area GB px15 line40 op7' value={message} onChange={(e) => {setMessage(checkline(e.target.value)); setCharacternumbers(e.target.value.length);}} />
                 <div className = 'characternumbers NS px12 bold op6'>
