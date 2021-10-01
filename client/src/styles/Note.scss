@@ -170,6 +170,18 @@ div.margin_note {
   }
 }
 div.written_question {
+  .blockButton {
+    position: absolute;
+    left: 722px;
+    top: 0px;
+    width: 30px;
+    height: 30px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   img.block_button {
     position: absolute;
     left: 722px;
@@ -221,6 +233,16 @@ div.submenu_container {
       height: 30px;
       box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
       border-radius: 5px;
+    }
+    .blockButton {
+      width: 30px;
+      height: 30px;
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 1);
     }
     div.orderContainer {
       display: flex;
@@ -279,6 +301,49 @@ div.questionBox {
     align-items: center;
     gap: 7px;
   }
+  .delButton {
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 1);
+    transform: rotate(45deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 27px;
+    left: 699px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    &:hover {
+      background: rgba(250, 250, 250, 1);
+    }
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  .addButton {
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 27px;
+    left: 661px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    &:hover {
+      background: rgba(250, 250, 250, 1);
+    }
+    svg {
+      width: 6;
+      height: 10px;
+    }
+  }
   img.delete_button {
     position: absolute;
     top: 27px;
@@ -331,6 +396,24 @@ div.questionBox {
     left: 487px;
     width: 241px;
     height: 94px;
+    background: #FBFBFB;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 19px 23px;
+    gap: 15px 7px;
+    button {
+      width: 93px;
+      height: 26px;
+    }
+  }
+  .add_container {
+    position: absolute;
+    top: 65px;
+    left: 449px;
+    width: 241px;
+    height: 120px;
     background: #FBFBFB;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
@@ -467,7 +550,7 @@ div.questionBox {
       top: 47px;
       left: 523px;
     }
-    img.delete_button {
+    .delButton {
       position: absolute;
       top: 47px;
       left: 699px;

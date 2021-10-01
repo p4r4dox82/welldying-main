@@ -282,3 +282,28 @@ export const answer3_1 = (
 </svg>
 
 );
+
+export const halfColon = (
+    <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.05739 4.3862C4.19237 3.15714 4.59733 2.3267 5.57598 1.59591C6.48714 0.898338 5.81221 -0.297501 4.66483 0.067893C1.49265 1.06443 -0.127187 3.78828 0.00779923 7.04362C0.0752923 8.8706 1.39141 10 3.01124 10C4.79981 10 5.98094 8.70451 5.98094 7.04362C5.98094 5.71491 5.20477 4.68516 4.05739 4.3862Z" fill="#27392F"/>
+</svg>
+
+);
+
+export const rowAlignVector = (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.9" y="0.9" width="16.2" height="6.2" rx="1.1" stroke="#23342A" stroke-width="1.8"/>
+<rect x="0.9" y="10.9" width="16.2" height="6.2" rx="1.1" stroke="#23342A" stroke-width="1.8"/>
+</svg>
+
+);
+
+export const blockAlignVector = (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6.33333 1H1.66667C1.29848 1 1 1.29848 1 1.66667V6.33333C1 6.70152 1.29848 7 1.66667 7H6.33333C6.70152 7 7 6.70152 7 6.33333V1.66667C7 1.29848 6.70152 1 6.33333 1Z" stroke="#23342A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.3333 1H11.6667C11.2985 1 11 1.29848 11 1.66667V6.33333C11 6.70152 11.2985 7 11.6667 7H16.3333C16.7015 7 17 6.70152 17 6.33333V1.66667C17 1.29848 16.7015 1 16.3333 1Z" stroke="#23342A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.33333 11H1.66667C1.29848 11 1 11.2985 1 11.6667V16.3333C1 16.7015 1.29848 17 1.66667 17H6.33333C6.70152 17 7 16.7015 7 16.3333V11.6667C7 11.2985 6.70152 11 6.33333 11Z" stroke="#23342A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.3333 11H11.6667C11.2985 11 11 11.2985 11 11.6667V16.3333C11 16.7015 11.2985 17 11.6667 17H16.3333C16.7015 17 17 16.7015 17 16.3333V11.6667C17 11.2985 16.7015 11 16.3333 11Z" stroke="#23342A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+);

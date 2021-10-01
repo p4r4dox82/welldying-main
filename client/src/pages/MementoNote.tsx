@@ -13,6 +13,7 @@ import { getSection, getSections } from '../etc/api/section';
 import { getAnswers } from '../etc/api/answer';
 import usePromise from '../etc/usePromise';
 import { setupMaster } from 'cluster';
+import { blockAlignVector, rowAlignVector } from '../img/Vectors';
 
 interface MatchParams {
     id: string;
@@ -129,7 +130,9 @@ function MementoNote({ match } : Props) {
                   <div className = 'title GB px16 bold line30'>
                   {section?.title}
                   </div>
-                  <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} onClick = {() => setBlock(!block)} style = {{cursor: 'pointer'}}/>
+                  <div className="blockButton" onClick = {() => setBlock(!block)} style = {{cursor: 'pointer'}}>
+                    {block ? rowAlignVector : blockAlignVector}
+                  </div>
                   <img className = 'order_button' src = {imageUrl('ContentPage/order_button.svg')} onClick = {() => setOrderContainer(!orderContainer)} style = {{cursor: 'pointer'}}/>
                   {orderContainer && <div className="orderContainer">
                       <div className={"NS px12 bold " + (order !== 1 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered); setUpdate(update + 1); console.log(questions); setOrder(1);}} style = {{cursor: 'pointer'}}>최근 답변순</div>

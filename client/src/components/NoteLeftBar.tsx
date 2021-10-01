@@ -51,7 +51,7 @@ function NoteLeftBar (props: Props) {
                 <Link to='/note/1'><div className = {'note' + (props.book ? '' : ' selected')} /></Link>
                 <div className = 'vector' />
                 <div className = 'title NS px12 bold op5'>나의 메멘토 북</div>
-                {(user.user?.bookname && user.user.bookname.length === 1) && <Link to='/notebook/1'><div className = {'note' + (props.book ? ' selected' : '')} /></Link>}
+                {(user.user?.bookname && user.user.bookname.length === 1) && <Link to='/notebook/0'><div className = {'note' + (props.book ? ' selected' : '')} /></Link>}
                 <div className = 'add note'>
                     <img className = 'add_image' src = {imageUrl('ContentPage/add_button.png')} onClick = {() => NoteBookClick()}/>
                     {(user.user?.bookname && user.user.bookname.length === 1) && <div className="notopen GB px12 whiteop10" style = {{width: '100%', height: '100%', background: 'rgba(96, 103, 99, 0.8)', boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: '0px', left: '0px', borderRadius: '5px'}}>오픈 준비중</div>}

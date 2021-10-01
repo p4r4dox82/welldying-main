@@ -12,6 +12,7 @@ import { uploadImage_formdata } from '../etc/api/image';
 import ReactCrop from 'react-image-crop';
 import { RootReducer } from '../store';
 import { useSelector } from 'react-redux';
+import { halfColon, PlusVector } from '../img/Vectors';
 
 interface Props {
   question: Question | undefined;
@@ -49,6 +50,7 @@ function NoteQuestion(props: Props) {
   let [save_success, setSave_success] = React.useState<boolean>(false);
   let [upload, setUpload] = React.useState<boolean>(false);
   let [del, setDel] = React.useState<boolean>(false);
+  let [add, setAdd] = React.useState<boolean>(false);
   let [showcontent, setshowcontent] = React.useState<boolean>(false);
 
   let [, answers] = usePromise(getAnswers);
@@ -131,7 +133,14 @@ function NoteQuestion(props: Props) {
                 </div>}
             </div>
             {!(props.type === 'add') && <>
-                {!(props.type === 'small') && <img className = 'delete_button' src = {imageUrl('NotePage/delete_button.png')} onClick = {() => {setDel(!del);}}/>}
+                {!(props.type === 'small') && <>
+                    <div className="delButton" onClick = {() => {setDel(!del);}}>
+                        {PlusVector}
+                    </div>
+                    {props.type !== 'type2' && <div className="addButton" onClick = {() => setAdd(!add)}>
+                        {halfColon}
+                    </div>}
+                </>}
                 {question.contents.length !== 0 && <div className = 'content_button' onMouseOver = {() => setshowcontent(true)} onMouseLeave = {() => setshowcontent(false)}>
                     <Link to={`/contentpage/${question.contents[0]}`}><button className = 'white NS px12 op10'>대표 컨텐츠 바로가기</button></Link>
                 </div>}
@@ -149,6 +158,21 @@ function NoteQuestion(props: Props) {
                             alert('질문이 삭제되었습니다.');
                     }}>삭제하기</button>
                 </div>}
+                {add && <div className = 'add_container' style = {{zIndex: 10}}>
+                    <div className = 'text GB px14 line20'>해당 질문을 메멘토 북에 추가하시겠습니까?</div>
+                    <button className = 'rec white NS px12' onClick = {() => setAdd(false)}>돌아가기</button>
+                    <button className = 'rec green NS px12' onClick = {async () => {
+                        if(user.user?.bookname.length === 0)
+                            alert('아직 메멘토 북이 존재하지 않습니다. 메멘토 북 추가 후 다시 시도해주세요.')
+                        else if (booked === 1 || answer?.book === 1)
+                            alert('이미 메멘토 북에 추가된 질문입니다.')
+                        else if (await addBook(Number(id), 1)) {
+                            setBooked(1);
+                            alert('해당 질문이 메멘토 북에 추가되었습니다.');
+                            setAdd(false);
+                        }
+                    }}>추가하기</button>
+                </div>}
             </>}
             {props.type === 'add' && <>
                 <button className = 'add_button' onClick = {async () => {
@@ -160,7 +184,7 @@ function NoteQuestion(props: Props) {
                 </button>
             </>}
             {showcontent && <div className = 'show_content_container'>
-            <img src = {((content?.imageData && content?.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '108px', height: '64px', objectFit: 'cover'}}/>
+            <img src = {((content?.imageData && content?.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: (props.type === 'small' ? '207px' : '108px'), height: (props.type === 'small' ? '122px' : '64px'), objectFit: 'cover', borderRadius: '5px'}}/>
             <div className = 'content_title NS px12 line15'>{content?.title.split('_')[0].slice(0, 25) + ((Number(content?.title.split('_')[0].length) > 25) ? '...' : '')}</div>
             <div className = 'content_writer NS px12 line15'>{content?.title.split('_')[1]}</div>
             </div>}
@@ -192,7 +216,7 @@ function NoteQuestion(props: Props) {
                 <div className = 'content_writer NS px12 line15'>{content?.title.split('_')[1]}</div>
             </div>}
         </div>}
-        {show_answer && <div className = {'note_question ' + answer_type + ' ' + props.type} style = {{marginLeft: (props.order !== -1 ? `${-30 -265 * (props.order % 3)}px` : ''), height: 'fit-content'}}>
+        {show_answer && <div className = {'note_question ' + answer_type + ' ' + props.type} style = {{marginLeft: (props.order !== -1 ? `${-30 -265 * (props.order % 3)}px` : ''), height: 'fit-content', marginTop: (props.type === 'add' ? '-121px' : '')}}>
             <img className = 'background' src = {imageUrl('ContentPage/question_background.png')} style = {{height: '100%'}}/>
             <div className = 'question_container'>
                 <textarea className = 'answer_area GB px15 line40 op7' value={message} onChange={(e) => {setMessage(checkline(e.target.value)); setCharacternumbers(e.target.value.length);}} />
