@@ -25,6 +25,7 @@ function ConfirmMementoBook({match} : Props) {
     let user = useSelector((state: RootReducer) => state.user);
     let [, allUsers] = usePromise(getUsers);
     let [giveusername, setGiveusername] = React.useState<string>('');
+    let [selectBook, setSelectBook] = React.useState<number>(id);
     React.useEffect(() => {
         console.log(id);
         setGiveusername(String(user.user?.UsersInfo.get[id].username));
@@ -33,7 +34,7 @@ function ConfirmMementoBook({match} : Props) {
 
     let input_file = React.useRef<any>(null);
     let [imageUri, setImageUri] = React.useState<string>('');
-    let handleFileinput  = async (e: any) => {
+    let handleFileinput = async (e: any) => {
         let formData = new FormData();
         formData.append('image', e.target.files[0]);
     
@@ -76,9 +77,9 @@ function ConfirmMementoBook({match} : Props) {
                 <img className = 'Background' src={imageUrl('MyPageBackground.png')} alt="" style = {{opacity: '0.4', objectFit: 'none', overflow: 'hidden', height: '100%', width: '100%'}}/>
                 <div className="titleContainer">
                     <div className="title GB px25 line40">{giveUser?.name + "님의 사전 장례 & 연명의료, 장기기증 의향서"}</div>
-                    <div className="subtitle NS px15 line30 op5">
-                        <div>메멘토는 2020년 4월을 시작으로 현재까지 다양한 어쩌구를 이루었으며</div>
-                        <div>신뢰할 수 있는 브랜드로 성장해 나갈 것입니다.</div>
+                    <div className="subtitle NS px15 line30 op5" style = {{letterSpacing: '0em'}}>
+                        <div>{giveUser?.name + "님이 작성하신 장례, 연명치료, 장기기증 의향서입니다."}</div>
+                        <div>본 의향서는 작성자 본인의 선택에 따라 언제든지 변경될 수 있습니다.</div>
                     </div>
                 </div>
                 <div className="deathInfoContainer" style = {{width: '269px', gap: '13px', marginTop: '61px', height: '132px'}}>
@@ -135,15 +136,23 @@ function ConfirmMementoBook({match} : Props) {
             <>
             <div className="BookContainerOverflow">
                 <div className="BookContainer" style = {{left: `${pagenumber * -266 + 'px'}`}}>
-                    {user.user?.UsersInfo.get.map((userInfo) => {
+                    {user.user?.UsersInfo.get.map((userInfo, key) => {
                         let giveuser = allUsers?.find((user) => user.username === userInfo.username);
                         if(!giveuser) return;
                         else return (
-                            <div onClick = {() => setGiveusername(userInfo.username)}>
+                            <div onClick = {() => {
+                                setGiveusername(userInfo.username);
+                                setSelectBook(key);
+                            }}>
                                 <MementoBook name = {userInfo.name} bookname = {giveuser?.bookname[0]} mine = {false} accept = {userInfo.accept} giveusername = {giveuser?.username} getusername = {String(user.user?.username)}></MementoBook>
                             </div>
                         )
                     })}
+                    <div className="vectorContainer" style = {{left: `${pagenumber * 266 + 'px'}`}}>
+                        <div className="vector">
+
+                        </div>
+                    </div>
                 </div>
             </div>
             {Number(user.user?.UsersInfo.get.length) > 4 && <div className="buttonContainer margin_base">
@@ -160,11 +169,11 @@ function ConfirmMementoBook({match} : Props) {
             <Header additionalClass = ''></Header>
             <div className="ConfirmBook">
                 <div className="block titleBlock">
-                    <div className="title GB px25 line25 ">메멘토는 성장합니다</div>
-                    <div className="subtitle NS px15 line20 op5">memento history</div>
+                    <div className="title GB px25 line25 ">메멘토북 보관함</div>
+                    <div className="subtitle NS px15 line20 op5">memento book storage</div>
                     <div className="detail NS px15 line20 op8">
-                        <div>메멘토는 2020년 4월을 시작으로 현재까지 다양한 어쩌구를 이루었으며</div>
-                        <div>신뢰할 수 있는 브랜드로 성장해 나갈 것입니다.</div>
+                        <div>{`${giveUser?.name}님께 전달된 메멘토북을 보관하는 공간입니다.`}</div>
+                        <div>찾으시는 메멘토북을 클릭해주세요.</div> 
                     </div>
                 </div>
                 <div className="block BookBlock">
@@ -176,10 +185,6 @@ function ConfirmMementoBook({match} : Props) {
                         <div>작성자가 자신의 사후(死後)에 전달되기를 희망한 기록입니다.</div>
                         <div>기록의 열람 방법은 하단의 글을 참고해주세요.</div>
                     </div>
-                    <button className="imageContainer" onClick = {() => handleClick()}>
-                        <div className="plus">{PlusVector}</div>
-                        <div className="NS px12" style = {{marginTop: '15px'}}>{giveUser?.name + '님의 사망확인서 제출하기'}</div>
-                    </button>
                     <div className="vector"></div>
                     <div className="detail GB px15 line45">
                         <div>메멘토는 작성자의 사망 사실을 확인한 후, 본 기록의 열람 권한을 오픈하는 방식으로 유언을 전달하고 있습니다. 그렇기 때문에 메멘토 북의 수령인 중 최소 1명 이상이 작성자분의 사망 사실을 메멘토에 알려주셔야 유언의 열람이 가능하게 됩니다. 따라서 사망사실을 확인하신 작성자분께서는 다음과 같은 방식으로 메멘토에 사망 사실 신고 절차를 진행해주시면 됩니다.</div>
@@ -187,8 +192,10 @@ function ConfirmMementoBook({match} : Props) {
                         <div>2. 제출하신 서류는 3일 이내에 확인 후 작성해주신 연락처를 통해 열람 가능 여부를 회신 드릴 예정입니다.</div>
                         <div>3. 추가적인 문의 사항이 있다면 memento.welldying@gmail.com으로 연락주세요!</div>
                     </div>
+                    <div className="vector"></div>
+                    <button className="submit NS bold whiteop10 px16" onClick = {() => handleClick()}>{'사망 사실 신고하기>'}</button>
                     {DeathInfoContainer}
-                    <input type="file" ref = {input_file} style = {{display: 'none'}} />
+                    <input type="file" onChange={e => {handleFileinput(e)}} ref = {input_file} style = {{display: 'none'}} />
                 </div>
             </div>
             <Footer additionalClass = ''></Footer>

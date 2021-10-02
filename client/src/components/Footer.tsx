@@ -8,6 +8,8 @@ interface Props {
     additionalClass: string;
 }
 
+let snsuri = ["https://www.instagram.com/memento.welldying/", "https://business.facebook.com/memento.welldying/", "https://blog.naver.com/memento_welldying", ""];
+
 function Footer({ additionalClass } : Props) {
     return (
         <footer className={additionalClass}>
@@ -34,7 +36,7 @@ function Footer({ additionalClass } : Props) {
                 {MementoLogo}
                 <div className = 'share_container'>
                     {[...Array(4).keys()].map((i, key) => (
-                      <img src={imageUrl(`share_image_${i+1}.png`)} alt = "profile" key = {key}/>
+                      <img src={imageUrl(`share_image_${i+1}.png`)} alt = "profile" key = {key} onClick = {key === 3 ? () => {} : () => window.open(snsuri[key], "_blank")} style = {{cursor: 'pointer'}}/>
                     ))}
                 </div>
             </div>

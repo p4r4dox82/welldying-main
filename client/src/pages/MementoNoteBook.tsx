@@ -17,7 +17,7 @@ import { kakaoJskey } from '../etc/config';
 import { imageUrl } from '../etc/config';
 import { parseDate } from '../etc/index';
 
-import { EmailVector, Colon, leftVector, rightVector } from '../img/Vectors';
+import { EmailVector, Colon, leftVector, rightVector, blockAlignVector, rowAlignVector } from '../img/Vectors';
 import { init, send } from 'emailjs-com';
 
 declare global {
@@ -111,7 +111,7 @@ function MementoNoteBook({ match } : Props) {
         })}
       </>
     );
-  }, [questions, answers, written_questions]);
+  }, [questions, answers, written_questions, block]);
 
   let section_written_questions = React.useMemo(() => {
     return (
@@ -576,7 +576,9 @@ Cherish your memories, memento`,
                       <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)감동'/>
                   </div>}
                   <div className = 'button_container'>
-                      <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} onClick = {() => setBlock(!block)} style = {{cursor: 'pointer'}}/>
+                      <div className="blockButton" onClick = {() => setBlock(!block)} style = {{cursor: 'pointer'}}>
+                        {block ? rowAlignVector : blockAlignVector}
+                      </div>
                       <img className = 'order_button' src = {imageUrl('NotePage/sort_image.png')} onClick = {() => setOrderContainer(!orderContainer)} style = {{cursor: 'pointer'}}/>
                   {orderContainer && <div className="orderContainer">
                       <div className={"NS px12 bold " + (order !== 1 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered); setUpdate(update + 1); console.log(questions); setOrder(1);}} style = {{cursor: 'pointer'}}>최근 답변순</div>
