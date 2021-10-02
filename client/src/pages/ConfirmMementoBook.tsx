@@ -77,9 +77,9 @@ function ConfirmMementoBook({match} : Props) {
                 <img className = 'Background' src={imageUrl('MyPageBackground.png')} alt="" style = {{opacity: '0.4', objectFit: 'none', overflow: 'hidden', height: '100%', width: '100%'}}/>
                 <div className="titleContainer">
                     <div className="title GB px25 line40">{giveUser?.name + "님의 사전 장례 & 연명의료, 장기기증 의향서"}</div>
-                    <div className="subtitle NS px15 line30 op5">
-                        <div>메멘토는 2020년 4월을 시작으로 현재까지 다양한 어쩌구를 이루었으며</div>
-                        <div>신뢰할 수 있는 브랜드로 성장해 나갈 것입니다.</div>
+                    <div className="subtitle NS px15 line30 op5" style = {{letterSpacing: '0em'}}>
+                        <div>{giveUser?.name + "님이 작성하신 장례, 연명치료, 장기기증 의향서입니다."}</div>
+                        <div>본 의향서는 작성자 본인의 선택에 따라 언제든지 변경될 수 있습니다.</div>
                     </div>
                 </div>
                 <div className="deathInfoContainer" style = {{width: '269px', gap: '13px', marginTop: '61px', height: '132px'}}>
