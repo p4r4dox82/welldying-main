@@ -89,22 +89,26 @@ function Main() {
         return (
             <>
             <Link to ='/signup' ref = {signupLink} style = {{display: 'none'}}></Link>
-            <div className = 'mobileMainInfo' style = {{display: 'flex', justifyContent: 'center', width: '100vw', height: '100vh', flexWrap: 'nowrap', alignContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
+            <div className = 'mobileMainInfo' style = {{display: 'flex', justifyContent: 'space-evenly', width: '100vw', height: '100vh', flexWrap: 'nowrap', alignContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
                 <img src={imageUrl('main_background.png')} alt="" className="background" style = {{width: '100vw', height: '100vh', objectFit: 'cover', position: 'absolute', opacity: '0.4'}}/>
-                <div className="GB px14 op4">{MementoInfo[mobileMainNumber].name}</div>
-                <div className="MementoLogo">{MementoLogo}</div>
+                <div>
+                    <div className="GB px14 op4" style = {{marginTop: '30px'}}>{MementoInfo[mobileMainNumber].name}</div>
+                    <div className="MementoLogo">{MementoLogo}</div>
+                </div>
                 <div className="imageContainer">
                     <div className="circleBorder"></div>
                     <img src={imageUrl(`MainImage${mobileMainNumber + 1}.png`)} alt="" className="MainImage" />
                     <div className="vector">{MainImageVector}</div>
                 </div>
-                <div className="MainText GB px20 line30 ">
-                    <div>{MementoInfo[mobileMainNumber].maintext.split('\n')[0]}</div>
-                    <div>{MementoInfo[mobileMainNumber].maintext.split('\n')[1]}</div>
-                </div>
-                <div className="Colon">{Colon}</div>
-                <div className="subtext GB px12 line30 op7">
-                    {MementoInfo[mobileMainNumber].subtext}
+                <div>
+                    <div className="MainText GB px20 line30 ">
+                        <div>{MementoInfo[mobileMainNumber].maintext.split('\n')[0]}</div>
+                        <div>{MementoInfo[mobileMainNumber].maintext.split('\n')[1]}</div>
+                    </div>
+                    <div className="Colon">{Colon}</div>
+                    <div className="subtext GB px12 line30 op7">
+                        {MementoInfo[mobileMainNumber].subtext}
+                    </div>
                 </div>
                 <div className="DotContainer">
                     {[...Array(5).keys()].map((i, key) => {
@@ -127,16 +131,18 @@ function Main() {
             {(!user.loggedIn && mobileMainNumber !== 5) && MobileMainContent}
             {(user.loggedIn || mobileMainNumber === 5) && <>
             <img src={imageUrl('mobileImage.png')} alt="" style = {{width: '100vw', objectFit: 'cover'}}/>
-            <div className = 'notification' style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center',background: 'rgba(0, 0, 0, 0.8)', position: 'fixed', top: '0px', height: '100vh', alignContent: 'flex-start'}}>
-                <div className="GB px25 line40 whiteop10" style = {{paddingTop: '97px'}}>회원가입 후, 웹 환경에서</div>
-                <div className="GB px25 line40 whiteop10">서비스를 이용해주세요.</div>
-                <div className = 'px14 line30 whiteop7'>모바일 서비스 2021년 10월 출시 예정</div>
-                <div className="dot" style = {{display: 'flex', gap: '7px', width: '30px', marginTop: '34px'}}>
+            <div className = 'notification' style = {{display: 'flex', justifyContent: 'space-around', width: '100vw', height: '100vh', flexWrap: 'nowrap', alignContent: 'center', flexDirection: 'column', alignItems: 'center', position: 'fixed', top: '0px', background: 'rgba(0, 0, 0, 0.8)'}}>
+                <div>
+                    <div className="GB px25 line40 whiteop10" style = {{paddingTop: '40px'}}>회원가입 후, 웹 환경에서</div>
+                    <div className="GB px25 line40 whiteop10">서비스를 이용해주세요.</div>
+                    <div className = 'px14 line30 whiteop7'>모바일 서비스 2021년 10월 출시 예정</div>
+                </div>
+                <div className="dot" style = {{display: 'flex', gap: '7px', width: '30px'}}>
                     <div>{MementoDotVector}</div>
                     <div>{MementoDotVector}</div>
                     <div>{MementoDotVector}</div>
                 </div>
-                <div className = 'NS px14 line30 whiteop7' style = {{marginTop: '57px', letterSpacing: '-0.05em'}}>
+                <div className = 'NS px14 line30 whiteop7' style = {{letterSpacing: '-0.05em'}}>
                     <div>메멘토의 <span className = 'bold'>MVP</span> 서비스에 관심을 가져주셔서 감사합니다.</div>
                     <div>현재 메멘토의 모바일 서비스에서는 서비스 이용을 위한</div>
                     <div>‘<span className = 'bold'>회원가입</span>’ 기능만을 제공하고 있습니다.</div>

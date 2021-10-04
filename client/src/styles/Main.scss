@@ -10,7 +10,7 @@
       text-align: center;
     }
     div.MementoLogo {
-      margin-top: 15px;
+      margin-top: 10px;
       svg {
         width: 134px;
         height: 31px;
@@ -22,7 +22,7 @@
       }
     }
     .imageContainer {
-      margin-top: 45px;
+      margin-top: 10px;
       width: 188px;
       height: 164px;
       .circleBorder {
@@ -51,7 +51,7 @@
       
     }
     div.MainText {
-      margin-top: 40px;
+      margin-top: 10px;
     }
     div.Colon {
       margin-top: 12px;
@@ -70,10 +70,11 @@
     }
     div.subtext {
       width: 282px;
+      margin-left: calc(50% - 282px/2);
       text-align: justify;
     }
     div.DotContainer {
-      margin-top: 30px;
+      margin-top: 10px;
       width: 76px;
       display: flex;
       gap: 10px;
@@ -96,7 +97,8 @@
       width: 291px;
     }
     button {
-      margin-top: 65px;
+      margin-top: 10px;
+      margin-bottom: 40px;
       width: 140px;
       height: 50px;
       border-radius: 5px;
@@ -127,7 +129,7 @@
       border: 1px solid #FFFFFF;
       box-sizing: border-box;
       border-radius: 5px;
-      margin-top: 79px;
+      margin-bottom: 40px;
     }
   }
 }
