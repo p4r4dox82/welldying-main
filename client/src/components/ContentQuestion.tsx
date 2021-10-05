@@ -139,6 +139,9 @@ function ContentQuestion (props : Props) {
                         </button>
                         <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
                     </div>
+                    {imageUri !== '' && <button className="delete green NS px12 whiteop10" onClick = {() => {
+                        setImageUri('');
+                    }}>사진 삭제하기</button>}
                 </div>
                 <div className = 'bottom_container'>
                     <div className = 'more'>
