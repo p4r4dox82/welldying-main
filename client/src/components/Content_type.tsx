@@ -133,9 +133,9 @@ function Content_type (props : Props) {
               <ReactPlayer width = {'769px'} height = {'432px'} url = {content.source} controls />
               <div className="donotplay"  style = {{width: '769px', height: '432px', position: 'absolute', top: '61px', left: '0px', cursor: 'pointer'}} onClick = {() => window.open(content?.source, '_blank')}></div>
               <div className = 'cover'>
-                  <div className = 'detail GB px14 op6'>영상의 한줄</div>
+                  <div className = 'detail GB px14 op6'>영상의 제목</div>
                   <div className = 'title GB px20 op9 line40'>{content.title.length > 30 ? content.title.slice(0, 30) + '...' : content.title}</div>
-                  <div className = 'date GB px14 op9'>{'영상제작일 : ' + String(parseDate(new Date(Number(content.date))))}</div>
+                  <div className = 'date GB px14 op9'>{'영상 제작일 : ' + String(parseDate(new Date(Number(content.date))))}</div>
                   <div className = 'tag GB px14 op6'>{content.tag}</div>
                   <div className={"vector_container like" + (liked ? ' liked' : '')} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;
@@ -180,7 +180,7 @@ function Content_type (props : Props) {
                   <div className = 'cover_blur' />
                   <div className = 'detail GB px14 op6'>책의 제목</div>
                   <div className = 'title GB px20 op9 line40'>{content.title.length > 30 ? content.title.slice(0, 30) + '...' : content.title}</div>
-                  <div className = 'date GB px14 op9'>{'영상제작일 : ' + String(parseDate(new Date(Number(content.date))))}</div>
+                  <div className = 'date GB px14 op9'>{'컨텐츠 제작일 : ' + String(parseDate(new Date(Number(content.date))))}</div>
                   <div className = 'tag GB px14 op6'>{content.tag}</div>
                   <div className={"vector_container like" + (liked ? ' liked' : '')} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;

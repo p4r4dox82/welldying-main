@@ -73,7 +73,7 @@ function ContentPage ({ match } : Props) {
             <div className = 'block contentpage' style = {{marginTop: '176px'}}>
                 <div className = 'contentsummary margin_large'>
                     <div className = 'title GB px20'>
-                    컨텐츠 내용 요약
+                    컨텐츠 요약
                     </div>
                     <div className = 'summary GB px16 line35'>
                     {content?.detail.summary.split('\n').map((summary_line) => 

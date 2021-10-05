@@ -88,6 +88,10 @@ function AdminWriteQuestion({ match }: Props) {
                     <textarea value={title} onChange={(e) => setTitle(e.target.value)}/>
                 </div>
                 <div className='row'>
+                    <div className='label'> 세부 질문 </div>
+                    <textarea value={message} onChange={(e) => setMessage(e.target.value)}/>
+                </div>
+                <div className='row'>
                     <div className='label'> 컨텐츠 목록 </div>
                     { contentForm }
                     <button onClick={(e) => {

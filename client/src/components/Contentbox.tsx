@@ -8,6 +8,7 @@ import { like_vector } from '../img/Vectors';
 import { bookmark_vector } from '../img/bookmark_vector';
 import usePromise from '../etc/usePromise';
 import { getQuestions } from '../etc/api/question';
+import { parseDate } from '../etc';
 
 interface Props {
     additionalClass: string;
@@ -104,7 +105,7 @@ function Contentbox(props: Props) {
                   </div>
               </div>}
               <div className = 'title' onClick = {() => {LinkClick();}} style = {{cursor: 'pointer'}}>{'[' + content.type + ']' + content.title.slice(0, 30) + (content.title.length > 30 ? '...' : '')}</div>
-              <div className = 'date'>{'2021.08.03'}</div>
+              <div className = 'date'>{String(parseDate(new Date(Number(content.date))))}</div>
           </div>
           {(user.loggedIn && content.userdata.read.find((username) => username === user.user!.username)) && <div className = 'read' style = {{top: (props.additionalClass === 'small' ? '134.5px' : '186.5px')}}/>}
           {(user.loggedIn && content.userdata.bookmark.find((username) => username === user.user!.username)) && <img className = 'bookmark' src = {imageUrl('ContentPage/bookmark.png')} />}
