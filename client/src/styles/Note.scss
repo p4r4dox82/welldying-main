@@ -766,6 +766,15 @@ div.note_question {
     }
     div.image_uploader {
       width: 678px;
+      button.delete {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        padding: 0px;
+        width: 100px;
+        height: 32px;
+        border-radius: 16px;
+      }
     }
     &.unwritten {
       height: 967px;
