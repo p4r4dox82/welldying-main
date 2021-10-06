@@ -295,7 +295,7 @@ function MementoNoteBook({ match } : Props) {
     return (
       !booknameupload && <div className="setbookname" style = {{width: '100vw', height: '100vh', background: 'rgba(0, 0, 0, 0.6)', position: 'fixed', zIndex: 200, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
           <div className="booknamecontainer" style = {{width: '837px', height: '137px', padding: '38px 50px', background: '#FFFFFF', boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.08)', borderRadius: '5px', display: 'flex', justifyContent: 'space-between'}}>
-            <input type="text" className="bookname NS bold px14" style = {{width: '581px', height: '100%', borderRadius: '5px', padding: '18px 30px', color: 'rgba(122, 121, 120, 1)', outline: 'none', border: 'none', boxShadow: 'inset 0px 1px 2px 1px rgba(0, 0, 0, 0.25)', background: 'rgba(249, 249, 249, 1)' }} placeholder = '노트의 제목을 입력해주세요. (15자 이내)' value = {bookname} onChange = {(e) => {setBookname(checkbookname(e.target.value));}} />
+            <input type="text" className="bookname NS bold px14" style = {{width: '581px', height: '100%', borderRadius: '5px', padding: '18px 30px', color: 'rgba(122, 121, 120, 1)', outline: 'none', border: 'none', boxShadow: 'inset 0px 1px 2px 1px rgba(0, 0, 0, 0.25)', background: 'rgba(249, 249, 249, 1)' }} placeholder = '메멘토 북의 제목을 입력해주세요. (15자 이내)' value = {bookname} onChange = {(e) => {setBookname(checkbookname(e.target.value));}} />
             <button className="submit green NS bold px16" style = {{width: '141px', height: '100%', background: 'rgba(39, 57, 47, 1)', borderRadius: '5px'}} onClick = {async () => {
               if(await setBookName(user.user!.username, [bookname]))
                 setBooknameupload(bookname);
