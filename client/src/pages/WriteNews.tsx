@@ -43,10 +43,10 @@ function WriteNews({ match }: Props) {
             <div className = 'writenews_page'>
                 <div className = 'submenu_container'>
                     <SubmenuContainer additionalClass = 'news'/>
-                    <div className = 'searchContainer'>
+                    {false && <div className = 'searchContainer'>
                         <img src = {imageUrl('search_image.png')} />
                         <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)메멘토 이벤트'/>
-                    </div>
+                    </div>}
                 </div>
                 <div className = 'main_title'>
                 보도자료

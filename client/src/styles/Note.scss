@@ -101,6 +101,10 @@ div.NoteLeftBar {
       span:not(:last-child)::after {
         content: '/';
       }
+      &.checked {
+        color: rgba(35, 52, 42, 0.6);
+        font-weight: 800;
+      }
     }
   }
   &.fixed {
@@ -166,6 +170,18 @@ div.margin_note {
   }
 }
 div.written_question {
+  .blockButton {
+    position: absolute;
+    left: 722px;
+    top: 0px;
+    width: 30px;
+    height: 30px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   img.block_button {
     position: absolute;
     left: 722px;
@@ -217,6 +233,16 @@ div.submenu_container {
       height: 30px;
       box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
       border-radius: 5px;
+    }
+    .blockButton {
+      width: 30px;
+      height: 30px;
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 1);
     }
     div.orderContainer {
       display: flex;
@@ -275,6 +301,49 @@ div.questionBox {
     align-items: center;
     gap: 7px;
   }
+  .delButton {
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 1);
+    transform: rotate(45deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 27px;
+    left: 699px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    &:hover {
+      background: rgba(250, 250, 250, 1);
+    }
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  .addButton {
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 27px;
+    left: 661px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    &:hover {
+      background: rgba(250, 250, 250, 1);
+    }
+    svg {
+      width: 6;
+      height: 10px;
+    }
+  }
   img.delete_button {
     position: absolute;
     top: 27px;
@@ -327,6 +396,24 @@ div.questionBox {
     left: 487px;
     width: 241px;
     height: 94px;
+    background: #FBFBFB;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 19px 23px;
+    gap: 15px 7px;
+    button {
+      width: 93px;
+      height: 26px;
+    }
+  }
+  .add_container {
+    position: absolute;
+    top: 65px;
+    left: 449px;
+    width: 241px;
+    height: 120px;
     background: #FBFBFB;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
@@ -418,6 +505,39 @@ div.questionBox {
         width: 180px;
       }
     }
+    .delButton {
+      width: 23px;
+      height: 23px;      
+      top: 10px;
+      left: 200px;
+      svg {
+        width: 13.5px;
+        height: 13.5px;
+      }
+    }
+    .del_container {
+      left:0px;
+      top: 40px;
+      width: 235px;
+      padding: 19px 20px;
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.10);
+    }
+    .add_container {
+      left:0px;
+      top: 40px;
+      width: 235px;
+      padding: 19px 20px;
+    }
+    .addButton {
+      width: 23px;
+      height: 23px;
+      top: 10px;
+      left: 170px;
+      svg {
+        width: 5px;
+        height: 8px;
+      }
+    }
     div.left_vector {
       top: 230px;
       left: 0px;
@@ -463,7 +583,7 @@ div.questionBox {
       top: 47px;
       left: 523px;
     }
-    img.delete_button {
+    .delButton {
       position: absolute;
       top: 47px;
       left: 699px;
@@ -535,6 +655,31 @@ div.note_question {
       opacity: 0.4;
       filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.23));
       border-radius: 5px;
+    }
+    .question {
+      position: absolute;
+      top: 54px;
+      left: 60px;
+    }
+    .closeQuestion {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #FAFAFA;
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+      position: absolute;
+      top: 54px;
+      left: 692px;
+      transform: rotate(90deg);
+      z-index: 2;
+      svg {
+        width: 10px;
+        height: 16px;
+      }
     }
     img.memento_colon {
       width: 5px;
@@ -621,6 +766,15 @@ div.note_question {
     }
     div.image_uploader {
       width: 678px;
+      button.delete {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        padding: 0px;
+        width: 100px;
+        height: 32px;
+        border-radius: 16px;
+      }
     }
     &.unwritten {
       height: 967px;
@@ -1187,9 +1341,11 @@ div.MementoNoteMain {
       height: 94px;
       background: #FFFFFF;
       mix-blend-mode: multiply;
-      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
       border-radius: 5px;
-      padding: 22px 104px;
+      padding: 0px 0px 0px 104px;
+      display: flex;
+      align-items: center;
       div {
         width: 200px;
         text-align: justify-all;

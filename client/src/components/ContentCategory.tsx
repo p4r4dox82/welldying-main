@@ -14,8 +14,8 @@ function ContentCategory (props : Props) {
   let [, categorys] = usePromise(getCategorys);
   let [search_word, setSearch_word] = React.useState<string>('');
   let [mouseover, setMouseover] = React.useState<number>(-1);
-  let next_page_id = (parseInt(props.additionalClass) + 1)%8;
-  let prev_page_id = (parseInt(props.additionalClass) === 0 ? 7 : parseInt(props.additionalClass) - 1);
+  let next_page_id = (parseInt(props.additionalClass) + 1)%4 === 0 ? 1 : (parseInt(props.additionalClass) + 1)%4;
+  let prev_page_id = (parseInt(props.additionalClass) === 1 ? 3 : parseInt(props.additionalClass) - 1);
   return (
     <>
       <div className = 'block'>
@@ -29,10 +29,10 @@ function ContentCategory (props : Props) {
               <div className = 'sub_title'>
               메멘토 컨텐츠
               </div>
-              <div className = 'searchContainer'>
+              {false && <div className = 'searchContainer'>
                   <img src = {imageUrl('search_image.png')} />
                   <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)메멘토 이벤트'/>
-              </div>
+              </div>}
               <div className = 'category_container'>
                   <div className = 'title'>
                   컨텐츠 카테고리 분류

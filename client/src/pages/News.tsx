@@ -42,10 +42,10 @@ function News ({ match }: Props) {
       <div className = 'news_page'>
           <div className = 'submenu_container'>
               <SubmenuContainer additionalClass = 'news'/>
-              <div className = 'searchContainer'>
+              {false && <div className = 'searchContainer'>
                   <img src = {imageUrl('search_image.png')} />
                   <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)메멘토 이벤트'/>
-              </div>
+              </div>}
           </div>
           <div className = 'main_title'>
           보도자료
@@ -59,10 +59,10 @@ function News ({ match }: Props) {
               {listnewses?.map((news, key) => (
                 <>
                     <div className = 'list_content' onClick = {() => window.open((key === 0 ? 'https://www.newswire.co.kr/newsRead.php?no=919731' : 'https://www.sedaily.com/NewsVIew/22L3E5TQVJ'), '_blank')}>
-                        <img className = 'archive' src = {imageUrl(key === 0 ? 'news2.png' : 'news1.png')} />
+                        <img className = 'archive' src = {imageUrl(key === 0 ? 'news2.png' : 'news1.png')} style = {{cursor: 'pointer'}}/>
                         <div className = 'news_info'>
                             <div className = 'company'>{news?.company}</div>
-                            <div className = 'title'>{news?.title}</div>
+                            <div className = 'title' style = {{cursor: 'pointer'}}>{news?.title}</div>
                             <div className = 'detail'>{news?.detail}</div>
                             <div className = 'date' style ={{marginTop: '20px'}}>{news?.date}</div>
                         </div>

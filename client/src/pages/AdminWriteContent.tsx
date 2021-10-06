@@ -184,7 +184,7 @@ function AdminWriteContent({ match }: Props) {
                                 <div className="page">
                                     <div className="number GB px20 px45 bold">#1</div>
                                     <input className="subtitle GB px20 line40" style = {{marginTop: '5px', outline: 'none', border: 'none', background: 'rgba(0, 0, 0, 0)'}} value = {subtitle} onChange = {(e) => setSubtitle(e.target.value)} placeholder = '입력해주세요'/>
-                                    <textarea name="" id="" rows={7} className="detail GB px13 line30" value = {bookdetail[0]} onChange = {(e) => {
+                                    <textarea name="" id="" cols = {36} rows={7} className="detail GB px13 line30" value = {bookdetail[0]} onChange = {(e) => {
                                         let newBookdetail = bookdetail;
                                         newBookdetail[0] = e.target.value;
                                         setBookdetail(newBookdetail);
@@ -196,7 +196,7 @@ function AdminWriteContent({ match }: Props) {
                         } else {
                             return (
                                 <div className="page" style = {{padding: '62px 56px 0px 58px'}}>
-                                    <textarea name="" id="" rows={10} className="detail GB px13 line30" value = {bookdetail[key]} onChange = {(e) => {
+                                    <textarea name="" id="" cols = {36} rows={10} className="detail GB px13 line30" value = {bookdetail[key]} onChange = {(e) => {
                                         let newBookdetail = bookdetail;
                                         newBookdetail[key] = e.target.value;
                                         setBookdetail(newBookdetail);

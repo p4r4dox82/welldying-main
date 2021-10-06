@@ -5,6 +5,7 @@ import { imageUrl } from '../etc/config';
 import Footer from '../components/Footer';
 import { getUser } from '../etc/api/user';
 import usePromise from '../etc/usePromise';
+import { MementoLogo } from '../img/Vectors';
 
 interface EntryType {
     name: string;
@@ -125,7 +126,9 @@ function Findid() {
                     <div className = 'signup_form'>
                         <div className='signupLogo'>
                             <Link to ='/'>
-                                <img src = {imageUrl('mainLogo.png')} />
+                                <div className="MementoLogo">
+                                    {MementoLogo}
+                                </div>
                             </Link>
                         </div>
                         <div className = 'info'>

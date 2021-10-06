@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import { getSections } from '../etc/api/section';
 import { getQuestions } from '../etc/api/question';
 import { getContents } from '../etc/api/content';
+import { getUsers } from '../etc/api/user';
 import { downloadSubscribers } from '../etc/api/subscriber';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
@@ -13,6 +14,7 @@ import { getCategorys } from '../etc/api/category';
 
 function Admin() {
     let user = useSelector((state: RootReducer) => state.user);
+    let [, AllUsers] = usePromise(getUsers);
     let [, sections] = usePromise(getSections);
     let [, questions] = usePromise(getQuestions);
     let [, contents] = usePromise(getContents);
@@ -76,6 +78,12 @@ function Admin() {
         );
     }, [id, sections, questions]);
 
+    let UsersNumber = React.useMemo(() => {
+        return (
+            <h1>{'총 가입자 수 : ' + AllUsers?.length}</h1>
+        )
+    }, [AllUsers]);
+
 
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
     return (
@@ -87,7 +95,7 @@ function Admin() {
                         <h1>
                             체크리스트 관리
                         </h1>
-                        <button onClick={() => downloadSubscribers() }> 이메일 리스트 받기 </button>
+                        {UsersNumber}
                         <Link to={`/admin/section/${maxSectionId+1}`}><button> 새 질문지 추가하기 </button></Link>
                         <Link to={`/admin/question/${maxQuestionId+1}`}><button> 새 질문 추가하기 </button></Link>
                         <Link to={`/admin/content/${maxContentId+1}`}><button> 새 컨텐츠 추가하기 </button></Link>

@@ -30,7 +30,7 @@ function ContentDetail (props : Props) {
                   <div className = 'tag'>
                   {section?.tag}
                   </div>
-                  <div className = 'more' onClick = {() => LinkNoteClick()}>
+                  <div className = 'more' onClick = {() => LinkNoteClick()} style = {{cursor: 'pointer'}}>
                   {'나의 메멘토 노트 바로가기 >'}
                   </div>
               </>}

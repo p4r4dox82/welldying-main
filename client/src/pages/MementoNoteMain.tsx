@@ -103,23 +103,23 @@ function MementoNoteMain () {
             case 1: 
                 return (
                     <>
-                    <div className="block Info" style = {{paddingBottom: '323px', borderBottom: '1px solid rgba(99, 106, 102, 0.2)'}} onClick = {() => LinkNoteClick()}>
+                    <div className="block Info" style = {{paddingBottom: '323px', borderBottom: '1px solid rgba(99, 106, 102, 0.2)', cursor: 'pointer'}} onClick = {() => LinkNoteClick()}>
                         <img src={imageUrl('NotePage/backgroundImage.png')} alt="" className="background" style = {{width: '100%', height: '296px', objectFit: 'none', position: 'absolute', borderRadius: '5px'}}/>
                         <div className="mixblend" style = {{width: '100%', height: '296px', position: 'absolute', background: 'rgba(110, 118, 114, 1)', mixBlendMode: 'multiply', borderRadius: '5px'}}></div>
                         <div className="text GB px13 line20" style = {{position: 'absolute', top: '-30px', left: '620px'}}>메멘토 노트에 작성된 답변을 메멘토 북으로 옮겨야 전달이 됩니다.</div>
                         <div className="MementoLogo">{MementoLogo}</div>
-                        <div className="more NS px14 whiteop10">{`나의 메멘토 노트 작성하기 >`}</div>
+                        <div className="more NS px14 whiteop10" style = {{cursor: 'pointer'}}>{`나의 메멘토 노트 작성하기 >`}</div>
                     </div>
                     <div className="detail" style = {{margin: '101px 15px 62px 15px '}}>
                         <div className="title GB px20 line40 ">{explain_main}</div>
                         <div className="message GB px14 line30 "style = {{marginTop: '37px'}}>{explain_detail}</div>
                     </div>
                     <div className = 'category_container'>
-                        <div className = {'category NS px12 line25 bold' + (id === 0 ? ' op7' : ' op4')} onClick = {() => {setId(0); setPosition(0);}}>{'전체'}</div>
+                        <div className = {'category NS px12 line25 bold' + (id === 0 ? ' op7' : ' op4')} onClick = {() => {setId(0); setPosition(0);}} style = {{cursor: 'pointer'}}>{'전체'}</div>
                         {sections?.map((section, key) =>{
                             if(key === 5) return <></>;
                             return (
-                            <div className = {'category NS px12 line25 bold' + (id === (key + 1) ? ' op7' : ' op4')} onClick = {() => {setId(key + 1); setPosition(0);}}>{section.tag.split("#").slice(1).map((tag) => (<span>{tag}</span>))}</div>
+                            <div className = {'category NS px12 line25 bold' + (id === (key + 1) ? ' op7' : ' op4')} onClick = {() => {setId(key + 1); setPosition(0);}} style = {{cursor: 'pointer'}}>{section.tag.split("#").slice(1).map((tag) => (<span>{tag}</span>))}</div>
                             );
                         })}
                     </div>
@@ -145,7 +145,7 @@ function MementoNoteMain () {
                                     <MementoBook bookname = {String(user.user?.bookname)} name = {String(user.user?.name)} mine = {true} accept = {0} giveusername = '' getusername = ''/>
                                 )
                             })}
-                            <div className="BookElement" onClick = {(user.user?.bookname && user.user.bookname.length === 1) ? () => {} : () => LinkBookClick()}>
+                            <div className="BookElement" onClick = {(user.user?.bookname && user.user.bookname.length === 1) ? () => {} : () => LinkBookClick()} style = {{cursor: 'pointer'}}>
                                 <button className="plus">{PlusVector}</button>
                                 <div className="text NS px12">유언 자서전 추가하기</div>
                                 {(user.user?.bookname && user.user.bookname.length === 1) && <div className="notopen GB px20 whiteop10" style = {{width: '100%', height: '100%', background: 'rgba(96, 103, 99, 0.8)', boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: '0px', left: '0px', borderRadius: '5px'}}>오픈 준비중입니다</div>}
@@ -161,19 +161,23 @@ function MementoNoteMain () {
                     </div>
                     <div className="text NS px12 bold line25" style = {{marginBottom: '14px'}}>기본형</div>
                     <div className = 'GiveUsersContainer'>
-                        {user.user?.UsersInfo.give.map((userinfo) => {
-                        let giveuser = AllUsers.find((user_) => user_.username === userinfo.username);
+                        {user.user?.UsersInfo.give.map((UserInfo) => {
+                        let giveuser = AllUsers.find((user_) => user_.username === UserInfo.username);
                         return (
-                            <div className="GiveUsersElement">
+                            (UserInfo.accept !== 2) && <div className="GiveUsersElement">
                                 <div className="UserImage">{UserImage}</div>
-                                <div className="namephone NS px15 line25 bold op6">{giveuser?.name + ' / 0' + giveuser?.cellphone.slice(3, 5) + '-' + giveuser?.cellphone.slice(5, 9) + '-' + giveuser?.cellphone.slice(9, 13)}</div>
-                                <div className="email NS px15 line25 bold op6">{giveuser?.email}</div>
+                                {(UserInfo.accept === 1) ? <div>
+                                    <div className="namephone NS px15 line25 bold op6">{giveuser?.name + ' / 0' + giveuser?.cellphone.slice(3, 5) + '-' + giveuser?.cellphone.slice(5, 9) + '-' + giveuser?.cellphone.slice(9, 13)}</div>
+                                    <div className="email NS px15 line25 bold op6">{giveuser?.email}</div>
+                                </div> : <>
+                                    <div className="email NS px13 line25 bold op6" style ={{width: '200px', letterSpacing: '0em'}}>{(giveuser?.name === undefined ? UserInfo.name : giveuser?.name )+ '님의 승인을 대기중입니다.'}</div>
+                                </>}
                             </div>
                         );
                         })}
-                        <div className="GiveUsersElement" style = {{padding: '35px 104px'}}>
+                        <div className="GiveUsersElement" style = {{padding: '0px 0px 0px 104px', cursor: 'pointer'}}>
                             <div className="plus">{PlusVector}</div>
-                            <div className="NS px15 line25 bold op6">노트 수령인 추가하기</div>
+                            <div className="NS px13 line25 bold op6" style = {{width: '200px'}}>노트 수령인 추가하기</div>
                         </div>
                     </div>
                     </>
@@ -213,7 +217,7 @@ function MementoNoteMain () {
                         <div>한국 생명의 전화(1588-9191) 등으로 전화를 걸어 도움을 요청하겠습니다.</div>
                     </div>
                     <div className="agreeCheck px12 line25 op3 bold" style = {{marginTop: '47px'}}>{(check ? <>{`네, 저 ${user.user?.name + ((!(!user || !user.user) && checkBatchim(String(user.user.name))) ? '은' : '는')} 메멘토의 이야기에 공감합니다.`}</> : <>네 이해하고 동의합니다
-                    <div className={"checkbox" + (check ? ' checked' : '')} style = {{width: '14px', height: '14px'}} onClick = {() => setCheck(!check)}></div></>)}</div>
+                    <div className={"checkbox" + (check ? ' checked' : '')} style = {{width: '14px', height: '14px', cursor: 'pointer'}} onClick = {() => setCheck(!check)}></div></>)}</div>
                 </div>
             </div>
             <div className="block" style = {{marginTop: '165px'}}>
@@ -221,10 +225,10 @@ function MementoNoteMain () {
                 <div className="margin_base">
                     <div className="toolbarContainer">
                         <div className="toolbar GB px16 bold">
-                            <div className="text" onClick = {() => setSelect(1)}>메멘토 노트{(select === 1) && <div className="select"></div>}</div>
-                            <div className="text" onClick = {() => setSelect(2)}>메멘토 북{(select === 2) && <div className="select"></div>}</div>
-                            <div className="text" onClick = {() => setSelect(3)}>함께쓰는 노트{(select === 3) && <div className="select"></div>}</div>
-                            <div className="text" onClick = {() => setSelect(4)}>오프라인 자서전{(select === 4) && <div className="select"></div>}</div>
+                            <div className="text" onClick = {() => setSelect(1)} style = {{cursor: 'pointer'}}>메멘토 노트{(select === 1) && <div className="select"></div>}</div>
+                            <div className="text" onClick = {() => setSelect(2)} style = {{cursor: 'pointer'}}>메멘토 북{(select === 2) && <div className="select"></div>}</div>
+                            <div className="text" onClick = {() => setSelect(3)} style = {{cursor: 'pointer'}}>함께쓰는 노트{(select === 3) && <div className="select"></div>}</div>
+                            <div className="text" onClick = {() => setSelect(4)} style = {{cursor: 'pointer'}}>오프라인 자서전{(select === 4) && <div className="select"></div>}</div>
                         </div>
                     </div>
                     <div className="detail" style = {{margin: '60px 15px'}}>

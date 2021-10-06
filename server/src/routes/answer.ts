@@ -47,7 +47,7 @@ export default (Answer: Model<AnswerDocument>) => {
             imageData: req.body.imageData,
         };
 
-        if (data.message.length === 0 && data.imageData.imageUrl === undefined) {
+        if (data.message.length === 0 && (data.imageData.imageUrl === undefined || data.imageData.imageUrl === '')) {
             await Answer.deleteOne({ username: data.username, questionId: data.questionId });
 
             res.sendStatus(202);

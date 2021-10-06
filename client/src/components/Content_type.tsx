@@ -104,13 +104,13 @@ function Content_type (props : Props) {
                 <div className="page">
                   <div className="number GB px20 px45 bold">#1</div>
                   <div className="subtitle GB px20 line40" style = {{marginTop: '5px'}}>{content?.detail.subtitle}</div>
-                  <textarea name="" id="" rows={7} className="detail GB px13 line30" value = {content?.detail.bookdetail[0]} style  = {{marginTop: '40px'}} readOnly></textarea>
+                  <textarea name="" id="" cols = {36} rows={7} className="detail GB px13 line30" value = {content?.detail.bookdetail[0]} style  = {{marginTop: '40px', textAlign: 'justify'}} readOnly></textarea>
                 </div>
             );
           } else {
               return (
                 <div className="page" style = {{padding: '62px 56px 0px 58px'}}>
-                  <textarea name="" id="" rows={10} className="detail GB px13 line30" value = {content?.detail.bookdetail[key]} readOnly></textarea>
+                  <textarea name="" id="" cols = {36} rows={10} className="detail GB px13 line30" value = {content?.detail.bookdetail[key]} readOnly></textarea>
                 </div>
               );
           }
@@ -128,14 +128,14 @@ function Content_type (props : Props) {
   if(!content) return <></>;
   else return (
     <>
-      <div className = 'block'>
+      <div className = 'block'style = {{overflow: 'hidden', height: '630px', marginBottom: '-130px'}}>
           {props.additionalClass === '동영상' && <div className = 'videocontent'>
               <ReactPlayer width = {'769px'} height = {'432px'} url = {content.source} controls />
-              <div className="donotplay"  style = {{width: '769px', height: '432px', position: 'absolute', top: '61px', left: '0px'}} onClick = {() => window.open(content?.source, '_blank')}></div>
+              <div className="donotplay"  style = {{width: '769px', height: '432px', position: 'absolute', top: '61px', left: '0px', cursor: 'pointer'}} onClick = {() => window.open(content?.source, '_blank')}></div>
               <div className = 'cover'>
-                  <div className = 'detail GB px14 op6'>영상의 한줄</div>
-                  <div className = 'title GB px20 op9 line40'>{content.title}</div>
-                  <div className = 'date GB px14 op9'>{'영상제작일 : ' + String(parseDate(new Date(Number(content.date))))}</div>
+                  <div className = 'detail GB px14 op6'>영상의 제목</div>
+                  <div className = 'title GB px20 op9 line40'>{content.title.length > 30 ? content.title.slice(0, 30) + '...' : content.title}</div>
+                  <div className = 'date GB px14 op9'>{'영상 제작일 : ' + String(parseDate(new Date(Number(content.date))))}</div>
                   <div className = 'tag GB px14 op6'>{content.tag}</div>
                   <div className={"vector_container like" + (liked ? ' liked' : '')} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;
@@ -148,9 +148,9 @@ function Content_type (props : Props) {
                     setUserdata(new_userdata);
                     setLiked(!liked);
                     await content_userdata(id, new_userdata);
-                  } : () => {}}>{like_vector}</div>
-                  <img className = 'share_button' src = {imageUrl('ContentPage/share_button.png')} onClick = { () => {setShare_container(!share_container);}} />
-                  <div className = 'more NS px12 bold op6' onClick = {() => window.open(content?.source, '_blank')}>{'원본파일 보기>'}</div>
+                  } : () => {}} style = {{cursor: 'pointer'}}>{like_vector}</div>
+                  <img className = 'share_button' src = {imageUrl('ContentPage/share_button.png')} onClick = { () => {setShare_container(!share_container);}}  style = {{cursor: 'pointer'}}/>
+                  <div className = 'more NS px12 bold op6' onClick = {() => window.open(content?.source, '_blank')} style = {{cursor: 'pointer'}}>{'원본파일 보기>'}</div>
                   <div className={"bookmark" + (bookmarked ? ' bookmarked' : '')} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;
                     if(userdata.bookmark.find((username) => (username === user.user!.username))) {
@@ -162,11 +162,11 @@ function Content_type (props : Props) {
                     setUserdata(new_userdata);
                     setBookmarked(!bookmarked);
                     await content_userdata(id, new_userdata);
-                  } : () => {}}>{BookMarkVector}</div>
+                  } : () => {}} style = {{cursor: 'pointer'}}>{BookMarkVector}</div>
               </div>
               {share_container && <div className = 'share_container'>
-                  <img id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} />
-                  <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} />
+                  <img id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} style = {{cursor: 'pointer'}} />
+                  <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} style = {{cursor: 'pointer'}} />
                   <div className="shareLink">
                       <input type="text NS px11" value = {`mymemento.kr/contentpage/${id}`} disabled/>
                       <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} onClick = {() => alert('링크가 복사되었습니다.')}>링크 복사</button>
@@ -179,8 +179,8 @@ function Content_type (props : Props) {
                   <img className = 'cover_image' src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '266px', height: '432px', objectFit: 'cover', borderRadius: '5px'}}/>
                   <div className = 'cover_blur' />
                   <div className = 'detail GB px14 op6'>책의 제목</div>
-                  <div className = 'title GB px20 op9 line40'>{content.title}</div>
-                  <div className = 'date GB px14 op9'>{'영상제작일 : ' + String(parseDate(new Date(Number(content.date))))}</div>
+                  <div className = 'title GB px20 op9 line40'>{content.title.length > 30 ? content.title.slice(0, 30) + '...' : content.title}</div>
+                  <div className = 'date GB px14 op9'>{'컨텐츠 제작일 : ' + String(parseDate(new Date(Number(content.date))))}</div>
                   <div className = 'tag GB px14 op6'>{content.tag}</div>
                   <div className={"vector_container like" + (liked ? ' liked' : '')} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;
@@ -193,9 +193,9 @@ function Content_type (props : Props) {
                     setUserdata(new_userdata);
                     setLiked(!liked);
                     await content_userdata(id, new_userdata);
-                  } : () => {}}>{like_vector}</div>
-                  <img className = 'share_button' src = {imageUrl('ContentPage/share_button.png')} onClick = { () => {setShare_container(!share_container);}} />
-                  <div className = 'more NS px12 bold op6'>{'책 구매하기>'}</div> 
+                  } : () => {}} style = {{cursor: 'pointer'}}>{like_vector}</div>
+                  <img className = 'share_button' src = {imageUrl('ContentPage/share_button.png')} onClick = { () => {setShare_container(!share_container);}} style = {{cursor: 'pointer'}} />
+                  <div className = 'more NS px12 bold op6' onClick = {() => window.open(content?.source, '_blank')} style = {{cursor: 'pointer'}}>{'책 구매하기>'}</div> 
                   <div className={"bookmark" + (bookmarked ? ' bookmarked' : '')} onClick = {user.loggedIn ? async () => {
                     let new_userdata = userdata;
                     if(userdata.bookmark.find((username) => (username === user.user!.username))) {
@@ -207,11 +207,11 @@ function Content_type (props : Props) {
                     setUserdata(new_userdata);
                     setBookmarked(!bookmarked);
                     await content_userdata(id, new_userdata);
-                  } : () => {}}>{BookMarkVector}</div>
+                  } : () => {}} style = {{cursor: 'pointer'}}>{BookMarkVector}</div>
               </div>
               {share_container && <div className = 'share_container'>
-                  <img id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} />
-                  <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} />
+                  <img id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} style = {{cursor: 'pointer'}} />
+                  <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} style = {{cursor: 'pointer'}} />
                   <div className="shareLink">
                       <input type="text NS px11" value = {`mymemento.kr/contentpage/${id}`} disabled/>
                       <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} onClick = {() => alert('링크가 복사되었습니다.')}>링크 복사</button>

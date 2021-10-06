@@ -72,7 +72,7 @@ function ContentSlide () {
                       <img className = {i === start_number ? '' : 'opacity'} src = {imageUrl('ContentPage/selector_select.png')} />
                   ))}
               </div>
-              <div className = 'slide_content_container' onClick = {() => LinkClick()}>
+              <div className = 'slide_content_container' onClick = {() => LinkClick()} style = {{cursor: 'pointer'}}>
                   <div className = 'left'>
                   {slide_contents?.map((content, key) => {
                     let question = questions?.find((question) => question.id === content.question);
@@ -92,10 +92,10 @@ function ContentSlide () {
                           <div className = 'title'>
                           {content.title}
                           </div>
-                          <div className = 'more'>
+                          <div className = 'more' style = {{cursor: 'pointer'}}>
                           {'컨텐츠 바로가기 >'}
                           </div>
-                          <div className = 'source'>
+                          <div className = 'source' style = {{cursor: 'pointer'}} onClick = {() => window.open(content.source, '_blank')}>
                           {'출처 : ' + content.source}
                           </div>
                       </div>

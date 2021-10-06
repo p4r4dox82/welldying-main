@@ -25,14 +25,16 @@ function NoteLeftBar (props: Props) {
       <div className="usersgive">
         <div className="title NS px12 bold line25">사후 노트 수령인</div>
         <div className="userscontainer">
-          {(user && users) && user.user?.UsersInfo.give.map((userinfo) => {
-            let giveuser = users.find((user_) => user_.username === userinfo.username);
+          {(user && users) && user.user?.UsersInfo.give.map((userinfo) => {let giveuser = users.find((user_) => user_.username === userinfo.username);
             if(giveuser) return (
-              <div className="username NS px12 line30">{giveuser?.name}</div>
+              false && <div className="username NS px12 line30">{giveuser?.name}</div>
             );
+            return (
+              <div className="username NS px12 line30">{userinfo?.name}</div>
+            )
           })}
         </div>
-        <div className="adduser NS px12 bold line25" onClick = {() => props.setAddUserGive(true)}>{'+ 수정하기'}</div>
+        <div className="adduser NS px12 bold line25" onClick = {() => props.setAddUserGive(true)} style = {{cursor: 'pointer'}}>{'+ 추가하기'}</div>
       </div>
     );
   }, [user, users]);
@@ -49,7 +51,7 @@ function NoteLeftBar (props: Props) {
                 <Link to='/note/1'><div className = {'note' + (props.book ? '' : ' selected')} /></Link>
                 <div className = 'vector' />
                 <div className = 'title NS px12 bold op5'>나의 메멘토 북</div>
-                {(user.user?.bookname && user.user.bookname.length === 1) && <Link to='/notebook/1'><div className = {'note' + (props.book ? ' selected' : '')} /></Link>}
+                {(user.user?.bookname && user.user.bookname.length === 1) && <Link to='/notebook/0'><div className = {'note' + (props.book ? ' selected' : '')} /></Link>}
                 <div className = 'add note'>
                     <img className = 'add_image' src = {imageUrl('ContentPage/add_button.png')} onClick = {() => NoteBookClick()}/>
                     {(user.user?.bookname && user.user.bookname.length === 1) && <div className="notopen GB px12 whiteop10" style = {{width: '100%', height: '100%', background: 'rgba(96, 103, 99, 0.8)', boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: '0px', left: '0px', borderRadius: '5px'}}>오픈 준비중</div>}
@@ -59,10 +61,11 @@ function NoteLeftBar (props: Props) {
             {props.category && <div className = 'CategoryBar'>
                 <div className = 'category_container'>
                     <div className = 'title NS px12 bold op7 line25'>작성 카테고리</div>
+                    <div className="vector" style = {{width: '54px', height: '1px', background: 'rgba(255, 255, 255, 0.5)', marginLeft: '35px'}}></div>
                     {sections?.map((section, key) =>{
                       if(key === 5) return <></>;
                       return (
-                        <Link to={`/note/${key + 1}`}><div className = {'category NS px14 whiteop9 line25' + (props.id === (key + 1) ? ' bold' : '')}>{section.tag.split("#").slice(1).map((tag) => (<span>{tag}</span>))}</div></Link>
+                        <Link to={`/note/${key + 1}`}><div className = {'category NS px14 whiteop9 line25' + (props.id === (key + 1) ? ' checked' : '')}>{section.tag.split("#").slice(1).map((tag) => (<span>{tag}</span>))}</div></Link>
                       );
                     })}
                 </div>

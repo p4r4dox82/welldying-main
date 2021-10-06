@@ -17,7 +17,7 @@ import { kakaoJskey } from '../etc/config';
 import { imageUrl } from '../etc/config';
 import { parseDate } from '../etc/index';
 
-import { EmailVector, Colon, leftVector, rightVector } from '../img/Vectors';
+import { EmailVector, Colon, leftVector, rightVector, blockAlignVector, rowAlignVector } from '../img/Vectors';
 import { init, send } from 'emailjs-com';
 
 declare global {
@@ -111,7 +111,7 @@ function MementoNoteBook({ match } : Props) {
         })}
       </>
     );
-  }, [questions, answers, written_questions]);
+  }, [questions, answers, written_questions, block]);
 
   let section_written_questions = React.useMemo(() => {
     return (
@@ -295,7 +295,7 @@ function MementoNoteBook({ match } : Props) {
     return (
       !booknameupload && <div className="setbookname" style = {{width: '100vw', height: '100vh', background: 'rgba(0, 0, 0, 0.6)', position: 'fixed', zIndex: 200, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
           <div className="booknamecontainer" style = {{width: '837px', height: '137px', padding: '38px 50px', background: '#FFFFFF', boxShadow: '0px 2px 20px rgba(0, 0, 0, 0.08)', borderRadius: '5px', display: 'flex', justifyContent: 'space-between'}}>
-            <input type="text" className="bookname NS bold px14" style = {{width: '581px', height: '100%', borderRadius: '5px', padding: '18px 30px', color: 'rgba(122, 121, 120, 1)', outline: 'none', border: 'none', boxShadow: 'inset 0px 1px 2px 1px rgba(0, 0, 0, 0.25)', background: 'rgba(249, 249, 249, 1)' }} placeholder = '노트의 제목을 입력해주세요. (15자 이내)' value = {bookname} onChange = {(e) => {setBookname(checkbookname(e.target.value));}} />
+            <input type="text" className="bookname NS bold px14" style = {{width: '581px', height: '100%', borderRadius: '5px', padding: '18px 30px', color: 'rgba(122, 121, 120, 1)', outline: 'none', border: 'none', boxShadow: 'inset 0px 1px 2px 1px rgba(0, 0, 0, 0.25)', background: 'rgba(249, 249, 249, 1)' }} placeholder = '메멘토 북의 제목을 입력해주세요. (15자 이내)' value = {bookname} onChange = {(e) => {setBookname(checkbookname(e.target.value));}} />
             <button className="submit green NS bold px16" style = {{width: '141px', height: '100%', background: 'rgba(39, 57, 47, 1)', borderRadius: '5px'}} onClick = {async () => {
               if(await setBookName(user.user!.username, [bookname]))
                 setBooknameupload(bookname);
@@ -559,10 +559,10 @@ Cherish your memories, memento`,
                   </div>
                   <div className = 'book_main'>
                       <div className = 'side_bar_container'>
-                          <img className = 'zoom_button' src = {imageUrl('NotePage/zoom_image.png')} />
-                          <img className = 'add_button' src = {imageUrl('NotePage/add_image.png')} onClick = {() => {setAddQuestions(true); setUpdate(update + 1);}}/>
+                          <img className = 'zoom_button' src = {imageUrl('NotePage/zoom_image.png')} style = {{cursor: 'pointer'}} />
+                          <img className = 'add_button' src = {imageUrl('NotePage/add_image.png')} onClick = {() => {setAddQuestions(true); setUpdate(update + 1);}} style = {{cursor: 'pointer'}}/>
                           <div className = 'title GB px13 line30'>{booknameupload ? booknameupload : ''}</div>
-                          <img className = 'edit_button' style = {{margin: '483px 0px 0px 0px'}} src = {imageUrl('NotePage/edit_image.png')} />
+                          <img className = 'edit_button' style = {{margin: '483px 0px 0px 0px', cursor: 'pointer'}} src = {imageUrl('NotePage/edit_image.png')} />
                       </div>
                       {MementoBookPage}
                   </div>
@@ -571,19 +571,21 @@ Cherish your memories, memento`,
           </div>
           <div className = 'block note_book_page'>
               <div className = 'submenu_container'>
-                  <div className = 'searchContainer'>
+                  {false && <div className = 'searchContainer'>
                       <img src = {imageUrl('search_image.png')} />
                       <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)감동'/>
-                  </div>
-                  <div className = 'button_container'>
-                      <img className = 'block_button' src = {imageUrl('ContentPage/block_button.svg')} onClick = {() => setBlock(!block)}/>
-                      <img className = 'order_button' src = {imageUrl('NotePage/sort_image.png')} onClick = {() => setOrderContainer(!orderContainer)}/>
-                  {orderContainer && <div className="orderContainer">
-                      <div className={"NS px12 bold " + (order !== 1 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered); setUpdate(update + 1); console.log(questions); setOrder(1);}}>최근 답변순</div>
-                      <div className={"NS px12 bold " + (order !== 2 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered_reverse); setUpdate(update + 1); console.log(questions); setOrder(2);}}>과거 답변순</div>
-                      <div className={"NS px12 bold " + (order !== 0 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_made); setUpdate(update + 1); setOrder(0);}}>질문 생성일</div>
                   </div>}
-                      <img src = {imageUrl('NotePage/add_image_.png')} onClick = {() => {setAddQuestions(true); window.scrollTo(0, 0);}}/>
+                  <div className = 'button_container'>
+                      <div className="blockButton" onClick = {() => setBlock(!block)} style = {{cursor: 'pointer'}}>
+                        {block ? rowAlignVector : blockAlignVector}
+                      </div>
+                      <img className = 'order_button' src = {imageUrl('NotePage/sort_image.png')} onClick = {() => setOrderContainer(!orderContainer)} style = {{cursor: 'pointer'}}/>
+                  {orderContainer && <div className="orderContainer">
+                      <div className={"NS px12 bold " + (order !== 1 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered); setUpdate(update + 1); console.log(questions); setOrder(1);}} style = {{cursor: 'pointer'}}>최근 답변순</div>
+                      <div className={"NS px12 bold " + (order !== 2 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered_reverse); setUpdate(update + 1); console.log(questions); setOrder(2);}} style = {{cursor: 'pointer'}}>과거 답변순</div>
+                      <div className={"NS px12 bold " + (order !== 0 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_made); setUpdate(update + 1); setOrder(0);}} style = {{cursor: 'pointer'}}>질문 생성일</div>
+                  </div>}
+                      <img src = {imageUrl('NotePage/add_image_.png')} onClick = {() => {setAddQuestions(true); window.scrollTo(0, 0);}} style = {{cursor: 'pointer'}}/>
                   </div>
               </div>
               <div className = 'written_question margin_note' style = {{marginTop: '-23px'}}>
@@ -701,7 +703,7 @@ Cherish your memories, memento`,
                         let newUsersGive = UsersGive.concat([{username: giveuser.username, name: giveuser.name, phonenumber: giveuser.cellphone, accept: 0}]);
                         setUsersGive(newUsersGive);
                         if(method === 0) {
-                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) alert('죄송합니다. 현재 메세지 전송이 원할하지 않습니다. 이메일 전송 혹은 카카오톡 전송을 이용해주세요.');
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) alert('전송이 완료되었습니다');
                         } else {
                           if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) alert('전송이 완료되었습니다');
                         }
@@ -712,7 +714,7 @@ Cherish your memories, memento`,
                         let newUsersGive = UsersGive.concat([{username: '', name: giveusername, phonenumber: ('+82' + giveuserphonenumber.slice(1, 11)), accept: 0}]);
                         setUsersGive(newUsersGive);
                         if(method === 0) {
-                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) alert('죄송합니다. 현재 메세지 전송이 원할하지 않습니다. 이메일 전송 혹은 카카오톡 전송을 이용해주세요.');
+                          if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, true, name)) alert('전송이 완료되었습니다');
                         } else {
                           if (await setUsers(user.user!.username, { give: newUsersGive, get: UsersGet}, newUsersGive.length, false, name)) alert('전송이 완료되었습니다');
                         }

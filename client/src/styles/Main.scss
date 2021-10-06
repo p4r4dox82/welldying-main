@@ -2,28 +2,135 @@
 @import url('https://fonts.googleapis.com/css2?family=Playball&display=swap');
 
 .mobile {
-  div {
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    svg {
-      width: 5px;
-      height: 5px;
-      path {
-        fill: rgba(255, 255, 255, 1);
-        
+  .mobileMainInfo {
+    div {
+      width: 100%;
+      box-sizing: border-box;
+      height: fit-content;
+      text-align: center;
+    }
+    div.MementoLogo {
+      margin-top: 10px;
+      svg {
+        width: 134px;
+        height: 31px;
+        g {
+          path {
+            fill: rgba(35, 52, 42, 1);
+          }
+        }
       }
     }
+    .imageContainer {
+      margin-top: 10px;
+      width: 188px;
+      height: 164px;
+      .circleBorder {
+        position: absolute;
+        top: 16px;
+        left: 0px;
+        width: 94px;
+        height: 94px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        border: 4px solid rgba(39, 57, 47, 0.7);
+        box-shadow: inset 0px 1px 1pxz rgba(0, 0, 0, 0.25);
+      }
+      img.MainImage {
+        left: 28px;
+        position: absolute;
+        width: 165px;
+        height: 169px;
+      }
+      div.vector {
+        width: 161px;
+        height: 165px;
+        position: absolute; 
+        left: 30px;
+      }
+      
+    }
+    div.MainText {
+      margin-top: 10px;
+    }
+    div.Colon {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      svg.Colon {
+        width: 7px;
+        height: 26px;
+        filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.2));
+        g {
+          opacity: 1;
+          path {
+            fill: rgba(250, 250, 250, 1);
+          }
+        }
+      }
+    }
+    div.subtext {
+      width: 282px;
+      margin-left: calc(50% - 282px/2);
+      text-align: justify;
+    }
+    div.DotContainer {
+      margin-top: 10px;
+      width: 76px;
+      display: flex;
+      gap: 10px;
+      svg {
+        path {
+          fill: rgba(35, 52, 42, 0.3);
+        }
+      }
+      div.selected {
+        svg {
+          path {
+            fill: rgba(35, 52, 42, 1);
+          }
+        }
+      }
+    }
+    .buttonContainer {
+      display: flex;
+      gap: 11px;
+      width: 291px;
+    }
+    button {
+      margin-top: 10px;
+      margin-bottom: 40px;
+      width: 140px;
+      height: 50px;
+      border-radius: 5px;
+      background: rgba(117, 129, 122, 1);
+      padding: 0px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    }
   }
-  button {
-    width: 251px;
-    height: 58px;
-
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid #FFFFFF;
-    box-sizing: border-box;
-    border-radius: 5px;
-    margin-top: 79px;
+  .notification {
+    div {
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      svg {
+        width: 5px;
+        height: 5px;
+        path {
+          fill: rgba(255, 255, 255, 1);
+          
+        }
+      }
+    }
+    button {
+      width: 251px;
+      height: 58px;
+  
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid #FFFFFF;
+      box-sizing: border-box;
+      border-radius: 5px;
+      margin-bottom: 40px;
+    }
   }
 }
 
@@ -292,6 +399,7 @@ div.main_display {
           height: 58px;
           border-radius: 50%;
           display: flex;
+          background: rgba(255, 255, 255, 1);
           justify-content: center;
           align-items: center;
           box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.15);
@@ -312,6 +420,7 @@ div.main_display {
           }
         }
         &:hover {
+          background: rgba(250, 250, 250, 1);
           svg {
             fill: rgba(97, 105, 101, 1);
             path {

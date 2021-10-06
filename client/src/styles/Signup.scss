@@ -28,19 +28,38 @@ div.signup_page {
       mix-blend-mode: normal;
       div.signup_form {
         margin-top: calc(50vh - 432px/2);
+        div.MementoLogo {
+          display: flex;
+          justify-content: center;
+          padding-bottom: 50px;
+        }
+        svg.MementoLogo {
+          width: 260px;
+          height: 60px;
+          viewport-fit: 0 0 260 60;
+          path {
+            fill: rgba(39, 57, 47, 1);
+          }
+        }
       }
     }
   }
 }
 
 .signupLogo {
-    display: block;
-    width: 100%;
-    img {
-        left: 50%;
-        margin-right: -50%;
-        transform: translateX(-50%);
+  div.MementoLogo {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
+  }
+  svg.MementoLogo {
+    width: 260px;
+    height: 60px;
+    viewport-fit: 0 0 260 60;
+    path {
+      fill: rgba(39, 57, 47, 1);
     }
+  }
 }
 
 .info {

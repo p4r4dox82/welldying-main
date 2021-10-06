@@ -7,11 +7,13 @@ import ContentQuestion from '../components/ContentQuestion';
 import OtherContent from '../components/OtherContent';
 import ContentBorder from '../components/ContentBorder';
 import Contentbox from '../components/Contentbox';
-import { getContents, getContent } from '../etc/api/content';
+import { getContents, getContent, content_userdata } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
 import { Link, match, Redirect } from 'react-router-dom';
 import { imageUrl } from '../etc/config';
 import { parseDate } from '../etc';
+import { useSelector } from 'react-redux';
+import { RootReducer } from '../store';
 
 interface MatchParams {
     id: string;
@@ -22,6 +24,8 @@ interface Props {
 };
 
 function ContentPage ({ match } : Props) {
+    let user = useSelector((state: RootReducer) => state.user);
+    let [userdata, setUserdata] = React.useState<{ likes: string[], bookmark: string[], read: string[] }>({ likes: [], bookmark: [], read: [] });
     let id = Number.parseInt(match.params.id);
     let [, contents] = usePromise(() => getContents());
     let content = React.useMemo(() => contents?.find((content) => content.id === id), [id, contents]);
@@ -36,7 +40,18 @@ function ContentPage ({ match } : Props) {
         setTag(content.tag);
         setType(content.type);
         setSummary(content.detail.summary);
+        setUserdata(content.userdata);
     }, [content]);
+    React.useEffect(() => {
+        if(user.loggedIn) {
+            let new_userdata = userdata;
+            if(userdata.read.find((username) => (username === user.user!.username)) === undefined) {
+                new_userdata.read.push(user.user!.username);
+                setUserdata(new_userdata);
+                content_userdata(id, new_userdata);
+            }
+        }
+    }, [user, userdata]);
     let [more_contents_count, setMore_contents_count] = React.useState<number>(6);
     let more_contents = contents?.slice(0, more_contents_count);
 
@@ -58,7 +73,7 @@ function ContentPage ({ match } : Props) {
             <div className = 'block contentpage' style = {{marginTop: '176px'}}>
                 <div className = 'contentsummary margin_large'>
                     <div className = 'title GB px20'>
-                    컨텐츠 내용 요약
+                    컨텐츠 요약
                     </div>
                     <div className = 'summary GB px16 line35'>
                     {content?.detail.summary.split('\n').map((summary_line) => 

@@ -33,6 +33,8 @@ import ContentPage from './pages/ContentPage';
 import MementoNote from './pages/MementoNote';
 import MementoNoteBook from './pages/MementoNoteBook';
 import MementoNoteMain from './pages/MementoNoteMain';
+import ConfirmMementoBook from './pages/ConfirmMementoBook';
+import Survey from './pages/Survey';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -72,6 +74,8 @@ function App() {
         <Route path='/notebook/:id' component = {MementoNoteBook} />
         <Route path='/note/:id' component = {MementoNote} />
         <Route path='/note' component = {MementoNoteMain} />
+        <Route path='/confirmbook/:id' component = {ConfirmMementoBook} />
+        <Route path='/survey' component = {Survey} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>

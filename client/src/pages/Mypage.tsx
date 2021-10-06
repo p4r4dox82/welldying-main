@@ -506,7 +506,7 @@ function Mypage() {
             case 0:
                 return  (
                     <div className="ModifyContent">
-                        <div className="imageContainer">
+                        <div className="imageContainer" style = {{cursor: 'pointer'}}>
                             <img src={user.user?.imageUri} alt="" className="profile" />
                             {user.user?.imageUri === '' && <>
                                 <div className="addContainer">
@@ -669,13 +669,13 @@ function Mypage() {
                 <img src={imageUrl('ModifyBackground.png')} alt="" className = 'background'/>
                 <div className="ModifySelectContainer NS px15 line25 op8 bold">
                     <div>
-                        <span style = {{opacity: (modifynumber === 0 ? '0.8' : '0.3')}}onClick = {() => setModifyNumber(0)}>기본정보</span>
+                        <span style = {{opacity: (modifynumber === 0 ? '0.8' : '0.3'), cursor: 'pointer'}}onClick = {() => setModifyNumber(0)} >기본정보</span>
                     </div>
                     <div>
-                        <span style = {{opacity: (modifynumber === 1 ? '0.8' : '0.3')}}onClick = {() => setModifyNumber(1)}>계정정보</span>
+                        <span style = {{opacity: (modifynumber === 1 ? '0.8' : '0.3'), cursor: 'pointer'}}onClick = {() => setModifyNumber(1)} >계정정보</span>
                     </div>
                     <div>
-                        <span style = {{opacity: (modifynumber === 2 ? '0.8' : '0.3')}}onClick = {() => setModifyNumber(2)}>비밀번호 변경</span>
+                        <span style = {{opacity: (modifynumber === 2 ? '0.8' : '0.3'), cursor: 'pointer'}}onClick = {() => setModifyNumber(2)} >비밀번호 변경</span>
                     </div>
                 </div>
                 {ModifyContent}
@@ -710,7 +710,7 @@ function Mypage() {
                                     <div className="namephone NS px15 line25 bold op6">{giveuser?.name + ' / 0' + giveuser?.cellphone.slice(3, 5) + '-' + giveuser?.cellphone.slice(5, 9) + '-' + giveuser?.cellphone.slice(9, 13)}</div>
                                     <div className="email NS px15 line25 bold op6">{giveuser?.email}</div>
                                 </div> : <>
-                                    <div className="email NS px15 line25 bold op6" style ={{width: '230px', letterSpacing: '0em'}}>{giveuser?.name + '님의 승인을 대기중입니다.'}</div>
+                                    <div className="email NS px15 line25 bold op6" style ={{width: '230px', letterSpacing: '0em'}}>{(giveuser?.name === undefined ? UserInfo.name : giveuser?.name) + '님의 승인을 대기중입니다.'}</div>
                                 </>}
                             </div>
                         );
@@ -724,13 +724,15 @@ function Mypage() {
         if(!AllUsers) return<></>;
         return (
             <div className="BookContainer" style = {{paddingTop: '37px'}}>
-                {user.user?.UsersInfo.get.map((UserInfo) => {
+                {user.user?.UsersInfo.get.map((UserInfo, key) => {
                     let getuser = AllUsers.find((user_) => user_.cellphone === UserInfo.phonenumber);
                     console.log(getuser);
                     return (
+                        <Link to ={`/confirmbook/${key}`}>
                         <div style = {{width: '236px', height: '441px'}}>
                             <MementoBook bookname = {String(getuser?.bookname[0])} mine = {false} accept = {accept} name = {String(getuser?.name)} giveusername = {String(getuser?.username)} getusername = {String(user.user?.username)} />
                         </div>
+                        </Link>
                     )
                 })}
                 
@@ -782,7 +784,7 @@ function Mypage() {
                     <div className="element">
                         <div className="AgreeContainer" onClick = {() => {setAgree(true); setDeathInfo({...DeathInfo, agree: true})}}>
                             {!agree && <>
-                                <div className="NS px12 bold">네 이해하고 동의합니다.</div>
+                                <div className="NS px12 bold"  style = {{cursor: 'pointer'}}>네 이해하고 동의합니다.</div>
                                 <button className="agree"></button>
                             </>}
                             {agree && <div className="NS px12 bold op3">{`네, 저 ${user.user?.name + ((!(!user || !user.user) && checkBatchim(String(user.user.name))) ? '은' : '는')} 위와 같이 서약합니다.`}</div>}
@@ -824,7 +826,7 @@ function Mypage() {
                         </div>
                     </div>
                     <div className="element" style ={{marginTop: '27px'}}>
-                        <div className="more NS px12 bold" onClick = {() => LinkNoteClick()}>{`작성페이지 바로가기>`}</div>
+                        <div className="more NS px12 bold" onClick = {() => LinkNoteClick()} style = {{cursor: 'pointer'}}>{`작성페이지 바로가기>`}</div>
                     </div>
                     <div className="userscontainer" style = {{paddingTop: '78px'}}>
                         <div>
