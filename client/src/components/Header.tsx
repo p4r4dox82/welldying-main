@@ -48,7 +48,7 @@ function Header({ additionalClass } : Props) {
                 )}
 
             </div>
-            <div className = 'vector' />
+            <div className = 'vector' style = {{zIndex: 10}} />
             <div className={"submenuContainerBar" + ((expanded_1 || expanded_2 || expanded_4) ? ' active' : '')} style = {{display: 'flex', width: '500px'}}>
               <div className = {'submenuContainer' + (expanded_1 ? ' active' : '')} onMouseLeave = {() => (setExpanded_1(false))}>
                   <div className = 'menuItem_1' onClick = {() => window.open('https://www.notion.so/Team-Memento-480ba51aeb3a43f6ad18d19a05bba5ad', '_blank')} style = {{cursor: 'pointer'}}>메멘토 소개</div>
