@@ -78,5 +78,12 @@ export default (Content: Model<ContentDocument>) => {
       res.send(200);
     })
 
+    router.put('/delete', async (req, res) => {
+      let id = Number.parseInt(req.body.id);
+      await Content.findOneAndDelete({ id });
+
+      res.send(200);
+    })
+
     return router;
 }

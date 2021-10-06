@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { AcroFormListBox } from "jspdf";
 import { apiAddress } from "../config";
 
 export interface Userdata {
@@ -62,6 +63,12 @@ export const content_userdata = async(id: number, userdata: { likes: string[], b
   let response = await Axios.put(`${apiAddress}/content/userdata`, {
     id, userdata
   }, { withCredentials: true });
+
+  return response.status === 200;
+}
+
+export const deleteContent = async(id: number) => {
+  let response = await Axios.put(`${apiAddress}/content/delete`, { id }, { withCredentials: true });
 
   return response.status === 200;
 }

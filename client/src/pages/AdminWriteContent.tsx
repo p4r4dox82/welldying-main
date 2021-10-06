@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link, match, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { getContent, writeContent } from '../etc/api/content';
+import { deleteContent, getContent, writeContent } from '../etc/api/content';
 import { getSections } from '../etc/api/section';
 import { getQuestions } from '../etc/api/question';
 import usePromise from '../etc/usePromise';
@@ -24,6 +24,10 @@ interface Props {
 };
 
 function AdminWriteContent({ match }: Props) {
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     let id = Number.parseInt(match.params.id);
     let user = useSelector((state: RootReducer) => state.user);
     let [contentLoading, content] = usePromise(() => getContent(id));
@@ -31,6 +35,7 @@ function AdminWriteContent({ match }: Props) {
     let [QuestionsLoading, Questions] = usePromise(getQuestions);
     let [CategoryLoading, allCategorys] = usePromise(getCategorys);
     let [error, setError] = React.useState<string>();
+
 
     let [title, setTitle] = React.useState<string>('');
     let [type, setType] = React.useState<string>('');
@@ -284,9 +289,13 @@ function AdminWriteContent({ match }: Props) {
                     if (!title || !category || !type || !source || !summary || !question  ) setError('모든 항목을 채워주세요.');
                     else if (await writeContent(id, title, type, category, { likes: [], bookmark: [], read: [], }, tag, 0, source, { summary: summary, oneline: oneline, subtitle: subtitle, bookdetail: bookdetail }, [], question, { imageUrl: thumbnailUri, cropX: crop.x, cropY: crop.y })) {setEditDone(true);}
                     else setError('어딘가 문제가 생겼습니다.');
-                }}>
+                }} style = {{marginBottom: '0px'}}>
                     { !content ? '추가하기' : '수정하기' }
                 </button>
+                <button className="signupButton" onClick = {async () => {
+                    if(await deleteContent(id)) 
+                        setEditDone(true);
+                }}>삭제하기</button>
                 { error }
             </div>
             {cropImage && <div className = 'crop_image_container admin'>
