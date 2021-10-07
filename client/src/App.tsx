@@ -42,14 +42,6 @@ function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
 
   if (userInfoLoading) return <></>;
-  if(isMobile) 
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route path='/' component = {MobileMain}/>
-        </Switch>
-      </BrowserRouter>
-    )
   else return (
     <BrowserRouter>
       <Switch>
