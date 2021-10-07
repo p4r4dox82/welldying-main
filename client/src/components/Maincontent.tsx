@@ -316,7 +316,7 @@ function Maincontent() {
         result.push({
             name: '메멘토 노트 ',
             mainText: <>
-                <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', lineHeight: '35px', display: 'inline-block'}}>당신의 야야기를 작성하는</div></div>
+                <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', lineHeight: '35px', display: 'inline-block'}}>당신의 이야기를 작성하는</div></div>
                 <div>당신만의 공간</div>
             </>,
             subText: <>
