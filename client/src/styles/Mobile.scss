@@ -1,0 +1,277 @@
+:root {
+    --white: rgba(255, 255, 255, 1);
+    --black: rgba(0, 0, 0, 1);
+    --green: rgba(35, 52, 42, 1);
+    --green04: rgba(35, 52, 42, 0.4);
+    --green9: rgba(39, 57, 47, 1);
+    --blackshadow15: rgba(0, 0, 0, 0.15);
+    --gray: rgba(97, 105, 101, 1);
+    --GB: GyeonggiBatang;
+}
+
+.MobileMain {
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+    h1, h2 {
+        font-family: var(--GB);
+        font-size: 20px;
+        letter-spacing: 0.05em;
+        color: var(--green);
+    }
+    h2 {
+        font-size: 14px;
+    }
+    h3 {
+        font-family: Noto Sans;
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--green9);
+    }
+    p {
+        font-family: var(--GB);
+        font-size: 16px;
+        line-height: 30px;
+        letter-spacing: 0.05em;
+        color: var(--green);
+    }
+    .ToolBar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 81px;
+        width: 100%;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-bottom: 1.5px solid #27392F;
+    }
+    .ToolBar .userimage {
+        width: 30px;
+        height: 21px;
+        border-radius: 15.5px;
+        background-color: var(--white);
+        box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.15);
+        svg {
+            left: calc(50% - 7px);
+            top: 7px;
+            width: 14px;
+            height: 14px;
+        }
+    }
+    .ToolBar .MementoLogo {
+        svg {
+            width: 111px;
+            height: 26px;
+            path {
+                fill: var(--green);
+            }
+        }
+    }
+    .MainInfo {
+        height: 340px;
+        border-bottom: 1px dashed var(--green);
+        img.background {
+            opacity: 0.4;
+            width: 100%;
+            height: 340px;
+            overflow: hidden;
+            object-fit: none;
+        }
+    }
+    .MainInfo .dotContainer {
+        display: flex;
+        gap: 7px;
+        position: absolute;
+        top: 31px;
+        right: 36px;
+        height: 7px;
+        .dot {
+            width: 7px;
+            height: 7px;
+        }
+        svg {
+            top: -7px;
+            path {
+                fill: var(--green);
+                opacity: 0.3;
+            }
+        }
+    }
+    .MainInfo .imageContainer {
+        width: 152px;
+        height: 133px;
+        padding-top: 65px;
+        box-sizing: content-box;
+        left: calc(50% - 152px/2);
+        .circle {
+            position: absolute;
+            top: 78px;
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            border: 4px solid var(--green9);
+        }
+        img {
+            position: absolute;
+            left: 22.5px;
+            width: 130px;
+            height: 133px;
+        }
+        .imagevector {
+            position: absolute;
+            left: 24.5px;
+            top: 66px;
+            svg {
+                width: 126px;
+                height: 129px;
+            }
+        }
+    }
+    .MainInfo .textContainer {
+        text-align: center;
+        margin-top: 31px;
+        .title {
+            font-family: var(--GB);
+            font-size: 20px;
+            line-height: 28px;
+            letter-spacing: 0.05em;
+        }
+        .more {
+            font-family: Noto Sans;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 40px;
+            color: var(--green);
+            opacity: 0.4;
+        }
+    }
+    
+    .MementoNoteInfo {
+        margin-top: 38px;
+        z-index: 1;
+    }
+    .MementoNoteInfo .textContainer {
+        text-align: center;
+        .title {
+
+        }
+        .subtitle {
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+        .more {
+            opacity: 0.6;
+            margin-top: 20px;
+        }
+        .detail {
+            margin-top: 17px;
+        }
+    }
+    .MementoNoteInfo .vector {
+        margin-top: 45px;
+        left: calc(50% - 26px/2);
+        width: 26px;
+        height: 1px;
+        background-color: var(--green);
+        opacity: 0.4;
+    }
+    .MementoNoteInfo .boxContainer {
+        margin-top: 48px;
+        width: 974px;
+        left: calc(50% - 221px/2);
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 30px;
+    }
+    .MementoNoteInfo .boxContainer .boxElement {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 221px;
+        height: 252px;
+        background: var(--white);
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+        .vectorContainer {
+            margin-top: 36px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--white);
+            box-shadow: inset 0px 1px 4px var(--blackshadow15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            svg {
+                path {
+                    fill: var(--gray);
+                    opacity: 0.4;
+                }
+            }
+        }
+        .title {
+            margin-top: 10px;
+            font-family: Noto Sans;
+            font-size: 16px;
+            font-weight: 800;
+            line-height: 25px;
+            letter-spacing: 00.05em;
+            color: var(--green);
+            opacity: 0.7;
+        }
+        .detail {
+            width: 182px;
+            text-align: center;
+            margin-top: 21px;
+            font-family: Noto Sans;
+            font-size: 14px;
+            line-height: 25px;
+            letter-spacing: -0.03em;
+            color: var(--green);
+            opacity: 0.6;
+        }
+    }
+    .MementoContentInfo {
+        text-align: center;
+        top: -39px;
+        width: 100%;
+        height: 545px;
+        background: rgba(210, 217, 215, 0.3);
+        mix-blend-mode: multiply;
+        box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.15);
+    }
+    .MementoContentInfo .textContainer {
+        padding-top: 107px;
+        text-align: center;
+        .title {
+
+        }
+        .subtitle {
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+        .more {
+            opacity: 0.6;
+            margin-top: 20px;
+        }
+        .detail {
+            margin-top: 17px;
+        }
+    }
+    .MementoContentInfo .dotContainer {
+        margin-top: 22px;
+        display: flex;
+        justify-content: center;
+        gap: 7px;
+        height: 5px;
+        svg {
+            top: -9px;
+            width: 5px;
+            height: 5px;
+            path {
+                fill: var(--green);
+                opacity: 0.3;
+            }
+        }
+    }
+}

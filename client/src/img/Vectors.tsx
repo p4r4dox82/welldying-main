@@ -307,3 +307,12 @@ export const blockAlignVector = (
 </svg>
 
 );
+
+export const toggleVector = (
+    <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20.9999 6H5.44434" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M21 1H1" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M21 11H1" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M20.9999 16H5.44434" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);

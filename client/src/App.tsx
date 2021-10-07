@@ -35,11 +35,21 @@ import MementoNoteBook from './pages/MementoNoteBook';
 import MementoNoteMain from './pages/MementoNoteMain';
 import ConfirmMementoBook from './pages/ConfirmMementoBook';
 import Survey from './pages/Survey';
+import { isMobile } from 'react-device-detect';
+import MobileMain from './Mobile/MobileMain';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
 
   if (userInfoLoading) return <></>;
+  if(isMobile) 
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path='/' component = {MobileMain}/>
+        </Switch>
+      </BrowserRouter>
+    )
   else return (
     <BrowserRouter>
       <Switch>
