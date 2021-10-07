@@ -42,7 +42,7 @@ function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
 
   if (userInfoLoading) return <></>;
-  if(isMobile) 
+  else if(isMobile) 
     return (
       <BrowserRouter>
         <Switch>
