@@ -25,13 +25,17 @@ function NoteLeftBar (props: Props) {
       <div className="usersgive">
         <div className="title NS px12 bold line25">사후 노트 수령인</div>
         <div className="userscontainer">
-          {(user && users) && user.user?.UsersInfo.give.map((userinfo) => {let giveuser = users.find((user_) => user_.username === userinfo.username);
-            if(giveuser) return (
-              false && <div className="username NS px12 line30">{giveuser?.name}</div>
-            );
-            return (
-              <div className="username NS px12 line30">{userinfo?.name}</div>
-            )
+          {(user && users) && user.user?.UsersInfo.give.map((userinfo) => {
+            let giveuser = users.find((user_) => user_.username === userinfo.username);
+            if(userinfo.accept === 0) {
+              return (
+                <div className="username NS px12 line30">{userinfo?.name + '(미승인)'}</div>
+              )
+            } else if(userinfo.accept === 1){
+              return (
+                <div className="username NS px12 line30">{userinfo?.name}</div>
+              )
+            }
           })}
         </div>
         <div className="adduser NS px12 bold line25" onClick = {() => props.setAddUserGive(true)} style = {{cursor: 'pointer'}}>{'+ 추가하기'}</div>
