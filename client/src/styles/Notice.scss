@@ -149,6 +149,14 @@ div.list {
     &.answer {
       height: fit-content;
       margin:0px;
+      .uri {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .uri:hover {
+        opacity: 0.7;
+      }
     }
     div.block {
       margin: 0px;
