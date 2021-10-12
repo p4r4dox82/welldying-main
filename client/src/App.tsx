@@ -37,6 +37,7 @@ import ConfirmMementoBook from './pages/ConfirmMementoBook';
 import Survey from './pages/Survey';
 import { isMobile } from 'react-device-detect';
 import MobileMain from './Mobile/MobileMain';
+import MobileNote from './Mobile/MobileNote';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -46,6 +47,7 @@ function App() {
     return (
       <BrowserRouter>
         <Switch>
+          <Route path='/note' component = {MobileNote} />
           <Route path='/' component = {MobileMain}/>
         </Switch>
       </BrowserRouter>

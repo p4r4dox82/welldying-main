@@ -5,6 +5,7 @@ import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
 import { Colon, halfColon, LeftArrowVector, leftVector, LeftVector2, leftVectorMobile, MainImageVector, MementoBookVector, MementoDotVector, MementoLogo, MementoMakeBookVector, MementoNoteVector, MementoTogetherNoteVector, RightArrowVector, rightVector, RightVector2, rightVectorMobile, toggleVector, UserImage } from '../img/Vectors';
 import { RootReducer } from '../store';
+import MobileHeader from './MobileHeader';
 
 function MobileMain() {
     let user = useSelector((state: RootReducer) => state.user);
@@ -123,11 +124,7 @@ function MobileMain() {
     return (
         <>
             <div className="MobileMain">
-                <div className="Header">
-                    <div className="userimage">{UserImage}</div>
-                    <div className="MementoLogo">{MementoLogo}</div>
-                    <div className="toggle">{toggleVector}</div>
-                </div>
+                <MobileHeader />
                 <div className="MainInfo">
                     <img src={imageUrl('main_background.png')} alt="" className="background" />
                     <div className="dotContainer">
@@ -215,21 +212,22 @@ function MobileMain() {
                             <div className="title">{'‘'}{MementoContentSection[ContentSection].name}{'’  인기 컨텐츠'}</div>
                             <div className="rightButton" onClick = {() => setContentNumber((contentNumber + 1)%4)}>{RightVector2}</div>
                         </div>
-                        <div className="Contents" style = {{transition: 'all 0.5s ease-in-out', left: `${(-410 * contentNumber) + 'px'}`}}>
-                            {MementoContentSection[ContentSection].newcontents?.map((content_) => {
-                                let content = AllContents.find((content) => content.id === content_.id);
-                                if(!content) return <></>;
-                                else return (
-                                    <div className="ContentElement">
-                                        <div className="image">
-                                            <img src={content.imageData.imageUrl} alt="" className="thumbnail" />
-                                            {content.userdata.read.includes(String(user.user?.username)) && <div className="read"></div>}
+                        <div className="ContentsCover">
+                            <div className="Contents" style = {{transition: 'all 0.5s ease-in-out', left: `${(-410 * contentNumber) + 'px'}`}}>
+                                {MementoContentSection[ContentSection].newcontents?.map((content_) => {
+                                    let content = AllContents.find((content) => content.id === content_.id);
+                                    if(!content) return <></>;
+                                    else return (
+                                        <div className="ContentElement">
+                                            <div className="image">
+                                                <img src={content.imageData.imageUrl} alt="" className="thumbnail" />
+                                                {content.userdata.read.includes(String(user.user?.username)) && <div className="read"></div>}
+                                            </div>
+                                            <div className="title">{content.title}</div>
                                         </div>
-                                        <div className="title">{content.title}</div>
-                                    </div>
-                                )
-                            })}
-                            
+                                    )
+                                })}
+                            </div>
                         </div>
                         <div className="vectorContainer">
                             <div className="line"></div>
