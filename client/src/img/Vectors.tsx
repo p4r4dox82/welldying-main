@@ -80,10 +80,23 @@ export const leftVector = (
     </svg>
 );
 
+export const leftVectorMobile = (
+    <svg width="12" height="28" viewBox="0 0 12 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path opacity="0.5" d="M10 26L2 14L10 2" stroke="#909693" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);
+
 export const rightVector = (
     <svg width="14" height="23" viewBox="0 0 14 23" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'rightVector'>
     <path opacity="0.7" d="M2 21L12 11.5L2 2" stroke="#283A30" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
+);
+
+export const rightVectorMobile = (
+    <svg width="12" height="28" viewBox="0 0 12 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path opacity="0.5" d="M2 2L10 14L1.99999 26" stroke="#909693" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
 );
 
 export const MementoMainVector = (

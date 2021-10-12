@@ -1,8 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { getContents } from '../etc/api/content';
 import { imageUrl } from '../etc/config';
-import { halfColon, MainImageVector, MementoBookVector, MementoDotVector, MementoLogo, MementoMakeBookVector, MementoNoteVector, MementoTogetherNoteVector, toggleVector, UserImage } from '../img/Vectors';
+import usePromise from '../etc/usePromise';
+import { Colon, halfColon, LeftArrowVector, leftVector, LeftVector2, leftVectorMobile, MainImageVector, MementoBookVector, MementoDotVector, MementoLogo, MementoMakeBookVector, MementoNoteVector, MementoTogetherNoteVector, RightArrowVector, rightVector, RightVector2, rightVectorMobile, toggleVector, UserImage } from '../img/Vectors';
+import { RootReducer } from '../store';
 
 function MobileMain() {
+    let user = useSelector((state: RootReducer) => state.user);
     let  MementoSectionArray = React.useMemo(() => {
         let result= [];
         result.push({
@@ -68,10 +73,57 @@ function MobileMain() {
         )
     }, [NoteTouchData, NoteTouchDir, update]);
 
+    //Content Variable
+    let [ContentSection, setContentSection] = React.useState<number>(0);
+    let [contentNumber, setContentNumber] = React.useState<number>(0);
+    let [, AllContents] = usePromise(getContents);
+    let MementoContentSection = React.useMemo(() => {
+        let result = [];
+        result.push({
+            name: '후회 없을 우리의 시간.',
+            image: 'Content1Image.png',
+            detail: `지난 삶을 돌아보며
+            추억의 순간들을 정리하고,
+            앞으로의 남은 삶에 대한 
+            계획을 세우는 시간입니다.`,
+            tag: `#기록 #추억 #자서전 #계획 
+            #버킷리스트 #편지`,
+            newcontents: AllContents?.filter((content) => [2, 43, 23, 46].includes(content.id)),
+            allcontents: AllContents?.filter((content) => content.category.includes(1)),
+        });
+        result.push({
+            name: '삶의 마지막, 그 때.',
+            image: 'Content2Image.png',
+            detail: `삶의 마지막 순간이 임박했을 때
+            꼭 해야 하는 선택들에 
+            대해 고민하는 시간입니다.`,
+            tag: `#자기결정권 #치료 #장례 #법 
+            #유산 #신탁 #죽음의 이해`,
+            newcontents: AllContents?.filter((content) => [20, 35, 48, 18].includes(content.id)),
+            allcontents: AllContents?.filter((content) => content.category.includes(2)),
+        });
+        result.push({
+            name: '죽음, 그 이후의 이야기.',
+            image: 'Content3Image.png',
+            detail: `물리적인 죽음을 넘어섰을 때
+            일어나는 일들에 대한 
+            사색의 시간입니다.`,
+            tag: `#사별 #애도 #심적준비
+             #편지 #반려동물`,
+            newcontents: AllContents?.filter((content) => [37, 42, 22, 50].includes(content.id)),
+            allcontents: AllContents?.filter((content) => content.category.includes(3)),
+        });
+
+        return result;
+    }, [AllContents]);
+
+    //Footer Variable
+    let snsuri = ["https://www.instagram.com/memento.welldying/", "https://business.facebook.com/memento.welldying/", "https://blog.naver.com/memento_welldying", ""];
+
     return (
         <>
             <div className="MobileMain">
-                <div className="ToolBar">
+                <div className="Header">
                     <div className="userimage">{UserImage}</div>
                     <div className="MementoLogo">{MementoLogo}</div>
                     <div className="toggle">{toggleVector}</div>
@@ -122,9 +174,84 @@ function MobileMain() {
                         <h3 className="more">{'컨텐츠 페이지 바로가기>'}</h3>
                     </div>
                     <div className="dotContainer">
-                        <div>{MementoDotVector}</div>
-                        <div>{MementoDotVector}</div>
-                        <div>{MementoDotVector}</div>
+                        <div className = {ContentSection === 0 ? 'select' : ''}>{MementoDotVector}</div>
+                        <div className = {ContentSection === 1 ? 'select' : ''}>{MementoDotVector}</div>
+                        <div className = {ContentSection === 2 ? 'select' : ''}>{MementoDotVector}</div>
+                    </div>
+                    <div className="imageContainer">
+                        <div className="leftButton" onClick = {() => {
+                            setContentSection(ContentSection === 0 ? 2 : (ContentSection - 1)%3);
+                            setContentNumber(0);
+                        }}>{leftVectorMobile}</div>
+                        <div className="image">
+                            <img src={imageUrl(`Contentpage/${MementoContentSection[ContentSection].image}`)} alt="" />
+                        </div>
+                        <div className="rightButton" onClick = {() => {
+                            setContentSection((ContentSection + 1)%3);
+                            setContentNumber(0);
+                        }}>{rightVectorMobile}</div>
+                    </div>
+                    <div className="titleContainer">
+                        <div className="tag">
+                            <div>{MementoContentSection[ContentSection].tag.split('\n')[0]}</div>
+                            <div>{MementoContentSection[ContentSection].tag.split('\n')[1]}</div>
+                        </div>
+                        <div className="title">{MementoContentSection[ContentSection].name}</div>
+                        <div className="vector"></div>
+                    </div>
+                </div>
+                <div className="MementoContentDetail">
+                    <div className="textContainer">
+                        <div className="Colon">{Colon}</div>
+                        <div className="detail">{MementoContentSection[ContentSection].detail.split('\n').map((detail) => {
+                            return (
+                                <div>{detail}</div>
+                            )
+                        })}</div>
+                    </div>
+                    <div className="ContentContainer">
+                        <div className="titleContainer">
+                            <div className="leftButton" onClick = {() => setContentNumber(contentNumber === 0 ? 3 : contentNumber - 1)}>{LeftVector2}</div>
+                            <div className="title">{'‘'}{MementoContentSection[ContentSection].name}{'’  인기 컨텐츠'}</div>
+                            <div className="rightButton" onClick = {() => setContentNumber((contentNumber + 1)%4)}>{RightVector2}</div>
+                        </div>
+                        <div className="Contents" style = {{transition: 'all 0.5s ease-in-out', left: `${(-410 * contentNumber) + 'px'}`}}>
+                            {MementoContentSection[ContentSection].newcontents?.map((content_) => {
+                                let content = AllContents.find((content) => content.id === content_.id);
+                                if(!content) return <></>;
+                                else return (
+                                    <div className="ContentElement">
+                                        <div className="image">
+                                            <img src={content.imageData.imageUrl} alt="" className="thumbnail" />
+                                            {content.userdata.read.includes(String(user.user?.username)) && <div className="read"></div>}
+                                        </div>
+                                        <div className="title">{content.title}</div>
+                                    </div>
+                                )
+                            })}
+                            
+                        </div>
+                        <div className="vectorContainer">
+                            <div className="line"></div>
+                            <div className="vector"></div>
+                        </div>
+                    </div>
+                </div>
+                {false && <div className="MementoMore">메멘토에 문의하기</div>}
+                <div className="Footer">
+                    <div className="whiteBackground">
+                        <div>회사명 : 메멘토</div>
+                        <div>대표이메일 : welldying.mememnto@gmail.com</div>
+                        <div>대표 : 신동경 | 사업자등록번호 : 176-64-00459</div>
+                        <div>주소 : 서울특별시 관악구 봉천동 856-6 BS타워 5층 (우) 08788</div>
+                    </div>
+                    <div className="greenBackground">
+                        <div className="SNSContainer">
+                            {[...Array(4).keys()].map((i, key) => (
+                            <img src={imageUrl(`share_image_${i+1}.png`)} alt = "profile" key = {key} onClick = {key === 3 ? () => {} : () => window.open(snsuri[key], "_blank")} style = {{cursor: 'pointer'}}/>
+                            ))}
+                        </div>
+                        <div className="Copyright">Copyright © 2021 Memento Corporation All rights reserved</div>
                     </div>
                 </div>
             </div>
