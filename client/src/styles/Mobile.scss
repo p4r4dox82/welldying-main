@@ -657,3 +657,176 @@
         color: var(--green);
     }
 }
+
+.Mobile .MobileContentMain {
+    .Main {
+        width: 100%;
+        height: 303px;
+        border-bottom: 1px dashed var(--green04);
+        img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: none;
+        }
+        .blend {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(230, 229, 226, 1);
+            mix-blend-mode: soft-light;
+        }
+        .title, .subtitle {
+            margin: 0px 0px 0px 36px;
+            padding-top: 41px;
+            font-family: var(--GB);
+            font-style: normal;
+            font-weight: normal;
+            font-size: 20px;
+            line-height: 35px;
+            /* or 175% */
+    
+            letter-spacing: 0.05em;
+    
+            color: var(--green);
+        }
+        .subtitle {
+            margin-top: 19px;
+            padding: 0px;
+            font-size: 14px;
+            line-height: 14px;
+            opacity: 0.7;
+        }
+    }
+    .Main .buttonContainer {
+        width: calc(100% - 68px);
+        left: 34px;
+        margin-top: 72px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .Main .categories {
+        margin-top: 20px;
+        height: 40px;
+        width: 100%;
+        overflow: scroll;
+    }
+    .Main .categoryContainer {
+        width: 505px;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 10px;
+        left: 34px;
+    }
+    .Main .categoryContainer .category {
+        display: flex;
+        align-items: center;
+        height: 30px;
+        padding: 0px 15px;
+        border-radius: 20px;
+        border: 1px solid #000000;
+        opacity: 0.3;
+        box-sizing: border-box;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+        font-family: Noto Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 25px;
+        /* identical to box height, or 208% */
+
+        text-align: center;
+        letter-spacing: 0.05em;
+
+        color: var(--green);
+    }
+    .Main .categoryContainer .category.select {
+        opacity: 1;
+        box-shadow: none;
+    }
+    .popularContents {
+        margin-left: 34px;
+        .title {
+            margin-top: 41px;
+            font-family: var(--GB);
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 60px;
+            /* identical to box height, or 429% */
+
+            letter-spacing: 0.05em;
+        }
+    }
+    .popularContents .contentsContainer {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 42px;
+        overflow: scroll;
+        margin-left: -34px;
+        top: -20px;
+        padding: 20px 34px;
+    }
+}
+
+.Mobile .Contentbox {
+    width: 233px;
+    height: 265px;
+    background: #FBFBFB;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    img {
+        width: 233px;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+    .cover {
+        margin: 20px 0px 0px 15px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 194px;
+        height: 98px;
+        font-family: Noto Sans;
+        .Colon {
+            width: 4px;
+            height: 15.5px;
+            svg {
+                g {
+                    opacity: 1;
+                }
+                path {
+                    fill: var(--green9);
+                }
+            }
+        }
+        .type {
+            margin-left: 7px;
+            width: 65px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 22px;
+            color: var(--green9);
+        }
+        .tag {
+            width: calc(100% - 4px - 7px - 65px);
+            font-size: 12px;
+            line-height: 16px;
+            text-align: right;
+            font-weight: 300;
+            color: vat(--green9);
+            opacity: 0.6;
+        }
+        .title {
+            font-family: Noto Sans;
+            margin-top: 24px;
+            width: 100%;
+            font-size: 12px;
+            line-height: 25px;
+            font-weight: bold;
+            color: var(--green9);
+            text-align: justify;
+        }
+    }
+}

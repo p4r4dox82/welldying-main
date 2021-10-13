@@ -38,6 +38,7 @@ import Survey from './pages/Survey';
 import { isMobile } from 'react-device-detect';
 import MobileMain from './Mobile/MobileMain';
 import MobileNote from './Mobile/MobileNote';
+import MobileContent from './Mobile/MobileContent';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -48,6 +49,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path='/note' component = {MobileNote} />
+          <Route path='/content/:id' component = {MobileContent} />
           <Route path='/' component = {MobileMain}/>
         </Switch>
       </BrowserRouter>

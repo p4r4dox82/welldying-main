@@ -173,7 +173,7 @@ function MobileMain() {
                     <div className="textContainer">
                         <h1 className="title">메멘토 컨텐츠</h1>
                         <h2 className="subtitle">삶과 죽음에 대해 생각하는 시간</h2>
-                        <h3 className="more">{'컨텐츠 페이지 바로가기>'}</h3>
+                        <Link to = '/content/1'><h3 className="more">{'컨텐츠 페이지 바로가기>'}</h3></Link>
                     </div>
                     <div className="dotContainer">
                         <div className = {ContentSection === 0 ? 'select' : ''}>{MementoDotVector}</div>
