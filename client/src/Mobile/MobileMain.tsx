@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getContents } from '../etc/api/content';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
@@ -55,15 +56,18 @@ function MobileMain() {
             setNoteTouchData({initialX: 0, initialY: 0 , LRdir: (diffX > diffY && diffX > 0) ? Math.max(NoteTouchData.LRdir - 1, -3) : Math.min(NoteTouchData.LRdir + 1, 0), UDdir: (diffY > diffX && diffY > 0) ? Math.max(NoteTouchData.UDdir - 1, -3) : Math.min(NoteTouchData.UDdir + 1, 0)});
         }
     }
-
+    let noteLink = React.useRef<any>(null);
+    let noteLinkClick = () => noteLink.current.click();
     let MementoSections = React.useMemo(() => {
         return (
+            <>
+            <Link to = '/note' ref = {noteLink} style = {{display: 'none'}}></Link>
             <div className="boxContainer" onTouchStart = {(e: any) => {setNoteTouchData({...NoteTouchData, initialX: e.touches ? e.touches[0].clientX: e.clientX , initialY: e.touches ? e.touches[0].clientY: e.clientY })}} onTouchMove = {(e: any) => {
                 dragDirection(e);
             }} style = {{transform: `translateX(${251 * NoteTouchData.LRdir + 'px'})`, transition: 'all 0.5s ease-in-out'}}>
-                {MementoSectionArray.map((MementoSection) => {
+                {MementoSectionArray.map((MementoSection, key) => {
                     return (
-                        <div className="boxElement">
+                        <div className="boxElement" onClick = {key === 0 ? () => noteLinkClick() : () => {}}>
                             <div className="vectorContainer">{MementoSection.vector}</div>
                             <div className="title">{MementoSection.name}</div>
                             <div className="detail">{MementoSection.detail}</div>
@@ -71,6 +75,7 @@ function MobileMain() {
                     )
                 })}
             </div>
+            </>
         )
     }, [NoteTouchData, NoteTouchDir, update]);
 

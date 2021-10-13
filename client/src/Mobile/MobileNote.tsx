@@ -5,7 +5,28 @@ import usePromise from '../etc/usePromise';
 import MobileHeader from './MobileHeader';
 
 function MobileNote() {
-    let [, sections] = usePromise(getSections);
+    let [allSectionsLoading, allSections] = usePromise(getSections);
+    let [sectionNum, setSectionNum] = React.useState<number>(0);
+
+    let sections = React.useMemo(() => {
+        if(!allSectionsLoading) return <></>;
+        else return (
+            <div className="sections">
+                <div className="sectionContainer">
+                    <div className={"section" + (sectionNum === 0 ? ' select' : '')}>전체</div>
+                    {allSections?.map((section, key) => {
+                        return (
+                            <div className={"section" + (sectionNum === key + 1 ? ' select' : '')}>{section.tag.split('#').slice(1).map((tag) => {
+                                return (
+                                    <span>{tag}</span>
+                                )
+                            })}</div>
+                        )
+                    })}
+                </div>
+            </div>
+        )
+    }, [allSections, sectionNum]);
     return (
         <>
             <div className="Mobile">
@@ -22,20 +43,7 @@ function MobileNote() {
                             메멘토 노트
                         </div>
                     </div>
-                    <div className="sections">
-                        <div className="sectionContainer">
-                            <div className="section">전체</div>
-                            {sections?.map((section) => {
-                                return (
-                                    <div className="section">{section.tag.split('#').slice(1).map((tag) => {
-                                        return (
-                                            <span>{tag}</span>
-                                        )
-                                    })}</div>
-                                )
-                            })}
-                        </div>
-                    </div>
+                    {sections}
                 </div>
             </div>
         </>
