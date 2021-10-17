@@ -2,13 +2,16 @@
     --white: rgba(255, 255, 255, 1);
     --black: rgba(0, 0, 0, 1);
     --green: rgba(35, 52, 42, 1);
+    --textareagreen: rgba(35, 52, 42, 0.5);
     --darkgreen: rgba(48, 59, 53, 1);
     --green04: rgba(35, 52, 42, 0.4);
+    --softgreen: rgba(210, 217, 215, 0.3);
     --green9: rgba(39, 57, 47, 1);
     --blackshadow15: rgba(0, 0, 0, 0.15);
     --gray: rgba(97, 105, 101, 1);
     --bordercolor: rgba(105, 117, 110, 1);
     --whitetext: rgba(248, 248, 247, 1);
+    --nocolor: rgba(0, 0, 0, 0);
     --GB: GyeonggiBatang;
 }
 
@@ -239,7 +242,7 @@
         top: -39px;
         width: 100%;
         height: 545px;
-        background: rgba(210, 217, 215, 0.3);
+        background: var(--softgreen);
         mix-blend-mode: multiply;
         box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.15);
         border-bottom: 1px solid rgba(110, 118, 114, 0.3);
@@ -775,7 +778,7 @@
         padding-left: 34px;
         width: 100%;
         height: 275px;
-        background: rgba(210, 217, 215, 0.3);
+        background: var(--softgreen);
         box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.15);
 
         border: 1px solid rgba(110, 118, 114, 0.3);
@@ -841,6 +844,464 @@
 
             letter-spacing: 0.05em;
         }
+    }
+    .moreContents .contentsContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 17px 42px;
+    }
+    .moreContents .more {
+        margin-top: 14px;
+        justify-content: center;
+        display: flex;
+        gap: 14px;
+        font-family: var(--GB);
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 18px;
+        /* identical to box height */
+
+        text-align: center;
+        letter-spacing: 0.05em;
+
+        color: var(--green9);
+        opacity: 0.5;
+        .vector {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #939C97;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotate(-90deg);
+            svg {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    }
+}
+
+.Mobile .MobileContentPage {
+    padding-bottom: 100px;
+    .coverContainer {
+        .image {
+            width: 100%;
+            img {
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+    .coverContainer .cover {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px 0px;
+        padding: 14px 22px;
+        width: 100%;
+        height: 95px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+        border-bottom: 0.5px dashed rgba(35, 52, 42, 0.4);
+        .title {
+            width: calc(100% - 60px);
+            height: 40px;
+            padding-right: 24px;
+            font-family: Noto Sans;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 20px;
+            /* or 143% */
+
+            text-align: justify;
+            letter-spacing: 0.05em;
+
+            color: var(--green);
+        }
+        .sharebutton {
+            margin-right: 13px;
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            background-color: var(--whitetext);
+            box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            svg {
+                left: -1px;
+            }
+        }
+        .likebutton {
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            background-color: var(--whitetext);
+            box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            svg {
+                left: -1px;
+                path {
+                    fill: rgba(196, 196, 196, 1);
+                }
+            }
+        }
+        .tag {
+            font-family: var(--GB);
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 20px;
+            /* identical to box height, or 167% */
+
+            letter-spacing: 0.05em;
+
+            color: var(--green);
+
+            opacity: 0.6;
+        }
+        .date {
+            font-family: var(--GB);
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 20px;
+            /* identical to box height, or 167% */
+
+            text-align: right;
+            letter-spacing: 0.05em;
+
+            color: var(--grean);
+
+            opacity: 0.5;
+        }
+    }
+    .coverContainer .source {
+        padding: 8px 20px;
+        width: 100%;
+        height: 36px;
+        border-bottom: 0.5px dashed rgba(35, 52, 42, 0.4);
+        font-family: var(--GB);
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 20px;
+        /* identical to box height, or 167% */
+
+        letter-spacing: 0.05em;
+
+        color: var(--green);
+
+        opacity: 0.5;
+    }
+    .bookContent {
+        padding-top: 44px;
+        padding-bottom: 31px;   
+        background-color: rgba(229, 229, 229, 0.3);
+        overflow-y: visible;
+    }
+    .bookContent .pageContainer {
+        width: fit-content;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 44px;
+    }
+    .bookContent .pageContainer .page {
+        width: calc(100vw - 44px);
+        padding: 0px;
+        padding-top: 28px;
+        background: #FFFFFF;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
+        border-radius: 5px;
+        text-align: center;
+        .number, .subtitle {
+            width: calc(100vw - 44px);
+            min-width: 315px;
+            max-width: 400px;
+            font-family: var(--GB);
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 45px;
+            /* or 225% */
+            letter-spacing: 0.05em;
+
+            color: var(--green);
+
+            opacity: 0.9;
+        }
+        .subtitle {
+            margin-top: 5px;
+        }
+        textarea {
+            margin-top: 30px;
+            padding: 0px;
+            padding-bottom: 40px;
+            border: none;
+            outline: none;
+            resize: none;
+            font-family: var(--GB);
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 35px;
+            /* or 219% */
+
+            text-align: justify;
+            letter-spacing: 0.05em;
+
+            color: var(--green);
+
+            opacity: 0.9;
+        }
+    }
+    .bookContent .buttonContainer {
+        margin-top: 27px;
+        display: flex;
+        justify-content: center;
+        gap: 13px;
+        align-items: center;
+        button {
+          width: 28px;
+          height: 28px;
+          background: rgba(255, 255, 255, 0.5);
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+          padding: 0px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          svg {
+            width: 10px;
+            path {
+              opacity: 0.5;
+              stroke-width: 4;
+            }
+          }
+          &:hover {
+            background: rgba(255, 255, 255, 0.8);
+          }
+        }
+      }
+    .summaryContainer {
+        padding: 40px 34px;
+        padding-bottom: 0px;
+        .title {
+            font-family: var(--GB);
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 60px;
+            /* identical to box height, or 429% */
+
+            letter-spacing: 0.05em;
+
+            color: var(--green);
+        }
+        .summary {
+            font-family: Noto Sans;
+            font-style: normal;
+            font-weight: 200;
+            font-size: 14px;
+            line-height: 35px;
+            /* or 250% */
+
+            text-align: justify;
+            letter-spacing: 0.05em;
+
+            color: var(--green);
+
+            opacity: 0.7;
+        }
+    }
+    .questionContainer {
+
+    }
+    .questionContainer .main {
+        width: 100%;
+        min-height: 198px;
+        background-color: var(--softgreen);
+        padding-left: 34px;
+        padding-right: 34px;
+        padding-bottom: 25px;
+    }
+    .questionContainer .textContainer .question {
+        margin-bottom: 24px;
+        padding-top: 27px;
+        display: flex;
+        gap: 8px;
+        .Colon {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            margin: 0px;
+            svg {
+                width: 3.4px;
+                height: 13px;
+                g {
+                    opacity: 1;
+                    path {
+                        fill: var(--green);
+                    }
+                }
+            }
+        }
+        .title {
+            width: calc(100% - 12px);
+            height: 60px;
+            margin: 0px;
+            font-family: var(--GB);
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 32px;
+            /* or 229% */
+
+            letter-spacing: 0.05em;
+
+            color: var(--green);
+        }
+    }
+    .questionContainer .main .textarea {
+        max-height: 165px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    .questionContainer .main .textarea .lineContainer {
+        position: absolute;
+        z-index: -1;
+        top: 0px;
+        padding-bottom: 5px;
+        .line {
+            width: calc(100vw - 68px);
+            margin-top: 29.5px;
+            height: 0.5px;
+            background-color: var(--textareagreen);
+        }
+    }
+    .questionContainer .main .textarea textarea {
+        resize: none;
+        padding: 0px;
+        padding-bottom: 10px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-family: Noto Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 30px;
+
+        color: var(--textareagreen);
+    }
+    .questionContainer .main .answerlength {
+        margin-top: 10px;
+        font-family: Noto Sans;
+        font-style: normal;
+        font-weight: bolder;
+        font-size: 13px;
+        line-height: 16px;
+        /* identical to box height */
+
+        text-align: right;
+        letter-spacing: 0.05em;
+
+        color: var(--green);
+
+        opacity: 0.4;
+    }
+    .questionContainer .main .imageContainer {
+        margin-top: 36px;
+        width: 100%;
+        min-height: 100px;
+        padding: 15px;
+        background-color: transparent;
+        box-shadow: inset 0px 1px 3px 3px rgba(0, 0, 0, 0.05);
+    }
+    .questionContainer .main .imageContainer img {
+        object-fit: cover;
+    }
+    .questionContainer .showanswer {
+        margin-top: 21px;
+        width: 100%;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--white);
+        border-radius: 5px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+        font-family: Noto Sans;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 12px;
+        line-height: 16px;
+        text-align: right;
+
+        color: var(--green9);
+    }
+    .questionContainer .saveContainer .saveConfirm {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: -73px;
+        background: #FBFBFB;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+        display: flex;
+        padding: 22px 13px;
+        align-items: center;
+        justify-content: space-between;
+        .text {
+            font-family: var(--GB);
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 20px;
+            /* identical to box height, or 133% */
+
+            text-align: center;
+            letter-spacing: 0.05em;
+
+            color: #515F57;
+        }
+        .button {
+            background: #23342A;
+            mix-blend-mode: darken;
+            opacity: 0.7;
+            box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+            border-radius: 5px;
+            width: 81px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Noto Sans;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12px;
+            line-height: 16px;
+
+            color: #FFFFFF;
+        }
+    }
+    .questionContainer .title,
+    .moreContents .title
+    {
+        margin-left: 34px;
+        margin-top: 41px;
+        font-family: var(--GB);
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 60px;
+
+        letter-spacing: 0.05em;
     }
     .moreContents .contentsContainer {
         display: flex;
