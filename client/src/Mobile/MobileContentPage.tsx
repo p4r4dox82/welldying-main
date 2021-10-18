@@ -240,7 +240,7 @@ function MobileContentPage({ match }: Props) {
                                     }}>확인</div>
                                 </div>}
                                 <div className="showanswer" style = {{background: showanswer ? 'rgba(144, 150, 147, 1)' : '', color: showanswer ? '#FFF' : ''}} onClick = {showanswer ? async () => {
-                                if(await writeAnswer(id!, answer, answer.length, { imageUrl: imageUri, cropX: 0, cropY: 0 }))
+                                if(await writeAnswer(Number(question?.id), answer, answer.length, { imageUrl: imageUri, cropX: 0, cropY: 0 }))
                                     setSave(true);
                                 } : () => setShowAnswer(!showanswer)}>{showanswer ? '저장하기' : '답변 작성하기'}
                                 </div>
