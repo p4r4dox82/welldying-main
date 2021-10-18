@@ -49,10 +49,16 @@ function App() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path='/note' component = {MobileNote} />
-          <Route path='/content/:id' component = {MobileContent} />
-          <Route path='/contentpage/:id' component = {MobileContentPage} />
-          <Route path='/' component = {MobileMain}/>
+          <Route path='/login/connect/:service/:id/:token' component={LoginConnect} />
+          <Route path='/login' component={Login} />
+          <Route path='/logout' component={Logout} />
+          <Route path='/signup/done' component={SignupDone} />
+          <Route path='/signup' component={Signup} />
+          <Route path='/test/note' component = {MobileNote} />
+          <Route path='/test/content/:id' component = {MobileContent} />
+          <Route path='/test/contentpage/:id' component = {MobileContentPage} />
+          <Route path='/test' component = {MobileMain}/>
+          <Route path='/' component={Main} />
         </Switch>
       </BrowserRouter>
     )
