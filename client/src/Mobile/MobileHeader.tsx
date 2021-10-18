@@ -6,7 +6,7 @@ function MobileHeader() {
         <>
             <div className="Header">
                 <div className="userimage">{UserImage}</div>
-                <Link to = '/'><div className="MementoLogo">{MementoLogo}</div></Link>
+                <Link to = '/test'><div className="MementoLogo">{MementoLogo}</div></Link>
                 <div className="toggle">{toggleVector}</div>
             </div>
         </>

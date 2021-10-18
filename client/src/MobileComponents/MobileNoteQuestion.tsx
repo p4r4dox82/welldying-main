@@ -130,7 +130,7 @@ function MobileNoteQuestion(props: Props) {
                         setSave(true);
                     } : () => setEditanswer(!editanswer)}>{editanswer ? '저장하기' : '내용 수정하기'}
                     </div>
-                    {question.contents[0] && <Link to ={`/contentpage/${question.contents[0]}`}><div className="morecontent">대표 컨텐츠 바로가기</div></Link>}
+                    {question.contents[0] && <Link to ={`/test/contentpage/${question.contents[0]}`}><div className="morecontent">대표 컨텐츠 바로가기</div></Link>}
                 </div>
             </div>}
             {showanswer && !props.written && <div className="answer" style = {{background : 'rgba(243, 243, 243, 0.9)'}}>
@@ -168,7 +168,7 @@ function MobileNoteQuestion(props: Props) {
                         setSave(true);
                     }}>{'저장하기'}
                     </div>
-                    {question.contents[0] && <Link to ={`/contentpage/${question.contents[0]}`}><div className="morecontent">대표 컨텐츠 바로가기</div></Link>}
+                    {question.contents[0] && <Link to ={`/test/contentpage/${question.contents[0]}`}><div className="morecontent">대표 컨텐츠 바로가기</div></Link>}
                 </div>
             </div>}
         </div>

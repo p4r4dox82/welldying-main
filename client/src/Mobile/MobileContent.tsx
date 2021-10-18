@@ -78,14 +78,14 @@ function MobileContent({ match }: Props) {
                             메멘토 컨텐츠
                         </div>
                         <div className="buttonContainer">
-                            <Link to = {`/content/${Math.max(id - 1, 1)}`} onClick = {() => clearVariable()}><div className="leftButton">{LeftVector2}</div></Link>
-                            <Link to = {`/content/${Math.min(id + 1, 3)}`} onClick = {() => clearVariable()}><div className="rightButton">{RightVector2}</div></Link>
+                            <Link to = {`/test/content/${Math.max(id - 1, 1)}`} onClick = {() => clearVariable()}><div className="leftButton">{LeftVector2}</div></Link>
+                            <Link to = {`/test/content/${Math.min(id + 1, 3)}`} onClick = {() => clearVariable()}><div className="rightButton">{RightVector2}</div></Link>
                         </div>
                         <div className="categories" ref = {categoryRef} style = {{transition : 'all 0.5s ease-in-out'}}>
                             <div className="categoryContainer" >
                                 {allcategorys?.map((category, key) => {
                                     return (
-                                        <Link to = {`/content/${key + 1}`} onClick = {() => {
+                                        <Link to = {`/test/content/${key + 1}`} onClick = {() => {
                                             clearVariable();
                                         }}><div className={"category" + (categoryNum === key + 1 ? ' select' : '')}>{category.title}</div></Link>
                                     )
