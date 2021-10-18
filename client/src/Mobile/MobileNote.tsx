@@ -10,6 +10,7 @@ import { Colon, LeftArrowVector, leftVector, PlusVector, rightVector } from '../
 import { RootReducer } from '../store';
 import MobileHeader from './MobileHeader';
 import MobileNoteQuestion from '../MobileComponents/MobileNoteQuestion';
+import { Redirect } from 'react-router';
 
 function MobileNote() {
     let user = useSelector((state: RootReducer) => state.user);
@@ -74,8 +75,8 @@ function MobileNote() {
         )
     }, [allSections, sectionNum]);
 
-    
-    return (
+    if(!user.loggedIn) return <Redirect to ='/login' />
+    else return (
         <>
             <div className="Mobile">
                 <MobileHeader />

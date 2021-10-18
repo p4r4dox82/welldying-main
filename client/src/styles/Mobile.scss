@@ -406,17 +406,17 @@
     .MementoContentDetail .ContentContainer .Contents {
         display: flex;
         flex-wrap: nowrap;
-        margin-left: calc(50% - 350px/2);
+        margin-left: calc(50% - 290px/2);
         gap: 60px;
     }
     .MementoContentDetail .ContentContainer .ContentsCover {
-        width: 350px;
-        left: calc(50% - 350px/2);
+        width: 290px;
+        left: calc(50% - 290px/2);
         overflow: hidden;
     }
     .MementoContentDetail .ContentContainer .Contents .ContentElement {
         margin-top: 35px;
-        width: 350px;
+        width: 290px;
         justify-content: center;
         img.thumbnail {
             width: 290px;
@@ -431,7 +431,7 @@
         }
         .title {
             margin-top: 43px;
-            width: 350px;
+            width: 290px;
             text-align: center;
             
             font-family: Noto Sans;
