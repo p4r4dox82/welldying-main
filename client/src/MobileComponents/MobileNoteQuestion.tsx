@@ -83,7 +83,7 @@ function MobileNoteQuestion(props: Props) {
         console.log(s3Uri);
         setImageUri(s3Uri);
         if(s3Uri === undefined) {
-        setImageUri('https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png');
+            setImageUri('https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png');
         }
         return s3Uri;
     }
@@ -113,8 +113,8 @@ function MobileNoteQuestion(props: Props) {
                 <div className="answerlength">
                     {answerLength + ' / 550 자'}
                 </div>
-                <div className="imageContainer" onClick = {() => {handleClick(); setCropImage(true);}}>
-                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: imageUri === '' ? 50 : width - 108, height: imageUri === '' ? 50 : width - 108}}/>
+                <div className="imageContainer" onClick = {editanswer ? () => {handleClick(); setCropImage(true);} : () => {}}>
+                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: (imageUri === '' || imageUri === undefined) ? 50 : width - 108, height: (imageUri === '' || imageUri === undefined) ? 50 : width - 108}}/>
                     <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
                 </div>
                 <div className="saveContainer">
@@ -152,7 +152,7 @@ function MobileNoteQuestion(props: Props) {
                     {answerLength + ' / 550 자'}
                 </div>
                 <div className="imageContainer" onClick = {() => {handleClick(); setCropImage(true);}}>
-                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: imageUri === '' ? 50 : width - 108, height: imageUri === '' ? 50 : width - 108}}/>
+                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: (imageUri === '' || imageUri === undefined) ? 50 : width - 108, height: (imageUri === '' || imageUri === undefined) ? 50 : width - 108}}/>
                     <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
                 </div>
                 <div className="saveContainer">
