@@ -5,6 +5,7 @@ import { getContents } from '../etc/api/content';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
 import { Colon, halfColon, LeftArrowVector, leftVector, LeftVector2, leftVectorMobile, MainImageVector, MementoBookVector, MementoDotVector, MementoLogo, MementoMakeBookVector, MementoNoteVector, MementoTogetherNoteVector, RightArrowVector, rightVector, RightVector2, rightVectorMobile, toggleVector, UserImage } from '../img/Vectors';
+import MobileNavigation from '../MobileComponents/MobileNavigation';
 import { RootReducer } from '../store';
 import MobileHeader from './MobileHeader';
 
@@ -128,6 +129,7 @@ function MobileMain() {
 
     return (
         <>
+            <div className="Mobile">
             <div className="MobileMain">
                 <MobileHeader />
                 <div className="MainInfo">
@@ -257,6 +259,8 @@ function MobileMain() {
                         <div className="Copyright">Copyright © 2021 Memento Corporation All rights reserved</div>
                     </div>
                 </div>
+            </div>
+            <MobileNavigation />
             </div>
         </>
     )
