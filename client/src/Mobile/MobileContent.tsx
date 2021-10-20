@@ -42,7 +42,7 @@ function MobileContent({ match }: Props) {
     }, [allContents, categoryNum]);
     let categoryAllContents = React.useMemo(() => {
         return allContents?.filter((content) => content.category.includes(categoryNum));
-    }, [categoryNum]);
+    }, [allContents, categoryNum]);
     let categoryRef = React.useRef<any>(null);
     let popularContentsRef = React.useRef<any>(null);
     React.useEffect(() => {
