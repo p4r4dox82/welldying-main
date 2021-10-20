@@ -15,7 +15,7 @@
     --GB: GyeonggiBatang;
 }
 
-.MobileMain {
+.Mobile .MobileMain {
     margin: 0px;
     padding: 0px;
     width: 100vw;
@@ -1806,6 +1806,56 @@
             color: var(--green9);
 
             opacity: 0.6;
+        }
+    }
+}
+
+.Mobile .Navigation {
+    position: fixed;
+    bottom: 0px;
+    z-index: 100;
+    width: 100vw;
+    min-height: 73px;
+    background: var(--white);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    .introButtonContainer {
+        padding: 18px 30px;
+        padding-bottom: 0px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .introButtonContainer .bar {
+        width: 1px;
+        height: 18px;
+        border-radius: 1px;
+        background-color: rgba(211, 214, 212, 1);
+    }
+    .introButtonContainer .Element {
+        text-align: center;
+        .vector {
+            svg {
+                transform: scale(0.75);
+                path {
+                    fill: rgba(97, 105, 101, 1);
+                }
+            }
+        }
+        .text {
+            font-family: var(--GB);
+            font-style: normal;
+            font-weight: normal;
+            font-size: 11px;
+            line-height: 30px;
+            /* identical to box height, or 273% */
+
+            text-align: center;
+            letter-spacing: 0.05em;
+
+            color: var(--green);
         }
     }
 }
