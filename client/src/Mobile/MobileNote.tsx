@@ -8,9 +8,10 @@ import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
 import { Colon, LeftArrowVector, leftVector, PlusVector, rightVector } from '../img/Vectors';
 import { RootReducer } from '../store';
-import MobileHeader from './MobileHeader';
+import MobileHeader from '../MobileComponents/MobileHeader';
 import MobileNoteQuestion from '../MobileComponents/MobileNoteQuestion';
 import { Redirect } from 'react-router';
+import MobileNavigation from '../MobileComponents/MobileNavigation';
 
 function MobileNote() {
     let user = useSelector((state: RootReducer) => state.user);
@@ -75,7 +76,7 @@ function MobileNote() {
         )
     }, [allSections, sectionNum]);
 
-    if(!user.loggedIn) return <Redirect to = '/login' />;
+    if(!user.loggedIn) return <Redirect to = {{pathname: '/login', state: {from: '/note'}}} />;
     else return (
         <>
             <div className="Mobile">
@@ -96,19 +97,25 @@ function MobileNote() {
                     <div className="QuestionContainer">
                         <div className="writtenQuestions">
                             <div className="title">{section?.title}</div>
-                            <div className="questions">
+                            {totalPageNumber === 0 ? <div className="empty">
+                                <div className="title">아직 답변하신 질문이 존재하지 않습니다.</div>
+                                <div className="subtitle">
+                                    <div>아래의 '작성하지 않은 질문'을 선택하여 </div>
+                                    <div>질문에 대한 답변을 남겨보세요</div>
+                                </div>
+                            </div> : <div className="questions">
                                 {writtenQuestions?.slice(4*(pageNumber - 1), 4*pageNumber).map((answer) => {
                                     let question = allQuestions?.find((question) => question.id === answer.questionId);
                                     if(question) return (
                                         <MobileNoteQuestion question = {question} answer = {answer} written = {true} />
                                     )
                                 })}
-                            </div>
-                            <div className="buttonContainer">
+                            </div>}
+                            {totalPageNumber > 4 && <div className="buttonContainer">
                                 <button className="left" onClick = {() => setPageNumber(Math.max(pageNumber - 1, 1))}>{leftVector}</button>
                                 <div className="pagenumber NS px14 bold">{pageNumber + '/' + (totalPageNumber)}</div>
                                 <button className="right" onClick = {() => setPageNumber(Math.min(pageNumber + 1, totalPageNumber))}>{rightVector}</button>
-                            </div>
+                            </div>}
                         </div>
                         <div className="unwrittenQuestions">
                             <div className="title">아직 작성하지 않은 질문</div>
@@ -126,6 +133,7 @@ function MobileNote() {
                         </div>
                     </div>
                 </div>
+                <MobileNavigation />
             </div>
         </>
     )

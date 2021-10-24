@@ -6,9 +6,18 @@ import { login, oauthLogin } from '../etc/api/user';
 import { googleClientId, imageUrl, kakaoJskey } from '../etc/config';
 import Footer from '../components/Footer';
 import { MementoLogo } from '../img/Vectors';
+import queryString from 'query-string';
+import { Match } from '@testing-library/dom';
+
+interface Props {
+    match: Match;
+    location: any;
+}
 
 
-function Login() {
+function Login({ match, location }: Props) {
+    console.log(match);
+    console.log(location);
     React.useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -18,7 +27,13 @@ function Login() {
     let [redirectTo, setRedirectTo] = React.useState<string>();
 
     const tryLogin = async () => {
-        if (await login(username, password)) setRedirectTo('/');
+        if (await login(username, password)) {
+            if (!location.state.from) {
+                setRedirectTo(String(location.state.from));
+            } else {
+                setRedirectTo(String(location.state.from));
+            }
+        }
         else setMessage('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
     }
 
@@ -26,7 +41,13 @@ function Login() {
         let response = await oauthLogin(service, id, token);
         if (response === false) setMessage(`${service}를 이용해 로그인하는 데에 문제가 발생했습니다.`);
         else {
-            if (response.loggedIn) setRedirectTo('/');
+            if (response.loggedIn) {
+                if (!location.state.from) {
+                    setRedirectTo(String(location.state.from));
+                } else {
+                    setRedirectTo(String(location.state.from));
+                }
+            }
             else setRedirectTo(`/login/connect/${service}/${id}/${token}`);
         }
     }

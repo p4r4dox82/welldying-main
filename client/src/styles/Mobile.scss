@@ -467,50 +467,6 @@
             opacity: 0.6;
         }
     }
-
-    .Footer {
-        margin-top: 40px;
-    }
-    .Footer .whiteBackground {
-        width: 340px;
-        left: calc(50% - 340px/2);
-        font-family: Noto Sans;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 11px;
-        line-height: 20px;
-        /* identical to box height */
-
-        letter-spacing: 0.05em;
-
-        color: var(--darkgreen);
-
-        opacity: 0.3;
-    }
-    .Footer .greenBackground {
-        margin-top: 20px;
-        width: 100%;
-        height: 90px;
-        text-align: center;
-        background-color: var(--darkgreen);
-        .SNSContainer {
-            position: relative;
-            padding-top: 21px;
-            margin-bottom: 10px;
-        }
-        .Copyright {
-            font-family: Noto Sans;
-            font-style: normal;
-            font-weight: 300;
-            font-size: 12px;
-            line-height: 16px;
-            letter-spacing: 0.05em;
-
-            color: #FFFFFF;
-
-            opacity: 0.5;
-        }
-    }
 }
 .Mobile {
     margin: 0px;
@@ -570,6 +526,49 @@
             path {
                 fill: var(--green);
             }
+        }
+    }
+    .Footer {
+        margin-top: 40px;
+    }
+    .Footer .whiteBackground {
+        width: 340px;
+        left: calc(50% - 340px/2);
+        font-family: Noto Sans;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 20px;
+        /* identical to box height */
+
+        letter-spacing: 0.05em;
+
+        color: var(--darkgreen);
+
+        opacity: 0.3;
+    }
+    .Footer .greenBackground {
+        margin-top: 20px;
+        width: 100%;
+        height: 90px;
+        text-align: center;
+        background-color: var(--darkgreen);
+        .SNSContainer {
+            position: relative;
+            padding-top: 21px;
+            margin-bottom: 10px;
+        }
+        .Copyright {
+            font-family: Noto Sans;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0.05em;
+
+            color: #FFFFFF;
+
+            opacity: 0.5;
         }
     }
 }
@@ -703,6 +702,24 @@
 
         color: var(--green);
         margin: 37px 0px 33px 35px;
+    }
+    .QuestionContainer .empty {
+        text-align: center;
+        padding: 50px 0px;
+        .title {
+            margin: 0px;
+            font-family: Noto Sans;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 20px;
+        }
+        .subtitle {
+            margin: 0px;
+            font-family: Noto Sans;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 15px;
+        }
     }
     .QuestionContainer .writtenQuestions .questions,
     .QuestionContainer .unwrittenQuestions .questions {
@@ -1558,6 +1575,9 @@
         padding: 15px;
         background-color: transparent;
         box-shadow: inset 0px 1px 3px 3px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .questionContainer .main .imageContainer img {
         object-fit: cover;
@@ -1779,6 +1799,7 @@
             }
         }
         .title {
+            width: 100%;
             height: 50px;
             margin: 0px;
             margin-top: 17px;

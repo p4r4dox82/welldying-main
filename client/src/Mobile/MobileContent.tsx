@@ -8,7 +8,8 @@ import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
 import { Colon, LeftArrowVector, leftVector, LeftVector2, RightArrowVector, RightVector2 } from '../img/Vectors';
 import MobileContentbox from '../MobileComponents/MobileContentbox';
-import MobileHeader from './MobileHeader';
+import MobileHeader from '../MobileComponents/MobileHeader';
+import MobileNavigation from '../MobileComponents/MobileNavigation';
 
 interface MatchParams {
     id: string;
@@ -135,6 +136,7 @@ function MobileContent({ match }: Props) {
                         </div>}
                     </div>
                 </div>
+                <MobileNavigation />
             </div>
         </>
     )

@@ -7,7 +7,8 @@ import usePromise from '../etc/usePromise';
 import { Colon, halfColon, LeftArrowVector, leftVector, LeftVector2, leftVectorMobile, MainImageVector, MementoBookVector, MementoDotVector, MementoLogo, MementoMakeBookVector, MementoNoteVector, MementoTogetherNoteVector, RightArrowVector, rightVector, RightVector2, rightVectorMobile, toggleVector, UserImage } from '../img/Vectors';
 import MobileNavigation from '../MobileComponents/MobileNavigation';
 import { RootReducer } from '../store';
-import MobileHeader from './MobileHeader';
+import MobileHeader from '../MobileComponents/MobileHeader';
+import MobileFooter from '../MobileComponents/MobileFooter';
 
 function MobileMain() {
     let user = useSelector((state: RootReducer) => state.user);
@@ -88,7 +89,7 @@ function MobileMain() {
         let result = [];
         result.push({
             name: '후회 없을 우리의 시간.',
-            image: 'Content1Image.png',
+            image: 'contentImage1.png',
             detail: `지난 삶을 돌아보며
             추억의 순간들을 정리하고,
             앞으로의 남은 삶에 대한 
@@ -100,7 +101,7 @@ function MobileMain() {
         });
         result.push({
             name: '삶의 마지막, 그 때.',
-            image: 'Content2Image.png',
+            image: 'contentImage2.png',
             detail: `삶의 마지막 순간이 임박했을 때
             꼭 해야 하는 선택들에 
             대해 고민하는 시간입니다.`,
@@ -111,7 +112,7 @@ function MobileMain() {
         });
         result.push({
             name: '죽음, 그 이후의 이야기.',
-            image: 'Content3Image.png',
+            image: 'contentImage3.png',
             detail: `물리적인 죽음을 넘어섰을 때
             일어나는 일들에 대한 
             사색의 시간입니다.`,
@@ -124,8 +125,7 @@ function MobileMain() {
         return result;
     }, [AllContents]);
 
-    //Footer Variable
-    let snsuri = ["https://www.instagram.com/memento.welldying/", "https://business.facebook.com/memento.welldying/", "https://blog.naver.com/memento_welldying", ""];
+    
 
     return (
         <>
@@ -188,7 +188,7 @@ function MobileMain() {
                             setContentNumber(0);
                         }}>{leftVectorMobile}</div>
                         <div className="image">
-                            <img src={imageUrl(`Contentpage/${MementoContentSection[ContentSection].image}`)} alt="" />
+                            <img src={imageUrl(`ContentPage/`+MementoContentSection[ContentSection].image)} alt="" />
                         </div>
                         <div className="rightButton" onClick = {() => {
                             setContentSection((ContentSection + 1)%3);
@@ -243,22 +243,7 @@ function MobileMain() {
                     </div>
                 </div>
                 {false && <div className="MementoMore">메멘토에 문의하기</div>}
-                <div className="Footer">
-                    <div className="whiteBackground">
-                        <div>회사명 : 메멘토</div>
-                        <div>대표이메일 : welldying.mememnto@gmail.com</div>
-                        <div>대표 : 신동경 | 사업자등록번호 : 176-64-00459</div>
-                        <div>주소 : 서울특별시 관악구 봉천동 856-6 BS타워 5층 (우) 08788</div>
-                    </div>
-                    <div className="greenBackground">
-                        <div className="SNSContainer">
-                            {[...Array(4).keys()].map((i, key) => (
-                            <img src={imageUrl(`share_image_${i+1}.png`)} alt = "profile" key = {key} onClick = {key === 3 ? () => {} : () => window.open(snsuri[key], "_blank")} style = {{cursor: 'pointer'}}/>
-                            ))}
-                        </div>
-                        <div className="Copyright">Copyright © 2021 Memento Corporation All rights reserved</div>
-                    </div>
-                </div>
+                <MobileFooter />
             </div>
             <MobileNavigation />
             </div>

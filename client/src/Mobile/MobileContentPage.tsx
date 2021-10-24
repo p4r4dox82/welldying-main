@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { match } from 'react-router';
+import { Link } from 'react-router-dom';
 import { forEachTrailingCommentRange } from 'typescript';
 import { parseDate } from '../etc';
 import { getAnswers, writeAnswer } from '../etc/api/answer';
@@ -136,6 +137,10 @@ function MobileContentPage({ match }: Props) {
         input_file.current.click();
     };
 
+    //Redirect
+    let loginRef = React.useRef<any>(null);
+    let loginRefClick = () => loginRef.current.click();
+
     if(!content) return <></>;
     else return (
         <>
@@ -200,6 +205,9 @@ function MobileContentPage({ match }: Props) {
                         <div className="summary">{content.detail.summary}</div>
                     </div>
                     {question && <div className="questionContainer">
+                        <Link to = {{ pathname: "/login", state: {
+                            from: `contentpage/${id}`
+                        }}} ref = {loginRef} style = {{display: "none"}} />
                         <div className="title">연관 질문</div>
                         <div className="main">
                             <div className="textContainer">
@@ -208,7 +216,10 @@ function MobileContentPage({ match }: Props) {
                                     <div className="title">{question?.title}</div>
                                 </div>
                             </div>
-                            {showanswer && <div className="WriteContainer">
+                            {showanswer && <div className="WriteContainer" onClick = {user.loggedIn ? () => {} : () => {
+                                alert("로그인 후 이용해주십시오.");
+                                loginRefClick();
+                            }}>
                                 <div className="textarea">
                                     <textarea name="" id="" cols={answerCol} rows={answerRow} value = {answer} onChange = {(e) => {
                                         setAnswer(e.target.value.slice(0, 549));
@@ -227,7 +238,7 @@ function MobileContentPage({ match }: Props) {
                                     {answerLength + ' / 550 자'}
                                 </div>
                                 <div className="imageContainer" onClick = {() => {handleClick(); setCropImage(true);}}>
-                                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: width - 98, height: width - 98}}/>
+                                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: (imageUri === '' || imageUri === undefined) ? 50 : width - 108, height: (imageUri === '' || imageUri === undefined) ? 50 : width - 108}}/>
                                     <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
                                 </div>
                             </div>}
