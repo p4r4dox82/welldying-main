@@ -83,7 +83,7 @@ function SignupAgree({ proceed } : Props) {
 
                     <div className = 'button_container' style = {{display: 'flex', flexWrap: 'wrap', gap: '13px'}}>
                         <div className = 'next_button' onClick={() => {
-                            if (check1 && check2 && check3) proceed({ agreeMessage: check4 }); else setmessage('이용약관과 개인정보 수집 및 이용에 대한 안내 모두 동의해주세요');
+                            if (check1 && check2) proceed({ agreeMessage: check4 }); else setmessage('이용약관과 개인정보 수집 및 이용에 대한 안내 모두 동의해주세요');
                         }}>
                             <div>다음으로</div>
                         </div>
