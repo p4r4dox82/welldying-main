@@ -29,8 +29,8 @@ function Login({ match, location }: Props) {
 
     const tryLogin = async () => {
         if (await login(username, password)) {
-            if (!location.state.from) {
-                setRedirectTo(String(location.state.from));
+            if (!location || !location.state || !location.state.from) {
+                setRedirectTo('/');
             } else {
                 setRedirectTo(String(location.state.from));
             }
@@ -40,7 +40,10 @@ function Login({ match, location }: Props) {
 
     const tryOauthLogin = async (service: string, id: string, token: string) => {
         let response = await oauthLogin(service, id, token);
-        if (response === false) setMessage(`${service}를 이용해 로그인하는 데에 문제가 발생했습니다.`);
+        if (response === false) {
+            setMessage(`${service}를 이용해 로그인하는 데에 문제가 발생했습니다.`);
+            alert(`${service}를 이용해 로그인하는 데에 문제가 발생했습니다.`);
+        }
         else {
             if (response.loggedIn) {
                 setRedirectTo('/');
@@ -65,13 +68,18 @@ function Login({ match, location }: Props) {
                     <input className='password' placeholder='비밀번호' type='password' autoComplete='current-password' onChange={(e) => setPassword(e.target.value)} value={password}/>
                     <button className='loginButton' type='submit' onClick={(e) => { e.preventDefault(); tryLogin(); }}> 메멘토 로그인 </button>
                 </form>
+                {isMobile ? <div className='subCommands'>
+                    <Link to='/signup'><span>{`회원가입`}</span></Link>
+                    <Link to='/findid'><span>아이디 찾기</span></Link>
+                    <Link to='/findpassword'><span>비밀번호 찾기</span></Link>
+                </div> : 
                 <div className='subCommands'>
                     <Link to='/findid'><span className='left'> 아이디 찾기 </span></Link>
                     <span className='left'> {' / '} </span>
                     <Link to='/findpassword'><span className='left'> 비밀번호 찾기 </span></Link>
                     <Link to='/signup'><span className='right'> {`회원가입 >`} </span></Link>
-                </div>
-                <div className = 'other_login' style = {{cursor: 'pointer'}}>
+                </div>}
+                {false && <div className = 'other_login' style = {{cursor: 'pointer'}}>
                     <KakaoLogin
                         token={kakaoJskey}
                         onSuccess={async (result) => {
@@ -98,7 +106,7 @@ function Login({ match, location }: Props) {
                         onFailure={(result) => console.log(result)}
                         render={(props) => <span className='link' style={{backgroundImage: `url(${imageUrl('providers/all.png')})`, width: '39px', height: '39px', backgroundPosition: 'right', float: 'left', margin: '5px'}} onClick={props.onClick}/>}
                     />
-                </div>
+                </div>}
                 { message && (
                     <div className='login_error'>
                         { message }

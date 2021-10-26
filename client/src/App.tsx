@@ -52,6 +52,8 @@ function App() {
           <Route path='/login/connect/:service/:id/:token' component={LoginConnect} />
           <Route path='/login' component={Login} />
           <Route path='/logout' component={Logout} />
+          <Route path='/findid' component = {Findid} />
+          <Route path='/findpassword' component = {Findpassword} />
           <Route path='/signup/done' component={SignupDone} />
           <Route path='/signup' component={Signup} />
           <Route path='/test/note' component = {MobileNote} />

@@ -35,7 +35,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
         const regex1 = /^[ -~]{5,100}$/;
 
         if (!regex1.test(username)) {
-            setUsernameMessage('아이디는 5글자 이상으로 설정해주세요.');
+            setUsernameMessage('5글자 이상으로 설정해주세요.');
             return false;
         }
 
@@ -59,7 +59,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
         const regex3 = /[0-9]/;
 
         if (!regex1.test(password) || !regex2.test(password) || !regex3.test(password)) {
-            setPasswordMessage('비밀번호는 8글자 이상으로, 영문과 숫자를 포함하도록 해 주세요.');
+            setPasswordMessage('8글자 이상으로, 영문과 숫자를 포함하도록 해 주세요.');
             return false;
         }
         setPasswordMessage('');
@@ -230,7 +230,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
             name: '비밀번호',
             body: (
                 <>
-                    <input type={passwordMessage ? 'text' : 'password'} className = {passwordMessage ? 'error' : ''} autoComplete='new-password' onChange={(e) => setPassword(e.target.value) } value={(passwordMessage ? passwordMessage : password)} onClick = {() => {setPasswordMessage('');}} placeholder = '숫자, 영문자 조합으로 8~20자리 비밀번호를 입력해주세요.'/>
+                    <input type={passwordMessage ? 'text' : 'password'} className = {passwordMessage ? 'error' : ''} autoComplete='new-password' onChange={(e) => setPassword(e.target.value) } value={(passwordMessage ? passwordMessage : password)} onClick = {() => {setPasswordMessage('');}} placeholder = {isMobile ? '8~20자리 비밀번호를 입력해주세요.' : '숫자, 영문자 조합으로 8~20자리 비밀번호를 입력해주세요.'}/>
                 </>
             ),
             message: passwordMessage,
@@ -356,10 +356,10 @@ function SignupFill({ givenInfo, proceed } : Props) {
 
     if(isMobile) {
         return (
-            <form className='signupForm margin_72px' style = {{width: '291px'}}>
+            <form className='signupForm margin_72px'>
                 { entries.map(({name, body, message}) => (
                     <>
-                        <div className={'row'} style={{width: (name === '성명' ? '265px' : (name === '성별' ? '190px' : '100%')), margin: (name === '성별' ? '20px 0px 0px 0px' : '20px 0px 0px 0px')}}>
+                        <div className={'row' + (name === '성명' ? ' name' : (name === '성별' ? ' sex' : ''))} style = {{marginBottom: '10px'}}>
                             <div className='label'> { name } </div>
                             { body }
                             { (message && name === '생년월일') && <div className='message'> { message } </div> }
