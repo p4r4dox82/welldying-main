@@ -6,8 +6,9 @@ import { login, oauthLogin } from '../etc/api/user';
 import { googleClientId, imageUrl, kakaoJskey } from '../etc/config';
 import Footer from '../components/Footer';
 import { MementoLogo } from '../img/Vectors';
-import queryString from 'query-string';
 import { Match } from '@testing-library/dom';
+import { isMobile } from 'react-device-detect';
+import MobileFooter from '../MobileComponents/MobileFooter';
 
 interface Props {
     match: Match;
@@ -42,11 +43,7 @@ function Login({ match, location }: Props) {
         if (response === false) setMessage(`${service}를 이용해 로그인하는 데에 문제가 발생했습니다.`);
         else {
             if (response.loggedIn) {
-                if (!location.state.from) {
-                    setRedirectTo(String(location.state.from));
-                } else {
-                    setRedirectTo(String(location.state.from));
-                }
+                setRedirectTo('/');
             }
             else setRedirectTo(`/login/connect/${service}/${id}/${token}`);
         }
@@ -54,7 +51,7 @@ function Login({ match, location }: Props) {
 
     if (redirectTo) return <Redirect to={ redirectTo }/>;
     else return (
-        <>
+        <div className = {isMobile ? "Mobile" : ""}>
             <div className = 'login_background_1' />
             <div className = 'login_background_2' />
             <div className='loginForm'>
@@ -108,8 +105,8 @@ function Login({ match, location }: Props) {
                     </div>
                 )}
             </div>
-            <Footer additionalClass = 'no_background floar one_page' />
-        </>
+            {isMobile ? <MobileFooter /> : <Footer additionalClass = 'no_background floar one_page' />}
+        </div>
     )
 }
 

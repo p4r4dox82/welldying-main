@@ -1880,3 +1880,21 @@
         }
     }
 }
+.Mobile .login_background_1,
+.Mobile .login_background_2 {
+    height: calc(100vh + 459px);
+    object-fit: cover;
+}
+.Mobile .loginForm {
+    height: 100vh;
+    top: 0px;
+    margin-top: 0px;
+    width: calc(100% - 70px);
+    left: 35px;
+}
+.Mobile .loginForm .MementoLogo {
+    svg {
+        width: 111px;
+        height: 26px;
+    }
+}
