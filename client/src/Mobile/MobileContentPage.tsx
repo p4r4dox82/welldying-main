@@ -11,6 +11,7 @@ import { getQuestions } from '../etc/api/question';
 import usePromise from '../etc/usePromise';
 import { Colon, LeftArrowVector, leftVector, like_vector, rightVector, shareVector } from '../img/Vectors';
 import MobileContentbox from '../MobileComponents/MobileContentbox';
+import MobileHeader from '../MobileComponents/MobileHeader';
 import { RootReducer } from '../store';
 
 interface MatchParams {
@@ -141,10 +142,19 @@ function MobileContentPage({ match }: Props) {
     let loginRef = React.useRef<any>(null);
     let loginRefClick = () => loginRef.current.click();
 
+    //Scroll
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [id]);
+
+    //summary
+    let [SummaryLength, setSummaryLength] = React.useState<number>(150);
+
     if(!content) return <></>;
     else return (
         <>
             <div className="Mobile">
+                <MobileHeader uri = {`/contentpage/${id}`} />
                 <div className="MobileContentPage">
                     <div className="coverContainer">
                         <div className="image" onClick = {() => window.open(content?.source, '_blank')}>
@@ -202,7 +212,7 @@ function MobileContentPage({ match }: Props) {
                     </div>}
                     <div className="summaryContainer">
                         <div className="title">영상 내용 요약</div>
-                        <div className="summary">{content.detail.summary}</div>
+                        <div className="summary">{content.detail.summary.slice(0, SummaryLength)}{(content.detail.summary.length > SummaryLength ? <span onClick = {() => setSummaryLength(Number(content?.detail.summary.length))}>...더보기</span> : '')}</div>
                     </div>
                     {question && <div className="questionContainer">
                         <Link to = {{ pathname: "/login", state: {

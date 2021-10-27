@@ -80,7 +80,7 @@ function MobileNote() {
     else return (
         <>
             <div className="Mobile">
-                <MobileHeader />
+                <MobileHeader uri = {'/note'} />
                 <div className="MobileNote">
                     <div className="Main">
                         <img src={imageUrl('Mobile/Background.png')} alt="" />

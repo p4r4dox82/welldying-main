@@ -2,7 +2,7 @@ import { imageUrl } from "../etc/config";
 
 function MobileFooter() {
     //Footer Variable
-    let snsuri = ["https://www.instagram.com/memento.welldying/", "https://business.facebook.com/memento.welldying/", "https://blog.naver.com/memento_welldying", ""];
+    let snsuri = ["https://www.instagram.com/welldying_memento/ ", "https://m.facebook.com/memento.welldying/", "https://blog.naver.com/memento_welldying", ""];
 
     return (
         <>

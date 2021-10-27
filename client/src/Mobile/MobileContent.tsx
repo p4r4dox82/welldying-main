@@ -66,7 +66,7 @@ function MobileContent({ match }: Props) {
     return (
         <>
             <div className="Mobile">
-                <MobileHeader />
+                <MobileHeader uri = {'/content/1'}/>
                 <div className="MobileContentMain">
                     <div className="Main">
                         <img src={imageUrl('Mobile/Background.png')} alt="" />
