@@ -56,11 +56,10 @@ function App() {
           <Route path='/findpassword' component = {Findpassword} />
           <Route path='/signup/done' component={SignupDone} />
           <Route path='/signup' component={Signup} />
-          <Route path='/test/note' component = {MobileNote} />
-          <Route path='/test/content/:id' component = {MobileContent} />
-          <Route path='/test/contentpage/:id' component = {MobileContentPage} />
-          <Route path='/test' component = {MobileMain}/>
-          <Route path='/' component={Main} />
+          <Route path='/note' component = {MobileNote} />
+          <Route path='/content/:id' component = {MobileContent} />
+          <Route path='/contentpage/:id' component = {MobileContentPage} />
+          <Route path='/' component={MobileMain} />
         </Switch>
       </BrowserRouter>
     )

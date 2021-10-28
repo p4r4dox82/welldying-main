@@ -63,7 +63,7 @@ function MobileMain() {
     let MementoSections = React.useMemo(() => {
         return (
             <>
-            <Link to = '/test/note' ref = {noteLink} style = {{display: 'none'}}></Link>
+            <Link to = '/note' ref = {noteLink} style = {{display: 'none'}}></Link>
             <div className="boxContainer" onTouchStart = {(e: any) => {setNoteTouchData({...NoteTouchData, initialX: e.touches ? e.touches[0].clientX: e.clientX , initialY: e.touches ? e.touches[0].clientY: e.clientY })}} onTouchMove = {(e: any) => {
                 dragDirection(e);
             }} style = {{transform: `translateX(${251 * NoteTouchData.LRdir + 'px'})`, transition: 'all 0.5s ease-in-out'}}>
@@ -230,7 +230,7 @@ function MobileMain() {
                     <div className="textContainer">
                         <h1 className="title">나의 서재</h1>
                         <h2 className="subtitle">인생을 담은 당신만의 공간</h2>
-                        <Link to = '/test/note/0'><h3 className="more">{'작성 페이지 바로가기>'}</h3></Link>
+                        <Link to = '/note/0'><h3 className="more">{'작성 페이지 바로가기>'}</h3></Link>
                     </div>
                     <div className="vector"></div>
                     <div className="textContainer">
@@ -247,7 +247,7 @@ function MobileMain() {
                     <div className="textContainer">
                         <h1 className="title">메멘토 컨텐츠</h1>
                         <h2 className="subtitle">삶과 죽음에 대해 생각하는 시간</h2>
-                        <Link to = '/test/content/1'><h3 className="more">{'컨텐츠 페이지 바로가기>'}</h3></Link>
+                        <Link to = '/content/1'><h3 className="more">{'컨텐츠 페이지 바로가기>'}</h3></Link>
                     </div>
                     <div className="dotContainer">
                         <div className = {ContentSection === 0 ? 'select' : ''}>{MementoDotVector}</div>
@@ -297,7 +297,7 @@ function MobileMain() {
                                     let content = AllContents.find((content) => content.id === content_.id);
                                     if(!content) return <></>;
                                     else return (
-                                        <Link to = {`/test/contentpage/${content.id}`}><div className="ContentElement">
+                                        <Link to = {`/contentpage/${content.id}`}><div className="ContentElement">
                                             <div className="image">
                                                 <img src={content.imageData.imageUrl} alt="" className="thumbnail" />
                                                 {content.userdata.read.includes(String(user.user?.username)) && <div className="read"></div>}

@@ -17,12 +17,12 @@ function MobileHeader({ uri }: Props) {
             <div className={"Header" + (menu ? ' active' : '')}>
                 <div className="Topbar">
                     <div className="userimage">{UserImage}</div>
-                    <Link to = '/test'><div className="MementoLogo">{MementoLogo}</div></Link>
+                    <Link to = '/'><div className="MementoLogo">{MementoLogo}</div></Link>
                     <div className="toggle" onClick = {() => setMenu(!menu)}>{toggleVector}</div>
                 </div>
                 <div className="Menu">
                     <span className="Name">{user.loggedIn ? user.user?.name + '님' : ''}</span>
-                    <Link to = {user.loggedIn ? '/logout' : {pathname: '/login', state: {from: '/test'}}}><span className="login">{user.loggedIn ? '로그아웃' : '로그인'}</span></Link>
+                    <Link to = {user.loggedIn ? '/logout' : {pathname: '/login', state: {from: '/'}}}><span className="login">{user.loggedIn ? '로그아웃' : '로그인'}</span></Link>
                 </div>
             </div>
         </>

@@ -23,7 +23,7 @@ function MobileContentbox(props: Props) {
     if(!content) return <></>;
     else if(props.type === 'big') return (
         <>
-            <Link to = {`/test/contentpage/${content.id}`}><div className="Contentbox big">
+            <Link to = {`/contentpage/${content.id}`}><div className="Contentbox big">
                 <img src={content.imageData.imageUrl} alt="" />
                 <div className="cover">
                     <div className="tag">{content.tag}</div>
@@ -40,7 +40,7 @@ function MobileContentbox(props: Props) {
     )
     else return (
         <>
-            <Link to = {`/test/contentpage/${content.id}`}><div className="Contentbox small">
+            <Link to = {`/contentpage/${content.id}`}><div className="Contentbox small">
                 <img src={content.imageData.imageUrl} alt="" />
                 <div className="cover">
                     <div className="Colon">{Colon}</div>

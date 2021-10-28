@@ -13,12 +13,12 @@ function MobileNavigation() {
                         <div className = "text">메멘토는</div>
                     </div>
                     <div className="bar"></div>
-                    <Link to = '/test/content/1'><div className="Element">
+                    <Link to = '/content/1'><div className="Element">
                         <div className={"vector"}>{MementoContentVector}</div>
                         <div className = "text">메멘토 컨텐츠</div>
                     </div></Link>
                     <div className="bar"></div>
-                    <Link to = '/test/note'><div className="Element">
+                    <Link to = '/note'><div className="Element">
                         <div className={"vector"}>{MementoNoteVector}</div>
                         <div className = "text">메멘토 노트</div>
                     </div></Link>
