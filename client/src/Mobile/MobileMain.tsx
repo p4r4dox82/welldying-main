@@ -193,7 +193,7 @@ function MobileMain() {
     React.useEffect(() => {
         setTimeout(() => {
             setMainNumber((MainNumber + 1)%5);
-        }, 2500);
+        }, 3000);
     }, [MainNumber]);
 
     return (
