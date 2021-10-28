@@ -12,6 +12,7 @@ import usePromise from '../etc/usePromise';
 import { Colon, LeftArrowVector, leftVector, like_vector, rightVector, shareVector } from '../img/Vectors';
 import MobileContentbox from '../MobileComponents/MobileContentbox';
 import MobileHeader from '../MobileComponents/MobileHeader';
+import MobileNavigation from '../MobileComponents/MobileNavigation';
 import { RootReducer } from '../store';
 
 interface MatchParams {
@@ -285,6 +286,7 @@ function MobileContentPage({ match }: Props) {
                         </div>}
                     </div>
                 </div>
+                <MobileNavigation />
             </div>
         </>
     );

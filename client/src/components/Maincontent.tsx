@@ -65,7 +65,7 @@ function Maincontent() {
         let result: MementoContentCategory[] = [];
         result.push({
             name: '후회 없을 우리의 시간.',
-            image: 'Content1Image.png',
+            image: 'contentImage1.png',
             detail: '지난 삶을 돌아보며 추억의 순간들을 정리하고, 앞으로의 남은 삶에 대한 계획을 세우는 시간입니다. 삶의 의미와 가치관, 희로애락의 시간, 소중한 사람들에게 보내는 메세지, 삶의 계획, 버킷리스트 등에 대한 컨텐츠로 구성되어 있습니다.',
             tag: '#기록 #추억 #자서전 #계획 #버킷리스트 #편지',
             newcontents: AllContents?.filter((content) => [2, 45, 23, 46].includes(content.id)),
@@ -73,7 +73,7 @@ function Maincontent() {
         });
         result.push({
             name: '삶의 마지막, 그 때.',
-            image: 'Content2Image.png',
+            image: 'contentImage2.png',
             detail: '삶의 마지막 순간이 임박했을 때 꼭 해야 하는 선택들에 대해 고민하는 시간입니다. 죽음에 대한 철학적 이해, 호스피스&완화의료, 장례식&유언장, 장기기증 등에 대한 실질적인 의사결정과 마주하며 죽음을 포괄적으로 준비할 수 있는 컨텐츠로 구성되어 있습니다.',
             tag: '#자기결정권 #치료 #장례 #법 #유산 #신탁 #죽음의 이해',
             newcontents: AllContents?.filter((content) => [20, 35, 48, 18].includes(content.id)),
@@ -81,7 +81,7 @@ function Maincontent() {
         });
         result.push({
             name: '죽음, 그 이후의 이야기.',
-            image: 'Content3Image.png',
+            image: 'contentImage3.png',
             detail: '물리적인 죽음을 넘어섰을 때 일어나는 일들에 대한 사색의 시간입니다. 사별에 대한 대처, 애도의 방식, 유품 정리, 심적 준비, 종교관, 펫로스 등에 대한 컨텐츠로 구성되어 있습니다.',
             tag: '#사별 #애도 #심적준비 #편지 #반려동물',
             newcontents: AllContents?.filter((content) => [37, 42, 22, 50].includes(content.id)),

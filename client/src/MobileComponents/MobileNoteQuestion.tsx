@@ -70,6 +70,7 @@ function MobileNoteQuestion(props: Props) {
 
     let [save, setSave] = React.useState<boolean>(false);
     let [editanswer, setEditanswer] = React.useState<boolean>(false);
+    let [editImage, setEditImage] = React.useState<boolean>(false);
     let [showanswer, setShowanswer] = React.useState<boolean>(false);
     let input_file = React.useRef<any>(null);
     let [state, setState] = React.useState<any>({ image: '', imageLoaded: false });
@@ -113,8 +114,12 @@ function MobileNoteQuestion(props: Props) {
                 <div className="answerlength">
                     {answerLength + ' / 550 자'}
                 </div>
-                <div className="imageContainer" onClick = {editanswer ? () => {handleClick(); setCropImage(true);} : () => {}}>
-                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: (imageUri === '' || imageUri === undefined) ? 50 : width - 108, height: (imageUri === '' || imageUri === undefined) ? 50 : width - 108}}/>
+                <div className="imageContainer" >
+                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: (imageUri === '' || imageUri === undefined) ? 50 : Math.min(400, width - 108), height: (imageUri === '' || imageUri === undefined) ? 50 : Math.min(400, width - 108)}} onClick = {editanswer ? ((imageUri === '' || imageUri === undefined) ? () => {handleClick(); setCropImage(true);} : () => {setEditImage(!editImage);}) : () => {}}/>
+                    {editImage && <div className="editImage">
+                        <button className="edit" onClick = {() => {handleClick(); setCropImage(true); setEditImage(false);}}>수정하기</button>
+                        <button className="delete" onClick = {() => {setImageUri(''); setEditImage(false);}}>삭제하기</button>
+                    </div>}
                     <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
                 </div>
                 <div className="saveContainer">
@@ -123,6 +128,7 @@ function MobileNoteQuestion(props: Props) {
                         <div className="button" onClick = {() => {
                             setSave(false);
                             setEditanswer(false);
+                            setEditImage(false);
                         }}>확인</div>
                     </div>}
                     <div className="editanswer" onClick = {editanswer ? async () => {

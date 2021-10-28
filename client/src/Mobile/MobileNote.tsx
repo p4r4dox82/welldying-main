@@ -51,7 +51,7 @@ function MobileNote() {
             else return true;
         })
         return unwrittensectionQuestions;
-    }, [allQuestions, section, sectionNum]);
+    }, [allQuestions, section, sectionNum, allAnswers]);
     
     //answerVariable
     
@@ -61,10 +61,10 @@ function MobileNote() {
         else return (
             <div className="sections">
                 <div className="sectionContainer">
-                    <div className={"section" + (sectionNum === 0 ? ' select' : '')} onClick = {() => setSectionNum(0)}>전체</div>
+                    <div className={"section" + (sectionNum === 0 ? ' select' : '')} onClick = {() => {setSectionNum(0); setPageNumber(1); setQuestionNum(4);}}>전체</div>
                     {allSections?.map((section, key) => {
                         if(key !== 5) return (
-                            <div className={"section" + (sectionNum === key + 1 ? ' select' : '')} onClick = {() => setSectionNum(key+1)}>{section.tag.split('#').slice(1).map((tag) => {
+                            <div className={"section" + (sectionNum === key + 1 ? ' select' : '')} onClick = {() => {setSectionNum(key+1); setPageNumber(1); setQuestionNum(4);}}>{section.tag.split('#').slice(1).map((tag) => {
                                 return (
                                     <span>{tag}</span>
                                 )
@@ -111,7 +111,7 @@ function MobileNote() {
                                     )
                                 })}
                             </div>}
-                            {totalPageNumber > 4 && <div className="buttonContainer">
+                            {totalPageNumber > 1 && <div className="buttonContainer">
                                 <button className="left" onClick = {() => setPageNumber(Math.max(pageNumber - 1, 1))}>{leftVector}</button>
                                 <div className="pagenumber NS px14 bold">{pageNumber + '/' + (totalPageNumber)}</div>
                                 <button className="right" onClick = {() => setPageNumber(Math.min(pageNumber + 1, totalPageNumber))}>{rightVector}</button>
