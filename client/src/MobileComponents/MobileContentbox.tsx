@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { parseDate } from "../etc";
 import { Content } from "../etc/api/content";
 import { imageUrl } from "../etc/config";
@@ -22,7 +23,7 @@ function MobileContentbox(props: Props) {
     if(!content) return <></>;
     else if(props.type === 'big') return (
         <>
-            <div className="Contentbox big">
+            <Link to = {`/test/contentpage/${content.id}`}><div className="Contentbox big">
                 <img src={content.imageData.imageUrl} alt="" />
                 <div className="cover">
                     <div className="tag">{content.tag}</div>
@@ -34,12 +35,12 @@ function MobileContentbox(props: Props) {
                     <div className="title">{'[' + content.type + ']' + contentTitle}</div>
                     <div className="date">{parseDate(new Date(Number(content.date)))}</div>
                 </div>
-            </div>
+            </div></Link>
         </>
     )
     else return (
         <>
-            <div className="Contentbox small">
+            <Link to = {`/test/contentpage/${content.id}`}><div className="Contentbox small">
                 <img src={content.imageData.imageUrl} alt="" />
                 <div className="cover">
                     <div className="Colon">{Colon}</div>
@@ -47,7 +48,7 @@ function MobileContentbox(props: Props) {
                     <div className="tag">{content.tag}</div>
                     <div className="title">{'[' + content.type + ']' + contentTitle}</div>
                 </div>
-            </div>
+            </div></Link>
         </>
     )
 }

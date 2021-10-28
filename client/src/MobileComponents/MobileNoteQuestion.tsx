@@ -70,6 +70,7 @@ function MobileNoteQuestion(props: Props) {
 
     let [save, setSave] = React.useState<boolean>(false);
     let [editanswer, setEditanswer] = React.useState<boolean>(false);
+    let [editImage, setEditImage] = React.useState<boolean>(false);
     let [showanswer, setShowanswer] = React.useState<boolean>(false);
     let input_file = React.useRef<any>(null);
     let [state, setState] = React.useState<any>({ image: '', imageLoaded: false });
@@ -83,7 +84,7 @@ function MobileNoteQuestion(props: Props) {
         console.log(s3Uri);
         setImageUri(s3Uri);
         if(s3Uri === undefined) {
-        setImageUri('https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png');
+            setImageUri('https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png');
         }
         return s3Uri;
     }
@@ -113,8 +114,12 @@ function MobileNoteQuestion(props: Props) {
                 <div className="answerlength">
                     {answerLength + ' / 550 자'}
                 </div>
-                <div className="imageContainer" onClick = {() => {handleClick(); setCropImage(true);}}>
-                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: imageUri === '' ? 50 : width - 108, height: imageUri === '' ? 50 : width - 108}}/>
+                <div className="imageContainer" >
+                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: (imageUri === '' || imageUri === undefined) ? 50 : Math.min(400, width - 108), height: (imageUri === '' || imageUri === undefined) ? 50 : Math.min(400, width - 108)}} onClick = {editanswer ? ((imageUri === '' || imageUri === undefined) ? () => {handleClick(); setCropImage(true);} : () => {setEditImage(!editImage);}) : () => {}}/>
+                    {editImage && <div className="editImage">
+                        <button className="edit" onClick = {() => {handleClick(); setCropImage(true); setEditImage(false);}}>수정하기</button>
+                        <button className="delete" onClick = {() => {setImageUri(''); setEditImage(false);}}>삭제하기</button>
+                    </div>}
                     <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
                 </div>
                 <div className="saveContainer">
@@ -123,6 +128,7 @@ function MobileNoteQuestion(props: Props) {
                         <div className="button" onClick = {() => {
                             setSave(false);
                             setEditanswer(false);
+                            setEditImage(false);
                         }}>확인</div>
                     </div>}
                     <div className="editanswer" onClick = {editanswer ? async () => {
@@ -130,7 +136,7 @@ function MobileNoteQuestion(props: Props) {
                         setSave(true);
                     } : () => setEditanswer(!editanswer)}>{editanswer ? '저장하기' : '내용 수정하기'}
                     </div>
-                    {question.contents[0] && <Link to ={`/contentpage/${question.contents[0]}`}><div className="morecontent">대표 컨텐츠 바로가기</div></Link>}
+                    {question.contents[0] && <Link to ={`/test/contentpage/${question.contents[0]}`}><div className="morecontent">대표 컨텐츠 바로가기</div></Link>}
                 </div>
             </div>}
             {showanswer && !props.written && <div className="answer" style = {{background : 'rgba(243, 243, 243, 0.9)'}}>
@@ -152,7 +158,7 @@ function MobileNoteQuestion(props: Props) {
                     {answerLength + ' / 550 자'}
                 </div>
                 <div className="imageContainer" onClick = {() => {handleClick(); setCropImage(true);}}>
-                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: imageUri === '' ? 50 : width - 108, height: imageUri === '' ? 50 : width - 108}}/>
+                    <img src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} alt="" style = {{width: (imageUri === '' || imageUri === undefined) ? 50 : width - 108, height: (imageUri === '' || imageUri === undefined) ? 50 : width - 108}}/>
                     <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
                 </div>
                 <div className="saveContainer">
@@ -168,7 +174,7 @@ function MobileNoteQuestion(props: Props) {
                         setSave(true);
                     }}>{'저장하기'}
                     </div>
-                    {question.contents[0] && <Link to ={`/contentpage/${question.contents[0]}`}><div className="morecontent">대표 컨텐츠 바로가기</div></Link>}
+                    {question.contents[0] && <Link to ={`/test/contentpage/${question.contents[0]}`}><div className="morecontent">대표 컨텐츠 바로가기</div></Link>}
                 </div>
             </div>}
         </div>

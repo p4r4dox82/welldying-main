@@ -5,8 +5,10 @@ import { getContents } from '../etc/api/content';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
 import { Colon, halfColon, LeftArrowVector, leftVector, LeftVector2, leftVectorMobile, MainImageVector, MementoBookVector, MementoDotVector, MementoLogo, MementoMakeBookVector, MementoNoteVector, MementoTogetherNoteVector, RightArrowVector, rightVector, RightVector2, rightVectorMobile, toggleVector, UserImage } from '../img/Vectors';
+import MobileNavigation from '../MobileComponents/MobileNavigation';
 import { RootReducer } from '../store';
-import MobileHeader from './MobileHeader';
+import MobileHeader from '../MobileComponents/MobileHeader';
+import MobileFooter from '../MobileComponents/MobileFooter';
 
 function MobileMain() {
     let user = useSelector((state: RootReducer) => state.user);
@@ -61,13 +63,13 @@ function MobileMain() {
     let MementoSections = React.useMemo(() => {
         return (
             <>
-            <Link to = '/note' ref = {noteLink} style = {{display: 'none'}}></Link>
+            <Link to = '/test/note' ref = {noteLink} style = {{display: 'none'}}></Link>
             <div className="boxContainer" onTouchStart = {(e: any) => {setNoteTouchData({...NoteTouchData, initialX: e.touches ? e.touches[0].clientX: e.clientX , initialY: e.touches ? e.touches[0].clientY: e.clientY })}} onTouchMove = {(e: any) => {
                 dragDirection(e);
             }} style = {{transform: `translateX(${251 * NoteTouchData.LRdir + 'px'})`, transition: 'all 0.5s ease-in-out'}}>
                 {MementoSectionArray.map((MementoSection, key) => {
                     return (
-                        <div className="boxElement" onClick = {key === 0 ? () => noteLinkClick() : () => {}}>
+                        <div className="boxElement" onClick = {key === 0 ? () => noteLinkClick() : (key === 1 ? () => alert('모바일 메멘토 북 서비스가 준비중입니다. PC크롬을 이용하여 접속해주십시오.') : () => alert('아직 오픈되지 않은 서비스입니다. 12월에 오픈 예정입니다.'))}>
                             <div className="vectorContainer">{MementoSection.vector}</div>
                             <div className="title">{MementoSection.name}</div>
                             <div className="detail">{MementoSection.detail}</div>
@@ -87,7 +89,7 @@ function MobileMain() {
         let result = [];
         result.push({
             name: '후회 없을 우리의 시간.',
-            image: 'Content1Image.png',
+            image: 'contentImage1.png',
             detail: `지난 삶을 돌아보며
             추억의 순간들을 정리하고,
             앞으로의 남은 삶에 대한 
@@ -99,7 +101,7 @@ function MobileMain() {
         });
         result.push({
             name: '삶의 마지막, 그 때.',
-            image: 'Content2Image.png',
+            image: 'contentImage2.png',
             detail: `삶의 마지막 순간이 임박했을 때
             꼭 해야 하는 선택들에 
             대해 고민하는 시간입니다.`,
@@ -110,7 +112,7 @@ function MobileMain() {
         });
         result.push({
             name: '죽음, 그 이후의 이야기.',
-            image: 'Content3Image.png',
+            image: 'contentImage3.png',
             detail: `물리적인 죽음을 넘어섰을 때
             일어나는 일들에 대한 
             사색의 시간입니다.`,
@@ -123,40 +125,112 @@ function MobileMain() {
         return result;
     }, [AllContents]);
 
-    //Footer Variable
-    let snsuri = ["https://www.instagram.com/memento.welldying/", "https://business.facebook.com/memento.welldying/", "https://blog.naver.com/memento_welldying", ""];
+    //MainImage Variable
+    let LinkAboutus = React.useRef<any>(null);
+    let LinkContent = React.useRef<any>(null);
+    let LinkNote = React.useRef<any>(null);
+    let LinkBook = React.useRef<any>(null);
+    let LinkAboutusClick = () => LinkAboutus.current.click();
+    let LinkContentClick = () => LinkContent.current.click();
+    let LinkNoteClick = () => LinkNote.current.click();
+    let LinkBookClick = () => LinkBook.current.click();
+    let [MainNumber, setMainNumber] = React.useState<number>(0);
+    let MainInfo = React.useMemo(() => {
+        let result = [];
+        
+        result.push({
+            name: '메멘토는',
+            mainText: <>
+                <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', display: 'inline-block'}}>당신의 아름다운 이야기</div>를</div>
+                <div>소중하게 전달합니다</div>
+            </>,
+            more: <div className="more px12 line40 bold" onClick = {() => window.open('https://www.notion.so/Team-Memento-480ba51aeb3a43f6ad18d19a05bba5ad', '_blank')}>{`브랜드드 소개 바로가기>`}</div>,
+            imageUrl: 'MainMementoImage.png'
+        });
+
+        result.push({
+            name: '메멘토 컨텐츠',
+            mainText: <>
+                <div>여러분은 <div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', display: 'inline-block'}}>죽음에 대해</div></div>
+                <div>얼만큼 알고 계신가요?</div>
+            </>,
+            more: <div className="more px12 line40 bold" onClick = {() => LinkContentClick()}>{`메멘토 컨텐츠 바로가기>`}</div>,
+            imageUrl: 'MainContentImage.png'
+        });
+
+        result.push({
+            name: '메멘토 노트 ',
+            mainText: <>
+                <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', display: 'inline-block'}}>당신의 이야기를 작성하는</div></div>
+                <div>당신만의 공간</div>
+            </>,
+            more: <div className="more px12 line40 bold" onClick = {() => LinkNoteClick()}>{`메멘토 노트 바로가기>`}</div>,
+            imageUrl: 'MainNoteImage.png'
+        });
+
+        result.push({
+            name: '메멘토 북',
+            mainText: <>
+                <div>당신의 이야기를 엮어</div>
+                <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', display: 'inline-block'}}>소중한 사람에게 전달하세요.</div></div>
+            </>,
+            more: <div className="more px12 line40 bold" onClick = {() => alert('모바일 메멘토 북 서비스가 준비중입니다. PC크롬을 이용하여 접속해주십시오.')}>{`메멘토 북 바로가기>`}</div>,
+            imageUrl: 'MainBookImage.png'
+        });
+
+        result.push({
+            name: '자서전 제작',
+            mainText: <>
+                <div>여러분의 소중한 이야기를</div>
+                <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', display: 'inline-block'}}>책으로 남겨보세요</div></div>
+            </>,
+            more: <div className="more px12 line40 bold">{`2021년 12월 출시 예정`}</div>,
+            imageUrl: 'MainMakeBookImage.png'
+        });
+        
+        return result;
+    }, []);
+    React.useEffect(() => {
+        setTimeout(() => {
+            setMainNumber((MainNumber + 1)%5);
+        }, 2500);
+    }, [MainNumber]);
 
     return (
         <>
+            <Link to={'/aboutus'} ref = {LinkAboutus} style = {{display: 'none'}} />
+            <Link to={'/content/1'} ref = {LinkContent} style = {{display: 'none'}} />
+            <Link to={'/note/0'} ref = {LinkNote} style = {{display: 'none'}} />
+            <Link to={'/notebook/0'} ref = {LinkBook} style = {{display: 'none'}} />
+            <div className="Mobile">
             <div className="MobileMain">
-                <MobileHeader />
+                <MobileHeader uri = {'/'}/>
                 <div className="MainInfo">
                     <img src={imageUrl('main_background.png')} alt="" className="background" />
                     <div className="dotContainer">
                         {[...Array(5).keys()].map((key) => {
                             return (
-                                <div className="dot">{MementoDotVector}</div>
+                                <div className={"dot" + (key === MainNumber ? ' active' : '')}>{MementoDotVector}</div>
                             )
                         })}
                     </div>
                     <div className="imageContainer">
                         <div className="circle"></div>
-                        <img src={imageUrl('MainImage1.png')} alt="" className="mainImage" />
+                        <img src={imageUrl(`${MainInfo[MainNumber].imageUrl}`)} alt="" className="mainImage" />
                         <div className="imagevector">{MainImageVector}</div>
                     </div>
                     <div className="textContainer">
                         <div className="title">
-                            <div><div style = {{boxShadow: 'inset 0 -15px 0 rgba(97, 105, 101, 0.2)', display: 'inline-block'}}>당신의 아름다운 이야기</div>를</div>
-                            <div>소중하게 전달합니다</div>
+                            {MainInfo[MainNumber].mainText}
                         </div>
-                        <div className="more">{'브랜드 소개 바로가기>'}</div>
+                        {MainInfo[MainNumber].more}
                     </div>
                 </div>
                 <div className="MementoNoteInfo">
                     <div className="textContainer">
                         <h1 className="title">나의 서재</h1>
                         <h2 className="subtitle">인생을 담은 당신만의 공간</h2>
-                        <h3 className="more">{'작성 페이지 바로가기>'}</h3>
+                        <Link to = '/test/note/0'><h3 className="more">{'작성 페이지 바로가기>'}</h3></Link>
                     </div>
                     <div className="vector"></div>
                     <div className="textContainer">
@@ -173,7 +247,7 @@ function MobileMain() {
                     <div className="textContainer">
                         <h1 className="title">메멘토 컨텐츠</h1>
                         <h2 className="subtitle">삶과 죽음에 대해 생각하는 시간</h2>
-                        <Link to = '/content/1'><h3 className="more">{'컨텐츠 페이지 바로가기>'}</h3></Link>
+                        <Link to = '/test/content/1'><h3 className="more">{'컨텐츠 페이지 바로가기>'}</h3></Link>
                     </div>
                     <div className="dotContainer">
                         <div className = {ContentSection === 0 ? 'select' : ''}>{MementoDotVector}</div>
@@ -186,7 +260,7 @@ function MobileMain() {
                             setContentNumber(0);
                         }}>{leftVectorMobile}</div>
                         <div className="image">
-                            <img src={imageUrl(`Contentpage/${MementoContentSection[ContentSection].image}`)} alt="" />
+                            <img src={imageUrl(`ContentPage/`+MementoContentSection[ContentSection].image)} alt="" />
                         </div>
                         <div className="rightButton" onClick = {() => {
                             setContentSection((ContentSection + 1)%3);
@@ -218,18 +292,18 @@ function MobileMain() {
                             <div className="rightButton" onClick = {() => setContentNumber((contentNumber + 1)%4)}>{RightVector2}</div>
                         </div>
                         <div className="ContentsCover">
-                            <div className="Contents" style = {{transition: 'all 0.5s ease-in-out', left: `${(-410 * contentNumber) + 'px'}`}}>
+                            <div className="Contents" style = {{transition: 'all 0.5s ease-in-out', left: `${(-350 * contentNumber) + 'px'}`}}>
                                 {MementoContentSection[ContentSection].newcontents?.map((content_) => {
                                     let content = AllContents.find((content) => content.id === content_.id);
                                     if(!content) return <></>;
                                     else return (
-                                        <div className="ContentElement">
+                                        <Link to = {`/test/contentpage/${content.id}`}><div className="ContentElement">
                                             <div className="image">
                                                 <img src={content.imageData.imageUrl} alt="" className="thumbnail" />
                                                 {content.userdata.read.includes(String(user.user?.username)) && <div className="read"></div>}
                                             </div>
                                             <div className="title">{content.title}</div>
-                                        </div>
+                                        </div></Link>
                                     )
                                 })}
                             </div>
@@ -241,22 +315,9 @@ function MobileMain() {
                     </div>
                 </div>
                 {false && <div className="MementoMore">메멘토에 문의하기</div>}
-                <div className="Footer">
-                    <div className="whiteBackground">
-                        <div>회사명 : 메멘토</div>
-                        <div>대표이메일 : welldying.mememnto@gmail.com</div>
-                        <div>대표 : 신동경 | 사업자등록번호 : 176-64-00459</div>
-                        <div>주소 : 서울특별시 관악구 봉천동 856-6 BS타워 5층 (우) 08788</div>
-                    </div>
-                    <div className="greenBackground">
-                        <div className="SNSContainer">
-                            {[...Array(4).keys()].map((i, key) => (
-                            <img src={imageUrl(`share_image_${i+1}.png`)} alt = "profile" key = {key} onClick = {key === 3 ? () => {} : () => window.open(snsuri[key], "_blank")} style = {{cursor: 'pointer'}}/>
-                            ))}
-                        </div>
-                        <div className="Copyright">Copyright © 2021 Memento Corporation All rights reserved</div>
-                    </div>
-                </div>
+                <MobileFooter />
+            </div>
+            <MobileNavigation />
             </div>
         </>
     )
