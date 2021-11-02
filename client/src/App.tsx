@@ -37,11 +37,32 @@ import ConfirmMementoBook from './pages/ConfirmMementoBook';
 import Survey from './pages/Survey';
 import { isMobile } from 'react-device-detect';
 import MobileMain from './Mobile/MobileMain';
+import MobileNote from './Mobile/MobileNote';
+import MobileContent from './Mobile/MobileContent';
+import MobileContentPage from './Mobile/MobileContentPage';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
 
   if (userInfoLoading) return <></>;
+  else if(isMobile) 
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path='/login/connect/:service/:id/:token' component={LoginConnect} />
+          <Route path='/login' component={Login} />
+          <Route path='/logout' component={Logout} />
+          <Route path='/findid' component = {Findid} />
+          <Route path='/findpassword' component = {Findpassword} />
+          <Route path='/signup/done' component={SignupDone} />
+          <Route path='/signup' component={Signup} />
+          <Route path='/note' component = {MobileNote} />
+          <Route path='/content/:id' component = {MobileContent} />
+          <Route path='/contentpage/:id' component = {MobileContentPage} />
+          <Route path='/' component={MobileMain} />
+        </Switch>
+      </BrowserRouter>
+    )
   else return (
     <BrowserRouter>
       <Switch>
