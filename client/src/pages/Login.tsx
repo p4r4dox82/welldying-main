@@ -17,8 +17,6 @@ interface Props {
 
 
 function Login({ match, location }: Props) {
-    console.log(match);
-    console.log(location);
     React.useEffect(() => {
         window.scrollTo(0, 0);
     }, []);

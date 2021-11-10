@@ -35,21 +35,17 @@ div.React_Crop {
 div.BookElement {
   width: 236px;
   height: 296px;
-  background: #FAFAFA;
-  mix-blend-mode: normal;
-  box-shadow: inset 0px 1px 6px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 5px;
   img.BookCover {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 296px;
     top: 0px;
     left: 0px;
     border-radius: 5px;
   }
   div.BookCoverBlend {
     width: 100%;
-    height: 100%;
+    height: 296px;
     background: #6E7672;
     mix-blend-mode: multiply;
     border-radius: 5px;          
@@ -109,4 +105,13 @@ div.BookElement {
     left: calc(50% - 130px/2);
     text-align: center;
   }
+}
+.BookElement .backgroundCover {
+  position: absolute;
+  width: 100%;
+  height: 296px;
+  background: #FAFAFA;
+  mix-blend-mode: normal;
+  box-shadow: inset 0px 1px 6px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
 }
