@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { application } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import rateLimiter from 'express-rate-limit';
@@ -28,6 +28,10 @@ export default async (app : express.Application) => {
     }));
     app.use(cors({
         origin: 'http://localhost:3000',
+        credentials: true,
+    }));
+    app.use(cors({
+        origin: "https://api.memento.kr",
         credentials: true,
     }));
     app.use(bodyParser.json());
