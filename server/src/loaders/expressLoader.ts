@@ -34,6 +34,10 @@ export default async (app : express.Application) => {
         origin: "https://mymemento.kr",
         credentials: true,
     }));
+    app.use(cors({
+        origin: "https://www.mymemento.kr",
+        credentials: true,
+    }));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.set('trust proxy', 1);
