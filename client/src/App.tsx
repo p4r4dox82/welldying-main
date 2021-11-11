@@ -61,6 +61,7 @@ function App() {
           <Route path='/content/:id' component = {MobileContent} />
           <Route path='/contentpage/:id' component = {MobileContentPage} />
           <Route path='/mypage' component = {MobileMyPage} />
+          <Route path='/survey' component = {Survey} />
           <Route path='/' component={MobileMain} />
         </Switch>
       </BrowserRouter>

@@ -1,13 +1,15 @@
+import { calculateBorderBoxPath } from 'html2canvas/dist/types/render/bound-curves';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import MementoBook from '../components/MementoBook';
 import { DeathInfo, getUsers, setUserDeathInfo } from '../etc/api/user';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
-import { EditVector, UserImage } from '../img/Vectors';
+import { EditVector, leftVector, MementoDotVector, rightVector, UserImage } from '../img/Vectors';
 import MobileFooter from '../MobileComponents/MobileFooter';
 import MobileHeader from '../MobileComponents/MobileHeader';
-import { checkBatchim } from '../pages/Mypage';
+import { checkBatchim, EntryType } from '../pages/Mypage';
 import { RootReducer } from '../store';
 
 function MobileMyPage() {
@@ -15,6 +17,9 @@ function MobileMyPage() {
 
     let [, AllUsers] = usePromise(getUsers);
     let [editPledge, setEditPledge] = React.useState<boolean>(false);
+    let [editPersonalData, setEditPersonalData] = React.useState<boolean>(false);
+    let [currentGetBooksNumber, setCurrentGetBooksNumber] = React.useState<number>(0);
+    let totalGetBooksNumber = React.useMemo(() => user.user?.UsersInfo.get.filter((userInfo) => userInfo.accept !== 2).length, [user]);
     let [DeathInfo, setDeathInfo] = React.useState<DeathInfo>();
     React.useEffect(() => {
         if(user.user?.DeathInfo !== undefined)
@@ -141,60 +146,8 @@ function MobileMyPage() {
         )
     }, [DeathInfo, answerArrays, isAnswerInArray, editDataOnArrayWithIndex]);
 
-    if(!editPledge) return (
-        <>
-            <div className="Mobile">
-                <MobileHeader uri = {'/mypage'} />
-                <div className="MobileMyPage">
-                    <div className="userInfoBlock">
-                        <div className="userImage">
-                            {UserImage}
-                        </div>
-                        <div className="userInfoContainer">
-                            <div className="namephone NS px15 line25 bold op6">{user.user?.name + ' / 0' + user.user?.cellphone.slice(3, 5) + '-' + user.user?.cellphone.slice(5, 9) + '-' + user.user?.cellphone.slice(9, 13)}</div>
-                            <div className="email NS px15 line25 bold op6">{user.user?.email}</div>
-                            <button className="Edit" onClick = {(e) => {
-                            }}>{EditVector}</button>
-                        </div>
-                        <div className="goEditPledge" onClick = {() => setEditPledge(!editPledge)}>
-                            {'나의 서약 바로가기 >'}
-                        </div>
-                    </div>
-                    <div className="myBookBlock">
-                        <div className="background"></div>
-                        <div className="vector"></div>
-                        <div className="textContainer">
-                            <div className="title">나에게 남긴, 그리고 내가 남긴 기록들</div>
-                            <div className="detail">
-                                <div>내가 기록을 남겨둔 이들과, 나에게 기록을 남겨둔 이들의 목록입니다.</div>
-                                <div>각각의 기록은 사망 사실 확인 후 열람 가능한 상태로 변경됩니다.</div>
-                            </div>
-                            <div className="goNotePage">{'작성 페이지 바로가기 >'}</div>
-                        </div>
-                        <div className="divider"></div>
-                        <div className="myBookContainer">
-                            <div className="title">나의 유언 자서전 전달</div>
-                            <div className="myBooks">
-                                <MementoBook bookOwner = {user.user!} watchingBookUser = {user.user!} />
-                            </div>
-                            <div className="GivenUsersContainer">
-                                {GivenUsers}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="getBooksBlock">
-                        <div className="background"></div>
-                        <div className="title">나에게 기록을 남겨놓은 사람들</div>
-                        <div className="getBooks">
-                            {GetBooksContainer}
-                        </div>
-                    </div>
-                </div>
-                <MobileFooter />
-            </div>
-        </>
-    )
-    else return (
+
+    if(editPledge) return (
         <>
             <div className="Mobile">
                 <MobileHeader uri = {'/mypage'}></MobileHeader>
@@ -248,6 +201,87 @@ function MobileMyPage() {
             </div>
         </>
     )
+    else if(editPersonalData) return (
+        <>
+            <div className="Mobile">
+                <MobileHeader uri = {'/mypage'}></MobileHeader>
+                <div className="MobileMyPageEditPersonalData">
+                    <div className="userImage">
+                        {UserImage}
+                    </div>
+                    {false && <div className="addUserImage">{'나의 기본 사진 추가하기 >'}</div>}
+                </div>
+                <MobileFooter></MobileFooter>
+            </div>
+        </>
+    )
+    else return (
+        <>
+            <div className="Mobile">
+                <MobileHeader uri = {'/mypage'} />
+                <div className="MobileMyPage">
+                    <div className="userInfoBlock">
+                        <div className="userImage">
+                            {UserImage}
+                        </div>
+                        <div className="userInfoContainer">
+                            <div className="namephone NS px15 line25 bold op6">{user.user?.name + ' / 0' + user.user?.cellphone.slice(3, 5) + '-' + user.user?.cellphone.slice(5, 9) + '-' + user.user?.cellphone.slice(9, 13)}</div>
+                            <div className="email NS px15 line25 bold op6">{user.user?.email}</div>
+                            <button className="Edit" onClick = {() => {
+                            }}>{EditVector}</button>
+                        </div>
+                        <div className="goEditPledge" onClick = {() => setEditPledge(!editPledge)}>
+                            {'나의 서약 바로가기 >'}
+                        </div>
+                    </div>
+                    <div className="myBookBlock">
+                        <div className="background"></div>
+                        <div className="vector"></div>
+                        <div className="textContainer">
+                            <div className="title">나에게 남긴, 그리고 내가 남긴 기록들</div>
+                            <div className="detail">
+                                <div>내가 기록을 남겨둔 이들과, 나에게 기록을 남겨둔 이들의 목록입니다.</div>
+                                <div>각각의 기록은 사망 사실 확인 후 열람 가능한 상태로 변경됩니다.</div>
+                            </div>
+                            <Link to = {'/note'} ><div className="goNotePage">{'작성 페이지 바로가기 >'}</div></Link>
+                        </div>
+                        <div className="divider"></div>
+                        <div className="myBookContainer">
+                            <div className="title">나의 유언 자서전 전달</div>
+                            <div className="myBooks">
+                                <MementoBook bookOwner = {user.user!} watchingBookUser = {user.user!} />
+                            </div>
+                            <div className="GivenUsersContainer">
+                                {GivenUsers}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="getBooksBlock">
+                        <div className="background"></div>
+                        <div className="title">나에게 기록을 남겨놓은 사람들</div>
+                        <div className="getBooks" style = {{left: (-276 * currentGetBooksNumber + 'px')}}>
+                            {GetBooksContainer}
+                        </div>
+                        <div className="buttonContainer">
+                            <div className="cover left"></div>
+                            <div className="cover right"></div>
+                            <button className="left" onClick = {() => setCurrentGetBooksNumber(Math.max(0, currentGetBooksNumber - 1))}>{leftVector}</button>
+                            <button className="right" onClick = {() => setCurrentGetBooksNumber(Math.min(totalGetBooksNumber! - 1, currentGetBooksNumber + 1))}>{rightVector}</button>
+                        </div>
+                        <div className="dotContainer">
+                            {[...Array(totalGetBooksNumber).keys()].map((key) => {
+                                return (
+                                    <div className = {key === currentGetBooksNumber ? 'selected' : ''}>{MementoDotVector}</div>        
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+                <MobileFooter />
+            </div>
+        </>
+    )
+    
 }
 
 export default MobileMyPage;
