@@ -31,7 +31,7 @@ export default async (app : express.Application) => {
         credentials: true,
     }));
     app.use(cors({
-        origin: "https://api.mymemento.kr",
+        origin: "https://mymemento.kr",
         credentials: true,
     }));
     app.use(bodyParser.json());
