@@ -1,4 +1,22 @@
 @import 'Consts.scss';
+:root {
+    --white: rgba(255, 255, 255, 1);
+    --black: rgba(0, 0, 0, 1);
+    --green: rgba(35, 52, 42, 1);
+    --textareagreen: rgba(35, 52, 42, 0.5);
+    --darkgreen: rgba(48, 59, 53, 1);
+    --green04: rgba(35, 52, 42, 0.4);
+    --green07: rgba(35, 52, 42, 0.7);
+    --softgreen: rgba(210, 217, 215, 0.3);
+    --green9: rgba(39, 57, 47, 1);
+    --blackshadow15: rgba(0, 0, 0, 0.15);
+    --gray: rgba(97, 105, 101, 1);
+    --bordercolor: rgba(105, 117, 110, 1);
+    --whitetext: rgba(248, 248, 247, 1);
+    --nocolor: rgba(0, 0, 0, 0);
+    --graygreen: rgba(145, 154, 149, 1);
+    --GB: GyeonggiBatang;
+}
 
 div.checkbox {
     cursor: pointer;
@@ -253,7 +271,7 @@ div.MyPage {
             }
         }
     }
-    div.DeathInfo {
+    div.DeathInfoContainer {
         margin-top: 123px;
         img.background {
             width: 100%;
@@ -276,100 +294,6 @@ div.MyPage {
             width: 915px;
             border-bottom: 1px dashed rgba(147, 156, 151, 1);
             left: calc(50% - 915px/2);
-        }
-        div.question {
-            width:100%;
-            margin-top: 57px;
-            div.title_container {
-                display: flex;
-                flex-wrap:wrap;
-                align-items: baseline;
-                width:100%;
-                height: fit-content;
-                div.number {
-                    width:102px;
-                    text-align: right;
-                    font-size: 16px;
-                    line-height: 16px;
-                }   
-                div.title {
-                    padding: 0px;
-                    margin-left:15px;
-                    font-size: 16px;
-                    line-height: 16px;
-                }
-                div.subtitle {
-                    margin-left: 15px;
-                    font-family: Noto Sans;
-                    font-style: normal;
-                    text-align: left;
-                    letter-spacing: 0.05em;
-        
-                    color: #23342A;
-                    font-size: 14px;
-                    line-height: 19px;
-                    font-weight:normal;
-                }
-            }
-            div.answer_container {
-                display: flex;
-                margin: 25px 0px 0px 117px;
-                font-family: Noto Sans;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 14px;
-                line-height: 25px;
-        
-                color: rgba(0, 0, 0, 0.5);
-                div.answer_block {
-                    display: flex;
-                    align-items: center;
-                    div.checkbox {
-                        cursor: pointer;
-                        width:24px;
-                        height:24px;
-                        border-radius: 50%;
-                        background: #F9F9F9;
-                        box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
-                        div.checked {
-                        margin: calc(50% - 14px/2) calc(50% - 14px/2);
-                        width:14px;
-                        height:14px;
-                        border-radius: 50%;
-                        background: #27392F;
-                        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
-                        }
-                    }
-                    div.name {
-                    margin-left: 14px;
-                    }
-                }
-                div:not(:first-child) {
-                    margin-left: 50px;
-                }
-                input {
-                    background: rgba(233, 235, 234, 0.5);
-                    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
-                    width: 298px;
-                    height: 36px;
-                    margin: 0px 0px 0px 20px;
-                    padding-left: 20px;
-                    border: none;
-                    font-family: Noto Sans;
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 13px;
-                    line-height: 25px;
-                    color: rgba(122, 121, 120, 1);
-                    outline: none;
-                    &::placeholder {
-                    color: rgba(122, 121, 120, 0.6);
-                    }
-                    &:disabled {
-                    background: rgba(233, 235, 234, 0.4);
-                    }
-                }
-            }
         }
         button.submit {
             margin-top: 64px;
@@ -493,6 +417,107 @@ div.MyPage {
         }
     }
 }
+
+.MyPage .DeathInfoContainer .questionContainer {
+    width:100%;
+    margin-top: 57px;
+    text-align: justify;
+    padding: 0px 89px;
+}
+.MyPage .DeathInfoContainer .questionContainer .title {
+    font-family: var(--GB);
+    font-size: 16px;
+    line-height: 16px;
+    color: var(--green);
+    letter-spacing: 0.05em;
+    padding: 0px;
+}
+.MyPage .DeathInfoContainer .questionContainer .answerContainer {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 25px 0px 0px 24px;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 25px;
+
+    color: rgba(0, 0, 0, 0.5);
+    :not(:first-child) {
+        margin-left: 30px;
+    }
+}
+.MyPage .DeathInfoContainer .questionContainer .answerContainer .answerElement {
+    display: flex;
+    align-items: center;
+}
+.MyPage .DeathInfoContainer .questionContainer .answerContainer .answerElement .checkBox {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+
+    background: #F9F9F9;
+    box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
+}
+.MyPage .DeathInfoContainer .questionContainer .answerContainer .answerElement .checkBox .checked {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+
+    background-color: var(--green9);
+    top: 6px;
+    left: 6px;
+}
+.MyPage .DeathInfoContainer .questionContainer .answerContainer .answerElement .name {
+    font-family: Noto Sans;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 25px;
+    color: var(--green);
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+    margin-left: 14px;
+    min-width: 52px;
+    text-align: left;
+    &.minWidthZero {
+        min-width: 0px;
+        width: fit-content;
+    }
+}
+.MyPage .DeathInfoContainer .questionContainer .answerContainer .answerElement input {
+    margin-left: 0px;
+    width: 220px;
+    height: 36px;
+    background: rgba(233, 235, 234, 0.5);
+    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+    padding: 0px 15px;
+    font-family: Noto Sans;
+    font-size: 13px;
+    line-height: 25px;
+    letter-spacing: 0.05em;
+    color: var(--green07);
+    border: none;
+    outline: none;
+    margin-left: 10px;
+    &::placeholder {
+        color: rgba(122, 121, 120, 0.6);
+    }
+    &:disabled {
+        background: rgba(233, 235, 234, 0.4);
+    }
+}
+.MyPage .DeathInfoContainer button.submit {
+    margin-top: 21px;
+    width: 178px;
+    height: 40px;
+    border-radius: 5px;
+    font-family: Noto Sans;
+    font-weight: bold;
+    font-size: 18px;
+    color: rgba(243, 242, 240, 1);
+    background-color: var(--green9);
+}
+
 div.ConfirmBook {
     div.block {
         text-align: center;

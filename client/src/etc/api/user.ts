@@ -199,6 +199,11 @@ export interface UserGiveInfo {
     accept: number;
 }
 
+export interface DeathInfo {
+    agree: boolean;
+    answerArray: Array<string>;
+}
+
 export interface UserData {
     username: string;
     password: string;
@@ -212,7 +217,7 @@ export interface UserData {
     kakaoId?: string;
     googleId?: string;
     bookname: string[];
-    DeathInfo: { agree: boolean, answer1: string, answer2: string, answer3: string, answer4: string, answer5: string };
+    DeathInfo: DeathInfo;
     UsersInfo: { give: UserGiveInfo[], get: UserGiveInfo[] };
     imageUri: string;
 }
@@ -238,7 +243,7 @@ export const setBookName = async (username: string, bookname: string[]) => {
     return response.status === 200;
 }
 
-export const setUserDeathInfo = async (username: string, DeathInfo: { answer1: string, answer2: string, answer3: string, answer4: string, answer5: string }) => {
+export const setUserDeathInfo = async (username: string, DeathInfo: DeathInfo) => {
     let response = await Axios.put(`${apiAddress}/user/deathinfo`, {
         username, DeathInfo
     }, { withCredentials: true });

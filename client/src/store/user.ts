@@ -21,7 +21,7 @@ export type UserAction =
   | ReturnType<typeof clearUser>
 ;
 
-interface UserState {
+export interface UserState {
   loggedIn: boolean;
   user?: UserData;
 };

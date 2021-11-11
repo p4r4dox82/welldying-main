@@ -80,10 +80,23 @@ export const leftVector = (
     </svg>
 );
 
+export const leftVectorMobile = (
+    <svg width="12" height="28" viewBox="0 0 12 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path opacity="0.5" d="M10 26L2 14L10 2" stroke="#909693" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);
+
 export const rightVector = (
     <svg width="14" height="23" viewBox="0 0 14 23" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'rightVector'>
     <path opacity="0.7" d="M2 21L12 11.5L2 2" stroke="#283A30" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
+);
+
+export const rightVectorMobile = (
+    <svg width="12" height="28" viewBox="0 0 12 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path opacity="0.5" d="M2 2L10 14L1.99999 26" stroke="#909693" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
 );
 
 export const MementoMainVector = (
@@ -306,4 +319,23 @@ export const blockAlignVector = (
 <path d="M16.3333 11H11.6667C11.2985 11 11 11.2985 11 11.6667V16.3333C11 16.7015 11.2985 17 11.6667 17H16.3333C16.7015 17 17 16.7015 17 16.3333V11.6667C17 11.2985 16.7015 11 16.3333 11Z" stroke="#23342A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 
+);
+
+export const toggleVector = (
+    <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20.9999 6H5.44434" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M21 1H1" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M21 11H1" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M20.9999 16H5.44434" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);
+
+export const shareVector = (
+    <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.51228 1.5181C8.90091 1.5181 8.40531 2.01371 8.40531 2.62507C8.40531 3.23643 8.90091 3.73204 9.51228 3.73204C10.1236 3.73204 10.6192 3.23643 10.6192 2.62507C10.6192 2.01371 10.1236 1.5181 9.51228 1.5181ZM7.29834 2.62507C7.29834 1.40235 8.28955 0.411133 9.51228 0.411133C10.735 0.411133 11.7262 1.40235 11.7262 2.62507C11.7262 3.84779 10.735 4.839 9.51228 4.839C8.28955 4.839 7.29834 3.84779 7.29834 2.62507Z" fill="#23342A"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.87043 5.39212C2.25907 5.39212 1.76346 5.88773 1.76346 6.49909C1.76346 7.11045 2.25907 7.60606 2.87043 7.60606C3.48179 7.60606 3.9774 7.11045 3.9774 6.49909C3.9774 5.88773 3.48179 5.39212 2.87043 5.39212ZM0.656494 6.49909C0.656494 5.27637 1.64771 4.28516 2.87043 4.28516C4.09315 4.28516 5.08436 5.27637 5.08436 6.49909C5.08436 7.72181 4.09315 8.71303 2.87043 8.71303C1.64771 8.71303 0.656494 7.72181 0.656494 6.49909Z" fill="#23342A"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.51228 9.2681C8.90091 9.2681 8.40531 9.76371 8.40531 10.3751C8.40531 10.9864 8.90091 11.482 9.51228 11.482C10.1236 11.482 10.6192 10.9864 10.6192 10.3751C10.6192 9.76371 10.1236 9.2681 9.51228 9.2681ZM7.29834 10.3751C7.29834 9.15235 8.28955 8.16113 9.51228 8.16113C10.735 8.16113 11.7262 9.15235 11.7262 10.3751C11.7262 11.5978 10.735 12.589 9.51228 12.589C8.28955 12.589 7.29834 11.5978 7.29834 10.3751Z" fill="#23342A"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.82609 7.05713C3.98 6.79302 4.31886 6.70368 4.58297 6.85759L8.36327 9.06045C8.62738 9.21435 8.71672 9.55322 8.56282 9.81733C8.40891 10.0814 8.07004 10.1708 7.80593 10.0169L4.02564 7.81402C3.76153 7.66011 3.67219 7.32124 3.82609 7.05713Z" fill="#23342A"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.5571 3.18183C8.71117 3.44584 8.62205 3.78477 8.35804 3.93884L4.58328 6.1417C4.31927 6.29577 3.98034 6.20665 3.82627 5.94264C3.6722 5.67862 3.76132 5.3397 4.02533 5.18563L7.80009 2.98276C8.06411 2.82869 8.40303 2.91782 8.5571 3.18183Z" fill="#23342A"/>
+    </svg>
 );

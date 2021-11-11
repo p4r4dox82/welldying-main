@@ -6,7 +6,7 @@ import { Link, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { getSections } from '../etc/api/section';
-import { getUsers, modifyUserInfo, oauthConnect, setUserDeathInfo } from '../etc/api/user';
+import { DeathInfo, getUsers, modifyUserInfo, oauthConnect, setUserDeathInfo } from '../etc/api/user';
 import { googleClientId, kakaoJskey } from '../etc/config';
 import usePromise from '../etc/usePromise';
 import useScroll from '../etc/useScroll';
@@ -28,7 +28,7 @@ interface EntryType {
 }
 
 
-let checkBatchim = (word: string) => {
+export let checkBatchim = (word: string) => {
     let lastLetter = word[word.length - 1];
     let uni = lastLetter.charCodeAt(0);
 
@@ -354,150 +354,78 @@ function Mypage() {
     }, [editing, entries]);
 
     let [, contents] = usePromise(getContents);
-    
-    interface DeathInformation {
-        agree: boolean,
-        answer1: string,
-        answer2: string,
-        answer3: string,
-        answer4: string,
-        answer5: string
-    }
 
     let [agree, setAgree] = React.useState<boolean>(false);
     
-    let [answer1Else, setAnswer1Else] = React.useState<boolean>(false);
-    let [answer2Else, setAnswer2Else] = React.useState<boolean>(false);
-    let [answer3Else, setAnswer3Else] = React.useState<boolean>(false);
-
-    let answer1Array = ['불교 형식', '기독교 형식', '전통 장례', '기타'];
+    let answer1Array = ['불교 형식', '기독교 형식', '카톨릭 형식', '전통 장례', '기타'];
     let answer2Array = ['화장 형식', '매장 형식', '기타'];
     let answer3Array = ['지인 모두 참석', '가족만 참석', '기타'];
     let answer4Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
     let answer5Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
+    
+    let answerArrays = React.useMemo(() => {
+        let result = [];
+        result.push({title: '원하시는 장례 진행 방법이 있나요?', answer: answer1Array});
+        result.push({title: '어떤 장법을 원하시나요?', answer: answer2Array});
+        result.push({title: '장례식의 규모는 어떻게 하시겠습니까?', answer: answer3Array});
+        result.push({title: '장기기증을 희망하십니까?', answer: answer4Array});
+        result.push({title: '연명 치료를 희망하십니까?', answer: answer5Array});
 
-    let [DeathInfo, setDeathInfo] = React.useState<DeathInformation>({ agree: false, answer1: '', answer2: '', answer3: '', answer4: '', answer5: ''});
+        return result;
+    }, []);
+
+    let [DeathInfo, setDeathInfo] = React.useState<DeathInfo>();
+
+    let isAnswerInArray = (answer: string, array: Array<string>) => {
+        if(answer === undefined) return false;
+        return array.includes(answer);
+    }
+
+    let editDataOnArrayWithIndex = (array: Array<string>, data: string, index: number) => {
+        let newarray = array;
+        newarray[index] = data;
+        return newarray;
+    }
+
+    let checkDeathInfoAnswerFilled = (DeathInfo: DeathInfo) => {
+        if(DeathInfo.answerArray.length !== 5)
+            return false;
+        if(DeathInfo.answerArray.includes(''))
+            return false;
+        for(let i = 0; i < 5; i ++)
+            if(!DeathInfo.answerArray[i])
+                return false;
+        return true;
+    }
 
     let Questions = React.useMemo(() => {
+        if(!DeathInfo || !answerArrays) return <></>;
         return (
             <>
-                <div className = 'question'>
-                        <div className = 'title_container'>
-                            <div className = 'number'>
-                            1.
-                            </div>
-                            <div className = 'title'>
-                            원하시는 장례 진행 방법이 있나요?
-                            </div>
+                {answerArrays.map((answerArray: any, key) => (
+                    <div className = 'questionContainer'>
+                        <div className = 'title'>
+                            {key + 1}.{answerArray.title}
                         </div>
-                        <div className = 'answer_container'>
-                            {answer1Array.map((answer) => (
-                              <div className = 'answer_block'>
-                                  <div className = 'checkbox' onClick = {answer === '기타' ? () => {setAnswer1Else(true); setDeathInfo({...DeathInfo, answer1: ''})} : () => {setDeathInfo({...DeathInfo, answer1: answer}); setAnswer1Else(false);}}>
-                                      <div className = {(answer1Else ? (answer === '기타' ? ' checked' : '') : (DeathInfo.answer1 === answer ? 'checked': ''))} />
-                                  </div>
-                                  <div className = 'name'>
-                                  {answer}
-                                  </div>
-                              </div>
-                            ))}
-                            <input type='text' autoComplete='password' onChange={(e) => setDeathInfo({...DeathInfo, answer1: e.target.value})} value={(answer1Else ? DeathInfo.answer1 : '')} placeholder = '25자 이하로 작성해주세요.' disabled = {(answer1Else ? false : true)}/>
-                        </div>
-                    </div>
-                    <div className = 'question'>
-                        <div className = 'title_container'>
-                            <div className = 'number'>
-                            2.
-                            </div>
-                            <div className = 'title'>
-                            어떤 장법을 원하시나요?
-                            </div>
-                        </div>
-                        <div className = 'answer_container'>
-                            {answer2Array.map((answer) => (
-                              <div className = 'answer_block'>
-                                  <div className = 'checkbox' onClick = {answer === '기타' ? () => {setAnswer2Else(true); setDeathInfo({...DeathInfo, answer2: ''})} : () => {setDeathInfo({...DeathInfo, answer2: answer}); setAnswer2Else(false);}}>
-                                      <div className = {(answer2Else ? (answer === '기타' ? ' checked' : '') : (DeathInfo.answer2 === answer ? 'checked': ''))} />
-                                  </div>
-                                  <div className = 'name'>
-                                  {answer}
-                                  </div>
-                              </div>
-                            ))}
-                            <input type='text' autoComplete='password' onChange={(e) => setDeathInfo({...DeathInfo, answer2: e.target.value})} value={(answer2Else ? DeathInfo.answer2 : '')} placeholder = '25자 이하로 작성해주세요.' disabled = {(answer2Else ? false : true)}/>
-                        </div>
-                    </div>
-                    <div className = 'question'>
-                        <div className = 'title_container'>
-                            <div className = 'number'>
-                            3.
-                            </div>
-                            <div className = 'title'>
-                            장례식의 규모는 어떻게 하시겠습니까?
-                            </div>
-                        </div>
-                        <div className = 'answer_container'>
-                            {answer3Array.map((answer) => (
-                              <div className = 'answer_block'>
-                                  <div className = 'checkbox' onClick = {answer === '기타' ? () => {setAnswer3Else(true); setDeathInfo({...DeathInfo, answer3: ''})} : () => {setDeathInfo({...DeathInfo, answer3: answer}); setAnswer3Else(false);}}>
-                                      <div className = {(answer3Else ? (answer === '기타' ? ' checked' : '') : (DeathInfo.answer3 === answer ? 'checked': ''))} />
-                                  </div>
-                                  <div className = 'name'>
-                                  {answer}
-                                  </div>
-                              </div>
-                            ))}
-                            <input type='text' autoComplete='password' onChange={(e) => setDeathInfo({...DeathInfo, answer3: e.target.value})} value={(answer3Else ? DeathInfo.answer3 : '')} placeholder = '25자 이하로 작성해주세요.' disabled = {(answer3Else ? false : true)}/>
-                        </div>
-                    </div>
-                    <div className = 'question'>
-                        <div className = 'title_container'>
-                            <div className = 'number'>
-                            4.
-                            </div>
-                            <div className = 'title'>
-                            장기기증을 희망하십니까?
-                            </div>
-                        </div>
-                        <div className = 'answer_container'>
-                            {answer4Array.map((answer) => (
-                              <div className = 'answer_block'>
-                                  <div className = 'checkbox' onClick = {() => {setDeathInfo({...DeathInfo, answer4: answer});}}>
-                                      <div className = {(DeathInfo.answer4 === answer ? 'checked': '')} />
-                                  </div>
-                                  <div className = 'name'>
-                                  {answer}
-                                  </div>
-                              </div>
+                        <div className = 'answerContainer'>
+                            {answerArray.answer.map((answer: any) => (
+                                <div className = 'answerElement'>
+                                    <div className = 'checkBox' onClick = {answer === '기타' ? () => {setDeathInfo({...DeathInfo!, answerArray: editDataOnArrayWithIndex(DeathInfo!.answerArray, '', key)})} : () => {setDeathInfo({...DeathInfo!, answerArray: editDataOnArrayWithIndex(DeathInfo!.answerArray, answer, key)})}}>
+                                        <div className = {isAnswerInArray(DeathInfo!.answerArray[key], answerArrays[key].answer) ? (DeathInfo?.answerArray[key] === answer ? 'checked' : '') : (answer === '기타' ? 'checked' : '')} />
+                                    </div>
+                                    <div className = {'name' + (answer === '기타' ? ' minWidthZero' : '')}>
+                                    {answer}
+                                    </div>
+                                    {answer === '기타' && <input type='text' autoComplete='password' onChange={(e) => setDeathInfo({...DeathInfo!, answerArray: editDataOnArrayWithIndex(DeathInfo!.answerArray, e.target.value, key)})} value={(isAnswerInArray(DeathInfo!.answerArray[key], answerArrays[key].answer) ? '' : DeathInfo?.answerArray[key])} placeholder = '25자 이하로 작성해주세요.' disabled = {(isAnswerInArray(DeathInfo!.answerArray[key], answerArrays[key].answer) ? true : false)}/>}
+                                </div>
                             ))}
                         </div>
                     </div>
-                    <div className = 'question'>
-                        <div className = 'title_container'>
-                            <div className = 'number'>
-                            5.
-                            </div>
-                            <div className = 'title'>
-                            연명 치료를 희망하십니까?
-                            </div>
-                        </div>
-                        <div className = 'answer_container'>
-                            {answer5Array.map((answer) => (
-                              <div className = 'answer_block'>
-                                  <div className = 'checkbox' onClick = {() => {setDeathInfo({...DeathInfo, answer5: answer});}}>
-                                      <div className = {(DeathInfo.answer5 === answer ? 'checked': '')} />
-                                  </div>
-                                  <div className = 'name'>
-                                  {answer}
-                                  </div>
-                              </div>
-                            ))}
-                        </div>
-                    </div>
-                
+                    )
+                )}
             </>
         )
-    }, [DeathInfo]);
+    }, [DeathInfo, answerArrays, isAnswerInArray, editDataOnArrayWithIndex]);
 
     let [modifynumber, setModifyNumber] = React.useState<number>(0);
 
@@ -698,7 +626,7 @@ function Mypage() {
         if(!AllUsers) return<></>;
         return (
             <div className="BookContainer" style = {{paddingTop: '37px'}}>
-                <MementoBook bookname = {String(user.user?.bookname[0])} mine = {true} accept = {0} name = '' giveusername = '' getusername = ''/>
+                <MementoBook bookOwner = {user.user!} watchingBookUser = {user.user!} />
                 <div className="vector"></div>
                 <div className="giveuserscontainer">
                     {user.user?.UsersInfo.give.map((UserInfo) => {
@@ -726,11 +654,10 @@ function Mypage() {
             <div className="BookContainer" style = {{paddingTop: '37px'}}>
                 {user.user?.UsersInfo.get.map((UserInfo, key) => {
                     let getuser = AllUsers.find((user_) => user_.cellphone === UserInfo.phonenumber);
-                    console.log(getuser);
                     return (
                         <Link to ={`/confirmbook/${key}`}>
                         <div style = {{width: '236px', height: '441px'}}>
-                            <MementoBook bookname = {String(getuser?.bookname[0])} mine = {false} accept = {accept} name = {String(getuser?.name)} giveusername = {String(getuser?.username)} getusername = {String(user.user?.username)} />
+                            <MementoBook bookOwner = {getuser!} watchingBookUser = {user.user!} />
                         </div>
                         </Link>
                     )
@@ -782,7 +709,7 @@ function Mypage() {
                         <div>한국생명의 전화(1588-9191) 등으로 전화를 걸어 도움을 요청하겠습니다.</div>
                     </div>
                     <div className="element">
-                        <div className="AgreeContainer" onClick = {() => {setAgree(true); setDeathInfo({...DeathInfo, agree: true})}}>
+                        <div className="AgreeContainer" onClick = {() => {setAgree(true); setDeathInfo({...DeathInfo!, agree: true})}}>
                             {!agree && <>
                                 <div className="NS px12 bold"  style = {{cursor: 'pointer'}}>네 이해하고 동의합니다.</div>
                                 <button className="agree"></button>
@@ -793,7 +720,7 @@ function Mypage() {
                 </div>
             </div>
             <div className="block">
-                <div className="DeathInfo margin_base">
+                <div className="DeathInfoContainer margin_base">
                     <img src={imageUrl('MyPageBackground.png')} alt="" className = 'background'/>
                     <div className="title GB px25 line40">나의 사전 장례 & 연명의료, 장기기증 의향서</div>
                     <div className="detail NS px15 line30">
@@ -806,10 +733,11 @@ function Mypage() {
                     {Questions}
                     <div className="vector" style = {{marginTop: '70px'}}></div>
                     <button className="submit NS px18 bold" onClick = {async () => {
-                        console.log(DeathInfo);
-                        if(DeathInfo.answer1 === '' || DeathInfo.answer2 === '' || DeathInfo.answer3 === '' || DeathInfo.answer4 === '' || DeathInfo.answer5 === '') alert('모든 항목을 채워주세요');
-                        else if(await setUserDeathInfo(user.user!.username, DeathInfo))
-                            alert('저장되었습니다');
+                        if(!checkDeathInfoAnswerFilled(DeathInfo!)) alert('모든 항목을 채워주세요');
+                        else if(await setUserDeathInfo(user.user!.username, DeathInfo!)) {
+                            alert('저장되었습니다.');
+                            window.scrollTo(0, 0);
+                        }
                         else alert('실패하였습니다');
                     }}>저장하기</button>
                 </div>

@@ -83,13 +83,13 @@ function ConfirmMementoBook({match} : Props) {
                     </div>
                 </div>
                 <div className="deathInfoContainer" style = {{width: '269px', gap: '13px', marginTop: '61px', height: '132px'}}>
-                    <div className="answer" style = {{opacity: (giveUser?.DeathInfo.answer5 == '예, 희망합니다.' ? '1' : '0' )}}>
+                    <div className="answer" style = {{opacity: (giveUser?.DeathInfo.answerArray[4] == '예, 희망합니다.' ? '1' : '0' )}}>
                         <div className="image">
                             <div className="agree"></div>
                         </div>
                         <div className="name NS px12 op5 bold">연명 치료 희망</div>
                     </div>
-                    <div className="answer" style = {{opacity: (giveUser?.DeathInfo.answer5 == '예, 희망합니다.' ? '1' : '0' )}}>
+                    <div className="answer" style = {{opacity: (giveUser?.DeathInfo.answerArray[3] == '예, 희망합니다.' ? '1' : '0' )}}>
                         <div className="image">
                             <div className="agree"></div>
                         </div>
@@ -99,28 +99,28 @@ function ConfirmMementoBook({match} : Props) {
                 <div className="deathInfoContainer" style = {{width: '915px', borderTop: '1px dashed rgba(147, 156, 151, 1)', borderBottom: '1px dashed rgba(147, 156, 151, 1)', margin: '41px 0px 0px calc(50% - 915px/2)', gap: '27px', padding: '17px 27px'}}>
                     <div className="answer big">
                         <div className="name GB px16">{giveUser?.name + '님의 희망 장례 진행 방법'}</div>
-                        <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answer1 ? giveUser?.DeathInfo.answer1 : ''}</div>
+                        <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answerArray[0] ? giveUser?.DeathInfo.answerArray[0] : ''}</div>
                         <div className="image">
                             <div className="imageinset">
-                                {deathInfoVector(giveUser?.DeathInfo.answer1 ? giveUser?.DeathInfo.answer1 : '')}
+                                {deathInfoVector(giveUser?.DeathInfo.answerArray[0] ? giveUser?.DeathInfo.answerArray[0] : '')}
                             </div>
                         </div>
                     </div>
                     <div className="answer big">
                         <div className="name GB px16">{giveUser?.name + '님의 희망 장법'}</div>
-                        <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answer2 ? giveUser?.DeathInfo.answer2 : ''}</div>
+                        <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answerArray[1] ? giveUser?.DeathInfo.answerArray[1] : ''}</div>
                         <div className="image">
                             <div className="imageinset">
-                                {deathInfoVector(giveUser?.DeathInfo.answer2 ? giveUser?.DeathInfo.answer2 : '')}
+                                {deathInfoVector(giveUser?.DeathInfo.answerArray[1] ? giveUser?.DeathInfo.answerArray[1] : '')}
                             </div>
                         </div>
                     </div>
                     <div className="answer big">
                         <div className="name GB px16">{giveUser?.name + '님의 희망 장례 규모'}</div>
-                        <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answer3 ? giveUser?.DeathInfo.answer3 : ''}</div>
+                        <div className="answerName NS px14 bold" style ={{color: 'rgba(124, 132, 127, 1)'}}>{giveUser?.DeathInfo.answerArray[2] ? giveUser?.DeathInfo.answerArray[2] : ''}</div>
                         <div className="image">
                             <div className="imageinset">
-                                {deathInfoVector(giveUser?.DeathInfo.answer3 ? giveUser?.DeathInfo.answer3 : '')}
+                                {deathInfoVector(giveUser?.DeathInfo.answerArray[2] ? giveUser?.DeathInfo.answerArray[2] : '')}
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,7 @@ function ConfirmMementoBook({match} : Props) {
                                 setGiveusername(userInfo.username);
                                 setSelectBook(key);
                             }}>
-                                <MementoBook name = {userInfo.name} bookname = {giveuser?.bookname[0]} mine = {false} accept = {userInfo.accept} giveusername = {giveuser?.username} getusername = {String(user.user?.username)}></MementoBook>
+                                <MementoBook bookOwner = {giveuser} watchingBookUser = {user.user!} ></MementoBook>
                             </div>
                         )
                     })}

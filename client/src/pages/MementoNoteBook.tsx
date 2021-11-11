@@ -657,14 +657,14 @@ Cherish your memories, memento`,
                             setTotal(false);
                           }}>추가하기</button>
                       </div>}
-                      <button className="resume" onClick = {() => {
+                      {user.user?.username === 'admin' && <button className="resume" onClick = {() => {
                         questions?.forEach(async (question) => {
                           if (await addBook(Number(question.id), 0))
                             console.log('resume');
                           else
                             console.log('fail');
                         });
-                      }}>새로고침</button>
+                      }}>새로고침</button>}
                   </div>
               </div>
           </div>}

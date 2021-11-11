@@ -58,8 +58,28 @@ function ReadNotice({ match }: Props) {
                         <div className = 'views'>{notice?.views}</div>
                     </div>
                     <div className = 'list_content answer'>
-                        <div className = 'block'>
-                            <textarea className = 'detail answer' style = {{height: '550px'}}value = {notice?.detail} disabled/>
+                        <div className = 'block' style = {{display: 'block', margin: '101px 0px 99px 31px', padding: '0px 15px', width: '945px', boxSizing: 'content-box'}}>
+                            {notice?.detail.split('\n').map((row) => {
+                                let uri = '';
+                                let rowhtml = <div className = "NS px13 line40" style = {{minHeight: '40px'}}>{row}</div>;
+                                if(row === '')
+                                    row = ' ';
+                                if(row.includes('http')) {
+                                    let startindex = row.indexOf('http');
+                                    let endindex = row.indexOf(' ', startindex);
+                                    if(endindex === -1) 
+                                        endindex = row.length;
+                                    uri = row.slice(startindex, endindex); 
+                                    rowhtml = <div className = "NS px13 line40" style = {{minHeight: '40px'}}>
+                                        <span>{row.slice(0, startindex)}</span>
+                                        <span onClick = {() => window.open(uri, '_blank')} className = 'uri'>{uri}</span>
+                                        <span>{row.slice(endindex, row.length)}</span>
+                                    </div>;
+                                }
+                                return (
+                                   rowhtml
+                                )
+                            })}
                         </div>
                     </div>
                 </div>

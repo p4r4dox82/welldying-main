@@ -45,7 +45,7 @@ export const userSchema = new Schema<UserDocument>({
     kakaoId: String,
     googleId: String,
     bookname: [String],
-    DeathInfo: { agree: Boolean, answer1: String, answer2: String, answer3: String, answer4: String, answer5: String },
+    DeathInfo: { agree: Boolean, answerArray: [String] },
     UsersInfo: { give: [{ username: String, name: String, phonenumber: String, accept: Number }], get: [{ username: String, name: String, phonenumber: String, accept: Number }] },
     imageUri: String,
 });
