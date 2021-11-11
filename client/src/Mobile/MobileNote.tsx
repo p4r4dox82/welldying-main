@@ -24,6 +24,10 @@ function MobileNote() {
     let [totalPageNumber, setTotalPageNumber] = React.useState<number>(4);
     let [questionNum, setQuestionNum] = React.useState<number>(4);
 
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+    })
+
     let writtenQuestions = React.useMemo(() => {
         let userAnswers = allAnswers?.filter((answer) => answer.username === user.user?.username);
         console.log(userAnswers);

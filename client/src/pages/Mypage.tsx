@@ -20,7 +20,7 @@ import { getContents } from '../etc/api/content';
 import Contentbox from '../components/Contentbox';
 
 
-interface EntryType {
+export interface EntryType {
     name: string;
     body: JSX.Element;
     message: string;
@@ -239,120 +239,6 @@ function Mypage() {
         }];
     }, [birthDate, birthMessage, birthMonth, birthYear, email, emailMessage, name, nameMessage, oldPassword, oldPasswordMessage, validateOldPassword, password, passwordConfirm, passwordConfirmMessage, passwordMessage, sex, sexMessage, validateBirth, validateEmail, validateName, validatePassword, validatePasswordConfirm]);
 
-
-    let content = React.useMemo(() => {
-        if (editing) return (
-            <>
-                <div className='row' style={{marginBottom: 0, width: '325px', left: 'calc(50vw - 325px/2)'}}>
-                    <h1> 
-                        { `${user.user?.name}님의 개인 설정 수정` }
-                    </h1>
-                    <form className='signupForm' style={{marginLeft: 0}}>
-                        <ul>
-                            <div className='row'> 
-                                <div className='label'> 아이디 </div>
-                                <input readOnly value={user.user?.username}/>
-                            </div>
-                            
-                            { entries.map(({name, body, message}) => (
-                                <>
-                                    <div className='row'>
-                                        <div className='label'> { name } </div>
-                                        { body }
-                                    </div>
-                                    { message && <div> { message } </div> }
-                                </>
-                            ))}
-
-                            <div className='row'> 
-                                <div className='label'> 전화번호 </div>
-                                <input readOnly value={user.user?.cellphone}/>
-                            </div>
-
-                            <div className='row'> 
-                                <div className='label'> 카카오톡 계정 </div>
-                                { user.user?.kakaoId 
-                                    ? <input readOnly value='연결됨'/> 
-                                    : <KakaoLogin 
-                                        token={kakaoJskey}
-                                        onSuccess={async (result) => {
-                                            const token = result.response.access_token;
-                                            const id = result.profile?.id;
-                                            if (!id) return;
-                                            
-                                            await oauthConnect('kakao', id.toString(), token);
-                                        }}
-                                        onFail={(result) => console.log(result)}     
-                                        onLogout={(result) => console.log(result)}   
-                                        render={(props) => <button onClick={(e) => { e.preventDefault(); props.onClick(); }}> 연결하기 </button>}
-                                    />
-                                }
-                            </div>
-
-                            <div className='row'> 
-                                <div className='label'> 구글 계정 </div>
-                                { user.user?.googleId 
-                                    ? <input readOnly value='연결됨'/> 
-                                    : <GoogleLogin
-                                        clientId={googleClientId}
-                                        onSuccess={async (result) => {
-                                            if (result.code) return;
-                                            
-                                            const token = (result as GoogleLoginResponse).tokenId;
-                                            const id = (result as GoogleLoginResponse).googleId;
-                    
-                                            await oauthConnect('google', id, token);
-                                        }}
-                                        onFailure={(result) => console.log(result)}
-                                        render={(props) => <button onClick={(e) => { e.preventDefault(); props.onClick(); }}> 연결하기 </button>}
-                                    />
-                                }
-                            </div>
-                        </ul>
-                    </form>
-
-                    <button onClick={async (e) => { 
-                        e.preventDefault();
-                        if (!await validateAll()) return false;
-                        if (await modifyUserInfo({
-                            username: user.user!.username, 
-                            password: password, 
-                            name, birthYear, birthMonth, birthDate, sex, email, imageUri 
-                        })) {
-                            setEditing(false);
-                        }
-                    }}> 수정 완료 </button>
-                </div>
-            </>
-        ); else return (
-            <>
-                <div className='row' style={{marginBottom: 0}}>
-                    <h1>
-                        { `${user.user?.name}님의 개인 설정` }
-                    </h1>
-                    <form className='signupForm' style={{marginLeft: 0}}>
-                        <div className='row'> <div className='label'> 아이디 </div> <input readOnly value={user.user?.username}/> </div>
-                        <div className='row'> <div className='label'> 이름 </div> <input readOnly value={user.user?.name}/> </div>
-                        <div className='row'> <div className='label'> 생일 </div> <input readOnly value={`${user.user?.birthYear}년 ${user.user?.birthMonth}월 ${user.user?.birthDate}일`}/> </div>
-                        <div className='row'> <div className='label'> 성별 </div> <input readOnly value={user.user?.sex === 'male' ? '남성' : '여성'}/> </div>
-                        <div className='row'> <div className='label'> 이메일 </div> <input readOnly value={user.user?.email ?? '입력하지 않음'}/> </div>
-                        <div className='row'> <div className='label'> 전화번호 </div> <input readOnly value={user.user?.cellphone}/> </div>
-                    </form>
-                    <button onClick={(e) => {
-                        e.preventDefault();
-                        setEditing(true);
-                        setBirthYear(user.user!.birthYear);
-                        setBirthMonth(user.user!.birthMonth);
-                        setBirthDate(user.user!.birthDate);
-                        setEmail(user.user!.email);
-                        setName(user.user!.name);
-                        setSex(user.user!.sex);
-                    }}> 수정하기 </button>
-                </div>
-            </>
-        )
-    }, [editing, entries]);
-
     let [, contents] = usePromise(getContents);
 
     let [agree, setAgree] = React.useState<boolean>(false);
@@ -471,7 +357,6 @@ function Mypage() {
                         <button className="submit" onClick={async (e) => { 
                             e.preventDefault();
                             if (!await validateAll()) {
-                                console.log('asd');
                                 return false;
                             }
                             if (await modifyUserInfo({
@@ -573,7 +458,6 @@ function Mypage() {
                         <button className="submit" onClick={async (e) => { 
                             e.preventDefault();
                             if (!await validateAll()) {
-                                console.log('asd');
                                 return false;
                             }
                             if (await modifyUserInfo({
