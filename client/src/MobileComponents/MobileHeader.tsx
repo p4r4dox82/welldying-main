@@ -90,7 +90,7 @@ function MobileHeader({ uri }: Props) {
                                     <div className="title">고객센터</div>
                                     <div className="leftVector">{rightVector}</div>
                                 </div>
-                                <Link to = {'/logout'}>
+                                <Link to = {user.loggedIn ? {}}>
                                 <div className="linkContainer">
                                     <div className="vector" style = {{opacity: '0'}}>{MementoNoteVector}</div>
                                     <div className="title">{user.loggedIn ? '로그아웃' : '로그인'}</div>
