@@ -14,6 +14,7 @@
     --whitetext: rgba(248, 248, 247, 1);
     --nocolor: rgba(0, 0, 0, 0);
     --graygreen: rgba(145, 154, 149, 1);
+    --graybutton: rgba(230, 229, 226, 1);
     --GB: GyeonggiBatang;
 }
 
@@ -565,7 +566,6 @@
     z-index: 200;
     position: fixed;
     width: 100%;
-    height: calc(100vh);
 }
 .Mobile .Header .Topbar {
     z-index: 210;
@@ -574,7 +574,7 @@
 .Mobile .Header .Menu .background {
     z-index: 200;
     width: 0px;
-    height: 100%;
+    height: 100vh;
     background-color: rgba(48, 59, 53, 0.8);   
     transition: all 0.5s ease-in-out; 
     opacity: 0;
@@ -582,7 +582,7 @@
 .Mobile .Header.active .Menu .background {
     z-index: 200;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: rgba(48, 59, 53, 0.8);   
     transition: opacity 0.5s ease-in-out; 
     opacity: 1;
@@ -594,7 +594,7 @@
     width: 65%;
     max-width: 411px;
     min-width: 230px;
-    height: 100%;
+    height: 100vh;
     background-color: var(--white);
     padding-top: 81px;
     text-align: right;
@@ -608,7 +608,7 @@
     width: 65%;
     max-width: 411px;
     min-width: 230px;
-    height: 100%;
+    height: 100vh;
     background-color: var(--white);
     padding-top: 81px;
     text-align: right;
@@ -661,7 +661,8 @@
 .Mobile .Header .Menu .MenuContainer .userInfoContainer .textContainer {
     margin-left: 10px;
 }
-.Mobile .Header .Menu .MenuContainer .userInfoContainer .textContainer .name {
+.Mobile .Header .Menu .MenuContainer .userInfoContainer .textContainer .name,
+.Mobile .Header .Menu .MenuContainer .userInfoContainer .textContainer .loginMessage {
     font-family: Noto Sans;
     font-size: 13px;
     font-weight: bold;
@@ -676,7 +677,8 @@
     opacity: 0.4;
     margin-top: 1px;
 }
-.Mobile .Header .Menu .MenuContainer .userInfoContainer .textContainer .linkMyPage {
+.Mobile .Header .Menu .MenuContainer .userInfoContainer .textContainer .linkMyPage,
+.Mobile .Header .Menu .MenuContainer .userInfoContainer .textContainer .linkLogin {
     font-family: Noto Sans;
     font-size: 8px;
     color: var(--green);
@@ -696,6 +698,9 @@
     width: calc(100% - 49px);
     :not(:first-child) {
         margin-top: 8px;
+        .linkContainer {
+            margin-top: 8px;
+        }
     }
 }
 .Mobile .Header .Menu .MenuContainer .linksBlock .linkContainer {
@@ -2773,4 +2778,173 @@ color: #7A7978;
     font-size: 12px;
     color: rgba(243, 242, 240, 1);
     background-color: var(--green9);
+}
+.Mobile .MobileMyPageEditPersonalData {
+    width: 100%;
+    text-align: center;
+}
+.Mobile .MobileMyPageEditPersonalData .userImage {
+    width: 90px;
+    height: 63px;
+    border-radius: 80px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 80px;
+    display: inline-flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-top: 31px;
+    svg {
+        width: 44px;
+        height: 44px;
+    }
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer {
+    display: inline-block;
+    width: calc(100% - 39px*2);
+    min-width: 300px;
+    min-height: 100px;
+    background: rgba(247, 246, 246, 0.4);
+    box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.08);
+    border-radius: 5px;
+    margin-top: 31px;
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .categoryContainer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 47px;
+    align-items: center;
+    border-bottom: 1px solid rgba(110, 118, 114, 0.3);
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .categoryContainer .category {
+    box-sizing: content-box;
+    height: 47px;
+    width: 33%;
+    text-align: center;
+    font-family: Noto Sans;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 47px;
+    color: var(--green04);
+    &.selected {
+        top: 2px;
+        border-bottom: 4px solid var(--green9);
+    }
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .categoryContainer .border {
+    font-size: 11px;
+    line-height: 25px;
+    color: var(--green);
+    opacity: 0.3;
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer {
+    padding: 18px;
+    padding-bottom: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: justify;
+    gap: 21px 26px;
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement {
+    width: 100%;
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement.inline {
+    width: fit-content;
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .title {
+    font-family: Noto Sans;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--green07);
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement input {
+    width: 100%;
+    display: inline-block;
+    height: 40px;
+    background: #F9F9F9;
+    box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    margin-top: 8px;
+    padding: 0px 10px;
+    font-family: Noto Sans;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--green07);
+    &::placeholder {
+        font-size: 11px;
+    }
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .checkAnswerElement {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    margin-top: 8px;
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .checkAnswerElement .checkBox {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #F9F9F9;
+    box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .checkAnswerElement .checkBox .checked {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--green07);
+    top: 3px;
+    left: 3px;
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .checkAnswerElement .name,
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .yearMonthDate {
+    display: inline-block;
+    font-family: Noto Sans;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--green07);
+    line-height: 25px;
+    margin-left: 8px;
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .yearMonthDate {
+    margin-left: 9px;
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .buttonInputAnswerElement {
+    display: flex;
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .buttonInputAnswerElement input {
+    width: none;
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .buttonInputAnswerElement button.sendCode,
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .buttonInputAnswerElement button.confirmCode {
+    margin-top: 8px;
+    flex: 0 0 90px;
+    height: 40px;
+    font-family: Noto Sans;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--whitetext);
+    background-color: var(--green9);
+    border-radius: 5px;
+    padding: 0px;
+    margin-left: 10px;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer .editInfoContainer .editInfoElement .buttonInputAnswerElement button.confirmCode {
+    background-color: var(--graybutton);
+    color: var(--green);
+}
+.Mobile .MobileMyPageEditPersonalData .personalDataContainer button.submit {
+    width: 178px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--green);
+    color: var(--whitetext);
+    font-family: Noto Sans;
+    font-size: 12px;
+    justify-self: center;
+    margin-top: 53px;
 }

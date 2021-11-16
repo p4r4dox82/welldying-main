@@ -17,6 +17,10 @@ function MobileHeader({ uri }: Props) {
     return (
         <>
             <Link to ='/mypage' ref = {linkMyPage} style = {{display: 'none'}} />
+            <Link to ='/mypage' ref = {linkMyPage} style = {{display: 'none'}} />
+            <Link to ='/mypage' ref = {linkMyPage} style = {{display: 'none'}} />
+            <Link to ='/mypage' ref = {linkMyPage} style = {{display: 'none'}} />
+            <Link to ='/mypage' ref = {linkMyPage} style = {{display: 'none'}} />
             <div className={"Header" + (menuActive ? ' active' : '')}>
                 <div className="Topbar">
                     <div className="userimage">{}</div>
@@ -30,18 +34,26 @@ function MobileHeader({ uri }: Props) {
                             <div className="userInfoContainer">
                                 <div className="userImage">{UserImage}</div>
                                 <div className="textContainer">
-                                    <div className="name">{user.user?.name}</div>
-                                    <div className="email">{user.user?.email}</div>
-                                    <div className="linkMyPage">{'마이페이지 >'}</div>
+                                    {user.loggedIn && <>
+                                        <div className="name">{user.user?.name}</div>
+                                        <div className="email">{user.user?.email}</div>
+                                        <Link to = {'/mypage'}><div className="linkMyPage">{'마이페이지 >'}</div></Link>
+                                    </>}
+                                    {!user.loggedIn && <>
+                                        <div className="loginMessage">로그인 후 사용해주세요.</div>
+                                        <Link to = {'/login'}><div className="linkLogin">{'로그인하기 >'}</div></Link>
+                                    </>}
                                 </div>
                             </div>
                             <div className="dashLine"></div>
                             <div className="linksBlock">
+                                <Link to = {'/'}>
                                 <div className="linkContainer">
                                     <div className="vector">{HomeVector}</div>
                                     <div className="title">메인</div>
                                     <div className="leftVector">{rightVector}</div>
                                 </div>
+                                </Link>
                                 <div className="linkContainer">
                                     <div className="vector">{NoticeVector}</div>
                                     <div className="title">알림</div>
@@ -50,22 +62,26 @@ function MobileHeader({ uri }: Props) {
                             </div>
                             <div className="dashLine"></div>
                             <div className="linksBlock">
-                                <div className="linkContainer">
+                                <div className="linkContainer" onClick = {() => window.open('https://www.notion.so/Team-Memento-480ba51aeb3a43f6ad18d19a05bba5ad', '_blank')}>
                                     <div className="vector">{MementoMainVector}</div>
                                     <div className="title">메멘토는</div>
                                     <div className="leftVector">{rightVector}</div>
                                 </div>
+                                <Link to = {'/content/1'}>
                                 <div className="linkContainer">
                                     <div className="vector">{MementoContentVector}</div>
                                     <div className="title">메멘토 컨텐츠</div>
                                     <div className="leftVector">{rightVector}</div>
                                 </div>
+                                </Link>
+                                <Link to ={'/note'}>
                                 <div className="linkContainer">
                                     <div className="vector">{MementoNoteVector}</div>
                                     <div className="title">메멘토 노트</div>
                                     <div className="leftVector">{rightVector}</div>
                                 </div>
-                                <div className="linkContainer">
+                                </Link>
+                                <div className="linkContainer" onClick = {() => alert('모바일 메멘토 북 서비스가 준비중입니다. PC크롬을 이용하여 접속해주십시오.')}>
                                     <div className="vector">{MementoBookVector}</div>
                                     <div className="title">메멘토 북</div>
                                     <div className="leftVector">{rightVector}</div>
@@ -83,11 +99,13 @@ function MobileHeader({ uri }: Props) {
                                     <div className="title">고객센터</div>
                                     <div className="leftVector">{rightVector}</div>
                                 </div>
+                                <Link to = {user.loggedIn ? '/logout' : {pathname: '/login', state: {from: '/'}}}>
                                 <div className="linkContainer">
                                     <div className="vector" style = {{opacity: '0'}}>{MementoNoteVector}</div>
-                                    <div className="title">로그아웃</div>
+                                    <div className="title">{user.loggedIn ? '로그아웃' : '로그인'}</div>
                                     <div className="leftVector">{rightVector}</div>
                                 </div>
+                                </Link>
                             </div>
                     </div>
                 </div>

@@ -23,19 +23,7 @@ export default async (app : express.Application) => {
         credentials: true,
     }));
     app.use(cors({
-        origin: 'https://localhost:3000',
-        credentials: true,
-    }));
-    app.use(cors({
-        origin: 'http://localhost:3000',
-        credentials: true,
-    }));
-    app.use(cors({
-        origin: "https://mymemento.kr",
-        credentials: true,
-    }));
-    app.use(cors({
-        origin: "https://www.mymemento.kr",
+        origin: ['https://localhost:3000', 'https://localhost:3000', 'https://mymemento.kr', 'https://www.mymemento.kr'],
         credentials: true,
     }));
     app.use(bodyParser.json());
