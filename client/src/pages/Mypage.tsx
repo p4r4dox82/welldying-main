@@ -362,7 +362,7 @@ function Mypage() {
                             if (await modifyUserInfo({
                                 username: user.user!.username, 
                                 password: password, 
-                                name, birthYear, birthMonth, birthDate, sex, email, imageUri
+                                name, birthYear, birthMonth, birthDate, sex, email, imageUri, cellphone : user.user!.cellphone
                             })) {
                                 setEditing(false);
                             }
@@ -431,7 +431,7 @@ function Mypage() {
                             if (await modifyUserInfo({
                                 username: user.user!.username, 
                                 password: password, 
-                                name, birthYear, birthMonth, birthDate, sex, email, imageUri
+                                name, birthYear, birthMonth, birthDate, sex, email, imageUri, cellphone : user.user!.cellphone
                             })) {
                                 setEditing(false);
                             }
@@ -463,7 +463,7 @@ function Mypage() {
                             if (await modifyUserInfo({
                                 username: user.user!.username, 
                                 password: password, 
-                                name, birthYear, birthMonth, birthDate, sex, email, imageUri
+                                name, birthYear, birthMonth, birthDate, sex, email, imageUri, cellphone : user.user!.cellphone
                             })) {
                                 setEditing(false);
                             }

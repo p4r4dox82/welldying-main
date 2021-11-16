@@ -332,7 +332,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
             body: (
                 <div style={{display: 'flex'}}>
                     <input type='text' className = {phoneCodeMessage ? 'error' : ''} onChange={(e) => setPhoneCode(Number.parseInt(e.target.value))} value={phoneCodeMessage ? phoneCodeMessage : phoneCode} placeholder = '전송된 인증번호를 입력해주세요.' onClick = {() => {setPhoneCodeMessage('');}}/>
-                    <button style={{flex: '0 0 100px', margin:'0px 0px 0px 10px', fontSize: '12px'}} className={(phoneVerified ? 'inactive' : '')} onClick={(e) => { e.preventDefault(); endPhoneVerify(); } }>
+                    <button style={{flex: '0 0 100px', margin:'0px 0px 0px 10px', fontSize: '12px'}} className={(phoneVerified ? 'inactive' : '')} onClick={(e) => { e.preventDefault(); endPhoneVerify(); }}>
                         { phoneVerified ? '인증완료' : '인증확인' }
                     </button>
                 </div>

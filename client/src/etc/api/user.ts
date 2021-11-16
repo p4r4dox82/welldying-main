@@ -52,7 +52,7 @@ export const register = async (data: UserPost) => {
     else return response.data;
 }
 
-interface UserPut {
+export interface UserPut {
     username: string;
     password: string;
     name: string;
@@ -62,6 +62,7 @@ interface UserPut {
     sex: 'male' | 'female';
     email: string;
     imageUri: string;
+    cellphone: string;
 }
 
 interface UserPassword {

@@ -1,9 +1,9 @@
-import { calculateBorderBoxPath } from 'html2canvas/dist/types/render/bound-curves';
+import { validate } from '@babel/types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MementoBook from '../components/MementoBook';
-import { DeathInfo, getUsers, setUserDeathInfo } from '../etc/api/user';
+import { checkCellphoneDuplicate, DeathInfo, getUsers, modifyUserInfo, setUserDeathInfo, UserPut, verifyPhone, verifyPhoneCheck } from '../etc/api/user';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
 import { EditVector, leftVector, MementoDotVector, rightVector, UserImage } from '../img/Vectors';
@@ -11,6 +11,20 @@ import MobileFooter from '../MobileComponents/MobileFooter';
 import MobileHeader from '../MobileComponents/MobileHeader';
 import { checkBatchim, EntryType } from '../pages/Mypage';
 import { RootReducer } from '../store';
+
+interface UserPutMessage {
+    oldPassword: string;
+    newPassword: string;
+    newPasswordConfirm: string;
+    name: string;
+    birthYear: string;
+    birthMonth: string;
+    birthDate: string;
+    email: string;
+    imageUri: string;
+    cellphone: string;
+    phoneValidateCode: string;
+}
 
 function MobileMyPage() {
     let user = useSelector((state: RootReducer) => state.user);
@@ -20,13 +34,134 @@ function MobileMyPage() {
     let [editPersonalData, setEditPersonalData] = React.useState<boolean>(false);
     let [currentGetBooksNumber, setCurrentGetBooksNumber] = React.useState<number>(0);
     let totalGetBooksNumber = React.useMemo(() => user.user?.UsersInfo.get.filter((userInfo) => userInfo.accept !== 2).length, [user]);
+    let [currentEditPersonalDataNumber, setCurrentEditPersonalDataNumber] = React.useState<number>(0);
     let [DeathInfo, setDeathInfo] = React.useState<DeathInfo>();
+
+    let [personalData, setPersonalData] = React.useState<UserPut>();
+    let [personalDataValidateMessage, setPersonalDataValidateMessage] = React.useState<UserPutMessage>();
+    let [phoneValidateCode, setPhoneValidateCode] = React.useState<number>();
+    let [phoneVerified, setPhoneVerified] = React.useState<boolean>(false);
+    let [currentPassword, setCurrentPassword] = React.useState<string>('');
+    let [confirmPassword, setConfirmPassword] = React.useState<string>('');
+
     React.useEffect(() => {
         if(user.user?.DeathInfo !== undefined)
             setDeathInfo(user.user?.DeathInfo);
         else 
             setDeathInfo({agree: false, answerArray: ['', '', '', '', '']});
+        if(user)
+            setPersonalData({ username: user.user!.username, password: '', name: user.user!.name, birthYear: user.user!.birthYear, birthMonth: user.user!.birthMonth, birthDate: user.user!.birthDate, sex: user.user!.sex, email: user.user!.email, imageUri: '', cellphone: user.user!.cellphone});
     }, [user]);
+
+    let ValidateBirthYear = () => {
+        if(!personalData) return false;
+        else return (personalData!.birthYear < 2021 && personalData.birthYear > 1900);
+    }
+    let ValidateBirthMonth = () => {
+        if(!personalData) return false;
+        else return (personalData.birthMonth <= 12 && personalData.birthMonth >=1);
+    }
+    let ValidateBirthDate = () => {
+        if(!personalData) return false;
+        else {
+            let birthDate = personalData.birthDate;
+            let birthYear = personalData.birthYear;
+            let birthMonth = personalData.birthMonth;
+            return !(birthDate < 1 || birthDate > [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][birthMonth] || (birthMonth === 2 && birthDate === 29 && (birthYear % 4 !== 0 || (birthYear % 100 === 0 && birthYear % 400 !== 0))));
+        }
+    }
+    let ValidateEmail = () => {
+        if(!personalData) return false;
+        else {
+            const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (!regex.test(personalData.email)) {
+                return false;
+            }
+            else return true;
+        }
+    }
+    let checkCellPhone = async () => {
+        if(!personalData || !personalDataValidateMessage) return false;
+        let cellPhoneMiddle = personalData?.cellphone.slice(6, 10);
+        let cellPhoneRear = personalData?.cellphone.slice(10, 14);
+        if (cellPhoneMiddle.length < 4 || cellPhoneRear.length < 4) {
+            setPersonalDataValidateMessage({...personalDataValidateMessage, cellphone: '올바른 전화번호를 적어주세요.'});
+            return false;
+        }
+        if (await checkCellphoneDuplicate(personalData.cellphone)) {
+            setPersonalDataValidateMessage({...personalDataValidateMessage, cellphone: '이미 사용하고 있는 전화번호입니다.'});
+            return false;
+        }
+        setPersonalDataValidateMessage({...personalDataValidateMessage, cellphone: ''});
+        return true;
+    }
+    let ValidateCellphone = async () => {
+        if(!personalData || !personalDataValidateMessage) return false;
+        if (!await checkCellPhone()) return false;
+        if (!phoneVerified) {
+            setPersonalDataValidateMessage({...personalDataValidateMessage, cellphone: '휴대전화를 인증해주세요.'});
+            return false;
+        }
+        setPersonalDataValidateMessage({...personalDataValidateMessage, cellphone: ''});
+        return true;
+    }
+    let [phoneVerifyStarted, setPhoneVerifyStarted] = React.useState(false);
+    let startPhoneVerify = async () => {
+        if(!personalData) return false;
+        if (phoneVerifyStarted) return false;
+        if (!await checkCellPhone()) return false;
+        let result = await verifyPhone('0' + personalData.cellphone.slice(4, 6), personalData.cellphone.slice(6, 10), personalData.cellphone.slice(10, 14));
+        if (result) {
+            setPhoneVerifyStarted(true);
+            setPhoneCode(undefined);
+        }
+        return result;
+    }
+    let [phoneCodeDigest, setPhoneCodeDigest] = React.useState('');
+    let [phoneCode, setPhoneCode] = React.useState<number>();
+    let endPhoneVerify = async () => {
+        if(!personalData || !personalDataValidateMessage) return false;
+        if (!phoneCode || !phoneVerifyStarted) return false;
+
+        let result = await verifyPhoneCheck('0' + personalData.cellphone.slice(4, 6), personalData.cellphone.slice(6, 10), personalData.cellphone.slice(10, 14), phoneCode);
+        if (result.isVerified) {
+            setPhoneVerified(true);
+            setPersonalDataValidateMessage({...personalDataValidateMessage, phoneValidateCode: ''});
+            setPhoneCodeDigest(result.phoneCodeDigest);
+            return true;
+        }
+        else {
+            setPersonalDataValidateMessage({...personalDataValidateMessage, phoneValidateCode: '인증에 실패했습니다.'});
+            return false;
+        }
+    }
+    let validatePhoneCode = () => {
+        if(!personalData || !personalDataValidateMessage) return false;
+        if (!phoneVerified) {
+            setPersonalDataValidateMessage({...personalDataValidateMessage, phoneValidateCode: '인증번호를 입력하고 인증을 눌러주세요.'});
+            return false;
+        }
+        return true;
+    }
+    let ValidateOldPassword = () => {
+        
+    }
+
+    let ValidateFunctionAllPersonalData = React.useMemo(() => {
+        return [ValidateBirthYear, ValidateBirthMonth, ValidateBirthDate, ValidateEmail, ValidateCellphone, validatePhoneCode];
+    }, [ValidateBirthYear, ValidateBirthMonth, ValidateBirthDate, ValidateEmail, ValidateCellphone, validatePhoneCode]);
+
+    let ValidateAllPersonalData = async () => {
+        let result = true;
+
+        for(let validate of ValidateFunctionAllPersonalData) {
+            if(!await validate()) {
+                console.log('asd');
+                result = false;
+            }
+        }
+        return result;
+    };
 
     let GivenUserInfoContainer = React.useCallback((userinfo: any) => {
         if(!AllUsers) return <></>;
@@ -146,6 +281,89 @@ function MobileMyPage() {
         )
     }, [DeathInfo, answerArrays, isAnswerInArray, editDataOnArrayWithIndex]);
 
+    let editPersonalDataContainerCases = () => {
+        if(!personalData) return <></>;
+        switch(currentEditPersonalDataNumber) {
+            case 0: 
+                return (
+                    <div className="editInfoContainer">
+                            <div className="editInfoElement inline">
+                                <div className="title">이름</div>
+                                <input type="text" className="text" value = {personalData.name} onChange = {(e) => setPersonalData({...personalData!, name: e.target.value})} style = {{width: '80px'}} />
+                            </div>
+                            <div className="editInfoElement inline">
+                                <div className="title">성별</div>
+                                <div className="checkAnswerElement" onClick = {() => setPersonalData({...personalData!, sex: 'male'})}>
+                                    <div className="checkBox">
+                                        <div className={personalData.sex === 'male' ? "checked" : ''}></div>
+                                    </div>
+                                    <div className="name">남성</div>
+                                </div>
+                                <div className="checkAnswerElement" style = {{marginLeft: '16px'}} onClick = {() => setPersonalData({...personalData!, sex: 'female'})}>
+                                    <div className="checkBox">
+                                        <div className={personalData.sex === 'female' ? "checked" : ''}></div>
+                                    </div>
+                                    <div className="name">여성</div>
+                                </div>
+                            </div>
+                            <div className="editInfoElement">
+                                <div className="title">생년월일</div>
+                                <input type="text" className="text" value = {personalData.birthYear} onChange = {(e) => setPersonalData({...personalData!, birthYear: Number(e.target.value)})} style = {{width: '60px'}} />
+                                <span className="yearMonthDate">년</span>
+                                <input type="text" className="text" value = {personalData.birthMonth} onChange = {(e) => setPersonalData({...personalData!, birthMonth: Number(e.target.value)})}style = {{width: '40px', marginLeft: '14px'}} />
+                                <span className="yearMonthDate">월</span>
+                                <input type="text" className="text" value = {personalData.birthDate} onChange = {(e) => setPersonalData({...personalData!, birthDate: Number(e.target.value)})}style = {{width: '40px', marginLeft: '14px'}} />
+                                <span className="yearMonthDate">일</span>
+                            </div>
+                        </div>
+                )
+            case 1:
+                return (
+                    <div className="editInfoContainer">
+                        <div className="editInfoElement">
+                            <div className="title">아이디</div>
+                            <input type="text" className="text" value = {personalData.username} disabled />
+                        </div>
+                        <div className="editInfoElement">
+                            <div className="title">이메일</div>
+                            <input type="text" className="text" value = {personalData.email} onChange = {(e) => setPersonalData({...personalData!, email: e.target.value})} />
+                        </div>
+                        <div className="editInfoElement">
+                            <div className="title">휴대전화</div>
+                            <div className="buttonInputAnswerElement">
+                                <input type="text" className="text" value = {'0' + personalData.cellphone.slice(3, 13)} onChange = {(e) => setPersonalData({...personalData!, cellphone: '+82' + e.target.value.slice(1,11)})} />
+                                <button className="sendCode">인증번호 전송</button>
+                            </div>
+                        </div>
+                        <div className="editInfoElement">
+                            <div className="title">인증번호 입력</div>
+                            <div className="buttonInputAnswerElement">
+                                <input type="text" className="text" value = {phoneValidateCode} onChange = {(e) => setPhoneValidateCode(Number(e.target.value))} placeholder = '인증번호를 입력해주세요.'/>
+                                <button className="confirmCode">인증확인</button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            case 2:
+                return (
+                    <div className="editInfoContainer">
+                        <div className="editInfoElement">
+                            <div className="title">현재 비밀번호</div>
+                            <input type="text" className="text" value = {currentPassword} onChange = {(e) => setCurrentPassword(e.target.value)} placeholder = '현재 비밀번호를 입력해주세요.'/>
+                        </div>
+                        <div className="editInfoElement">
+                            <div className="title">변경할 비밀번호</div>
+                            <input type="text" className="text" value = {personalData.password} onChange = {(e) => setPersonalData({...personalData!, password: e.target.value})} placeholder = '8~20자리 비밀번호를 입력해주세요.'/>
+                        </div>
+                        <div className="editInfoElement">
+                            <div className="title">비밀번호 확인</div>
+                            <input type="text" className="text" value = {confirmPassword} onChange = {(e) => setConfirmPassword(e.target.value)} placeholder = '위와 동일한 비밀번호를 다시 한 번 입력해주세요.'/>
+                        </div>
+                    </div>
+                )
+        }
+    }
+
 
     if(editPledge) return (
         <>
@@ -201,7 +419,7 @@ function MobileMyPage() {
             </div>
         </>
     )
-    else if(editPersonalData) return (
+    else if(editPersonalData && personalData) return (
         <>
             <div className="Mobile">
                 <MobileHeader uri = {'/mypage'}></MobileHeader>
@@ -210,6 +428,25 @@ function MobileMyPage() {
                         {UserImage}
                     </div>
                     {false && <div className="addUserImage">{'나의 기본 사진 추가하기 >'}</div>}
+                    <div className="personalDataContainer">
+                        <div className="categoryContainer">
+                            <div className={"category" + (currentEditPersonalDataNumber === 0 ? ' selected' : '')} onClick = {() => setCurrentEditPersonalDataNumber(0)}>기본정보</div>
+                            <div className="border">|</div>
+                            <div className={"category" + (currentEditPersonalDataNumber === 1 ? ' selected' : '')} onClick = {() => setCurrentEditPersonalDataNumber(1)}>계정정보</div>
+                            <div className="border">|</div>
+                            <div className={"category" + (currentEditPersonalDataNumber === 2 ? ' selected' : '')} onClick = {() => setCurrentEditPersonalDataNumber(2)}>비밀번호 변경</div>
+                        </div>
+                        {editPersonalDataContainerCases()}
+                        <button className="submit" onClick = {async(e) => {
+                            e.preventDefault();
+                            if(!await ValidateAllPersonalData())
+                                return false;
+                            if (await modifyUserInfo(personalData!)) {
+                                console.log("저장되었습니다.");
+                                setEditPersonalData(false);
+                            }
+                        }}>저장하기</button>
+                    </div>
                 </div>
                 <MobileFooter></MobileFooter>
             </div>
@@ -227,7 +464,7 @@ function MobileMyPage() {
                         <div className="userInfoContainer">
                             <div className="namephone NS px15 line25 bold op6">{user.user?.name + ' / 0' + user.user?.cellphone.slice(3, 5) + '-' + user.user?.cellphone.slice(5, 9) + '-' + user.user?.cellphone.slice(9, 13)}</div>
                             <div className="email NS px15 line25 bold op6">{user.user?.email}</div>
-                            <button className="Edit" onClick = {() => {
+                            <button className="Edit" onClick = {() => {setEditPersonalData(!editPersonalData);
                             }}>{EditVector}</button>
                         </div>
                         <div className="goEditPledge" onClick = {() => setEditPledge(!editPledge)}>

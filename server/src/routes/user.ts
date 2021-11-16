@@ -256,6 +256,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         let birthDate: number = Number.parseInt(req.body.birthDate);
         let sex: string = req.body.sex;
         let email: string = req.body.email;
+        let cellphone: string = req.body.cellphone;
 
         if (user.username !== username) return res.sendStatus(401);
 
@@ -271,7 +272,7 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         }
 
         await User.findOneAndUpdate({ username }, {
-            name, birthYear, birthMonth, birthDate, sex, email
+            name, birthYear, birthMonth, birthDate, sex, email, cellphone
         });
 
         res.send(200);
