@@ -41,6 +41,7 @@ import MobileNote from './Mobile/MobileNote';
 import MobileContent from './Mobile/MobileContent';
 import MobileContentPage from './Mobile/MobileContentPage';
 import MobileMyPage from './Mobile/MobileMyPage';
+import MobileMementoBook from './Mobile/MobileMementoBook';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -62,6 +63,7 @@ function App() {
           <Route path='/contentpage/:id' component = {MobileContentPage} />
           <Route path='/mypage' component = {MobileMyPage} />
           <Route path='/survey' component = {Survey} />
+          <Route path='/book' component = {MobileMementoBook} />
           <Route path='/' component={MobileMain} />
         </Switch>
       </BrowserRouter>
