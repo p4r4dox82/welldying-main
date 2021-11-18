@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MementoBook from '../components/MementoBook';
-import { checkCellphoneDuplicate, DeathInfo, getUsers, modifyUserInfo, setUserDeathInfo, UserPut, verifyPhone, verifyPhoneCheck } from '../etc/api/user';
+import { checkCellphoneDuplicate, DeathInfo, getUser, getUserid, getUsers, modifyUserInfo, setUserDeathInfo, User, UserPut, verifyPhone, verifyPhoneCheck } from '../etc/api/user';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
 import { EditVector, leftVector, MementoDotVector, rightVector, UserImage } from '../img/Vectors';
@@ -11,6 +11,7 @@ import MobileFooter from '../MobileComponents/MobileFooter';
 import MobileHeader from '../MobileComponents/MobileHeader';
 import { checkBatchim, EntryType } from '../pages/Mypage';
 import { RootReducer } from '../store';
+import crypto from 'crypto';
 
 interface UserPutMessage {
     oldPassword: string;
@@ -43,6 +44,8 @@ function MobileMyPage() {
     let [phoneVerified, setPhoneVerified] = React.useState<boolean>(false);
     let [currentPassword, setCurrentPassword] = React.useState<string>('');
     let [confirmPassword, setConfirmPassword] = React.useState<string>('');
+
+    let [userLoading, User] = usePromise(() => getUserid(personalData!.username), [personalData]);
 
     React.useEffect(() => {
         if(user.user?.DeathInfo !== undefined)
@@ -162,13 +165,48 @@ function MobileMyPage() {
         else
             return true;
     }
-    let ValidateOldPassword = () => {
-        
+    function isPasswordValid(password: string, hash: string, salt: string) {
+        const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+        return hash === hashVerify;
+    }
+    let ValidateCurrentPassword = () => {
+        if(!personalData) 
+            return false;
+        if(currentPassword === '' && personalData.password === '') 
+            return true;
+        else 
+            return isPasswordValid(currentPassword, User!.passwordHash, User!.passwordSalt);
+    }
+    let ValidateNewPassword = () => {
+        if(!personalData || !personalDataValidateMessage)
+            return false;
+        if(currentPassword === '' && personalData.password === '')
+            return true;
+        else {
+            const regex1 = /^[ -~]{8,200}$/;
+            const regex2 = /[a-zA-Z]/;
+            const regex3 = /[0-9]/;
+
+            if (!regex1.test(personalData.password) || !regex2.test(personalData.password) || !regex3.test(personalData.password)) {
+                setPersonalDataValidateMessage({...personalDataValidateMessage, newPassword: '비밀번호는 8글자 이상으로, 영문과 숫자를 포함하도록 해 주세요.'});
+                return false;
+            }
+            else
+                return true;
+        }
+    }
+    let ValidateConfirmPassword = () => {
+        if(!personalData || !personalDataValidateMessage)
+            return false;
+        else {
+            setPersonalDataValidateMessage({...personalDataValidateMessage, newPasswordConfirm: '비밀번호가 일치하지 않습니다.'});
+            return true;
+        }
     }
 
     let ValidateFunctionAllPersonalData = React.useMemo(() => {
-        return [ValidateBirthYear, ValidateBirthMonth, ValidateBirthDate, ValidateEmail, ValidateCellphone, validatePhoneCode];
-    }, [ValidateBirthYear, ValidateBirthMonth, ValidateBirthDate, ValidateEmail, ValidateCellphone, validatePhoneCode]);
+        return [ValidateBirthYear, ValidateBirthMonth, ValidateBirthDate, ValidateEmail, ValidateCellphone, validatePhoneCode, ValidateCurrentPassword, ValidateNewPassword, ValidateConfirmPassword];
+    }, [ValidateBirthYear, ValidateBirthMonth, ValidateBirthDate, ValidateEmail, ValidateCellphone, validatePhoneCode, ValidateCurrentPassword, ValidateNewPassword, ValidateConfirmPassword]);
 
     let ValidateAllPersonalData = async () => {
         let result = true;
@@ -367,15 +405,15 @@ function MobileMyPage() {
                     <div className="editInfoContainer">
                         <div className="editInfoElement">
                             <div className="title">현재 비밀번호</div>
-                            <input type="text" className="text" value = {currentPassword} onChange = {(e) => setCurrentPassword(e.target.value)} placeholder = '현재 비밀번호를 입력해주세요.'/>
+                            <input type="password" className="text" value = {currentPassword} onChange = {(e) => setCurrentPassword(e.target.value)} placeholder = '현재 비밀번호를 입력해주세요.'/>
                         </div>
                         <div className="editInfoElement">
                             <div className="title">변경할 비밀번호</div>
-                            <input type="text" className="text" value = {personalData.password} onChange = {(e) => setPersonalData({...personalData!, password: e.target.value})} placeholder = '8~20자리 비밀번호를 입력해주세요.'/>
+                            <input type="password" className="text" value = {personalData.password} onChange = {(e) => setPersonalData({...personalData!, password: e.target.value})} placeholder = '8~20자리 비밀번호를 입력해주세요.'/>
                         </div>
                         <div className="editInfoElement">
                             <div className="title">비밀번호 확인</div>
-                            <input type="text" className="text" value = {confirmPassword} onChange = {(e) => setConfirmPassword(e.target.value)} placeholder = '위와 동일한 비밀번호를 다시 한 번 입력해주세요.'/>
+                            <input type="password" className="text" value = {confirmPassword} onChange = {(e) => setConfirmPassword(e.target.value)} placeholder = '위와 동일한 비밀번호를 다시 한 번 입력해주세요.'/>
                         </div>
                     </div>
                 )
