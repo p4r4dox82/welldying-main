@@ -1,0 +1,259 @@
+@import 'Consts.scss';
+@import 'Mobile.scss';
+
+.SellingMain {
+    width: 100vw;
+    padding: 0px;
+    margin: 0px;
+    button {
+        padding: 0px;
+        background-color: transparent;
+    }
+}
+.SellingMain .mainBlock {
+    text-align: center;
+    width: 1032px;
+    min-height: 100px;
+    margin: 0px calc(50% - 1032px/2);
+}
+.SellingMain .mainBlock img.backgroundImage {
+    position: absolute;
+    width: 100vw;
+    left: calc(50% - 50vw);
+    height: 600px;
+    object-fit: cover;
+    opacity: 0.4;
+}
+.SellingMain .mainBlock .textContainer {
+    text-align: justify;
+    width: 100%;
+}
+.SellingMain .mainBlock .textContainer .titleContainer {
+    padding-top: 120px;
+    font-family: var(--GB);
+    font-size: 30px;
+    line-height: 55px;
+    color: var(--black);
+}
+.SellingMain .mainBlock .textContainer .vectorLine {
+    width: 996px;
+    height: 3px;
+    background-color: var(--white);
+    opacity: 0.8;
+    margin-top: 6px;
+}
+.SellingMain .mainBlock .textContainer .detail {
+    width: 500px;
+    height: 90px;
+    font-family: var(--GB);
+    font-size: 14px;
+    line-height: 30px;
+    color: var(--green07);
+    margin-top: 48px;
+    text-align: justify;
+}
+.SellingMain .mainBlock .textContainer .moreButton {
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 40px;
+    color: var(--green9);
+    opacity: 0.8;
+}
+.SellingMain .mainBlock .imageContainer {
+    position: absolute;
+    left: 590px;
+    top: 226px;
+}
+.SellingMain .mainBlock .imageContainer .circle {
+    width: 205px;
+    height: 205px;
+    border-radius: 50%;
+    border: 4px solid var(--green9);
+    box-sizing: border-box;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+.SellingMain .mainBlock .imageContainer img.productMainImage {
+    position: absolute;
+    left: 67px;
+    bottom: -45px;
+} 
+.SellingMain .mainBlock .menuContainer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 120px;
+    width: 615px;
+    height: 105px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+.SellingMain .mainBlock .menuContainer .menuElement {
+    width: 90px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.SellingMain .mainBlock .menuContainer .menuElement .vector {
+    width: 100%;
+    height: 30px;
+    svg {
+        path {
+            fill: rgba(97, 105, 101, 0.7);
+        }
+    }
+    &.selected {
+        svg {
+            path {
+                fill: rgba(97, 105, 101, 1);
+            }
+        }
+    }
+}
+.SellingMain .mainBlock .menuContainer .menuElement .name {
+    margin-top: 13.5px;
+    font-family: var(--GB);
+    font-size: 15px;
+    line-height: 30px;
+}
+.SellingMain .productListBlock {
+    width: 1032px;
+    margin: auto;
+    padding-bottom: 100px;
+}
+.SellingMain .productListBlock .headContainer {
+    width: 100%;
+    height: 28px;
+    display: flex;
+    justify-content: space-between;
+}
+.SellingMain .productListBlock .headContainer .title {
+    font-family: var(--GB);
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: bold;
+    color: var(--black);
+}
+.SellingMain .productListBlock .headContainer .numberContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 13px;
+}
+.SellingMain .productListBlock .headContainer .numberContainer button {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    svg {
+        width: 10px;
+        height: 18px;
+        path {
+            stroke: rgba(40, 58, 48, 1);
+            stroke-width: 3px;
+        }
+    }
+}
+.SellingMain .productListBlock .headContainer .numberContainer {
+    font-family: Noto Sans;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--green9);
+    opacity: 0.7;
+}
+.SellingMain .productListBlock .productList {
+    margin-top: 62px;
+    display: flex;
+    gap: 50px;
+}
+.SellingMain .productListBlock .productList .productElement {
+    width: 310px;
+    height: 480px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 17px 20px;
+
+}
+.SellingMain .productListBlock .productList .productElement img {
+    width: 270px;
+    height: 240px;
+    object-fit: cover;
+}   
+.SellingMain .productListBlock .productList .productElement .cover {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-top: 17px;
+    justify-content: space-between;
+}
+.SellingMain .productListBlock .productList .productElement .cover .title,
+.SellingMain .productListBlock .productList .productElement .cover .price {
+    width: 100%;
+    font-family: Noto Sans;
+    font-size: 17px;
+    line-height: 25px;
+    color: rgba(120, 131, 125, 1);
+    font-weight: bold;
+    span {
+        margin-left: 5px;
+        font-size: 14px;
+    }
+}
+.SellingMain .productListBlock .productList .productElement .cover .detail {
+    width: 100%;
+    width: 100%;
+    height: 86px;
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: 4px;
+    color: var(--green);
+    opacity: 0.6;
+}
+.SellingMain .productListBlock .productList .productElement .cover .price {
+    margin-bottom: 40px;
+}
+.SellingMain .productListBlock .productList .productElement .cover .tag {
+    font-family: var(--GB);
+    font-size: 13px;
+    color: var(--green9);
+    opacity: 0.7;
+}
+.SellingMain .productListBlock .productList .productElement .cover .likeContainer {
+    font-family: var(--GB);
+    font-size: 14px;
+    color: var(--green9);
+    svg {
+        width: 10px;
+        height: 8px;
+        path {
+            stroke: var(--green9);
+        }
+    }
+}
+.SellingMain .productListBlock .productList .productElement .likeButton {
+    position: absolute;
+    top: 27px;
+    left: 258px;
+    svg {
+        width: 19px;
+        height: 17px;
+        path {
+            stroke: var(--green9);
+        }
+    }
+}
+.SellingMain .commentBlock {
+    width: 100%;
+    margin-top: 60px;
+    min-height: 100px;
+}
+.SellingMain .commentBlock img.backgroundImage {
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+    height: 663px;
+    opacity: 0.2;
+    top: -192px;
+}

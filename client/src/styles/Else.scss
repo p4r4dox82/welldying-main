@@ -728,3 +728,33 @@ div.ConfirmBook {
         }
     }
 }
+
+.Notification {
+    width: 100vw;
+    height: 56px;
+    background-color: rgba(191, 196, 193, 1);
+    mix-blend-mode: multiply;
+    box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.15);
+    padding: 0px calc(50vw - 1032px/2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.Notification .text {
+    font-family: Noto Sans;
+    font-size: 13px;
+    color: var(--white);
+
+}
+.Notification button.quitButton {
+    padding: 0px;
+    background-color: transparent;
+    transform: rotate(45deg);
+    svg {
+        width: 16px;
+        height: 16px;
+        path {
+            fill: var(--white);
+        }
+    }
+}
