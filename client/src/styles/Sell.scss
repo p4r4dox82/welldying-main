@@ -257,3 +257,537 @@
     opacity: 0.2;
     top: -192px;
 }
+
+.productPage {
+    width: 100%;
+    button {
+        padding: 0px;
+        background-color: transparent;
+    }
+}
+.productPage .goSellMain {
+    margin: 0px calc(50% - 1032px/2);
+    margin-top: 24px;
+    font-family: var(--GB);
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--green);
+    opacity: 0.5;
+}
+.productPage .productMainBlock {
+    width: 1032px;
+    height: 500px;
+    margin: auto;
+    margin-top: 83px;
+    padding-bottom: 111px;
+    box-sizing: content-box;
+}
+.productPage .productMainBlock .imageContainer {
+    display: inline-block;
+    width: 413px;
+    height: 100%;
+}
+.productPage .productMainBlock .imageContainer img.mainImage {
+    width: 413px;
+    height: 413px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.productPage .productMainBlock .imageContainer .imageList {
+    margin-top: 23px;
+    display: flex;
+    gap: 18px;
+}
+.productPage .productMainBlock .imageContainer .imageList img.imageListElement {
+    width: 62px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.productPage .productMainBlock .informationContainer {
+    display: inline-block;
+    width: 586px;
+    height: 100%;
+    vertical-align: top;
+    margin-left: 30px;
+    font-family: Noto Sans;
+    color: var(--green);
+    
+}
+.productPage .productMainBlock .informationContainer .subtitle {
+    font-size: 15px;
+    line-height: 40px;
+    margin-top: -12px;
+}
+.productPage .productMainBlock .informationContainer .title {
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: bold;
+}
+.productPage .productMainBlock .informationContainer .price {
+    margin-top: 50px;
+    font-size: 25px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.productPage .productMainBlock .informationContainer span {
+    font-size: 15px;
+}
+.productPage .productMainBlock .informationContainer .deliver {
+    margin-top: 35px;
+    border-top: 1.5px solid var(--green9);
+    border-bottom: 1.5px solid var(--green9);
+    padding: 10px 0px;
+}
+.productPage .productMainBlock .informationContainer .deliver .name,
+.productPage .productMainBlock .informationContainer .deliver .detail {
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: bold;
+    display: inline-block;
+    
+}
+.productPage .productMainBlock .informationContainer .deliver .name {
+    margin-left: 10px;
+    width: 100px;
+    margin-right: 20px;
+}
+.productPage .productMainBlock .informationContainer .deliver .detail {
+    font-weight: 300;
+}
+.productPage .productMainBlock .informationContainer select.product {
+    width: 100%;
+    height: 76px;
+    margin-top: 52px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #68756E;
+    box-sizing: border-box;
+    box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 0px 10px;
+}
+.productPage .productMainBlock .informationContainer .totalPrice {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.productPage .productMainBlock .informationContainer .totalPrice .name {
+    font-size: 13px;
+    line-height: 25px;
+    margin-left: 10px;
+}
+.productPage .productMainBlock .informationContainer .totalPrice .price {
+    margin: 0px;
+    font-size: 25px;
+    line-height: 25px;
+    margin-right: 20px;
+}
+.productPage .productMainBlock .informationContainer .buttonContainer {
+    width: 100%;
+    margin-top: 36px;
+    display: flex;
+    justify-content: space-between;
+}
+.productPage .productMainBlock .informationContainer .buttonContainer button.addCart,
+.productPage .productMainBlock .informationContainer .buttonContainer button.purchase {
+    width: 287px;
+    height: 60px;
+    background-color: var(--white);
+    border: 1px solid var(--green9);
+    box-sizing: border-box;
+    filter: drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.08));
+    border-radius: 7px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--green);
+}
+.productPage .productMainBlock .informationContainer .buttonContainer button.purchase {
+    background: #1E2C25;
+    box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 7px;
+    color: var(--whitetext);
+}
+.productPage .productInformationNavigation {
+    width: 100%;
+    height: 56px;
+    background: rgba(191, 196, 193, 0.3);
+    opacity: 0.7;
+    box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.15);
+}
+.productPage .productInformationNavigation .navigationMenu {
+    width: 1032px;
+    margin: auto;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    :not(:last-child)::after {
+        content: '|';
+        font-size: 20px;
+    }
+}
+.productPage .productInformationNavigation .navigationMenu .navigationMenuElement {
+    width: 140px;
+    text-align: center;
+}
+.productPage .productInformationNavigation .navigationMenu .navigationMenuElement .name {
+    display: inline-block;
+    width: 134px;
+    font-family: var(--GB);
+    font-size: 15px;
+    opacity: 1;
+}
+.productPage .productInformationNavigation .selectorVector {
+    width: 134px;
+    height: 5px;
+    position: absolute;
+    background-color: var(--green9);
+    opacity: 0.4;
+    bottom: 0px;
+    left: calc(50% - 1032px/2);
+    transition: all 0.5s ease-in-out;
+}
+.productPage .productInformationBlock {
+    width: 1032px;
+    margin: auto;
+}
+.productPage .productInformationBlock .productInformationTable {
+    width: 100%;
+    border-top: 2px solid var(--green9);
+    border-bottom: 2px solid var(--green9);
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: 56px;
+}
+.productPage .productInformationBlock .productInformationTable .tableRow {
+    display: flex;
+}
+.productPage .productInformationBlock .productInformationTable .tableRow .name {
+    width: 150px;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 40px;
+    font-weight: bold;
+}
+.productPage .productInformationBlock .productInformationTable .tableRow .detail {
+    width: calc(50% - 150px);
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 30px;
+}
+.productPage .productInformationBlock .productInformationTable :first-child .name,
+.productPage .productInformationBlock .productInformationTable :first-child .detail{
+    border-top: none;
+}
+.productPage .productInformationBlock .productInformationTable .tableRow :first-child {
+    border-left: none;
+}
+.productPage .productInformationBlock .imageContainer {
+    text-align: center;
+}
+.productPage .productInformationBlock .imageContainer img.productInformationImage {
+    margin-top: 70px;
+    width: calc(1032px * 0.8);
+    object-fit: contain;
+}
+.productPage .productInformationBlock .divider {
+    width: 100%;
+}
+.productPage .productInformationBlock .divider .crossLine {
+    position: absolute;
+    top: 11px;
+    width: 100%;
+    border-top: 2px solid rgba(39, 57, 47, 0.7);
+}
+.productPage .productInformationBlock .divider .circle {
+    margin: auto;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 2px solid rgba(39, 57, 47, 0.7);
+    box-sizing: border-box;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+.productPage .productInformationBlock .notificationContainer {
+    margin-top: 135px;
+}
+.productPage .productInformationBlock .notificationContainer .title {
+    text-align: center;
+    font-family: var(--GB);
+    font-size: 30px;
+    line-height: 50px;
+}
+.productPage .productInformationBlock .notificationContainer .notificationList {
+    font-family: var(--GB);
+    font-size: 20px;
+    line-height: 35px;
+    margin-top: 25px;
+}
+.productPage .productInformationBlock .notificationContainer .notificationList div {
+    font-size: 20px;
+    line-height: 35px;
+}
+.productPage .productInformationBlock .notificationContainer .notificationList ::before {
+    content: '\00B7';
+    font-size: 35px;
+}
+.productPage .productDetailInformationBlock,
+.productPage .transactionInformationBlock {
+    margin-top: 115px;
+}
+.productPage .productDetailInformationBlock .title,
+.productPage .transactionInformationBlock .title {
+    font-family: Noto Sans;
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable {
+    width: 100%;
+    border-top: 2px solid var(--green9);
+    border-bottom: 2px solid var(--green9);
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: 35px;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable .tableRow {
+    display: flex;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable .tableRow .name {
+    width: 150px;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 40px;
+    font-weight: bold;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable .tableRow .detail {
+    width: calc(100% - 150px);
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 30px;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable :first-child .name,
+.productPage .productDetailInformationBlock .productDetailInformationTable :first-child .detail{
+    border-top: none;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable .tableRow :first-child {
+    border-left: none;
+}
+.productPage .transactionInformationBlock .transactionInformationTable {
+    width: 100%;
+    border-top: 2px solid var(--green9);
+    border-bottom: 2px solid var(--green9);
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: 35px;
+}
+.productPage .transactionInformationBlock .transactionInformationTable .tableRow {
+    display: flex;
+}
+.productPage .transactionInformationBlock .transactionInformationTable .tableRow .name {
+    width: 340px;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 40px;
+    padding-right: 20px;
+    font-weight: bold;
+}
+.productPage .transactionInformationBlock .transactionInformationTable .tableRow .detail {
+    width: calc(100% - 340px);
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 30px;
+}
+.productPage .transactionInformationBlock .transactionInformationTable :first-child .name,
+.productPage .transactionInformationBlock .transactionInformationTable :first-child .detail{
+    border-top: none;
+}
+.productPage .transactionInformationBlock .transactionInformationTable .tableRow :first-child {
+    border-left: none;
+}
+.productPage .mementoLicense {
+    width: 100%;
+    margin-top: 140px;
+    height: 459px;
+    text-align: center;
+    padding-top: 136px;
+}
+.productPage .mementoLicense img.backgroundImage {
+    position: absolute;
+    top: 0px;
+    width: 100vw;
+    height: 100%;
+    left: calc(50% - 50vw);
+    opacity: 0.2;
+}
+.productPage .mementoLicense .title {
+    font-weight: bold;
+    font-family: var(--GB);
+    font-size: 35px;
+    line-height: 40px;
+    color: var(--black);
+}
+.productPage .mementoLicense .detail {
+    margin-top: 68px;
+    font-family: var(--GB);
+    font-size: 25px;
+    line-height: 40px;
+    color: var(--black);
+}
+.productPage .returnExchangeInformationBlock {
+    width: 1032px;
+    margin: auto;
+    margin-top: 26px;
+    padding-bottom: 100px;
+}
+.productPage .returnExchangeInformationBlock .tableBlock,
+.productPage .returnExchangeInformationBlock .textBlock {
+    margin-top: 82px;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .title,
+.productPage .returnExchangeInformationBlock .textBlock .title {
+    font-family: Noto Sans;
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .subtitle {
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .table {
+    width: 100%;
+    border-top: 2px solid var(--green9);
+    border-bottom: 2px solid var(--green9);
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: 35px;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow {
+    display: flex;
+    width: 100%;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow .name {
+    width: 150px;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 40px;
+    padding-right: 20px;
+    font-weight: bold;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow.two .name {
+    width: 150px;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow .detail {
+    width: calc(100% - 150px);
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 30px;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow.two .detail {
+    width: calc(50% - 150px);
+}
+.productPage .returnExchangeInformationBlock .tableBlock :first-child .name,
+.productPage .returnExchangeInformationBlock .tableBlock :first-child .detail{
+    border-top: none;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow :first-child {
+    border-left: none;
+}
+.productPage .returnExchangeInformationBlock .textBlock .textContainer {
+    width: 100%;
+    margin-top: 33px;
+    padding: 11px 30px;
+    border-top: 1.5px solid rgba(39, 57, 47, 0.7);
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    color: var(--green);
+}
+.productPage .returnExchangeInformationBlock .textBlock .textContainer .dot::before{
+    content: '\00B7';
+    font-size: 18px;
+}
+
+.paymentPage .getPaymentInformationBlock {
+    width: 590px;
+    margin-left: calc(50% - 1032px/2);
+}
+.paymentPage .getPaymentInformationBlock .title {
+    font-family: Noto Sans;
+    font-size: 25px;
+    line-height: 34px;
+    font-weight: bold;
+    color: var(--green9);
+    margin-top: 91px;
+
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer {
+    width: 100%;
+
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .titleContainer {
+    width: 100%;
+    border-bottom: 1.5px solid rgba(39, 57, 47, 0.3);
+    padding-bottom: 16px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .titleContainer .title {
+    margin: 0px;
+    margin-top: 52px;
+    opacity: 0.8;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .inputContainer {
+
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .inputContainer .inputElement {
+    width: 100%;
+    margin-top: 26px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .inputContainer .inputElement .name {
+    font-family: Noto Sans;
+    font-size: 15px;
+    line-height: 25px;
+    color: rgba(122, 121, 120, 1);
+    font-weight: bold;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .inputContainer .inputElement input {
+    width: 280px;
+    height: 55px;
+    background: #F9F9F9;
+    box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
