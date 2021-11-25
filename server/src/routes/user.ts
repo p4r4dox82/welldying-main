@@ -69,6 +69,13 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
         res.send(req.user);
     });
 
+    router.get('/checkpassword', onlyAuthUser, (req, res) => {
+        let user: any = req.user;
+        
+        
+
+    })
+
     // Sign in
     router.post('/login', passport.authenticate('local'), (req, res) => {
         res.write('Logged in with ' + req.user!.username);

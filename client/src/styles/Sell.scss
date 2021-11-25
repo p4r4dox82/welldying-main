@@ -1,0 +1,1176 @@
+@import 'Consts.scss';
+@import 'Mobile.scss';
+
+.SellingMain {
+    width: 100vw;
+    padding: 0px;
+    margin: 0px;
+    button {
+        padding: 0px;
+        background-color: transparent;
+    }
+}
+.SellingMain .mainBlock {
+    text-align: center;
+    width: 1032px;
+    min-height: 100px;
+    margin: 0px calc(50% - 1032px/2);
+}
+.SellingMain .mainBlock img.backgroundImage {
+    position: absolute;
+    width: 100vw;
+    left: calc(50% - 50vw);
+    height: 600px;
+    object-fit: cover;
+    opacity: 0.4;
+}
+.SellingMain .mainBlock .textContainer {
+    text-align: justify;
+    width: 100%;
+}
+.SellingMain .mainBlock .textContainer .titleContainer {
+    padding-top: 120px;
+    font-family: var(--GB);
+    font-size: 30px;
+    line-height: 55px;
+    color: var(--black);
+}
+.SellingMain .mainBlock .textContainer .vectorLine {
+    width: 996px;
+    height: 3px;
+    background-color: var(--white);
+    opacity: 0.8;
+    margin-top: 6px;
+}
+.SellingMain .mainBlock .textContainer .detail {
+    width: 500px;
+    height: 90px;
+    font-family: var(--GB);
+    font-size: 14px;
+    line-height: 30px;
+    color: var(--green07);
+    margin-top: 48px;
+    text-align: justify;
+}
+.SellingMain .mainBlock .textContainer .moreButton {
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 40px;
+    color: var(--green9);
+    opacity: 0.8;
+}
+.SellingMain .mainBlock .imageContainer {
+    position: absolute;
+    left: 590px;
+    top: 226px;
+}
+.SellingMain .mainBlock .imageContainer .circle {
+    width: 205px;
+    height: 205px;
+    border-radius: 50%;
+    border: 4px solid var(--green9);
+    box-sizing: border-box;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+.SellingMain .mainBlock .imageContainer img.productMainImage {
+    position: absolute;
+    left: 67px;
+    bottom: -45px;
+} 
+.SellingMain .mainBlock .menuContainer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 120px;
+    width: 615px;
+    height: 105px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+.SellingMain .mainBlock .menuContainer .menuElement {
+    width: 90px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.SellingMain .mainBlock .menuContainer .menuElement .vector {
+    width: 100%;
+    height: 30px;
+    svg {
+        path {
+            fill: rgba(97, 105, 101, 0.7);
+        }
+    }
+    &.selected {
+        svg {
+            path {
+                fill: rgba(97, 105, 101, 1);
+            }
+        }
+    }
+}
+.SellingMain .mainBlock .menuContainer .menuElement .name {
+    margin-top: 13.5px;
+    font-family: var(--GB);
+    font-size: 15px;
+    line-height: 30px;
+}
+.SellingMain .productListBlock {
+    width: 1032px;
+    margin: auto;
+    padding-bottom: 100px;
+}
+.SellingMain .productListBlock .headContainer {
+    width: 100%;
+    height: 28px;
+    display: flex;
+    justify-content: space-between;
+}
+.SellingMain .productListBlock .headContainer .title {
+    font-family: var(--GB);
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: bold;
+    color: var(--black);
+}
+.SellingMain .productListBlock .headContainer .numberContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 13px;
+}
+.SellingMain .productListBlock .headContainer .numberContainer button {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    svg {
+        width: 10px;
+        height: 18px;
+        path {
+            stroke: rgba(40, 58, 48, 1);
+            stroke-width: 3px;
+        }
+    }
+}
+.SellingMain .productListBlock .headContainer .numberContainer {
+    font-family: Noto Sans;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--green9);
+    opacity: 0.7;
+}
+.SellingMain .productListBlock .productList {
+    margin-top: 62px;
+    display: flex;
+    gap: 50px;
+}
+.SellingMain .productListBlock .productList .productElement {
+    width: 310px;
+    height: 480px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 17px 20px;
+
+}
+.SellingMain .productListBlock .productList .productElement img {
+    width: 270px;
+    height: 240px;
+    object-fit: cover;
+}   
+.SellingMain .productListBlock .productList .productElement .cover {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-top: 17px;
+    justify-content: space-between;
+}
+.SellingMain .productListBlock .productList .productElement .cover .title,
+.SellingMain .productListBlock .productList .productElement .cover .price {
+    width: 100%;
+    font-family: Noto Sans;
+    font-size: 17px;
+    line-height: 25px;
+    color: rgba(120, 131, 125, 1);
+    font-weight: bold;
+    span {
+        margin-left: 5px;
+        font-size: 14px;
+    }
+}
+.SellingMain .productListBlock .productList .productElement .cover .detail {
+    width: 100%;
+    width: 100%;
+    height: 86px;
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: 4px;
+    color: var(--green);
+    opacity: 0.6;
+}
+.SellingMain .productListBlock .productList .productElement .cover .price {
+    margin-bottom: 40px;
+}
+.SellingMain .productListBlock .productList .productElement .cover .tag {
+    font-family: var(--GB);
+    font-size: 13px;
+    color: var(--green9);
+    opacity: 0.7;
+}
+.SellingMain .productListBlock .productList .productElement .cover .likeContainer {
+    font-family: var(--GB);
+    font-size: 14px;
+    color: var(--green9);
+    svg {
+        width: 10px;
+        height: 8px;
+        path {
+            stroke: var(--green9);
+        }
+    }
+}
+.SellingMain .productListBlock .productList .productElement .likeButton {
+    position: absolute;
+    top: 27px;
+    left: 258px;
+    svg {
+        width: 19px;
+        height: 17px;
+        path {
+            stroke: var(--green9);
+        }
+    }
+}
+.SellingMain .commentBlock {
+    width: 100%;
+    margin-top: 60px;
+    min-height: 100px;
+}
+.SellingMain .commentBlock img.backgroundImage {
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+    height: 663px;
+    opacity: 0.2;
+    top: -192px;
+}
+
+.productPage {
+    width: 100%;
+    button {
+        padding: 0px;
+        background-color: transparent;
+    }
+}
+.productPage .goSellMain {
+    margin: 0px calc(50% - 1032px/2);
+    margin-top: 24px;
+    font-family: var(--GB);
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--green);
+    opacity: 0.5;
+}
+.productPage .productMainBlock {
+    width: 1032px;
+    height: 500px;
+    margin: auto;
+    margin-top: 83px;
+    padding-bottom: 111px;
+    box-sizing: content-box;
+}
+.productPage .productMainBlock .imageContainer {
+    display: inline-block;
+    width: 413px;
+    height: 100%;
+}
+.productPage .productMainBlock .imageContainer img.mainImage {
+    width: 413px;
+    height: 413px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.productPage .productMainBlock .imageContainer .imageList {
+    margin-top: 23px;
+    display: flex;
+    gap: 18px;
+}
+.productPage .productMainBlock .imageContainer .imageList img.imageListElement {
+    width: 62px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.productPage .productMainBlock .informationContainer {
+    display: inline-block;
+    width: 586px;
+    height: 100%;
+    vertical-align: top;
+    margin-left: 30px;
+    font-family: Noto Sans;
+    color: var(--green);
+    
+}
+.productPage .productMainBlock .informationContainer .subtitle {
+    font-size: 15px;
+    line-height: 40px;
+    margin-top: -12px;
+}
+.productPage .productMainBlock .informationContainer .title {
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: bold;
+}
+.productPage .productMainBlock .informationContainer .price {
+    margin-top: 50px;
+    font-size: 25px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.productPage .productMainBlock .informationContainer span {
+    font-size: 15px;
+}
+.productPage .productMainBlock .informationContainer .deliver {
+    margin-top: 35px;
+    border-top: 1.5px solid var(--green9);
+    border-bottom: 1.5px solid var(--green9);
+    padding: 10px 0px;
+}
+.productPage .productMainBlock .informationContainer .deliver .name,
+.productPage .productMainBlock .informationContainer .deliver .detail {
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: bold;
+    display: inline-block;
+    
+}
+.productPage .productMainBlock .informationContainer .deliver .name {
+    margin-left: 10px;
+    width: 100px;
+    margin-right: 20px;
+}
+.productPage .productMainBlock .informationContainer .deliver .detail {
+    font-weight: 300;
+}
+.productPage .productMainBlock .informationContainer select.product {
+    width: 100%;
+    height: 76px;
+    margin-top: 52px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #68756E;
+    box-sizing: border-box;
+    box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 0px 10px;
+}
+.productPage .productMainBlock .informationContainer .totalPrice {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.productPage .productMainBlock .informationContainer .totalPrice .name {
+    font-size: 13px;
+    line-height: 25px;
+    margin-left: 10px;
+}
+.productPage .productMainBlock .informationContainer .totalPrice .price {
+    margin: 0px;
+    font-size: 25px;
+    line-height: 25px;
+    margin-right: 20px;
+}
+.productPage .productMainBlock .informationContainer .buttonContainer {
+    width: 100%;
+    margin-top: 36px;
+    display: flex;
+    justify-content: space-between;
+}
+.productPage .productMainBlock .informationContainer .buttonContainer button.addCart,
+.productPage .productMainBlock .informationContainer .buttonContainer button.purchase {
+    width: 287px;
+    height: 60px;
+    background-color: var(--white);
+    border: 1px solid var(--green9);
+    box-sizing: border-box;
+    filter: drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.08));
+    border-radius: 7px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--green);
+}
+.productPage .productMainBlock .informationContainer .buttonContainer button.purchase {
+    background: #1E2C25;
+    box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 7px;
+    color: var(--whitetext);
+}
+.productPage .productInformationNavigation {
+    width: 100%;
+    height: 56px;
+    background: rgba(191, 196, 193, 0.3);
+    opacity: 0.7;
+    box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.15);
+}
+.productPage .productInformationNavigation .navigationMenu {
+    width: 1032px;
+    margin: auto;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    :not(:last-child)::after {
+        content: '|';
+        font-size: 20px;
+    }
+}
+.productPage .productInformationNavigation .navigationMenu .navigationMenuElement {
+    width: 140px;
+    text-align: center;
+}
+.productPage .productInformationNavigation .navigationMenu .navigationMenuElement .name {
+    display: inline-block;
+    width: 134px;
+    font-family: var(--GB);
+    font-size: 15px;
+    opacity: 1;
+}
+.productPage .productInformationNavigation .selectorVector {
+    width: 134px;
+    height: 5px;
+    position: absolute;
+    background-color: var(--green9);
+    opacity: 0.4;
+    bottom: 0px;
+    left: calc(50% - 1032px/2);
+    transition: all 0.5s ease-in-out;
+}
+.productPage .productInformationBlock {
+    width: 1032px;
+    margin: auto;
+}
+.productPage .productInformationBlock .productInformationTable {
+    width: 100%;
+    border-top: 2px solid var(--green9);
+    border-bottom: 2px solid var(--green9);
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: 56px;
+}
+.productPage .productInformationBlock .productInformationTable .tableRow {
+    display: flex;
+}
+.productPage .productInformationBlock .productInformationTable .tableRow .name {
+    width: 150px;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 40px;
+    font-weight: bold;
+}
+.productPage .productInformationBlock .productInformationTable .tableRow .detail {
+    width: calc(50% - 150px);
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 30px;
+}
+.productPage .productInformationBlock .productInformationTable :first-child .name,
+.productPage .productInformationBlock .productInformationTable :first-child .detail{
+    border-top: none;
+}
+.productPage .productInformationBlock .productInformationTable .tableRow :first-child {
+    border-left: none;
+}
+.productPage .productInformationBlock .imageContainer {
+    text-align: center;
+}
+.productPage .productInformationBlock .imageContainer img.productInformationImage {
+    margin-top: 70px;
+    width: calc(1032px * 0.8);
+    object-fit: contain;
+}
+.productPage .productInformationBlock .divider {
+    width: 100%;
+}
+.productPage .productInformationBlock .divider .crossLine {
+    position: absolute;
+    top: 11px;
+    width: 100%;
+    border-top: 2px solid rgba(39, 57, 47, 0.7);
+}
+.productPage .productInformationBlock .divider .circle {
+    margin: auto;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 2px solid rgba(39, 57, 47, 0.7);
+    box-sizing: border-box;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+.productPage .productInformationBlock .notificationContainer {
+    margin-top: 135px;
+}
+.productPage .productInformationBlock .notificationContainer .title {
+    text-align: center;
+    font-family: var(--GB);
+    font-size: 30px;
+    line-height: 50px;
+}
+.productPage .productInformationBlock .notificationContainer .notificationList {
+    font-family: var(--GB);
+    font-size: 20px;
+    line-height: 35px;
+    margin-top: 25px;
+}
+.productPage .productInformationBlock .notificationContainer .notificationList div {
+    font-size: 20px;
+    line-height: 35px;
+}
+.productPage .productInformationBlock .notificationContainer .notificationList ::before {
+    content: '\00B7';
+    font-size: 35px;
+}
+.productPage .productDetailInformationBlock,
+.productPage .transactionInformationBlock {
+    margin-top: 115px;
+}
+.productPage .productDetailInformationBlock .title,
+.productPage .transactionInformationBlock .title {
+    font-family: Noto Sans;
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable {
+    width: 100%;
+    border-top: 2px solid var(--green9);
+    border-bottom: 2px solid var(--green9);
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: 35px;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable .tableRow {
+    display: flex;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable .tableRow .name {
+    width: 150px;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 40px;
+    font-weight: bold;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable .tableRow .detail {
+    width: calc(100% - 150px);
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 30px;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable :first-child .name,
+.productPage .productDetailInformationBlock .productDetailInformationTable :first-child .detail{
+    border-top: none;
+}
+.productPage .productDetailInformationBlock .productDetailInformationTable .tableRow :first-child {
+    border-left: none;
+}
+.productPage .transactionInformationBlock .transactionInformationTable {
+    width: 100%;
+    border-top: 2px solid var(--green9);
+    border-bottom: 2px solid var(--green9);
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: 35px;
+}
+.productPage .transactionInformationBlock .transactionInformationTable .tableRow {
+    display: flex;
+}
+.productPage .transactionInformationBlock .transactionInformationTable .tableRow .name {
+    width: 340px;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 40px;
+    padding-right: 20px;
+    font-weight: bold;
+}
+.productPage .transactionInformationBlock .transactionInformationTable .tableRow .detail {
+    width: calc(100% - 340px);
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 30px;
+}
+.productPage .transactionInformationBlock .transactionInformationTable :first-child .name,
+.productPage .transactionInformationBlock .transactionInformationTable :first-child .detail{
+    border-top: none;
+}
+.productPage .transactionInformationBlock .transactionInformationTable .tableRow :first-child {
+    border-left: none;
+}
+.productPage .mementoLicense {
+    width: 100%;
+    margin-top: 140px;
+    height: 459px;
+    text-align: center;
+    padding-top: 136px;
+}
+.productPage .mementoLicense img.backgroundImage {
+    position: absolute;
+    top: 0px;
+    width: 100vw;
+    height: 100%;
+    left: calc(50% - 50vw);
+    opacity: 0.2;
+}
+.productPage .mementoLicense .title {
+    font-weight: bold;
+    font-family: var(--GB);
+    font-size: 35px;
+    line-height: 40px;
+    color: var(--black);
+}
+.productPage .mementoLicense .detail {
+    margin-top: 68px;
+    font-family: var(--GB);
+    font-size: 25px;
+    line-height: 40px;
+    color: var(--black);
+}
+.productPage .returnExchangeInformationBlock {
+    width: 1032px;
+    margin: auto;
+    margin-top: 26px;
+    padding-bottom: 100px;
+}
+.productPage .returnExchangeInformationBlock .tableBlock,
+.productPage .returnExchangeInformationBlock .textBlock {
+    margin-top: 82px;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .title,
+.productPage .returnExchangeInformationBlock .textBlock .title {
+    font-family: Noto Sans;
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .subtitle {
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .table {
+    width: 100%;
+    border-top: 2px solid var(--green9);
+    border-bottom: 2px solid var(--green9);
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: 35px;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow {
+    display: flex;
+    width: 100%;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow .name {
+    width: 150px;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 40px;
+    padding-right: 20px;
+    font-weight: bold;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow.two .name {
+    width: 150px;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow .detail {
+    width: calc(100% - 150px);
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 30px;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow.two .detail {
+    width: calc(50% - 150px);
+}
+.productPage .returnExchangeInformationBlock .tableBlock :first-child .name,
+.productPage .returnExchangeInformationBlock .tableBlock :first-child .detail{
+    border-top: none;
+}
+.productPage .returnExchangeInformationBlock .tableBlock .tableRow :first-child {
+    border-left: none;
+}
+.productPage .returnExchangeInformationBlock .textBlock .textContainer {
+    width: 100%;
+    margin-top: 33px;
+    padding: 11px 30px;
+    border-top: 1.5px solid rgba(39, 57, 47, 0.7);
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    color: var(--green);
+}
+.productPage .returnExchangeInformationBlock .textBlock .textContainer .dot::before{
+    content: '\00B7';
+    font-size: 18px;
+}
+
+.paymentPage .getPaymentInformationBlock {
+    width: 590px;
+    margin-left: calc(50% - 1032px/2);
+    padding-bottom: 178px;
+}
+.paymentPage .getPaymentInformationBlock .title {
+    font-family: Noto Sans;
+    font-size: 25px;
+    line-height: 34px;
+    font-weight: bold;
+    color: var(--green9);
+    margin-top: 91px;
+
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer {
+    width: 100%;
+
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .titleContainer {
+    width: 100%;
+    border-bottom: 1.5px solid rgba(39, 57, 47, 0.3);
+    padding-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 52px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .titleContainer .title {
+    margin: 0px;
+    opacity: 0.8;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .titleContainer .checkContainer {
+    display: flex;
+    align-items: center;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .titleContainer .checkContainer .checkBox {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #F9F9F9;
+    box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .titleContainer .checkContainer .checkBox .checked {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--green9);
+    top: 4px;
+    left: 4px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .titleContainer .checkContainer .name {
+    font-family: Noto Sans;
+    font-size: 13px;
+    color: var(--green9);
+    font-weight: bold;
+    margin-left: 7px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .inputContainer {
+
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .inputContainer .inputElement {
+    width: 100%;
+    margin-top: 26px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .inputContainer .inputElement .name {
+    font-family: Noto Sans;
+    font-size: 15px;
+    line-height: 25px;
+    color: rgba(122, 121, 120, 1);
+    font-weight: bold;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .inputContainer .inputElement input {
+    width: 280px;
+    height: 55px;
+    background: #F9F9F9;
+    box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    &.midium {
+        width: 400px;
+    }
+    &.long {
+        width: 529px;
+    }
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .inputContainer .inputElement button.searchPostCode {
+    width: 147px;
+    height: 56px;
+    padding: 0px;
+    border-radius: 5px;
+    background-color: var(--green9);
+    color: var(--whitetext);
+    font-family: Noto Sans;
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 15px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .productInformationContainer {
+    width: 100%;
+    height: 153px;
+    background: #FFFFFF;
+    box-shadow: inset 0px 0px 3px 0.5px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 18px 22px;
+    margin-top: 44px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .productInformationContainer img.mainImage {
+    display: inline-block;
+    width: 112px;
+    height: 117px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .productInformationContainer .textContainer {
+    vertical-align: top;
+    display: inline-block;
+    width: 360px;
+    margin-left: 26px;
+    font-family: Noto Sans;
+    color: var(--green);
+    opacity: 0.7;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .productInformationContainer .textContainer .productName,
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .productInformationContainer .textContainer .price {
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .productInformationContainer .textContainer .optionsList {
+    ::before {
+        content: '\00B7';
+    }
+    font-size: 12px;
+    line-height: 25px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .productInformationContainer .textContainer .vector {
+    width: 353px;
+    border-top: 1px solid rgba(39, 57, 47, 0.7);
+    margin-top: 13px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .productInformationContainer .textContainer .price {
+    margin-top: 10px;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .purchaseMethodContainer {
+    margin-top: 42px;
+    display: flex;
+    gap: 16px 10px;
+    flex-wrap: wrap;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .purchaseMethodContainer .purchaseMethodElement {
+    width: 190px;
+    height: 90px;
+    background: #F7F7F6;
+    box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 17px 11px;
+    display: flex;
+    align-items: center;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .purchaseMethodContainer .purchaseMethodElement.selected {
+    box-shadow: inset 0px 3px 6px 3px rgba(0, 0, 0, 0.25);
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .purchaseMethodContainer .purchaseMethodElement .icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #EDEDEB;
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.paymentPage .getPaymentInformationBlock .getPaymentInformationContainer .purchaseMethodContainer .purchaseMethodElement .name {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 22px;
+    margin-left: 25px;
+
+    color: var(--green);
+}
+.paymentPage .paymentSummaryBlock {
+    position: absolute;
+    left: calc(50% - 1032px/2 + 610px);
+    top: 204px;
+    width: 420px;
+    min-height: 100px;
+    background: #F9F9F9;
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 27px 32px 43px 32px;
+    font-family: Noto Sans;
+}
+.paymentPage .paymentSummaryBlock.fixed {
+    position: fixed;
+    top: 50px;
+}
+.paymentPage .paymentSummaryBlock .title {
+    font-size: 18px;
+    line-height: 25px;
+    color: var(--green9);
+    font-weight: bold;
+}
+.paymentPage .paymentSummaryBlock .priceList {
+    width: 100%;
+    margin: 18px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 0px;
+}
+.paymentPage .paymentSummaryBlock .priceList .priceElement,
+.paymentPage .paymentSummaryBlock .totalPrice {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.paymentPage .paymentSummaryBlock .priceList .priceElement .name {
+    font-size: 15px;
+    line-height: 25px;
+    font-weight: bold;
+    color: rgba(122, 121, 120, 1);
+}
+.paymentPage .paymentSummaryBlock .priceList .priceElement .price {
+    font-size: 15px;
+    line-height: 25px;
+    font-weight: bold;
+    color: var(--green);
+}
+.paymentPage .paymentSummaryBlock .vector {
+    width: 100%;
+    border-top: 1px solid rgba(39, 57, 47, 0.3);
+}
+.paymentPage .paymentSummaryBlock .totalPrice {
+    margin: 18px 0px;
+}
+.paymentPage .paymentSummaryBlock .totalPrice .name,
+.paymentPage .paymentSummaryBlock .totalPrice .price {
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: bold;
+    color: var(--green9);
+}
+.paymentPage .paymentSummaryBlock .agreeContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 22px;
+}
+.paymentPage .paymentSummaryBlock .agreeContainer .agreeElement {
+    width: 100%;
+    display: flex;
+    font-size: 13px;
+    line-height: 18px;
+    color: var(--green9);
+    font-weight: bold;
+}
+.paymentPage .paymentSummaryBlock .agreeContainer .agreeElement .checkBox {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #F9F9F9;
+    box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
+    margin-right: 8px;
+}
+.paymentPage .paymentSummaryBlock .agreeContainer .agreeElement .checkBox .checked {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--green9);
+    top: 4px;
+    left: 4px;
+    margin-right: 8px;
+}
+.paymentPage .paymentSummaryBlock .agreeContainer .agreeElement.more {
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.paymentPage .paymentSummaryBlock .agreeContainer .agreeElement.more textarea.detail {
+    resize: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 120px;
+    box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    overflow-y: scroll;
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--green07);
+}
+.paymentPage .paymentSummaryBlock .agreeContainer .agreeElement.more button.moreButton {
+    padding: 0px;
+    background-color: transparent;
+    transform: rotate(-90deg);
+    svg {
+        width: 8px;
+        height: 14px;
+        path {
+            stroke: rgba(147, 147, 146, 1);
+            stroke-width: 4px;
+        }
+    }
+}
+.paymentPage .paymentSummaryBlock button.purchaseButton {
+    width: 100%;
+    height: 56px;
+    border-radius: 5px;
+    background: var(--green9);
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+    color: var(--whitetext);
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 27px;
+}
+.paymentPage .paymentCompleteBlock {
+    margin-top: 163px;
+    text-align: center;
+    padding-bottom: 317px;
+}
+.paymentPage .paymentCompleteBlock .imageContainer {
+    display: inline-flex;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: #EDEDEB;
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
+    align-items: center;
+    justify-content: center;
+}
+.paymentPage .paymentCompleteBlock .imageContainer .checkVector {
+    position: absolute;
+    top: 109px;
+    left: 124px;
+}
+.paymentPage .paymentCompleteBlock .textContainer {
+    margin-top: 23px;
+    font-family: Noto Sans;
+    font-size: 25px;
+    line-height: 30px;
+    color: var(--green9);
+    font-weight: bold;
+}
+
+.paymentPage .paymentCompleteBlock .tableContainer {
+    display: inline-block;
+    margin-top: 42px;
+    width: 678px;
+    text-align: justify;
+}
+.paymentPage .paymentCompleteBlock .tableContainer .title {
+    font-family: Noto Sans;
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.paymentPage .paymentCompleteBlock .tableContainer .subtitle {
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.paymentPage .paymentCompleteBlock .tableContainer .table {
+    width: 100%;
+    border-top: 2px solid var(--green9);
+    border-bottom: 2px solid var(--green9);
+    font-family: Noto Sans;
+    font-size: 12px;
+    line-height: 25px;
+}
+.paymentPage .paymentCompleteBlock .tableContainer .tableRow {
+    display: flex;
+    width: 100%;
+}
+.paymentPage .paymentCompleteBlock .tableContainer .tableRow .name {
+    width: 150px;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 40px;
+    padding-right: 20px;
+    font-weight: bold;
+}
+.paymentPage .paymentCompleteBlock .tableContainer .tableRow.two .name {
+    width: 150px;
+}
+.paymentPage .paymentCompleteBlock .tableContainer .tableRow .detail {
+    width: calc(100% - 150px);
+    box-sizing: border-box;
+    border: 1.5px solid rgba(39, 57, 47, 0.3);
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 0px;
+    padding-left: 30px;
+}
+.paymentPage .paymentCompleteBlock .tableContainer .tableRow.two .detail {
+    width: calc(50% - 150px);
+}
+.paymentPage .paymentCompleteBlock .tableContainer:first-child .name,
+.paymentPage .paymentCompleteBlock .tableContainer:first-child .detail{
+    border-top: none;
+}
+.paymentPage .paymentCompleteBlock .tableContainer .tableRow :first-child {
+    border-left: none;
+}
+.paymentPage .paymentCompleteBlock .buttonContainer {
+    width: 678px;
+    display: inline-flex;
+    margin-top: 53px;
+    justify-content: space-between;
+}
+.paymentPage .paymentCompleteBlock .buttonContainer button {
+    width: 332px;
+    height: 56px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+    font-family: Noto Sans;
+    font-size: 16px;
+    font-weight: bold;
+}
+.paymentPage .paymentCompleteBlock .buttonContainer button.goShoppingButton {
+    background-color: var(--green9);
+    color: var(--whitetext);
+}
+.paymentPage .paymentCompleteBlock .buttonContainer button.goOrderPageButton {
+    background-color: rgba(247, 247, 246, 1);
+    color: var(--green);
+}

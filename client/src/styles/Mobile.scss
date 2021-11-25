@@ -2808,6 +2808,7 @@ color: #7A7978;
     box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.08);
     border-radius: 5px;
     margin-top: 31px;
+    padding-bottom: 15px;
 }
 .Mobile .MobileMyPageEditPersonalData .personalDataContainer .categoryContainer {
     display: flex;
@@ -2947,4 +2948,88 @@ color: #7A7978;
     font-size: 12px;
     justify-self: center;
     margin-top: 53px;
+}
+
+.Mobile .MobileMementoBook {
+    width: 100%;
+}
+.Mobile .MobileMementoBook .titleBlock {
+    width: 100%;
+    height: 150px;
+    background-color: var(--green9);
+    padding: 5px 0px;
+    text-align: center;
+}
+.Mobile .MobileMementoBook .titleBlock .borderBox {
+    position: absolute;
+    width: 100%;
+    height: calc(150px - 5px*2);
+    border-top: 1px dashed rgba(250, 250, 250, 0.4);
+    border-bottom: 1px dashed rgba(250, 250, 250, 0.4);
+}
+.Mobile .MobileMementoBook .titleBlock .title {
+    margin-top: 32px;
+    font-family: var(--GB);
+    font-size: 18px;
+    line-height: 35px;
+    color: var(--whitetext);
+}
+.Mobile .MobileMementoBook .titleBlock .subtitle {
+    font-family: var(--GB);
+    font-size: 12px;
+    color: var(--whitetext);
+}
+.Mobile .MobileMementoBook .titleBlock .flowerImage {
+    margin-top: 15px;
+}
+.Mobile .MobileMementoBook .bookBlock {
+    width: calc(100% - 24px*2);
+    margin: auto;    
+}
+.Mobile .MobileMementoBook .bookBlock .titleContainer {
+    margin-top: 32px;
+    margin-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.Mobile .MobileMementoBook .bookBlock .titleContainer .title {
+    font-family: var(--GB);
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--green);
+    display: inline-block;
+}
+.Mobile .MobileMementoBook .bookBlock .titleContainer .expandButton {
+    padding: 0px;
+    width: 30px;
+    height: 30px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    svg {
+        top: 2px;
+    }
+}
+.Mobile .MobileMementoBook .bookBlock .vector {
+    width: 100vw;
+    left: calc(50% - 50vw);
+    border-top: 0.5px dashed var(--green04);
+}
+.Mobile .MobileMementoBook .bookBlock  .explanationText {
+    margin-top: 6px;
+    font-family: var(--GB);
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--green);
+    opacity: 0.5;
+}
+.Mobile .MobileMementoBook .bookBlock .bookContainer {
+    margin-top: 31px;
+    width: 100%;
+    min-height: 100px;
+    background: #FFFFFF;
+    mix-blend-mode: darken;
+    box-shadow: inset 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
 }

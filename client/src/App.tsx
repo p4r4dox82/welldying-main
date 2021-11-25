@@ -41,6 +41,11 @@ import MobileNote from './Mobile/MobileNote';
 import MobileContent from './Mobile/MobileContent';
 import MobileContentPage from './Mobile/MobileContentPage';
 import MobileMyPage from './Mobile/MobileMyPage';
+import MobileMementoBook from './Mobile/MobileMementoBook';
+import XlsxData from './Data/XlsxData';
+import SellingMain from './pages/SellingMain';
+import ProductPage from './pages/ProductPage';
+import PaymentPage from './pages/PaymentPage';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -62,6 +67,7 @@ function App() {
           <Route path='/contentpage/:id' component = {MobileContentPage} />
           <Route path='/mypage' component = {MobileMyPage} />
           <Route path='/survey' component = {Survey} />
+          <Route path='/book' component = {MobileMementoBook} />
           <Route path='/' component={MobileMain} />
         </Switch>
       </BrowserRouter>
@@ -102,6 +108,10 @@ function App() {
         <Route path='/note' component = {MementoNoteMain} />
         <Route path='/confirmbook/:id' component = {ConfirmMementoBook} />
         <Route path='/survey' component = {Survey} />
+        <Route path='/xlsx' component = {XlsxData} />
+        <Route path='/sellmain' component = {SellingMain} />
+        <Route path='/product/:id' component = {ProductPage} />
+        <Route path='/payment/:id' component = {PaymentPage} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>
