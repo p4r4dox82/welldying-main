@@ -410,3 +410,125 @@ export const expandVector = (
 </svg>
 
 );
+export const phoneVector = (
+    <svg width="31" height="43" viewBox="0 0 31 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_2431_1785)">
+<path d="M23.4596 2H7.61355C5.86324 2 4.44434 3.57262 4.44434 5.51255V33.6129C4.44434 35.5528 5.86324 37.1255 7.61355 37.1255H23.4596C25.2099 37.1255 26.6288 35.5528 26.6288 33.6129V5.51255C26.6288 3.57262 25.2099 2 23.4596 2Z" stroke="#27392F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="15.5362" cy="32.505" r="1.84871" fill="#27392F"/>
+<rect x="8.14111" y="5.69531" width="14.7897" height="22.1845" rx="1" fill="#27392F"/>
+</g>
+<defs>
+<filter id="filter0_d_2431_1785" x="0.944336" y="0.5" width="29.1846" height="42.125" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="1"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2431_1785"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2431_1785" result="shape"/>
+</filter>
+</defs>
+</svg>
+
+);
+
+export const cardVector = (
+    <svg width="44" height="31" viewBox="0 0 44 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_2510_1227)">
+<path d="M7.6 2H36.4C38.38 2 40 3.29987 40 4.88861V22.2202C40 23.809 38.38 25.1089 36.4 25.1089H7.6C5.62 25.1089 4 23.809 4 22.2202V4.88861C4 3.29987 5.62 2 7.6 2Z" stroke="#27392F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<rect x="4" y="7" width="36" height="5" fill="#23342A"/>
+<defs>
+<filter id="filter0_d_2510_1227" x="0.5" y="0.5" width="43" height="30.1094" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="1"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2510_1227"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2510_1227" result="shape"/>
+</filter>
+</defs>
+</svg>
+
+);
+export const cashVector = (
+    <svg width="44" height="31" viewBox="0 0 44 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_2510_1231)">
+<path d="M7.6 2H36.4C38.38 2 40 3.29987 40 4.88861V22.2202C40 23.809 38.38 25.1089 36.4 25.1089H7.6C5.62 25.1089 4 23.809 4 22.2202V4.88861C4 3.29987 5.62 2 7.6 2Z" stroke="#27392F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path d="M25.2 15.472L24.832 17.84H24.752L24.352 15.472L24.144 14.48H25.36L25.2 15.472ZM19.824 15.472L19.424 17.84H19.36L19.008 15.472L18.832 14.48H20.016L19.824 15.472ZM21.968 10.576H22.048L22.48 13.504H21.552L21.968 10.576ZM28.864 13.504H27.2L28.368 8.192H26.416L25.536 13.504H23.952L23.024 8.912H21.088L20.208 13.504H18.672L17.744 8.192H15.648L16.88 13.504H16.432L15.136 13.616V14.48H17.12L18.4 20H20.336L21.408 14.48H22.624L23.728 20H25.76L26.976 14.48H28.864V13.504Z" fill="#27392F"/>
+<defs>
+<filter id="filter0_d_2510_1231" x="0.5" y="0.5" width="43" height="30.1094" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="1"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2510_1231"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2510_1231" result="shape"/>
+</filter>
+</defs>
+</svg>
+
+);
+export const naverpayVector = (
+    <svg width="33" height="31" viewBox="0 0 33 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_2510_1230)">
+<path d="M6.5 2H26.5C27.875 2 29 3.29987 29 4.88861V22.2202C29 23.809 27.875 25.1089 26.5 25.1089H6.5C5.125 25.1089 4 23.809 4 22.2202V4.88861C4 3.29987 5.125 2 6.5 2Z" stroke="#27392F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path d="M21.824 19H18.304L13.696 10.632H13.632C13.6533 11.0907 13.6747 11.6027 13.696 12.168C13.728 12.7227 13.7547 13.24 13.776 13.72V19H11.344V7.576H14.848L19.44 15.848H19.488C19.4667 15.3893 19.4453 14.8987 19.424 14.376C19.4027 13.8427 19.3867 13.3413 19.376 12.872V7.576H21.824V19Z" fill="#27392F"/>
+<defs>
+<filter id="filter0_d_2510_1230" x="0.5" y="0.5" width="32" height="30.1094" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="1"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2510_1230"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2510_1230" result="shape"/>
+</filter>
+</defs>
+</svg>
+
+);
+export const paycoVector = (
+    <svg width="44" height="11" viewBox="0 0 44 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.173 0.717999C4.36033 0.717999 5.23567 0.977999 5.799 1.498C6.371 2.00933 6.657 2.72433 6.657 3.643C6.657 4.189 6.54433 4.70467 6.319 5.19C6.09367 5.66667 5.721 6.05667 5.201 6.36C4.681 6.65467 3.97467 6.802 3.082 6.802H2.302V10H0.0920001V0.717999H3.173ZM3.095 2.525H2.302V4.995H2.887C3.329 4.995 3.693 4.89533 3.979 4.696C4.27367 4.49667 4.421 4.16733 4.421 3.708C4.421 3.32667 4.31267 3.03633 4.096 2.837C3.87933 2.629 3.54567 2.525 3.095 2.525ZM13.964 10L13.392 8.011H10.181L9.60902 10H7.19102L10.35 0.679H13.184L16.382 10H13.964ZM12.352 4.306C12.3087 4.15 12.248 3.942 12.17 3.682C12.1007 3.41333 12.027 3.14033 11.949 2.863C11.8797 2.58567 11.8233 2.35167 11.78 2.161C11.7453 2.35167 11.689 2.59 11.611 2.876C11.5417 3.15333 11.4723 3.42633 11.403 3.695C11.3337 3.955 11.2773 4.15867 11.234 4.306L10.688 6.165H12.898L12.352 4.306ZM20.431 4.371L22.212 0.717999H24.604L21.536 6.386V10H19.326V6.451L16.258 0.717999H18.663L20.431 4.371ZM30.1169 2.421C29.4409 2.421 28.9166 2.68533 28.5439 3.214C28.1713 3.74267 27.9849 4.46633 27.9849 5.385C27.9849 6.32967 28.1626 7.05333 28.5179 7.556C28.8733 8.05 29.4279 8.297 30.1819 8.297C30.5719 8.297 30.9576 8.24933 31.3389 8.154C31.7203 8.05 32.1233 7.92 32.5479 7.764V9.636C32.1319 9.80933 31.7159 9.935 31.2999 10.013C30.8926 10.091 30.4463 10.13 29.9609 10.13C28.9729 10.13 28.1669 9.93067 27.5429 9.532C26.9189 9.13333 26.4553 8.57867 26.1519 7.868C25.8573 7.15733 25.7099 6.32533 25.7099 5.372C25.7099 4.436 25.8789 3.60833 26.2169 2.889C26.5549 2.16967 27.0533 1.60633 27.7119 1.199C28.3706 0.791666 29.1766 0.588 30.1299 0.588C30.5806 0.588 31.0443 0.644333 31.5209 0.757C32.0063 0.860999 32.4699 1.02133 32.9119 1.238L32.2229 3.006C31.8763 2.85 31.5296 2.71567 31.1829 2.603C30.8363 2.48167 30.4809 2.421 30.1169 2.421ZM43.3775 5.346C43.3775 6.308 43.2215 7.14867 42.9095 7.868C42.5975 8.57867 42.1122 9.13333 41.4535 9.532C40.7949 9.93067 39.9499 10.13 38.9185 10.13C37.8959 10.13 37.0552 9.93067 36.3965 9.532C35.7379 9.13333 35.2482 8.57433 34.9275 7.855C34.6155 7.13567 34.4595 6.295 34.4595 5.333C34.4595 4.371 34.6155 3.53467 34.9275 2.824C35.2482 2.11333 35.7379 1.563 36.3965 1.173C37.0552 0.774333 37.9002 0.575 38.9315 0.575C39.9629 0.575 40.8035 0.774333 41.4535 1.173C42.1122 1.563 42.5975 2.11767 42.9095 2.837C43.2215 3.54767 43.3775 4.384 43.3775 5.346ZM36.7865 5.346C36.7865 6.256 36.9512 6.971 37.2805 7.491C37.6185 8.011 38.1645 8.271 38.9185 8.271C39.6899 8.271 40.2359 8.011 40.5565 7.491C40.8859 6.971 41.0505 6.256 41.0505 5.346C41.0505 4.436 40.8859 3.721 40.5565 3.201C40.2359 2.67233 39.6942 2.408 38.9315 2.408C38.1689 2.408 37.6185 2.67233 37.2805 3.201C36.9512 3.721 36.7865 4.436 36.7865 5.346Z" fill="#27392F"/>
+</svg>
+
+);
+
+export const checkVector = (
+    <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="35" cy="35" r="33.5" fill="#EDEDEB" stroke="#27392F" stroke-width="3"/>
+    <path d="M21 30C24.1667 33.3333 30.8 42.5 32 52.5L49.5 19" stroke="#27392F" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+);
+
+export const bigCardVector = (
+    <svg width="146" height="97" viewBox="0 0 146 97" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_2520_1270)">
+<path d="M18.0552 2.06641H128.29C135.868 2.06641 142.069 7.04178 142.069 13.1228V79.4611C142.069 85.5422 135.868 90.5175 128.29 90.5175H18.0552C10.4766 90.5175 4.27588 85.5422 4.27588 79.4611V13.1228C4.27588 7.04178 10.4766 2.06641 18.0552 2.06641Z" stroke="#27392F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<rect x="4.27588" y="21.207" width="137.793" height="19.1379" fill="#23342A"/>
+<defs>
+<filter id="filter0_d_2520_1270" x="0.775879" y="0.566406" width="144.793" height="95.4492" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="1"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2520_1270"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2520_1270" result="shape"/>
+</filter>
+</defs>
+</svg>
+
+)

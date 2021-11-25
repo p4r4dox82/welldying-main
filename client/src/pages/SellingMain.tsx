@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Notification from '../components/Notification';
 import { imageUrl } from '../etc/config';
 import { leftVector, like_vector, MementoBookVector, MementoContentVector, MementoMainVector, MementoMakeBookVector, MementoNoteVector, rightVector } from '../img/Vectors';
+import { productInformationArray } from './ProductPage';
 
 function SellingMain() {
     let [mainBlockNumber, setMainBlockNumber] = React.useState<number>(0);
@@ -61,17 +62,21 @@ function SellingMain() {
                         </div>
                     </div>
                     <div className="productList">
-                        <div className="productElement">
-                            <Link to = {"/product/1"}><img src={imageUrl('ContentPage/defaultThumbnail.png')} alt="" className="thumbnail"/></Link>
-                            <div className="cover">
-                                <div className="title">메멘토 포토카드</div>
-                                <div className="detail">소중한 이에게 포토카드를 보내보세요. 상세설명 상세설명.</div>
-                                <div className="price">10,000<span>원</span></div>
-                                <div className="tag">#기록</div>
-                                <div className="likeContainer">{like_vector}   999+</div>
-                            </div>
-                            <div className="likeButton">{like_vector}</div>
-                        </div>
+                        {productInformationArray.map((productInformationElement, key) => {
+                            return (
+                                <div className="productElement">
+                                    <Link to = {`/product/${key + 1}`}><img src={productInformationElement.imageUri + "/productThumbnail.png"} alt="" className="thumbnail"/></Link>
+                                    <div className="cover">
+                                        <div className="title">{productInformationElement.title}</div>
+                                        <div className="detail">{productInformationElement.subtitle}</div>
+                                        <div className="price">{productInformationElement.price}<span>원</span></div>
+                                        <div className="tag">#기록</div>
+                                        <div className="likeContainer">{like_vector}   999+</div>
+                                    </div>
+                                    <div className="likeButton">{like_vector}</div>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
                 {false && <div className="commentBlock">

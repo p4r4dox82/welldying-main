@@ -15,9 +15,37 @@ interface Props {
     match: match<MatchParams>;
 };
 let productInformationNavigationMenuArray = ["상품정보", "리뷰", "문의", "배송/환불"];
+export interface productInformation {
+    subtitle: string;
+    title: string;
+    price: number;
+    imageUri: string;
+}
+export let productInformationArray : productInformation[] = [
+    {
+        subtitle: "함께 그리는 삶의 마침표",
+        title: "웰다잉 대화 카드 [함께, 기억]",
+        price: 12900,
+        imageUri: imageUrl("SellingPage/Product1"),
+    },
+    {
+        subtitle: "당신의 아름다운 순간을 한 권의 책에 담다",
+        title: "청춘유언 프로그램",
+        price: 20000,
+        imageUri: imageUrl("SellingPage/Product2"),
+    },
+    {
+        subtitle: "삶의 끝에서 사랑하는 이들에게 전하는 당신의 마지막 메세지",
+        title: "메멘토 인증카드",
+        price: 10900,
+        imageUri: imageUrl("SellingPage/Product3"),
+    },
+    
+]
 
 function ProductPage({ match }: Props) {
-    let id = Number.parseInt(match.params.id || '0');
+    let id = Number.parseInt(match.params.id || '1');
+    let productInformation = React.useMemo(() => productInformationArray[id - 1], [id, productInformationArray]);
     let [product, setProduct] = React.useState<any>();
     let [productInformationNavigationMenu, setProductInformationNavigationMenu] = React.useState<number>(0);
     let setProductBySelect = (e: any) => {
@@ -25,6 +53,8 @@ function ProductPage({ match }: Props) {
     }
     let defaultProduct = "상품을 선택해주세요.";
     let productName = "웰다잉 대화카드 [함께, 기억]";
+    React.useEffect(() => window.scrollTo(0, 0), []);
+    React.useEffect(() => setProduct(productInformation.title), [productInformation]);
     return (
         <>
             <div className="productPage">
@@ -32,26 +62,26 @@ function ProductPage({ match }: Props) {
                 <Link to = '/sellmain'><button className="goSellMain">{"메멘토 굿즈 >"}</button></Link>
                 <div className="productMainBlock">
                     <div className="imageContainer">
-                        <img src={imageUrl('ContentPage/defaultThumbnail.png')} alt="" className="mainImage" />
+                        <img src={productInformation.imageUri + "/productThumbnail.png"} alt="" className="mainImage" />
                         <div className="imageList">
-                            <img src={imageUrl('ContentPage/defaultThumbnail.png')} alt="" className="imageListElement" />
+                            <img src={productInformation.imageUri + "/productThumbnail.png"} alt="" className="imageListElement" />
                         </div>
                     </div>
                     <div className="informationContainer">
-                        <div className="subtitle">함께 그리는 삶의 마침표</div>
-                        <div className="title">{"웰다잉 대화카드 [함께, 기억]"}</div>
-                        <div className="price">12,900  <span>원</span></div>
+                        <div className="subtitle">{productInformation.subtitle}</div>
+                        <div className="title">{productInformation.title}</div>
+                        <div className="price">{productInformation.price}  <span>원</span></div>
                         <div className="deliver">
                             <div className="name">배송</div>
                             <div className="detail">택배 배송/무료 배송</div>
                         </div>
                         <select name="" id="" className="product" onChange = {setProductBySelect}>
+                            <option value={productInformation.title} key = {productInformation.title}>{productInformation.title}</option>
                             <option value={defaultProduct} key = {defaultProduct}>{defaultProduct}</option>
-                            <option value={productName} key = {productName}>{productName}</option>
                         </select>
                         <div className="totalPrice">
                             <div className="name">주문금액</div>
-                            <div className="price">12,900원</div>
+                            <div className="price">{productInformation.price}원</div>
                         </div>
                         <div className="buttonContainer">
                             <button className="addCart">장바구니 담기</button>
@@ -111,7 +141,7 @@ function ProductPage({ match }: Props) {
                         </div>
                     </div>
                     <div className="imageContainer">
-                        <img src={imageUrl('SellingPage/Product1/productInformationImage.png')} alt="" className="productInformationImage" />
+                        <img src={productInformation.imageUri + "/productInformationImage.png"} alt="" className="productInformationImage" />
                     </div>
                     <div className="divider" style = {{marginTop: '157px'}}>
                         <div className="crossLine"></div>
