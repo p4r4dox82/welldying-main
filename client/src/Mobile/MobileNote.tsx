@@ -130,9 +130,9 @@ function MobileNote() {
                                 })}
                             </div>
                             {questionNum < unwrittenQuestions?.length && <div className="more" onClick = {() => setQuestionNum(questionNum + 3)}>
-                            <div>더보기</div>
-                            <div className = "vector">{LeftArrowVector}</div>
-                        </div>}
+                                <div>더보기</div>
+                                <div className = "vector">{LeftArrowVector}</div>
+                            </div>}
                         </div>
                     </div>
                 </div>

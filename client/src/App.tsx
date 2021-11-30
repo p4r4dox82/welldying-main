@@ -46,6 +46,7 @@ import XlsxData from './Data/XlsxData';
 import SellingMain from './pages/SellingMain';
 import ProductPage from './pages/ProductPage';
 import PaymentPage from './pages/PaymentPage';
+import MyBook from './pages/MyBook';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -112,6 +113,7 @@ function App() {
         <Route path='/sellmain' component = {SellingMain} />
         <Route path='/product/:id' component = {ProductPage} />
         <Route path='/payment/:id' component = {PaymentPage} />
+        <Route path='/mybook' component = {MyBook} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>
