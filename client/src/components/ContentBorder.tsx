@@ -1,6 +1,6 @@
 import React from 'react';
 import { imageUrl } from '../etc/config';
-import { getContent, contentComment, Content, content_userdata, Userdata } from '../etc/api/content';
+import { contentComment, Content, content_userdata, Userdata } from '../etc/api/content';
 import { getComments, writeComment } from '../etc/api/comment';
 import usePromise from '../etc/usePromise';
 import { useSelector } from 'react-redux';
@@ -24,7 +24,7 @@ declare global {
     }
 }
 
-const { Kakao, ClipboardJS } = window;
+const { Kakao } = window;
 
 function ContentBorder (props : Props) {
   let user = useSelector((state: RootReducer) => state.user);
@@ -34,11 +34,11 @@ function ContentBorder (props : Props) {
   let [, comments] = usePromise(getComments);
   let [comment_write, setComment_write] = React.useState<string>('');
   let [date, setDate] = React.useState<number>();
-  let [error, setError] = React.useState<string>('');
+  let [, setError] = React.useState<string>('');
   let [maxCommentId, setMaxCommentId] = React.useState<number>(0);
   React.useEffect(() => setMaxCommentId(comments ? Math.max(...comments.map(comment => comment.id)) : 0), [comments]);
   let [content_comments, setContent_comments] = React.useState<number[]>([]);
-  let [title, setTitle] = React.useState<string>('');
+  let [, setTitle] = React.useState<string>('');
   let [update, setUpdate] = React.useState<number>(0);
   let [show_comment, setShow_comment] = React.useState<boolean>(false);
   let [contentUserdata, setContentUserdata] = React.useState<Userdata>({ likes: [], bookmark: [], read: [] });
@@ -47,7 +47,7 @@ function ContentBorder (props : Props) {
   let uri = `https://mymemento.kr/contentpage/${id}`;
 
   let comments_content = React.useMemo(() => comments?.filter((comment) => content_comments?.includes(comment.id))
-  , [comments, id]);
+  , [comments, content_comments]);
 
   let [max_show_comments_number, setMax_show_comments_number] = React.useState<number>(0);
   React.useEffect (() => setMax_show_comments_number(comments_content?.length), [comments_content])
@@ -62,11 +62,11 @@ function ContentBorder (props : Props) {
       setContentUserdata(content.userdata);
       if(content.userdata.likes.find((username_) => username_ === username)) 
         setContentliked(true);
-  }, [content, user]);
+  }, [content, user, username]);
 
   React.useEffect(() => {
     writeCommenttoContent(id, content_comments);
-  }, [update]);
+  }, [id, content_comments]);
 
   React.useEffect(() => {
     if(!Kakao.isInitialized())
@@ -107,8 +107,6 @@ function ContentBorder (props : Props) {
     window.open(`https://www.facebook.com/sharer/sharer.php?u=https://mymemento.kr/contentpage/${id}`);
   }
 
-  let clipboard = new ClipboardJS('.clipboard_btn');
-
   let comment_container = React.useMemo(() => show_comments?.map((comment) => (
     <div className = 'comment_box'>
         <div className = 'user_icon' style = {{background: 'rgba(0, 0, 0, 0)', boxShadow: '0px 0px 0px'}}>
@@ -117,7 +115,7 @@ function ContentBorder (props : Props) {
         {comment.writer + ' 님'}
         </div>
         <textarea className = 'comment_area written NS px13 line25' placeholder = '메멘토에 댓글을 남겨보세요.' value = {comment.detail} disabled/>
-        <img className = 'like_button' src = {imageUrl('ContentPage/like_button.png')} />
+        <img alt = "" className = 'like_button' src = {imageUrl('ContentPage/like_button.png')} />
         <div className = 'likes NS px13 bold line25'>
         {comment.userdata.likes.length}
         </div>
@@ -126,7 +124,7 @@ function ContentBorder (props : Props) {
             <div className = 'declare_button  NS px12 bold op9'>{'신고하기'}</div>
         </div>
     </div>
-  )), [update, show_comments]);
+  )), [show_comments]);
 
   return (
     <>
@@ -135,7 +133,7 @@ function ContentBorder (props : Props) {
               <div style = {{width: '100%', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />
               {false && <>
                 <div style = {{width: '443px', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />
-                <img src = {imageUrl('ContentPage/comment_border_image.png')} style = {{opacity: 0}}/>
+                <img alt = "" src = {imageUrl('ContentPage/comment_border_image.png')} style = {{opacity: 0}}/>
                 <div style = {{width: '443px', height: '1px', background: 'rgba(39, 57, 47, 0.5)'}} />
               </>}
           </div>
@@ -154,19 +152,19 @@ function ContentBorder (props : Props) {
                   {contentUserdata.likes.length}
               </button>
               <button className = 'share_button white NS px12 bold op9' onClick = {() => setShare_container(!share_container)}>
-                  <img src = {imageUrl('ContentPage/share_image.png')} />
+                  <img alt = "" src = {imageUrl('ContentPage/share_image.png')} />
                   공유하기
               </button>
               {share_container && <div className = 'share_container' style = {{zIndex: 10}}>
-                  <img id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} style = {{cursor: 'pointer'}} />
-                  <img src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} style = {{cursor: 'pointer'}} />
+                  <img alt = "" id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} style = {{cursor: 'pointer'}} />
+                  <img alt = "" src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} style = {{cursor: 'pointer'}} />
                   <div className="shareLink">
                       <input type="text NS px11" value = {`mymemento.kr/contentpage/${id}`} disabled/>
                       <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} onClick = {() => alert('링크가 복사되었습니다.')}>링크 복사</button>
                   </div>
               </div>}
               <button className = 'comment_button white NS px12 bold op9' onClick = {() => {setShow_comment(!show_comment); setShow_comments_number(Math.min(4, max_show_comments_number));}}>
-                  <img src = {imageUrl('ContentPage/comment_image.png')} />
+                  <img alt = "" src = {imageUrl('ContentPage/comment_image.png')} />
                   댓글보기
               </button>
           </div>
@@ -191,7 +189,7 @@ function ContentBorder (props : Props) {
               </div>}
               {show_comments_number !== max_show_comments_number && <div className = 'more_border' onClick = {() => {setShow_comments_number(Math.min(show_comments_number + 4, max_show_comments_number))}}>
                   <div className = 'GB px18 bold op5'>더보기</div>
-                  <img className = 'more_button' src = {imageUrl('ContentPage/more_button.png')} />
+                  <img alt = "" className = 'more_button' src = {imageUrl('ContentPage/more_button.png')} />
               </div>}
           </div>}
       </div>

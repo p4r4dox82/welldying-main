@@ -12,6 +12,7 @@ import { newsSchema } from "../models/news";
 import { qnaSchema } from "../models/qna";
 import { commentSchema } from "../models/comment";
 import { categorySchema } from '../models/category';
+import { orderSchema } from "../models/order";
 
 
 
@@ -33,6 +34,7 @@ const f = async (app: Application) => {
         Qna: model('qna', qnaSchema, 'qnas'),
         Comment: model('comment', commentSchema, 'comments'),
         Category: model('category', categorySchema, 'categorys'),
+        Order: model('order', orderSchema, 'orders'),
     }
 }
 

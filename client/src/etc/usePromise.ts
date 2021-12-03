@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function usePromise<Type>(promiseCreator: () => Promise<Type>, deps: React.DependencyList = [], ifError: 'abort' | 'ignore' = 'abort', cleanup : () => void = () => {} ) {
   const [loading, setLoading] = useState<boolean>(true);
@@ -9,13 +9,13 @@ export default function usePromise<Type>(promiseCreator: () => Promise<Type>, de
     try {
       const result = await promiseCreator();
       setQuestion(result);
-    } catch (error) {
+    } catch (error: any) {
       setError(error);
       console.log('While getting promise: ', promiseCreator);
       console.log('We got an error: ', error);
     }
     setLoading(false);
-  };
+  }
 
   useEffect(() => {
     setLoading(true);

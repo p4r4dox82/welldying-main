@@ -2,13 +2,13 @@ import React from 'react';
 import { match } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import DaumPostcode from 'react-daum-postcode';
 import PopupPostCode from '../components/PopupPostCode';
-import { imageUrl } from '../etc/config';
 import { bigCardVector, cardVector, checkVector, leftVector, naverpayVector, paycoVector, phoneVector } from '../img/Vectors';
 import useScroll from '../etc/useScroll';
 import { Link } from 'react-router-dom';
 import { productInformationArray } from './ProductPage';
+import { Helmet } from 'react-helmet';
+import { rspSuccess } from '../etc/api/payment';
 
 interface MatchParams {
     id?: string;
@@ -385,11 +385,22 @@ const agreeText2 = `### **구매 이용약관**
 
 [부칙]제1조(시행일) 이 약관은 2021년 7월 1일부터 시행 합니다.`;
 
+declare global {
+    interface Window {
+      IMP: any;
+    }
+}
+
+const { IMP }  = window;
+IMP.init("imp17113033");
+
+
+
 function PaymentPage({ match }: Props) {
     let id = Number.parseInt(match.params.id || '1');
-    let productInformation = React.useMemo(() => productInformationArray[id - 1], [id, productInformationArray]);
+    let productInformation = React.useMemo(() => productInformationArray[id - 1], [id]);
     let scroll = useScroll();
-    let [paymentSummaryFixed, setPaymentSummaryFixed] = React.useState<boolean>(false);
+    let [paymentSummaryPositionFixed, setPaymentSumaryPositionFixed] = React.useState<boolean>(false);
     let [searchPostCode, setSearchPostCode] = React.useState<boolean>(false);
     let [zipCode, setZipCode] = React.useState<string>('');
     let [fullAddress, setFullAddress] = React.useState<string>('');
@@ -402,19 +413,52 @@ function PaymentPage({ match }: Props) {
     let [agree, setAgree] = React.useState<boolean>(false);
     let [checkValidate, setCheckValidate] = React.useState<boolean>(false);
     React.useEffect(() => {
-        setPaymentSummaryFixed(scroll >= 154);
+        setPaymentSumaryPositionFixed(scroll >= 154);
     }, [scroll]);
     React.useEffect(() => window.scrollTo(0, 0), []);
     React.useEffect(() => {
-        if(zipCode != "" && fullAddress != "" && agree) {
+        if(zipCode !== "" && fullAddress !== "" && agree) {
             setCheckValidate(true);
         } else {
             setCheckValidate(false);
         }
     }, [zipCode, fullAddress, agree]);
+
+    const requestPay = () => {
+        IMP.request_pay({
+            pg: "html5-inicis",
+            pay_method: "card",
+            merchant_uid: "ORD20180131-" + new Date().getTime(),
+            name: "메멘토 대화카드",
+            amount: 100,
+            buyer_name: "신민재",
+            buyer_tel: "010-4024-3523",
+        }, async (rsp : any) => {
+            console.log("rsp");
+            if(rsp.success) {
+                let data = await rspSuccess(rsp);
+                switch(data.status) {
+                    case "vbankIssued":
+                    
+                        break;
+                    case "success":
+                        setPaymentComplete(true);
+                        break;
+                }
+    
+            } else {
+                alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
+            }
+        })
+    }
+
     return (
         <>
             <div className="paymentPage">
+                <Helmet>
+                    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+                    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+                </Helmet>
                 <Header additionalClass = ""></Header>
                 {!paymentComplete && <>
                     <div className="getPaymentInformationBlock">
@@ -500,7 +544,7 @@ function PaymentPage({ match }: Props) {
                             </div>
                         </div>
                     </div>
-                    <div className={"paymentSummaryBlock" + (paymentSummaryFixed ? ' fixed' : '')}>
+                    <div className={"paymentSummaryBlock" + (paymentSummaryPositionFixed ? ' fixed' : '')}>
                         <div className="title">결재금액</div>
                         <div className="priceList">
                             <div className="priceElement">
@@ -544,7 +588,7 @@ function PaymentPage({ match }: Props) {
                                 <div className="name">본인은 만 14세 이상이며, 주문 내용을 확인하였습니다.</div>
                             </div>
                         </div>
-                        <button className="purchaseButton" onClick = {checkValidate ? () => setPaymentComplete(true) : () => alert("입력하신 정보가 잘못되었습니다.")}>{"12,900"}원 결제하기</button>
+                        <button className="purchaseButton" onClick = {checkValidate ? requestPay : () => alert("입력하신 정보가 잘못되었습니다.")}>{"12,900"}원 결제하기</button>
                     </div>
                 </>}
                 {paymentComplete && <div className = "paymentCompleteBlock">

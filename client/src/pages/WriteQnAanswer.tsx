@@ -1,14 +1,11 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
 import { useSelector } from 'react-redux';
-import { Link, match, Redirect } from 'react-router-dom';
+import { match, Redirect } from 'react-router-dom';
 import { imageUrl } from '../etc/config';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SubmenuContainer from '../components/SubmenuContainer';
-import QuillToolbar from '../components/QuillToolbar';
-import { getContent, writeContent } from '../etc/api/content';
-import { getSections } from '../etc/api/section';
+import { getContent } from '../etc/api/content';
 import { writeQna, getQna } from '../etc/api/qna';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
@@ -29,7 +26,6 @@ const checkline = (data: string) => {
   let actual_row = row;
   let data_fixed = '';
   let data_len = 0;
-  let real_row;
   let current_row = 0;
   if(str_len >= 3000) {
     data_fixed = str.slice(0, -1);
@@ -46,28 +42,16 @@ const checkline = (data: string) => {
 
 function WriteQnAanswer({ match }: Props) {
     let id = Number.parseInt(match.params.id);
-    let [qnaLoading, qna] = usePromise(() => getQna(id));
+    let [, qna] = usePromise(() => getQna(id));
     let user = useSelector((state: RootReducer) => state.user);
-    let [contentLoading, content] = usePromise(() => getContent(id));
-    let [allSectionsLoading, allSections] = usePromise(() => getSections());
-    let [error, setError] = React.useState<string>();
+    let [contentLoading, ] = usePromise(() => getContent(id));
+    let [, setError] = React.useState<string>();
 
     let [editDone, setEditDone] = React.useState<boolean>(false);
 
     let [search_word, setSearch_word] = React.useState<string>('');
-
-    let classification_answer = ['메멘토 서비스 질문', '유언전달에 관한 질문', '기타 질문', '메멘토에 제안', '기타 의견'];
-    let open_answer = ['공개', '비공개'];
-    let sns_notice_answer = ['수신 원함', '수신 원치 않음'];
-    let writer = user.user!.name;
-    let [title, setTitle] = React.useState<string>('');
-    let [detail, setDetail] = React.useState<string>('');
     let [answerdate, setAnswerdate] = React.useState<number>(0);
-    let [open, setOpen] = React.useState<string>('공개');
-    let [state, setState] = React.useState<string>('');
-    let [password, setPassword] = React.useState<string>('');
-    let [classification, setClassification] = React.useState<string>('메멘토 서비스 질문');
-    let [sns_notice, setSns_notice] = React.useState<string>('수신 원함');
+    let [, setState] = React.useState<string>('');
     let [answer, setAnswer] = React.useState<string>('');
     let [faq, setFaq] = React.useState<boolean>(qna?.faq as boolean);
     let [characternumbers, setCharacternumbers] = React.useState<number>(0);
@@ -83,7 +67,7 @@ function WriteQnAanswer({ match }: Props) {
                 <div className = 'submenu_container'>
                     <SubmenuContainer additionalClass = 'qna'/>
                     {false && <div className = 'searchContainer'>
-                        <img src = {imageUrl('search_image.png')} />
+                        <img src = {imageUrl('search_image.png')} alt = ""/>
                         <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)메멘토 이벤트'/>
                     </div>}
                 </div>

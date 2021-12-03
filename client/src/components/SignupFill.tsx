@@ -3,7 +3,6 @@ import { register, checkUsernameDuplicate, verifyPhone, verifyPhoneCheck, checkC
 import { SignupInfo1, SignupInfo2 } from '../pages/Signup';
 import { isMobile } from 'react-device-detect';
 import usePromise from '../etc/usePromise';
-import { UserInfo, userInfo } from 'os';
 
 interface EntryType {
     name: string;
@@ -31,7 +30,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
     let [username, setUsername] = React.useState('');
     let [usernameMessage, setUsernameMessage] = React.useState('');
     let [usernameValidated, setUsernameValidated] = React.useState(false);
-    let validateUsername = async () => {
+    let validateUsername = React.useCallback(async () => {
         const regex1 = /^[ -~]{5,100}$/;
 
         if (!regex1.test(username)) {
@@ -49,11 +48,11 @@ function SignupFill({ givenInfo, proceed } : Props) {
         setUsernameValidated(true);
         setUsernameMessage('');
         return true;
-    }
+    }, [username])
 
     let [password, setPassword] = React.useState('');
     let [passwordMessage, setPasswordMessage] = React.useState('');
-    let validatePassword = () => {
+    let validatePassword = React.useCallback(() => {
         const regex1 = /^[ -~]{8,200}$/;
         const regex2 = /[a-zA-Z]/;
         const regex3 = /[0-9]/;
@@ -64,11 +63,11 @@ function SignupFill({ givenInfo, proceed } : Props) {
         }
         setPasswordMessage('');
         return true;
-    }
+    }, [password])
 
     let [passwordConfirm, setPasswordConfirm] = React.useState('');
     let [passwordConfirmMessage, setPasswordConfirmMessage] = React.useState('');
-    let validatePasswordConfirm = () => {
+    let validatePasswordConfirm = React.useCallback(() => {
         let result = password === passwordConfirm;
 
         if (!result) {
@@ -77,11 +76,11 @@ function SignupFill({ givenInfo, proceed } : Props) {
         }
         setPasswordConfirmMessage('');
         return true;
-    }
+    }, [password, passwordConfirm])
 
     let [name, setName] = React.useState('');
     let [nameMessage, setNameMessage] = React.useState('');
-    let validateName = () => {
+    let validateName = React.useCallback(() => {
         if (name.length < 1) {
             setNameMessage('성명을 입력해주세요.');
             return false;
@@ -92,13 +91,13 @@ function SignupFill({ givenInfo, proceed } : Props) {
         }
         setNameMessage('');
         return true;
-    }
+    }, [name])
 
     let [birthYear, setBirthYear] = React.useState(2000);
     let [birthMonth, setBirthMonth] = React.useState(1);
     let [birthDate, setBirthDate] = React.useState(1);
     let [birthMessage, setBirthMessage] = React.useState('');
-    let validateBirth = () => {
+    let validateBirth = React.useCallback(() => {
         if (birthYear === 0 || birthMonth === 0 || birthDate === 0) {
             setBirthMessage('생년월일을 적어주세요.');
             return false;
@@ -109,7 +108,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
         }
         setBirthMessage('');
         return true;
-    }
+    }, [birthDate, birthMonth, birthYear])
 
     let [sex, setSex] = React.useState<'female' | 'male'>('male');
     let [sexMessage, ] = React.useState('');
@@ -119,20 +118,20 @@ function SignupFill({ givenInfo, proceed } : Props) {
 
     let [email, setEmail] = React.useState('');
     let [emailMessage, setEmailMessage] = React.useState('');
-    let validateEmail = () => {
+    let validateEmail = React.useCallback(() => {
         if (!email) {
             setEmailMessage('이메일을 입력해주세요');
             return false;
         }
 
-        const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!regex.test(email)) {
             setEmailMessage('이메일의 형식이 올바르지 않습니다.');
             return false;
         }
         setEmailMessage('');
         return true;
-    }
+    }, [email])
 
     let [cellPhoneFront, ] = React.useState('010');
     let [cellPhoneNumber, setCellPhoneNumber] = React.useState('');
@@ -140,17 +139,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
     let [cellPhoneRear, setCellPhoneRear] = React.useState('');
     let [cellPhoneMessage, setCellPhoneMessage] = React.useState('');
     let [phoneVerifyStarted, setPhoneVerifyStarted] = React.useState(false);
-    let startPhoneVerify = async () => {
-        if (phoneVerifyStarted) return false;
-        if (!await checkCellPhone()) return false;
-        let result = await verifyPhone(cellPhoneFront, cellPhoneMiddle, cellPhoneRear);
-        if (result) {
-            setPhoneVerifyStarted(true);
-            setPhoneCode(undefined);
-        }
-        return result;
-    }
-    let checkCellPhone = async () => {
+    let checkCellPhone = React.useCallback(async () => {
         if (cellPhoneMiddle.length < 4 || cellPhoneRear.length < 4) {
             setCellPhoneMessage('올바른 전화번호를 적어주세요.');
             return false;
@@ -161,9 +150,20 @@ function SignupFill({ givenInfo, proceed } : Props) {
         }
         setCellPhoneMessage('');
         return true;
-    }
-
-    let validateCellPhone = async () => {
+    }, [cellPhoneFront, cellPhoneMiddle, cellPhoneRear]);
+    let startPhoneVerify = React.useCallback(async () => {
+        if (phoneVerifyStarted) return false;
+        if (!await checkCellPhone()) return false;
+        let result = await verifyPhone(cellPhoneFront, cellPhoneMiddle, cellPhoneRear);
+        if (result) {
+            setPhoneVerifyStarted(true);
+            setPhoneCode(undefined);
+        }
+        return result;
+    }, [cellPhoneFront, cellPhoneMiddle, cellPhoneRear, checkCellPhone, phoneVerifyStarted])
+    
+    let [phoneVerified, setPhoneVerified] = React.useState(false);
+    let validateCellPhone = React.useCallback(async () => {
         if (!await checkCellPhone()) return false;
         if (!phoneVerified) {
             setCellPhoneMessage('휴대전화를 인증해주세요.');
@@ -171,13 +171,12 @@ function SignupFill({ givenInfo, proceed } : Props) {
         }
         setCellPhoneMessage('');
         return true;
-    }
+    }, [checkCellPhone, phoneVerified]);
 
     let [phoneCodeDigest, setPhoneCodeDigest] = React.useState('');
     let [phoneCode, setPhoneCode] = React.useState<number>();
     let [phoneCodeMessage, setPhoneCodeMessage] = React.useState('');
-    let [phoneVerified, setPhoneVerified] = React.useState(false);
-    let endPhoneVerify = async () => {
+    let endPhoneVerify = React.useCallback(async () => {
         if (!phoneCode || !phoneVerifyStarted) return false;
 
         let result = await verifyPhoneCheck(cellPhoneFront, cellPhoneMiddle, cellPhoneRear, phoneCode);
@@ -191,16 +190,16 @@ function SignupFill({ givenInfo, proceed } : Props) {
             setPhoneCodeMessage('인증에 실패했습니다.');
             return false;
         }
-    }
-    let validatePhoneCode = () => {
+    }, [cellPhoneFront, cellPhoneMiddle, cellPhoneRear,phoneCode, phoneVerifyStarted])
+    let validatePhoneCode = React.useCallback(() => {
         if (!phoneVerified) {
             setPhoneCodeMessage('인증번호를 입력하고 인증을 눌러주세요.');
             return false;
         }
         return true;
-    }
+    }, [phoneVerified])
 
-    let [showContent, setShowContent] = React.useState<ShowContentType>({
+    let [showContent,] = React.useState<ShowContentType>({
         '아버지': false,
         '어머니': false,
         '조부모님': false,
@@ -342,7 +341,7 @@ function SignupFill({ givenInfo, proceed } : Props) {
         });
 
         return result;
-    }, [phoneVerifyStarted, birthDate, birthMessage, birthMonth, birthYear, cellPhoneFront, cellPhoneMessage, cellPhoneMiddle, cellPhoneRear, email, emailMessage, endPhoneVerify, name, nameMessage, password, passwordConfirm, passwordConfirmMessage, passwordMessage, phoneCode, phoneCodeMessage, phoneVerified, sex, sexMessage, startPhoneVerify, username, usernameMessage, usernameValidated, validateBirth, validateCellPhone, validateEmail, validateName, validatePassword, validatePasswordConfirm, validateUsername]);
+    }, [phoneVerifyStarted, birthDate, birthMessage, birthMonth, birthYear, cellPhoneMessage, email, emailMessage, endPhoneVerify, name, nameMessage, password, passwordConfirm, passwordConfirmMessage, passwordMessage, phoneCode, phoneCodeMessage, phoneVerified, sex, sexMessage, startPhoneVerify, username, usernameMessage, usernameValidated, validateBirth, validateCellPhone, validateEmail, validateName, validatePassword, validatePasswordConfirm, validateUsername, cellPhoneNumber, validatePhoneCode]);
 
     let validateAll = async () => {
         let result = true;

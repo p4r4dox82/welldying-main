@@ -1,5 +1,5 @@
 import React from 'react';
-import { expandVector, FlowerVector, PlusVector } from '../img/Vectors';
+import { expandVector, FlowerVector } from '../img/Vectors';
 import MobileHeader from '../MobileComponents/MobileHeader';
 import MobileNavigation from '../MobileComponents/MobileNavigation';
 

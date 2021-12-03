@@ -8,13 +8,9 @@ import { getQuestions } from '../etc/api/question';
 function ContentSlide2 () {
   let [, AllContents] = usePromise(getContents);
   let [, questions] = usePromise(getQuestions);
-  let contents = React.useMemo(() => AllContents?.filter((content) => content.id <= 5), [AllContents]);
   let [slide_number, setSlide_number] = React.useState<number>(1);
-  let [content_id, setContent_id] = React.useState<number>(1);
   const maxslide_number = 5;
   let start_number = slide_number;
-  let end_number = ((slide_number + maxslide_number) <= maxslide_number ? slide_number + maxslide_number : slide_number + maxslide_number - maxslide_number);
-  let new_slide_contents = (end_number > start_number ? contents?.slice(start_number, end_number) : contents?.slice(start_number, maxslide_number).concat(contents?.slice(0, end_number)));
   let SlideContents = React.useMemo(() => AllContents?.filter((content) => [43, 42, 41, 35, 29].includes(content.id)), [AllContents]);
   let slide_contents_1 = React.useMemo(() => SlideContents?.filter((content, key) => (key === 4 || ((key >=0 && key <=1)))), [SlideContents]);
   let slide_contents_2 = React.useMemo(() => SlideContents?.filter((content, key) => (key >= 2 && key <= 4)), [SlideContents]);
@@ -130,7 +126,7 @@ function ContentSlide2 () {
           <div className = 'contentslide2'>
               <div className = 'selector_container'>
                   {[...Array(maxslide_number).keys()].map((i) => (
-                      <img className = {i === start_number ? '' : 'opacity'} src = {imageUrl('ContentPage/selector_select.png')} />
+                      <img alt = "" className = {i === start_number ? '' : 'opacity'} src = {imageUrl('ContentPage/selector_select.png')} />
                   ))}
               </div>
               <div className = 'slide_content_container flex' style ={{marginTop: '25px'}}>
@@ -138,7 +134,7 @@ function ContentSlide2 () {
                   {slide_contents_1?.map((content, key) => (
                     <div className = {'slide_content'} onClick = {() => LinkClick()}>
                         <div className = 'slide_image'>
-                            <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '678px', height: '401px', objectFit: 'cover', borderRadius: '5px'}}/>
+                            <img alt = "" src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '678px', height: '401px', objectFit: 'cover', borderRadius: '5px'}}/>
                         </div>
                     </div>
                   ))}
@@ -147,7 +143,7 @@ function ContentSlide2 () {
                   {slide_contents_2?.map((content, key) => (
                     <div className = {'slide_content'} onClick = {() => LinkClick()}>
                         <div className = 'slide_image'>
-                            <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '678px', height: '401px', objectFit: 'cover', borderRadius: '5px'}}/>
+                            <img alt = "" src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '678px', height: '401px', objectFit: 'cover', borderRadius: '5px'}}/>
                         </div>
                     </div>
                   ))}
@@ -166,13 +162,13 @@ function ContentSlide2 () {
                       {'[' + content?.type + ']' + content?.title}
                   </div>
                   <button className = 'left_button' onClick = {left_button_click} ref = {left_button_dom} disabled = {button_function}>
-                      <img className = 'left_button' src = {imageUrl('ContentPage/video_left_button.png')}/>
+                      <img alt = "" className = 'left_button' src = {imageUrl('ContentPage/video_left_button.png')}/>
                   </button>
                   <button className = 'right_button' onClick = {right_button_click} ref = {right_button_dom} disabled = {button_function}>
-                      <img  src = {imageUrl('ContentPage/video_right_button.png')} />
+                      <img alt = ""  src = {imageUrl('ContentPage/video_right_button.png')} />
                   </button>
                   <button className = 'like_button' ref = {like_button_dom} disabled = {button_function}>
-                      <img  src = {imageUrl('ContentPage/video_like_button.png')}/>
+                      <img alt = ""  src = {imageUrl('ContentPage/video_like_button.png')}/>
                   </button>
               </div>
           </div>

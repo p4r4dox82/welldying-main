@@ -227,16 +227,13 @@ function Survey() {
   let time = LiveTimeContainer();
   let real_time = time - first_time;
 
-  let minute = (real_time - (real_time%60))/60;
-  let second = real_time % 60;
-
   return (
     <>
       <div className = 'phone'>
           <div className = 'main'>
               <div className = 'main_image'>
                   <div className = {'image_1' + (click_start ? ' click' : '') + (click_1st ? ' click_1st' : '')}>
-                      <img src = {imageUrl('survey/image_1.png')} />
+                      <img alt = "" src = {imageUrl('survey/image_1.png')} />
                   </div>
               </div>
 
@@ -248,7 +245,7 @@ function Survey() {
                       <p>{main_2}</p>
                   </div>
                   <div className = {'vector'}>
-                      <img src = {imageUrl('survey/vector.png')} />
+                      <img alt = "" src = {imageUrl('survey/vector.png')} />
                   </div>
                   <div className = {'text_1'}>
                       <p>{text_1}</p>
@@ -259,7 +256,7 @@ function Survey() {
               </div>
 
               <div className = {'vector1' + (click_start ? ' click' : '')}>
-              <img src = {imageUrl('survey/vector1.png')} />
+              <img alt = "" src = {imageUrl('survey/vector1.png')} />
               </div>
 
               <div className = {'vector1_later' + (click_start ? ' click' : '') + (click_1st ? ' click_1st' : '') + (click_9th ? ' click_9th' : '')}>
@@ -282,7 +279,7 @@ function Survey() {
                 </div>
 
                 <div className = {'sound' + (click_start ? ' click' : '') + (click_1st ? ' click_1st' : '') + (click_10th ? ' click_10th' : '')} onClick = {() => {setsound_click(!sound_click);}}>
-                    <img src = {imageUrl('survey/sound.png')} />
+                    <img alt = "" src = {imageUrl('survey/sound.png')} />
                 </div>
                 <div className = {'sound_ref_backgroud' + (sound_click ? ' clicked' : '') + (click_1st ? ' click_1st' : '')} />
                 <div className = {'sound_ref' + (sound_click ? ' clicked' : '') + (click_1st ? ' click_1st' : '')}>
@@ -295,19 +292,19 @@ function Survey() {
           </div>
 
           <div className = {'back_ground' + (click_1st ? ' click_1st' : '') + (click_9th ? ' click_9th' : '')}>
-              <img src = {imageUrl('survey/back_ground.png')} />
+              <img alt = "" src = {imageUrl('survey/back_ground.png')} />
           </div>
 
           <div className = {'who_is_your_precious_person' + (click_1st ? ' click_1st' : '') + (click_2nd ? ' click_2nd' : '')}>
               <div className = {'text_back_precious'}>
-                  <img src = {imageUrl('survey/text_back_precious.png')} />
+                  <img alt = "" src = {imageUrl('survey/text_back_precious.png')} />
               </div>
               <div className = {'text_4'}>
                   <textarea value = {text_4} disabled/>
               </div>
 
               <div className = {'fade_in_slow' + (click_1st ? ' click_1st' : '')}>
-                <div className = {'quote'}> <img src = {imageUrl('survey/quote.png')} /> </div>
+                <div className = {'quote'}> <img alt = "" src = {imageUrl('survey/quote.png')} /> </div>
                 <div className = {'answer_1'} onClick = {() => {setclick_2nd(true);}}>
                     { [...Array(6).keys()].map((i) => (
                         <div className = {`answer_1_${i + 1}`}>
@@ -320,7 +317,7 @@ function Survey() {
 
           <div className = {'person_page' + (click_2nd ? ' click_2nd' : '') + (click_3rd ? ' click_3rd' : '')}>
               <div className = {'text_back_person'}>
-                  <img src = {imageUrl('survey/text_back_person.png')} />
+                  <img alt = "" src = {imageUrl('survey/text_back_person.png')} />
               </div>
               <div className = {'text_5'}>
                   <textarea className = 'text_5_1' value = {text_5_1} disabled />
@@ -330,37 +327,37 @@ function Survey() {
               <div className = 'image_3'>
                   { [...Array(4).keys()].map((i) => (
                       <div className = {`image_3_${i + 1}` + ((`${button_select_1}` === `${i+1}`) ? ' selected' : ' not')}>
-                          <img className = 'normal' src = {imageUrl(`survey/image_3_${i + 1}.png`)} />
+                          <img alt = "" className = 'normal' src = {imageUrl(`survey/image_3_${i + 1}.png`)} />
                       </div>
                   )) }
                   { [...Array(4).keys()].map((i) => (
                       <div className = {`image_3_${i + 1}_shadow` + ((`${button_select_1}` === `${i+1}`) ? ' selected' : ' not')}>
-                          <img className = 'shadow' src = {imageUrl(`survey/image_3_${i + 1}_shadow.png`)} />
+                          <img alt = "" className = 'shadow' src = {imageUrl(`survey/image_3_${i + 1}_shadow.png`)} />
                       </div>
                   )) }
               </div>
 
               { [...Array(4).keys()].map((i) => (
                   <div className = {`button_${i+1}`} onClick = {() => {button_select_1_before = button_select_1; button_select_1 = (i+1);}}>
-                      <img src = {imageUrl('survey/button.png')} />
+                      <img alt = "" src = {imageUrl('survey/button.png')} />
                   </div>
               )) }
 
-              <div className = {'button_select' + ` button_select_${button_select_1_before}_${button_select_1}`}>
-                  <img src = {imageUrl('survey/button_select.png')} />
+              <div className = {`button_select button_select_${button_select_1_before}_${button_select_1}`}>
+                  <img alt = "" src = {imageUrl('survey/button_select.png')} />
               </div>
 
 
               <div className = 'image_2'>
                   { [...Array(4).keys()].map((i) => (
                       <div className = {`image_2_${i + 1}` + ((`${button_select_1}` === `${i + 1}`) ? ' selected' : ' not')}>
-                          <img className = 'image' src = {imageUrl(`survey/image_2_${i+1}.png`)} />
+                          <img alt = "" className = 'image' src = {imageUrl(`survey/image_2_${i+1}.png`)} />
                       </div>
                   )) }
               </div>
 
               <div className = {'image_border'}>
-              <img src = {imageUrl(`survey/image_border.png`)} />
+              <img alt = "" src = {imageUrl(`survey/image_border.png`)} />
               </div>
 
               { [...Array(4).keys()].map((i) => (
@@ -382,16 +379,16 @@ function Survey() {
 
           <div className = {'timer_page' + (click_3rd ? ' click_3rd' : '') + (click_5th ? ' click_5th' : '')}>
             <div className = {'text_back_timer'}>
-                <img src = {imageUrl('survey/text_back_timer.png')} />
+                <img alt = "" src = {imageUrl('survey/text_back_timer.png')} />
             </div>
             <div className = {'timer_dot' + (click_4th ? ' click_4th' : '')}>
-                <img src = {imageUrl('survey/timer_dot.png')} />
+                <img alt = "" src = {imageUrl('survey/timer_dot.png')} />
             </div>
             <div className = {'shadow' + (click_4th ? ' click_4th' : '')}>
-                <img src = {imageUrl('survey/shadow.png')} />
+                <img alt = "" src = {imageUrl('survey/shadow.png')} />
             </div>
             <div className = {'timer' + (click_4th ? ' click_4th' : '')}>
-                <img src = {imageUrl('survey/timer.png')} />
+                <img alt = "" src = {imageUrl('survey/timer.png')} />
             </div>
             <div className = {'text_8'}>
                 <textarea className = 'text_8_1' value = {text_8_1} disabled />
@@ -410,7 +407,7 @@ function Survey() {
 
           <div className = {'vibe_page' + (click_5th ? ' click_5th' : '') + (click_6th ? ' click_6th' : '')}>
             <div className = {'text_back_vibe'}>
-                <img src = {imageUrl('survey/text_back_vibe.png')} />
+                <img alt = "" src = {imageUrl('survey/text_back_vibe.png')} />
             </div>
             <div className = 'text_10'>
                 <textarea value = {text_10} disabled />
@@ -418,7 +415,7 @@ function Survey() {
             <div className = 'vibe_image'>
               { [...Array(4).keys()].map((i) => (
                   <div className = {`vibe_${i + 1}` + ((`${button_select_2}` === `${i+1}`) ? ' selected' : ' not')} onClick = {() => {button_select_2_before = button_select_2; button_select_2 = (i+1); button_select_2_changed = ((button_select_2 !== button_select_2_before) ? !button_select_2_changed : button_select_2_changed)}} >
-                    <img className = 'image' src = {imageUrl(`survey/vibe_${i+1}.png`)} /> </div>
+                    <img alt = "" className = 'image' src = {imageUrl(`survey/vibe_${i+1}.png`)} /> </div>
               )) }
             </div>
             <div className = 'vibe_text'>
@@ -429,8 +426,8 @@ function Survey() {
               )) }
             </div>
             <div className = {'image_selector'}>
-                <div className = {`image_selector_${button_select_2_before}` + ` delta_${button_select_2 - button_select_2_before}` }>
-                    <img src = {imageUrl('survey/image_selector.png')} />
+                <div className = {`image_selector_${button_select_2_before} delta_${button_select_2 - button_select_2_before}` }>
+                    <img alt = "" src = {imageUrl('survey/image_selector.png')} />
                 </div>
             </div>
             <div className = {'next_button_6th'} onClick = {() => {setclick_6th(!click_6th);}}>
@@ -440,7 +437,7 @@ function Survey() {
 
           <div className = {'act_page' + (click_6th ? ' click_6th' : '') + (click_7th ? ' click_7th' : '')}>
             <div className = {'text_back_act'}>
-                <img src = {imageUrl('survey/text_back_act.png')} />
+                <img alt = "" src = {imageUrl('survey/text_back_act.png')} />
             </div>
             <div className = 'text_11'>
                 <textarea value = {text_11} disabled />
@@ -455,7 +452,7 @@ function Survey() {
             <div className = 'act_image'>
               { [...Array(4).keys()].map((i) => (
                   <div className = {`act_image_${i + 1}` + ((`${button_select_3}` === `${i+1}`) ? ` selected_${button_select_3_dir}` : ` not_${button_select_3_dir}` + ((`${button_select_3_before}` === `${i+1}`) ? ' before' : ''))}>
-                      <img className = 'image' src = {imageUrl(`survey/act_image_${i+1}.png`)} />
+                      <img alt = "" className = 'image' src = {imageUrl(`survey/act_image_${i+1}.png`)} />
                   </div>
               )) }
             </div><div className = 'text_select_dot'>
@@ -472,7 +469,7 @@ function Survey() {
 
           <div className = {'story_page' + (click_7th ? ' click_7th' : '') + (button_select_4 ? ' click_8th' : '')}>
             <div className = {'text_back_story'}>
-                <img src = {imageUrl('survey/text_back_story.png')} />
+                <img alt = "" src = {imageUrl('survey/text_back_story.png')} />
             </div>
             <div className = {'text_12'}>
                 <textarea value = {text_12} disabled />
@@ -480,7 +477,7 @@ function Survey() {
             <div className = 'story'>
               { [...Array(4).keys()].map((i) => (
                   <div className = {`story_${i + 1}`} onClick = {() => {button_select_4 = (i+1);}}>
-                      <img src = {imageUrl(`survey/story_${i+1}.png`)} />
+                      <img alt = "" src = {imageUrl(`survey/story_${i+1}.png`)} />
                       <p>{story_text_1[i]}</p>
                       <textarea value = {story_text_2[i]} disabled />
                   </div>
@@ -491,7 +488,7 @@ function Survey() {
 
           <div className = {'message_write_page' + (button_select_4 ? ' click_8th' : '') + (click_9th ? ' click_9th' : ' not') + (displaynone_9th ? ' displaynone_9th' : '')}>
               <div className = {'text_back_message'}>
-                  <img src = {imageUrl('survey/text_back_message.png')} />
+                  <img alt = "" src = {imageUrl('survey/text_back_message.png')} />
               </div>
               <div className = {'text_13'}>
                   <textarea className = 'text_13_1' value = {text_13_1} disabled />
@@ -500,11 +497,11 @@ function Survey() {
               <div className = {'message_line'}>
                   { [...Array(6).keys()].map((i) => (
                     <div className = {`message_line_${i + 1}`}>
-                    <img src = {imageUrl('survey/message_line.png')} />
+                    <img alt = "" src = {imageUrl('survey/message_line.png')} />
                     </div>
                   )) }
                   <div className = 'message_line_7'>
-                      <img src = {imageUrl('survey/message_line_2.png')} />
+                      <img alt = "" src = {imageUrl('survey/message_line_2.png')} />
                   </div>
               </div>
               <div className = 'message_button' onClick = {() => {setclick_9th(true);
@@ -536,13 +533,13 @@ function Survey() {
           <div className = {'message_page' + (click_9th ? ' click_9th' : '') + (back_message ? ' back_message' : '') + (click_10th ? ' click_10th' : '') + (displaynone_10th ? ' displaynone_10th' : '')}>
             <div className = {'capture'}>
                 <div className = 'message_background'>
-                    <img src = {imageUrl(`survey/message_background_${button_select_4}.png`)} />
+                    <img alt = "" src = {imageUrl(`survey/message_background_${button_select_4}.png`)} />
                 </div>
                 <div className = 'message_logo_background'>
-                    <img src = {imageUrl(`survey/message_logo_background.png`)} />
+                    <img alt = "" src = {imageUrl(`survey/message_logo_background.png`)} />
                 </div>
                 <div className = 'message_logo'>
-                    <img src = {imageUrl(`survey/message_logo_${button_select_4}.png`)} />
+                    <img alt = "" src = {imageUrl(`survey/message_logo_${button_select_4}.png`)} />
                 </div>
                 <div className = 'dot'>
                 </div>
@@ -550,7 +547,7 @@ function Survey() {
                     <p>{text_14}</p>
                 </div>
                 <div className = 'person_logo'>
-                    <img src = {imageUrl(`survey/person_logo_${button_select_1}.png`)} />
+                    <img alt = "" src = {imageUrl(`survey/person_logo_${button_select_1}.png`)} />
                 </div>
                 <div className = 'vector_2'>
                 </div>
@@ -561,21 +558,21 @@ function Survey() {
                     <p>{text_15}</p>
                 </div>
                 <div className = {'vector_6' + (check_capture ? (passive_capture_hide ? ' hide' : ' not') : '')}>
-                    <img src = {imageUrl(`survey/vector_6.png`)} />
+                    <img alt = "" src = {imageUrl(`survey/vector_6.png`)} />
                 </div>
                 <div className = {'memento_logo' + (check_capture ? (passive_capture_hide ? ' hide' : ' not') : '')}>
-                    <img src = {imageUrl(`survey/message_memento_logo.png`)} />
+                    <img alt = "" src = {imageUrl(`survey/message_memento_logo.png`)} />
                 </div>
                 <div className = 'message_image_div'>
-                    <img className = 'message_image'/>
+                    <img alt = "" className = 'message_image'/>
                 </div>
             </div>
             <div className = {'nonecapture'}>
                 <div className = 'message_background'>
-                    <img src = {imageUrl(`survey/message_background_${button_select_4}.png`)} />
+                    <img alt = "" src = {imageUrl(`survey/message_background_${button_select_4}.png`)} />
                 </div>
                 <div className = {'message_background_2' + (check_capture ? (passive_capture_hide ? ' hide' : '') : '')}>
-                    <img src = {imageUrl(`survey/message_background_${button_select_4}.png`)} />
+                    <img alt = "" src = {imageUrl(`survey/message_background_${button_select_4}.png`)} />
                 </div>
                 <div className = 'message'>
                 <textarea value={message} disabled/>
@@ -585,7 +582,7 @@ function Survey() {
                         <p>{text_16}</p>
                     </div>
                     <div className = 'vector_3'>
-                        <img src = {imageUrl(`survey/vector_3.png`)} />
+                        <img alt = "" src = {imageUrl(`survey/vector_3.png`)} />
                     </div>
                     <div className = 'edit_message' onClick = {() => {setclick_9th(false);
                       setback_message(true);
@@ -629,7 +626,7 @@ function Survey() {
 
           <div className = {'reservation_page' + (click_10th ? ' click_10th' : '')}>
             <div className = 'reservation_background'>
-              <img src = {imageUrl(`survey/reservation_background.png`)} />
+              <img alt = "" src = {imageUrl(`survey/reservation_background.png`)} />
             </div>
             <div className = 'vector_4'>
             </div>
@@ -640,7 +637,7 @@ function Survey() {
                 <textarea value = {text_18} disabled/>
             </div>
             <div className = 'vector_5'>
-              <img src = {imageUrl(`survey/vector_5.png`)} />
+              <img alt = "" src = {imageUrl(`survey/vector_5.png`)} />
             </div>
             <div className = 'copy_link' onClick = {() => {
               const element = document.createElement('textarea');
@@ -670,7 +667,7 @@ function Survey() {
 
           <div className = {'timeover_page' + ((real_time >= 299 && time_start && !click_9th) ? ' timeover' : '') + (go_back_test ? ' go_back_test' : '') + (displaynone ? ' displaynone' : '')}>
             <div className = 'timeover_background'>
-              <img src = {imageUrl(`survey/timeover_background.png`)} />
+              <img alt = "" src = {imageUrl(`survey/timeover_background.png`)} />
             </div>
             <div className = 'vector_4'>
             </div>
@@ -698,10 +695,10 @@ function Survey() {
 
       <div className = {'non_phone'}>
           <div className = {'back_ground_nonphone'}>
-              <img src = {imageUrl('survey/back_ground_nonphone.png')} />
+              <img alt = "" src = {imageUrl('survey/back_ground_nonphone.png')} />
           </div>
           <div className ={'memento_logo'}>
-              <img src = {imageUrl('survey/message_memento_logo.png')} />
+              <img alt = "" src = {imageUrl('survey/message_memento_logo.png')} />
           </div>
           <div className = {'vector_7'} />
           <div className = 'text_1_1'>
@@ -709,7 +706,7 @@ function Survey() {
           </div>
           <div className = 'content'>
               <div className = 'Smartphone_image'>
-                  <img src = {imageUrl('survey/Smartphone_image.png')} />
+                  <img alt = "" src = {imageUrl('survey/Smartphone_image.png')} />
               </div>
               <div className = {'vector_8'} />
               <div className = 'text_1_2'>
@@ -721,12 +718,12 @@ function Survey() {
               </div>
               <div className = 'rectangle' />
               <div className = 'QR_code'>
-              <img src = {imageUrl('survey/QR_code.png')} />
+              <img alt = "" src = {imageUrl('survey/QR_code.png')} />
               </div>
               <div className = 'text_1_4'>
                   <p className = 'head'>휴대폰 QR 코드</p>
-                  <p className = {'main' + 'a'}>휴대폰으로 QR코드를 스캔하여</p>
-                  <p className = {'main' + 'b'}>최적화된 모바일 환경에서 이용하세요.</p>
+                  <p className = {'maina'}>휴대폰으로 QR코드를 스캔하여</p>
+                  <p className = {'mainb'}>최적화된 모바일 환경에서 이용하세요.</p>
                   <p className = 'detail'>(기본 카메라에 QR 코드를 인식해주세요)</p>
               </div>
           </div>

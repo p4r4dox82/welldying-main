@@ -1,15 +1,14 @@
-import { validate } from '@babel/types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MementoBook from '../components/MementoBook';
-import { checkCellphoneDuplicate, DeathInfo, getUser, getUserid, getUsers, modifyUserInfo, setUserDeathInfo, User, UserPut, verifyPhone, verifyPhoneCheck } from '../etc/api/user';
+import { checkCellphoneDuplicate, DeathInfo, getUserid, getUsers, modifyUserInfo, setUserDeathInfo, UserPut } from '../etc/api/user';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
 import { EditVector, leftVector, MementoDotVector, rightVector, UserImage } from '../img/Vectors';
 import MobileFooter from '../MobileComponents/MobileFooter';
 import MobileHeader from '../MobileComponents/MobileHeader';
-import { checkBatchim, EntryType } from '../pages/Mypage';
+import { checkBatchim } from '../pages/Mypage';
 import { RootReducer } from '../store';
 import crypto from 'crypto';
 
@@ -41,11 +40,11 @@ function MobileMyPage() {
     let [personalData, setPersonalData] = React.useState<UserPut>();
     let [personalDataValidateMessage, setPersonalDataValidateMessage] = React.useState<UserPutMessage>();
     let [phoneValidateCode, setPhoneValidateCode] = React.useState<number>();
-    let [phoneVerified, setPhoneVerified] = React.useState<boolean>(false);
+    let [phoneVerified, ] = React.useState<boolean>(false);
     let [currentPassword, setCurrentPassword] = React.useState<string>('');
     let [confirmPassword, setConfirmPassword] = React.useState<string>('');
 
-    let [userLoading, User] = usePromise(() => getUserid(personalData!.username), [personalData]);
+    let [, User] = usePromise(() => getUserid(personalData!.username), [personalData]);
 
     React.useEffect(() => {
         if(user.user?.DeathInfo !== undefined)
@@ -57,15 +56,15 @@ function MobileMyPage() {
         setPersonalDataValidateMessage({oldPassword: '', newPassword: '', newPasswordConfirm: '', name: '', birthDate: '', birthMonth: '', birthYear: '', email: '', imageUri: '', cellphone: '', phoneValidateCode: ''})
     }, [user]);
 
-    let ValidateBirthYear = () => {
+    let ValidateBirthYear = React.useCallback(() => {
         if(!personalData) return false;
         else return (personalData!.birthYear < 2021 && personalData.birthYear > 1900);
-    }
-    let ValidateBirthMonth = () => {
+    }, [personalData])
+    let ValidateBirthMonth = React.useCallback(() => {
         if(!personalData) return false;
         else return (personalData.birthMonth <= 12 && personalData.birthMonth >=1);
-    }
-    let ValidateBirthDate = () => {
+    }, [personalData])
+    let ValidateBirthDate = React.useCallback(() => {
         if(!personalData) return false;
         else {
             let birthDate = personalData.birthDate;
@@ -73,18 +72,18 @@ function MobileMyPage() {
             let birthMonth = personalData.birthMonth;
             return !(birthDate < 1 || birthDate > [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][birthMonth] || (birthMonth === 2 && birthDate === 29 && (birthYear % 4 !== 0 || (birthYear % 100 === 0 && birthYear % 400 !== 0))));
         }
-    }
-    let ValidateEmail = () => {
+    }, [personalData])
+    let ValidateEmail = React.useCallback(() => {
         if(!personalData) return false;
         else {
-            const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if (!regex.test(personalData.email)) {
                 return false;
             }
             else return true;
         }
-    }
-    let checkCellPhone = async () => {
+    },[personalData])
+    let checkCellPhone = React.useCallback(async () => {
         if(!personalData || !personalDataValidateMessage) return false;
         let cellPhoneMiddle = personalData?.cellphone.slice(6, 10);
         let cellPhoneRear = personalData?.cellphone.slice(10, 14);
@@ -98,14 +97,14 @@ function MobileMyPage() {
         }
         setPersonalDataValidateMessage({...personalDataValidateMessage, cellphone: ''});
         return true;
-    }
-    let checkCellPhoneChanged = () => {
+    }, [personalData, personalDataValidateMessage])
+    let checkCellPhoneChanged = React.useCallback(() => {
         if(user.user?.cellphone === personalData?.cellphone) 
             return false;
         else 
             return true;
-    }
-    let ValidateCellphone = async () => {
+    }, [personalData, user])
+    let ValidateCellphone = React.useCallback(async () => {
         if(!personalData || !personalDataValidateMessage) {
             return false;
         }
@@ -122,38 +121,8 @@ function MobileMyPage() {
         } 
         else 
             return true;
-    }
-    let [phoneVerifyStarted, setPhoneVerifyStarted] = React.useState(false);
-    let startPhoneVerify = async () => {
-        if(!personalData) return false;
-        if (phoneVerifyStarted) return false;
-        if (!await checkCellPhone()) return false;
-        let result = await verifyPhone('0' + personalData.cellphone.slice(4, 6), personalData.cellphone.slice(6, 10), personalData.cellphone.slice(10, 14));
-        if (result) {
-            setPhoneVerifyStarted(true);
-            setPhoneCode(undefined);
-        }
-        return result;
-    }
-    let [phoneCodeDigest, setPhoneCodeDigest] = React.useState('');
-    let [phoneCode, setPhoneCode] = React.useState<number>();
-    let endPhoneVerify = async () => {
-        if(!personalData || !personalDataValidateMessage) return false;
-        if (!phoneCode || !phoneVerifyStarted) return false;
-
-        let result = await verifyPhoneCheck('0' + personalData.cellphone.slice(4, 6), personalData.cellphone.slice(6, 10), personalData.cellphone.slice(10, 14), phoneCode);
-        if (result.isVerified) {
-            setPhoneVerified(true);
-            setPersonalDataValidateMessage({...personalDataValidateMessage, phoneValidateCode: ''});
-            setPhoneCodeDigest(result.phoneCodeDigest);
-            return true;
-        }
-        else {
-            setPersonalDataValidateMessage({...personalDataValidateMessage, phoneValidateCode: '인증에 실패했습니다.'});
-            return false;
-        }
-    }
-    let validatePhoneCode = () => {
+    }, [checkCellPhone, checkCellPhoneChanged, personalData, personalDataValidateMessage, phoneVerified])
+    let validatePhoneCode = React.useCallback(() => {
         if(!personalData || !personalDataValidateMessage) return false;
         if(checkCellPhoneChanged()) {
             if (!phoneVerified) {
@@ -164,20 +133,20 @@ function MobileMyPage() {
         }
         else
             return true;
-    }
+    }, [checkCellPhoneChanged, personalData, personalDataValidateMessage, phoneVerified])
     function isPasswordValid(password: string, hash: string, salt: string) {
         const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
         return hash === hashVerify;
     }
-    let ValidateCurrentPassword = () => {
+    let ValidateCurrentPassword = React.useCallback(() => {
         if(!personalData) 
             return false;
         if(currentPassword === '' && personalData.password === '') 
             return true;
         else 
             return isPasswordValid(currentPassword, User!.passwordHash, User!.passwordSalt);
-    }
-    let ValidateNewPassword = () => {
+    }, [User, currentPassword, personalData])
+    let ValidateNewPassword = React.useCallback(() => {
         if(!personalData || !personalDataValidateMessage)
             return false;
         if(currentPassword === '' && personalData.password === '')
@@ -194,15 +163,15 @@ function MobileMyPage() {
             else
                 return true;
         }
-    }
-    let ValidateConfirmPassword = () => {
+    }, [personalData, personalDataValidateMessage, currentPassword])
+    let ValidateConfirmPassword = React.useCallback(() => {
         if(!personalData || !personalDataValidateMessage)
             return false;
         else {
             setPersonalDataValidateMessage({...personalDataValidateMessage, newPasswordConfirm: '비밀번호가 일치하지 않습니다.'});
             return true;
         }
-    }
+    }, [personalData, personalDataValidateMessage])
 
     let ValidateFunctionAllPersonalData = React.useMemo(() => {
         return [ValidateBirthYear, ValidateBirthMonth, ValidateBirthDate, ValidateEmail, ValidateCellphone, validatePhoneCode, ValidateCurrentPassword, ValidateNewPassword, ValidateConfirmPassword];
@@ -257,7 +226,7 @@ function MobileMyPage() {
                     </>
                 )
         }
-    }, [AllUsers]);
+    }, [AllUsers, user]);
 
     let GetBooksContainer = React.useMemo(() => {
         return (
@@ -265,17 +234,17 @@ function MobileMyPage() {
                 if(userinfo.accept !== 2) {
                     return GetBooks(userinfo);
                 }
+                return <></>;
             })
         )
     }, [user, GetBooks]);
     
-    let answer1Array = ['불교 형식', '기독교 형식', '카톨릭 형식', '전통 장례', '기타'];
-    let answer2Array = ['화장 형식', '매장 형식', '기타'];
-    let answer3Array = ['지인 모두 참석', '가족만 참석', '기타'];
-    let answer4Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
-    let answer5Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
-    
-    let answerArrays = React.useMemo(() => {
+    let answerArrays = React.useMemo(() => {    
+        let answer1Array = ['불교 형식', '기독교 형식', '카톨릭 형식', '전통 장례', '기타'];
+        let answer2Array = ['화장 형식', '매장 형식', '기타'];
+        let answer3Array = ['지인 모두 참석', '가족만 참석', '기타'];
+        let answer4Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
+        let answer5Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
         let result = [];
         result.push({title: '원하시는 장례 진행 방법이 있나요?', answer: answer1Array});
         result.push({title: '어떤 장법을 원하시나요?', answer: answer2Array});
@@ -286,16 +255,16 @@ function MobileMyPage() {
         return result;
     }, []);
     
-    let isAnswerInArray = (answer: string, array: Array<string>) => {
+    let isAnswerInArray = React.useCallback((answer: string, array: Array<string>) => {
         if(answer === undefined) return false;
         return array.includes(answer);
-    }
+    }, [])
 
-    let editDataOnArrayWithIndex = (array: Array<string>, data: string, index: number) => {
+    let editDataOnArrayWithIndex = React.useCallback((array: Array<string>, data: string, index: number) => {
         let newarray = array;
         newarray[index] = data;
         return newarray;
-    }
+    }, [])
 
     let checkDeathInfoAnswerFilled = (DeathInfo: DeathInfo) => {
         if(DeathInfo.answerArray.length !== 5)

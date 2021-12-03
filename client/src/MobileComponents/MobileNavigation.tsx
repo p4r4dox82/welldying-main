@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MementoBookVector, MementoContentVector, MementoMainVector, MementoNoteVector, RightVector } from '../img/Vectors';
+import { MementoBookVector, MementoContentVector, MementoMainVector, MementoNoteVector } from '../img/Vectors';
 
 function MobileNavigation() {
     return (

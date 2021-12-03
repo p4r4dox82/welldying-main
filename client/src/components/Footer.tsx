@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { imageUrl } from '../etc/config';
 
 import { MementoLogo } from '../img/Vectors';
@@ -24,6 +23,7 @@ function Footer({ additionalClass } : Props) {
                 <div className = 'item'>회사명 : 메멘토</div>
                 <div className = 'item'>대표 : 신동경</div>
                 <div className = 'item'>대표이메일 : welldying.memento@gmail.com</div>
+                <div className = 'item'>문의 : 0507-1367-0842</div>
             </div>
             <div className = 'about_company_container_2'>
                 <div className = 'item'>주소 : 서울특별시 관악구 봉천동 856-6 BS타워 5층 (우) 08788</div>

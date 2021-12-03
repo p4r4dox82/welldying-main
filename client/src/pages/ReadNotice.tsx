@@ -1,13 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link, match } from 'react-router-dom';
 import { imageUrl } from '../etc/config';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SubmenuContainer from '../components/SubmenuContainer';
-import { getrevNotices, getNotice } from '../etc/api/notice';
+import { getNotice } from '../etc/api/notice';
 import usePromise from '../etc/usePromise';
-import { RootReducer } from '../store';
 import { parseDate } from '../etc';
 
 interface MatchParams {
@@ -20,9 +18,7 @@ interface Props {
 
 function ReadNotice({ match }: Props) {
     let id = Number.parseInt(match.params.id);
-    let user = useSelector((state: RootReducer) => state.user);
     let [noticeLoading, notice] = usePromise(() => getNotice(id));
-    let [, revnotices] = usePromise(getrevNotices);
     let [search_word, setSearch_word] = React.useState<string>('');
 
     if (noticeLoading) return <></>;

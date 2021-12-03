@@ -20,7 +20,7 @@ export function useDeltaScroll() {
     React.useEffect(() => {
         setDeltaScroll(scroll - befScroll);
         setBefScroll(scroll);
-    }, [scroll]);
+    }, [scroll, befScroll]);
 
     return deltaScroll;
 }

@@ -4,14 +4,12 @@ import { Link, match, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { deleteContent, getContent, writeContent } from '../etc/api/content';
-import { getSections } from '../etc/api/section';
 import { getQuestions } from '../etc/api/question';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
 import { uploadImage_formdata } from '../etc/api/image';
 import ReactCrop from 'react-image-crop';
 import { imageUrl } from '../etc/config';
-import { getCategorys } from '../etc/api/category';
 
 import { leftVector, rightVector } from '../img/Vectors';
 
@@ -30,10 +28,8 @@ function AdminWriteContent({ match }: Props) {
 
     let id = Number.parseInt(match.params.id);
     let user = useSelector((state: RootReducer) => state.user);
-    let [contentLoading, content] = usePromise(() => getContent(id));
-    let [allSectionsLoading, allSections] = usePromise(() => getSections());
-    let [QuestionsLoading, Questions] = usePromise(getQuestions);
-    let [CategoryLoading, allCategorys] = usePromise(getCategorys);
+    let [, content] = usePromise(() => getContent(id));
+    let [, Questions] = usePromise(getQuestions);
     let [error, setError] = React.useState<string>();
 
 
@@ -88,11 +84,10 @@ function AdminWriteContent({ match }: Props) {
         if (content.imageData.imageUrl !== '')
             setThumbnailUri(content.imageData.imageUrl);
         setCrop({ ...crop, x: content.imageData.cropX, y: content.imageData.cropY });
-    }, [content]);
-
-    let allTags = ['#기록 #추억 #자서전', '#계획 #버킷리스트', '#편지', '#자기경정권 #치료', '#장례', '#죽음의 이해 #심적준비', '#법 #유산 #신탁', '#반려동물', '#사별 #애도'];
+    }, [content, crop]);
 
     let tagForm = React.useMemo(() => {
+        let allTags = ['#기록 #추억 #자서전', '#계획 #버킷리스트', '#편지', '#자기경정권 #치료', '#장례', '#죽음의 이해 #심적준비', '#법 #유산 #신탁', '#반려동물', '#사별 #애도'];
         if (!allTags) return <></>;
         else return (
             <div>
@@ -130,7 +125,7 @@ function AdminWriteContent({ match }: Props) {
                 </select>
             </div>
         );
-    }, [update]);
+    }, [update, tagId]);
 
     let questionForm = React.useMemo(() => {
         if (!Questions) return <></>;
@@ -148,13 +143,13 @@ function AdminWriteContent({ match }: Props) {
               </select>
           </div>
         );
-    }, [update, allSectionsLoading, QuestionsLoading]);
+    }, [update, Questions, question]);
 
     React.useEffect(() => {
         if(!content?.imageData || !content?.imageData.imageUrl) return;
         if(thumbnailUri !== content?.imageData.imageUrl)
             setCrop({ ...crop, x: 0, y: 0 });
-    }, [thumbnailUri]);
+    }, [thumbnailUri, content, crop]);
 
     let input_file = React.useRef<any>(null);
     let [cropImage, setCropImage] = React.useState<boolean>(false);
@@ -277,7 +272,7 @@ function AdminWriteContent({ match }: Props) {
                         <div className = 'fileSelector' style = {{height: (thumbnailUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? 150 : (crop.height + 60))}}>
                             <button className = 'image_input' onClick = {() => {handleClick(); setCropImage(true);}} style = {{background:'rgba(255, 255, 255, 1)'}}>
                                 <div className = 'new_image' style = {{margin: 'auto', width: crop.width, height: (thumbnailUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? 150 : crop.height), overflow: 'hidden'}}>
-                                    <img className = 'new_image' src = {thumbnailUri} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (thumbnailUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? '11px' : '0px')}}/>
+                                    <img alt = "" className = 'new_image' src = {thumbnailUri} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (thumbnailUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? '11px' : '0px')}}/>
                                 </div>
                             </button>
                             <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
@@ -300,7 +295,7 @@ function AdminWriteContent({ match }: Props) {
             </div>
             {cropImage && <div className = 'crop_image_container admin'>
                 <div className = 'imageCrop'>
-                    <img className = 'quit_button' src = {imageUrl('NotePage/quit_vector.svg')} onClick = {() => setCropImage(false)}/>
+                    <img alt = "" className = 'quit_button' src = {imageUrl('NotePage/quit_vector.svg')} onClick = {() => setCropImage(false)}/>
                     <div className = 'image_container'>
                         <ReactCrop className = 'Crop' src = {(thumbnailUri === 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' ? '' : thumbnailUri)} crop = {crop} onChange = {(newCrop) => {
                             let changeCrop = newCrop;

@@ -17,7 +17,7 @@ function MobileNoteQuestion(props: Props) {
     let [answerCol, setAnswerCol] = React.useState<number>(0);
     let [answerRow, setAnswerRow] = React.useState<number>(5);
     let [answerLength, setAnswerLength] = React.useState<number>(0);
-    let [answerByteLength, setAnswerByteLength] = React.useState<number>(0);
+    let [, setAnswerByteLength] = React.useState<number>(0);
     let [answer, setAnswer] = React.useState<string>('');
     let [imageUri, setImageUri] = React.useState<string>('');
     let userAnswer = props.answer;
@@ -40,6 +40,7 @@ function MobileNoteQuestion(props: Props) {
             let bytelen = byte.length;
             newRow += (bytelen - bytelen/answerCol)/answerCol + 1;
             newRow = parseInt(String(newRow));
+            return newRow;
         })
         setAnswerByteLength(bytelength);
         setAnswerRow(Math.max(5, newRow));
@@ -59,6 +60,7 @@ function MobileNoteQuestion(props: Props) {
                 let bytelen = byte.length;
                 newRow += (bytelen - bytelen/answerCol)/answerCol + 1;
                 newRow = parseInt(String(newRow));
+                return newRow;
             })
             setAnswerByteLength(bytelength);
             setAnswerRow(Math.max(5, newRow));
@@ -66,16 +68,14 @@ function MobileNoteQuestion(props: Props) {
                 setImageUri('');
             else setImageUri(userAnswer.imageData.imageUrl);
         }
-    }, [userAnswer, props])
+    }, [userAnswer, props, answerCol])
 
     let [save, setSave] = React.useState<boolean>(false);
     let [editanswer, setEditanswer] = React.useState<boolean>(false);
     let [editImage, setEditImage] = React.useState<boolean>(false);
     let [showanswer, setShowanswer] = React.useState<boolean>(false);
     let input_file = React.useRef<any>(null);
-    let [state, setState] = React.useState<any>({ image: '', imageLoaded: false });
-    let [cropImage, setCropImage] = React.useState<boolean>(false);
-    let [save_success, setSave_success] = React.useState<boolean>(false);
+    let [, setCropImage] = React.useState<boolean>(false);
     let handleFileinput  = async (e: any) => {
         let formData = new FormData();
         formData.append('image', e.target.files[0]);

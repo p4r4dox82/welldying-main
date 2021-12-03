@@ -192,7 +192,7 @@ function MementoNoteMain () {
                     </div>
                 );
         }
-    }, [select, sections, section_questions, user, position]);
+    }, [select, sections, section_questions, user, position, AllUsers, explain_detail, explain_main, id, maxQuestionId]);
 
     if(!user.loggedIn) return <Redirect to='/login'/>
     return (

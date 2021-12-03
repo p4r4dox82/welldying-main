@@ -8,9 +8,8 @@ import { uploadImage_formdata } from '../etc/api/image';
 import { getUsers } from '../etc/api/user';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
-import { answer1_1, answer1_2, answer1_3, answer2_1, answer2_2, answer3_1, answer_else, LeftArrowVector, leftVector, LeftVector2, PlusVector, RightArrowVector, rightVector, RightVector2 } from '../img/Vectors';
+import { answer1_1, answer1_2, answer1_3, answer2_1, answer2_2, answer3_1, answer_else, LeftArrowVector, RightArrowVector } from '../img/Vectors';
 import { RootReducer } from '../store';
-import MementoNote from './MementoNote';
 
 interface MatchParams {
     id?: string;
@@ -25,7 +24,7 @@ function ConfirmMementoBook({match} : Props) {
     let user = useSelector((state: RootReducer) => state.user);
     let [, allUsers] = usePromise(getUsers);
     let [giveusername, setGiveusername] = React.useState<string>('');
-    let [selectBook, setSelectBook] = React.useState<number>(id);
+    let [, setSelectBook] = React.useState<number>(id);
     React.useEffect(() => {
         console.log(id);
         setGiveusername(String(user.user?.UsersInfo.get[id].username));
@@ -33,7 +32,7 @@ function ConfirmMementoBook({match} : Props) {
     let giveUser = React.useMemo(() => allUsers?.find((user) => user.username === giveusername), [giveusername, allUsers]);
 
     let input_file = React.useRef<any>(null);
-    let [imageUri, setImageUri] = React.useState<string>('');
+    let [, setImageUri] = React.useState<string>('');
     let handleFileinput = async (e: any) => {
         let formData = new FormData();
         formData.append('image', e.target.files[0]);
@@ -51,21 +50,21 @@ function ConfirmMementoBook({match} : Props) {
     };
 
     let deathInfoVector = (answer: string) => {
-        if(answer == '불교 형식')
+        if(answer === '불교 형식')
             return answer1_1;
-        if(answer == '기독교 형식')
+        if(answer === '기독교 형식')
             return answer1_2;
-        if(answer == '전통 장례')
+        if(answer === '전통 장례')
             return answer1_3;
-        if(answer == '화장 형식')
+        if(answer === '화장 형식')
             return answer2_1;
-        if(answer == '매장 형식')
+        if(answer === '매장 형식')
             return answer2_2;
-        if(answer == '지인 모두 참석')
+        if(answer === '지인 모두 참석')
             return answer3_1;
-        if(answer == '가족만 참식')
+        if(answer === '가족만 참식')
             return answer3_1;
-        if(answer == '기타' || answer == '')
+        if(answer === '기타' || answer === '')
             return answer_else;
     }
 
@@ -83,13 +82,13 @@ function ConfirmMementoBook({match} : Props) {
                     </div>
                 </div>
                 <div className="deathInfoContainer" style = {{width: '269px', gap: '13px', marginTop: '61px', height: '132px'}}>
-                    <div className="answer" style = {{opacity: (giveUser?.DeathInfo.answerArray[4] == '예, 희망합니다.' ? '1' : '0' )}}>
+                    <div className="answer" style = {{opacity: (giveUser?.DeathInfo.answerArray[4] === '예, 희망합니다.' ? '1' : '0' )}}>
                         <div className="image">
                             <div className="agree"></div>
                         </div>
                         <div className="name NS px12 op5 bold">연명 치료 희망</div>
                     </div>
-                    <div className="answer" style = {{opacity: (giveUser?.DeathInfo.answerArray[3] == '예, 희망합니다.' ? '1' : '0' )}}>
+                    <div className="answer" style = {{opacity: (giveUser?.DeathInfo.answerArray[3] === '예, 희망합니다.' ? '1' : '0' )}}>
                         <div className="image">
                             <div className="agree"></div>
                         </div>
@@ -138,7 +137,7 @@ function ConfirmMementoBook({match} : Props) {
                 <div className="BookContainer" style = {{left: `${pagenumber * -266 + 'px'}`}}>
                     {user.user?.UsersInfo.get.map((userInfo, key) => {
                         let giveuser = allUsers?.find((user) => user.username === userInfo.username);
-                        if(!giveuser) return;
+                        if(!giveuser) return <></>;
                         else return (
                             <div onClick = {() => {
                                 setGiveusername(userInfo.username);
@@ -161,7 +160,7 @@ function ConfirmMementoBook({match} : Props) {
             </div>}
             </>       
         )
-    }, [pagenumber, giveUser, giveusername]);
+    }, [pagenumber, allUsers, user]);
 
     if(!user.loggedIn) return <Redirect to ='/login'></Redirect>;
     else return (

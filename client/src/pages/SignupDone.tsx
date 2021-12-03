@@ -16,7 +16,6 @@ interface Props {
 
 
 function SignupDone({ match, location }: Props) {
-    let [redirectToMain, setRedirectToMain] = React.useState(false);
     let name = location.state.name;
     let username = location.state.username;
     let password = location.state.password;
@@ -27,7 +26,7 @@ function SignupDone({ match, location }: Props) {
     }
 
     React.useEffect(() => {
-        if (!name) setRedirectToMain(true);
+        if (name)
         setTimeout(() => {
             trylogin();
         }, 1000);

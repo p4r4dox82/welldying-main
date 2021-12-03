@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
-import { HomeVector, leftVector, MementoBookVector, MementoContentVector, MementoLogo, MementoMainVector, MementoNoteVector, NoticeVector, PlusVector, rightVector, toggleVector, UserImage } from "../img/Vectors";
+import { HomeVector, MementoBookVector, MementoContentVector, MementoLogo, MementoMainVector, MementoNoteVector, NoticeVector, PlusVector, rightVector, toggleVector, UserImage } from "../img/Vectors";
 import { RootReducer } from '../store';
 
 interface Props {
@@ -12,7 +12,6 @@ function MobileHeader({ uri }: Props) {
     let user = useSelector((state: RootReducer) => state.user);
     let [menuActive, setMenuActive] = React.useState<boolean>(false);
     let linkMyPage = React.useRef<any>(null);
-    let clickLinkMyPage = () => linkMyPage.current.click();
 
     return (
         <>

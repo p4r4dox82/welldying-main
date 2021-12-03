@@ -1,5 +1,4 @@
 import React from 'react';
-import { match } from 'react-router';
 import queryString from 'query-string';
 
 interface Props {

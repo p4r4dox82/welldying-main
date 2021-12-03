@@ -11,7 +11,7 @@ interface EntryType {
 function Console() {
     let [name, setName] = React.useState('');
     let [nameMessage, setNameMessage] = React.useState('');
-    let validateName = () => {
+    let validateName = React.useCallback(() => {
         if (name.length < 1) {
             setNameMessage('이름을 적어주세요.');
             return false;
@@ -22,13 +22,13 @@ function Console() {
         }
         setNameMessage('');
         return true;
-    }
+    }, [name])
 
     let [birthYear, setBirthYear] = React.useState(0);
     let [birthMonth, setBirthMonth] = React.useState(0);
     let [birthDate, setBirthDate] = React.useState(0);
     let [birthMessage, setBirthMessage] = React.useState('');
-    let validateBirth = () => {
+    let validateBirth = React.useCallback(() => {
         if (birthYear === 0 || birthMonth === 0 || birthDate === 0) {
             setBirthMessage('생년월일을 적어주세요.');
             return false;
@@ -39,11 +39,11 @@ function Console() {
         }
         setBirthMessage('');
         return true;
-    }
+    }, [birthDate, birthMonth, birthYear])
 
     let [myName, setMyName] = React.useState('');
     let [myNameMessage, setMyNameMessage] = React.useState('');
-    let validateMyName = () => {
+    let validateMyName = React.useCallback(() => {
         if (myName.length < 1) {
             setMyNameMessage('이름을 적어주세요.');
             return false;
@@ -54,12 +54,12 @@ function Console() {
         }
         setMyNameMessage('');
         return true;
-    }
+    }, [myName])
 
     let [idFront, setIdFront] = React.useState('');
     let [idBack, setIdBack] = React.useState('');
     let [idMessage, setIdMessage] = React.useState('');
-    let validateId = () => {
+    let validateId = React.useCallback(() => {
         if (!/[0-9]{6}/.test(idFront) || !/[0-9]{7}/.test(idBack)) {
             setIdMessage('올바른 주민등록번호를 적어주세요.');
             return false;
@@ -67,28 +67,28 @@ function Console() {
 
         setIdMessage('');
         return true;
-    }
+    }, [idBack, idFront])
 
     let [email, setEmail] = React.useState('');
     let [emailMessage, setEmailMessage] = React.useState('');
-    let validateEmail = () => {
+    let validateEmail = React.useCallback(() => {
         if (!email) {
             setEmailMessage('이메일을 입력해주세요.');
             return false;
         }
 
-        const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!regex.test(email)) {
             setEmailMessage('이메일의 형식이 올바르지 않습니다.');
             return false;
         }
         setEmailMessage('');
         return true;
-    }
+    }, [email])
 
     let [file, setFile] = React.useState<File>();
     let [fileMessage, setFileMessage] = React.useState('');
-    let validateFile = () => {
+    let validateFile = React.useCallback(() => {
         if (!file) {
             setFileMessage('사망증명서를 업로드해주세요.');
             return false;
@@ -96,7 +96,7 @@ function Console() {
 
         setFileMessage('');
         return true;
-    }
+    }, [file])
 
     let entries = React.useMemo<EntryType[]>(() => {
         let result: EntryType[] =  [
@@ -156,7 +156,7 @@ function Console() {
             name: '사망증명서 업로드',
             body: (
                 <Dropzone onDrop={ acceptedFiles => {
-                    if (acceptedFiles.length == 0) return;
+                    if (acceptedFiles.length === 0) return;
                     setFile(acceptedFiles[0]);
                 }}>
                     {({getRootProps, getInputProps}) => (
@@ -173,7 +173,7 @@ function Console() {
         }];
 
         return result;
-    }, [birthDate, birthMessage, birthMonth, birthYear, email, emailMessage, name, nameMessage, validateBirth, validateEmail, validateName]);
+    }, [birthDate, birthMessage, birthMonth, birthYear, email, emailMessage, name, nameMessage, validateBirth, validateEmail, validateName, file, fileMessage, idBack, idFront, idMessage, myName, myNameMessage, validateFile, validateId, validateMyName]);
 
     let validateAll = async () => {
         let result = true;

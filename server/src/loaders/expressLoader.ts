@@ -19,7 +19,7 @@ const postRateLimiter = rateLimiter({
 
 export default async (app : express.Application) => {
     app.use(cors({
-        origin: ['https://localhost:3000', 'https://localhost:3000', 'https://mymemento.kr', 'https://www.mymemento.kr'],
+        origin: ['https://localhost:3000', 'http://localhost:3000', 'https://mymemento.kr', 'https://www.mymemento.kr'],
         credentials: true,
     }));
     app.use(bodyParser.json());

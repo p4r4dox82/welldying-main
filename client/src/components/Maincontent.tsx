@@ -5,7 +5,7 @@ import { getComments } from '../etc/api/comment';
 import usePromise from '../etc/usePromise';
 import { Link } from 'react-router-dom';
 
-import { MementoMainVector, MementoNoteVector, MementoBookVector, MementoContentVector, MementoMakeBookVector, MementoTogetherNoteVector, LeftVector2, RightVector2, RightVector, LeftArrowVector, RightArrowVector, Colon, like_vector, MementoDotVector, leftVector, rightVector } from '../img/Vectors';
+import { MementoMainVector, MementoNoteVector, MementoBookVector, MementoContentVector, MementoMakeBookVector, MementoTogetherNoteVector, LeftVector2, RightVector2, RightVector, LeftArrowVector, RightArrowVector, Colon, like_vector, MementoDotVector } from '../img/Vectors';
 import { parseDate } from '../etc';
 import { useSelector } from 'react-redux';
 import { RootReducer } from '../store';
@@ -15,7 +15,7 @@ function Maincontent() {
     let [, AllContents] = usePromise(getContents);
     let [, AllComments] = usePromise(getComments);
     let [review_number, setreview_number] = React.useState<number>(1);
-    let [total_review_number, settotal_review_number] = React.useState<number>(6);
+    let [total_review_number, ] = React.useState<number>(6);
     let [userdata, setUserdata] = React.useState<{ likes: string[], bookmark: string[], read: string[] }>({ likes: [], bookmark: [], read: [] });
     let [liked, setLiked] = React.useState<boolean>(false);
 
@@ -111,16 +111,16 @@ function Maincontent() {
           } else {
             setLiked(false);
           }
-    }, [newContent]);
+    }, [newContent, user]);
 
     let PopularContents = React.useMemo(() => ContentCategorySelected.allcontents?.filter((content, key) => key < 9), [ContentCategorySelected]);
     let PopularContent = React.useMemo(() => {
         if(!PopularContents) return;
         return PopularContents[popularContentNumber];
-    }, [newContents, popularContentNumber]);
+    }, [popularContentNumber, PopularContents]);
 
     let MainComents = React.useMemo(() => AllComments?.filter((comment) => comment.id >= 62),[AllComments]);
-    let [CommentNumber, setCommentNumber] = React.useState<number>(0);
+    let [CommentNumber, ] = React.useState<number>(0);
     let Comment = React.useMemo(() => {
         if(!MainComents) return;
         return MainComents[CommentNumber];
@@ -223,7 +223,7 @@ function Maincontent() {
                 </div>
             </>
         );
-    }, [ContentCategory, MementoContentCategoryArray, newContentNumber, newContent, PopularContents, PopularContent, userdata, liked]);
+    }, [ContentCategory, MementoContentCategoryArray, newContentNumber, newContent, PopularContent, userdata, liked, ContentCategorySelected, popularContentNumber, user, PopularContents]);
 
     let comment_content = React.useRef<any>(null);
     let LinkCommentContent = () => {comment_content.current.click()};
@@ -279,7 +279,6 @@ function Maincontent() {
     let LinkContent = React.useRef<any>(null);
     let LinkNote = React.useRef<any>(null);
     let LinkBook = React.useRef<any>(null);
-    let LinkAboutusClick = () => LinkAboutus.current.click();
     let LinkContentClick = () => LinkContent.current.click();
     let LinkNoteClick = () => LinkNote.current.click();
     let LinkBookClick = () => LinkBook.current.click();
@@ -375,7 +374,7 @@ function Maincontent() {
                 <img src={imageUrl(`${MainText[4].imageUrl}`)} alt="" className="mainBlockImage" style = {{opacity: (MainCoverNumber === 4 ? '1' : '0')}}/>
             </div>
         );
-    }, [MainCoverNumber]);
+    }, [MainCoverNumber, MainText]);
 
     return (
         <div className='main_display'>

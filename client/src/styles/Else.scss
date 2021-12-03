@@ -781,3 +781,24 @@ div.ConfirmBook {
     margin-top: 100px;
     left: calc(50vw - 500px/2 + 460px);
 }
+
+
+.generateQRcode {
+    
+}
+.generateQRcode .getInformationBlock {
+    min-height: 100px;
+    width: 1032px;
+    margin: auto;
+}
+.generateQRcode .QRCodeBlock {
+    padding-bottom: 100px;
+    text-align: center;
+    width: 1032px;
+    margin: auto;
+}
+.generateQRcode .QRCodeBlock table tbody tr td {
+    min-width: 150px;
+    height: 150px;
+    vertical-align: middle;
+}

@@ -2,14 +2,13 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ContentCover from '../components/ContentCover';
-import Content_type from '../components/Content_type';
+import ContentType from '../components/ContentType';
 import ContentQuestion from '../components/ContentQuestion';
-import OtherContent from '../components/OtherContent';
 import ContentBorder from '../components/ContentBorder';
 import Contentbox from '../components/Contentbox';
-import { getContents, getContent, content_userdata } from '../etc/api/content';
+import { getContents, content_userdata } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
-import { Link, match, Redirect } from 'react-router-dom';
+import { match } from 'react-router-dom';
 import { imageUrl } from '../etc/config';
 import { parseDate } from '../etc';
 import { useSelector } from 'react-redux';
@@ -33,7 +32,7 @@ function ContentPage ({ match } : Props) {
     let [title, setTitle] = React.useState<string>('');
     let [tag, setTag] = React.useState<string>('');
     let [type, setType] = React.useState<string>('');
-    let [summary, setSummary] = React.useState<string>('');
+    let [, setSummary] = React.useState<string>('');
     React.useEffect(() => {
         if(!content) return;
         setTitle(content.title);
@@ -51,13 +50,13 @@ function ContentPage ({ match } : Props) {
                 content_userdata(id, new_userdata);
             }
         }
-    }, [user, userdata]);
+    }, [user, userdata,id]);
     let [more_contents_count, setMore_contents_count] = React.useState<number>(6);
-    let more_contents = contents?.slice(0, more_contents_count);
+    let [more_contents, setMore_contents] = React.useState<Array<any>>(contents?.slice(0, more_contents_count));
 
     React.useEffect(() => {
-        more_contents = contents?.slice(0, more_contents_count);
-    }, [more_contents_count]);
+        setMore_contents(contents?.slice(0, more_contents_count));
+    }, [more_contents_count, contents]);
 
     React.useEffect(() => {
         window.scrollTo(0, 0);
@@ -69,7 +68,7 @@ function ContentPage ({ match } : Props) {
             <>
             <Header additionalClass = '' />
             <ContentCover additionalClass = '0' title = {title} tag = {tag} date = {String(parseDate(new Date(Number(content?.date))))} source = {content?.source}/>
-            <Content_type additionalClass = {type} content = {content}/>
+            <ContentType additionalClass = {type} content = {content}/>
             <div className = 'block contentpage' style = {{marginTop: '176px'}}>
                 <div className = 'contentsummary margin_large'>
                     <div className = 'title GB px20'>
@@ -103,14 +102,14 @@ function ContentPage ({ match } : Props) {
                     </div>
                     {more_contents_count !== maxContentId && <div className = 'more_border' onClick = {() => {setMore_contents_count(Math.min(more_contents_count + 6, maxContentId))}}>
                         <div className = 'GB px18 bold op5'>더보기</div>
-                        <img className = 'more_button' src = {imageUrl('ContentPage/more_button.png')} />
+                        <img alt = "" className = 'more_button' src = {imageUrl('ContentPage/more_button.png')} />
                     </div>}
                 </div>
             </div>
             <Footer additionalClass = ''/>
         </>
         )
-    }, [id, content, title, tag, type, summary, contents, more_contents_count]);
+    }, [content, title, tag, type, more_contents_count, maxContentId, more_contents]);
     
     return (
         <>

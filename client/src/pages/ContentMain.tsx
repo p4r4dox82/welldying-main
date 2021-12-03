@@ -6,13 +6,10 @@ import ContentDetail from '../components/ContentDetail';
 import ContentSlide from '../components/ContentSlide';
 import ContentSlide2 from '../components/ContentSlide2';
 import Contentbox from '../components/Contentbox';
-import { getContents, Content } from '../etc/api/content';
+import { getContents } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
-import { Link, match, Redirect } from 'react-router-dom';
+import { Link, match } from 'react-router-dom';
 import { imageUrl } from '../etc/config';
-import { RootReducer } from '../store';
-import { useSelector } from 'react-redux';
-import { getCategorys } from '../etc/api/category';
 
 
 interface MatchParams {
@@ -26,7 +23,6 @@ interface Props {
 function ContentMain({ match } : Props) {
     let id = React.useMemo(() => Number.parseInt(match.params.id), [match]);    
     let [, contents] = usePromise(getContents);
-    let [, categorys] = usePromise(getCategorys);
     let popular_contents = React.useMemo(() => contents?.filter((content) => [44, 34, 39].includes(content.id)), [contents]);
     let subject_contents1 = React.useMemo(() => contents?.filter((content) => [2, 43, 23, 46].includes(content.id)), [contents]);
     let subject_contents2 = React.useMemo(() => contents?.filter((content) => [20, 35, 48, 18].includes(content.id)), [contents]);
@@ -59,7 +55,6 @@ function ContentMain({ match } : Props) {
     }
 
     let LinkNote = React.useRef<any>(null);
-    let LinkNoteClick = () => LinkNote.current.click();
 
     let html = React.useMemo(() => {
         if(!subject_contents1 || !subject_contents2 || !subject_contents3) return;
@@ -144,10 +139,10 @@ function ContentMain({ match } : Props) {
                           <Contentbox additionalClass = 'question' content = {content}/>)}
                       </div>
                       {(question_contentsNumber && position !== (question_contentsNumber - 3)) && <div className = 'button_background right'>
-                          <img className = 'slide_right_button' src = {imageUrl('ContentPage/slide_right_button.png')} onClick = {() => {let newposition = Math.min(position + 3, Number(question_contentsNumber) - 3); setPosition(newposition); moveLeft(newposition);}}/>
+                          <img alt = "" className = 'slide_right_button' src = {imageUrl('ContentPage/slide_right_button.png')} onClick = {() => {let newposition = Math.min(position + 3, Number(question_contentsNumber) - 3); setPosition(newposition); moveLeft(newposition);}}/>
                       </div>}
                       {position !== 0 && <div className = 'button_background left'>
-                          <img className = 'slide_left_button' src = {imageUrl('ContentPage/slide_left_button.png')} onClick = {() => {let newposition = Math.max(position - 3, 0); setPosition(newposition); moveRight(newposition);}} />
+                          <img alt = "" className = 'slide_left_button' src = {imageUrl('ContentPage/slide_left_button.png')} onClick = {() => {let newposition = Math.max(position - 3, 0); setPosition(newposition); moveRight(newposition);}} />
                       </div>}
                   </div>
               </div>
@@ -162,7 +157,7 @@ function ContentMain({ match } : Props) {
                       </div>
                       {categoryContentsNumber !== maxcategoryContents && <div className = 'more_border' onClick = {() => {setcategoryContentNumber(Math.min(categoryContentsNumber + 8, maxcategoryContents))}}>
                           <div className = 'GB px18 bold op5'>더보기</div>
-                          <img className = 'more_button' src = {imageUrl('ContentPage/more_button.png')} />
+                          <img alt = "" className = 'more_button' src = {imageUrl('ContentPage/more_button.png')} />
                       </div>}
                   </div>
               </div>
@@ -170,7 +165,7 @@ function ContentMain({ match } : Props) {
             <Footer additionalClass = ' '/>
             </>
         );
-    }, [id, popular_contents, categorys, contents, categoryContentsNumber, maxcategoryContents, categoryContents, position, question_contents, subject_contents1, subject_contents2, subject_contents3])
+    }, [id, popular_contents, categoryContentsNumber, maxcategoryContents, categoryContents, position, question_contents, subject_contents1, subject_contents2, subject_contents3, question_contentsNumber])
 
     return (
     <>

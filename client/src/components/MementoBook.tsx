@@ -1,13 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { imageUrl } from '../etc/config';
-import { RootReducer } from '../store';
 import { Link } from 'react-router-dom';
 
 import { Colon, MementoLogo } from '../img/Vectors';
-import { getUsers, setUsers, User, UserData, UserGiveInfo } from '../etc/api/user';
-import usePromise from '../etc/usePromise';
-import { UserState } from '../store/user';
+import { setUsers, UserData } from '../etc/api/user';
 
 interface Props {
     bookOwner: UserData;
@@ -25,7 +21,7 @@ function findDataAndEditInArray(array: Array<any>, oldValue: any, newValue: any)
 function MementoBook (props: Props) {
     let bookOwner = props.bookOwner;
     let watchingBookUser = props.watchingBookUser;
-    let bookisMine = (bookOwner == watchingBookUser);
+    let bookisMine = (bookOwner === watchingBookUser);
     let bookOwnerUserInfoByWatchingBookUser = React.useMemo(() => watchingBookUser?.UsersInfo.get.find((userInfo) => userInfo.username === bookOwner?.username), [bookOwner, watchingBookUser]);
 
 
@@ -69,7 +65,7 @@ function MementoBook (props: Props) {
         return (
             <div className="more NS px12 whiteop5" style = {{cursor: 'pointer'}}>{`메멘토 북 수정하기 >`}</div>
         )
-    }, [bookisMine, bookOwner]);
+    }, []);
 
     let bookOwnerInfoOnBottom = React.useMemo(() => {
         return (

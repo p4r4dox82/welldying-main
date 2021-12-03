@@ -1,4 +1,3 @@
-import { directive } from '@babel/types';
 import React from 'react';
 import { match } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -39,14 +38,13 @@ export let productInformationArray : productInformation[] = [
 
 function ProductPage({ match }: Props) {
     let id = Number.parseInt(match.params.id || '1');
-    let productInformation = React.useMemo(() => productInformationArray[id - 1], [id, productInformationArray]);
+    let productInformation = React.useMemo(() => productInformationArray[id - 1], [id]);
     let [product, setProduct] = React.useState<any>();
     let [productInformationNavigationMenu, setProductInformationNavigationMenu] = React.useState<number>(0);
     let setProductBySelect = (e: any) => {
         setProduct(e.target.value);
     }
     let defaultProduct = "상품을 선택해주세요.";
-    let productName = "웰다잉 대화카드 [함께, 기억]";
     React.useEffect(() => window.scrollTo(0, 0), []);
     React.useEffect(() => setProduct(productInformation.title), [productInformation]);
     return (

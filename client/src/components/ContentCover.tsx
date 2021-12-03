@@ -13,7 +13,7 @@ function ContentName (props : Props) {
   return (
     <>
       <div className = 'block'>
-          <img className = 'background small' src = {imageUrl('ContentPage/content_background.png')} />
+          <img alt = "" className = 'background small' src = {imageUrl('ContentPage/content_background.png')} />
           <div className = 'background small' />
           <div className = 'contentname'>
               <div className = 'main_title'>

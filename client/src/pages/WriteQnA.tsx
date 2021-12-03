@@ -5,10 +5,7 @@ import { imageUrl } from '../etc/config';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SubmenuContainer from '../components/SubmenuContainer';
-import { getContent } from '../etc/api/content';
-import { getSections } from '../etc/api/section';
 import { writeQna } from '../etc/api/qna';
-import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
 
 interface MatchParams {
@@ -44,7 +41,7 @@ const checkline = (data: string) => {
 function WriteQnA({ match }: Props) {
     let id = Number.parseInt(match.params.id);
     let user = useSelector((state: RootReducer) => state.user);
-    let [error, setError] = React.useState<string>();
+    let [, setError] = React.useState<string>();
 
     let [editDone, setEditDone] = React.useState<boolean>(false);
 
@@ -57,12 +54,12 @@ function WriteQnA({ match }: Props) {
     let [title, setTitle] = React.useState<string>('');
     let [detail, setDetail] = React.useState<string>('');
     let [date, setDate] = React.useState<number>(0);
-    let [answerdate, setAnswerdate] = React.useState<number>(0);
+    let [answerdate, ] = React.useState<number>(0);
     let [open, setOpen] = React.useState<string>('공개');
     let [password, setPassword] = React.useState<string>('');
     let [classification, setClassification] = React.useState<string>('메멘토 서비스 질문');
     let [sns_notice, setSns_notice] = React.useState<string>('수신 원함');
-    let [answer, setAnswer] = React.useState<string>('');
+    let [answer, ] = React.useState<string>('');
     let [characternumbers, setCharacternumbers] = React.useState<number>(0);
 
 
@@ -75,7 +72,7 @@ function WriteQnA({ match }: Props) {
                 <div className = 'submenu_container'>
                     <SubmenuContainer additionalClass = 'qna'/>
                     {false && <div className = 'searchContainer'>
-                        <img src = {imageUrl('search_image.png')} />
+                        <img src = {imageUrl('search_image.png')} alt = ""/>
                         <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)메멘토 이벤트'/>
                     </div>}
                 </div>

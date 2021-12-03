@@ -2,10 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { match } from 'react-router';
 import { Link } from 'react-router-dom';
-import { forEachTrailingCommentRange } from 'typescript';
 import { parseDate } from '../etc';
 import { getAnswers, writeAnswer } from '../etc/api/answer';
-import { getContent, getContents } from '../etc/api/content';
+import { getContents } from '../etc/api/content';
 import { uploadImage_formdata } from '../etc/api/image';
 import { getQuestions } from '../etc/api/question';
 import usePromise from '../etc/usePromise';
@@ -32,12 +31,12 @@ function MobileContentPage({ match }: Props) {
     let question = allQuestions?.find((question) => question.id === content?.question);
     let categoryAllContents = React.useMemo(() => {
         return allContents?.filter((content) => content.category.includes(content.category[0]));
-    }, [content]);
+    }, [allContents]);
     let [width, setWidth] = React.useState<number>(0);
     let [answerCol, setAnswerCol] = React.useState<number>(0);
     let [answerRow, setAnswerRow] = React.useState<number>(5);
     let [answerLength, setAnswerLength] = React.useState<number>(0);
-    let [answerByteLength, setAnswerByteLength] = React.useState<number>(0);
+    let [, setAnswerByteLength] = React.useState<number>(0);
     let [answer, setAnswer] = React.useState<string>('');
     let [imageUri, setImageUri] = React.useState<string>('');
     React.useEffect(() => {
@@ -58,6 +57,7 @@ function MobileContentPage({ match }: Props) {
             let bytelen = byte.length;
             newRow += (bytelen - bytelen/answerCol)/answerCol + 1;
             newRow = parseInt(String(newRow));
+            return newRow;
         })
         setAnswerByteLength(bytelength);
         setAnswerRow(Math.max(5, newRow));
@@ -85,16 +85,16 @@ function MobileContentPage({ match }: Props) {
             let bytelen = byte.length;
             newRow += (bytelen - bytelen/answerCol)/answerCol + 1;
             newRow = parseInt(String(newRow));
+            return newRow;
         })
         setAnswerByteLength(bytelength);
         setAnswerRow(Math.max(5, newRow));
         if(!userAnswer.imageData || userAnswer.imageData.imageUrl === '')
             setImageUri('');
         else setImageUri(userAnswer.imageData.imageUrl);
-    }, [userAnswer])
+    }, [userAnswer, answerCol])
 
     //pageVariable
-    let [pagenumber, setPagenumber] = React.useState<number>(0);
     let pagetotalnumber = React.useMemo(() => content?.detail.bookdetail.length, [content]);
     interface touchData {
         initialX: number;
@@ -103,8 +103,6 @@ function MobileContentPage({ match }: Props) {
         UDdir: number;
     }
     let [PageTouchData, setPageTouchData] = React.useState<touchData>({ initialX: 0, initialY: 0, LRdir: 0, UDdir: 0 });
-    let [PageTouchDir, setPageTouchDir] = React.useState<number>(0);
-    let [update, setUpdate] = React.useState<number>(0);
 
     let dragDirection = (e:any) => {
         if(PageTouchData.initialX !== 0 && PageTouchData.initialY !== 0 && pagetotalnumber) {
@@ -120,9 +118,7 @@ function MobileContentPage({ match }: Props) {
     //save answer
     let [save, setSave] = React.useState<boolean>(false);
     let input_file = React.useRef<any>(null);
-    let [state, setState] = React.useState<any>({ image: '', imageLoaded: false });
-    let [cropImage, setCropImage] = React.useState<boolean>(false);
-    let [save_success, setSave_success] = React.useState<boolean>(false);
+    let [, setCropImage] = React.useState<boolean>(false);
     let handleFileinput  = async (e: any) => {
         let formData = new FormData();
         formData.append('image', e.target.files[0]);

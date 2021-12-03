@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { parseDate } from "../etc";
 import { Content } from "../etc/api/content";
-import { imageUrl } from "../etc/config";
 import { Colon } from "../img/Vectors";
 
 interface Props {

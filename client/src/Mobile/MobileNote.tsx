@@ -1,12 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { parseDate } from '../etc';
 import { getQuestions } from '../etc/api/question';
 import { getSections } from '../etc/api/section';
 import { getAnswers } from '../etc/api/answer';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
-import { Colon, LeftArrowVector, leftVector, PlusVector, rightVector } from '../img/Vectors';
+import { LeftArrowVector, leftVector, rightVector } from '../img/Vectors';
 import { RootReducer } from '../store';
 import MobileHeader from '../MobileComponents/MobileHeader';
 import MobileNoteQuestion from '../MobileComponents/MobileNoteQuestion';
@@ -55,7 +54,7 @@ function MobileNote() {
             else return true;
         })
         return unwrittensectionQuestions;
-    }, [allQuestions, section, sectionNum, allAnswers]);
+    }, [allQuestions, section, sectionNum, allAnswers, user]);
     
     //answerVariable
     
@@ -74,6 +73,8 @@ function MobileNote() {
                                 )
                             })}</div>
                         )
+                        else
+                            return <></>;
                     })}
                 </div>
             </div>
@@ -112,6 +113,8 @@ function MobileNote() {
                                     if(question) return (
                                         <MobileNoteQuestion question = {question} answer = {answer} written = {true} />
                                     )
+                                    else 
+                                        return <></>;
                                 })}
                             </div>}
                             {totalPageNumber > 1 && <div className="buttonContainer">

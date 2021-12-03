@@ -12,6 +12,7 @@ import newsRouter from '../routes/news';
 import qnaRouter from '../routes/qna';
 import commentRouter from '../routes/comment';
 import categoryRouter from '../routes/category';
+import orderRouter from '../routes/order';
 import { ModelsType } from './mongooseLoader';
 import { AWSServices } from './awsLoader';
 
@@ -28,6 +29,7 @@ export default async (app : Application, models: ModelsType, awsServices: AWSSer
     app.use('/qna', qnaRouter(models.Qna));
     app.use('/comment', commentRouter(models.Comment));
     app.use('/category', categoryRouter(models.Category));
+    app.use('/order', orderRouter(models.Order, models.User, awsServices.sns));
 
     app.use(errorHandler);
 }
