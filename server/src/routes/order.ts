@@ -16,6 +16,18 @@ export default (Order: Model<OrderDocument>, User: Model<UserDocument>, sns: AWS
         }).promise();
     }
 
+    router.post('/addNewOrder', async(req, res, next) => {
+      const orderData: OrderType = req.body.orderData;
+
+      if (!await Order.findOneAndUpdate({ merchant_uid: orderData.merchant_uid }, { orderData })) {
+          const order = new Order(orderData);
+          order.save();
+      }
+
+      res.sendStatus(200);
+      return;
+    });
+
     router.post('/payments/complete', async(req, res, next) => {
         try {
             const { imp_uid, merchant_uid } = req.body; // req의 body에서 imp_uid, merchant_uid 추출
@@ -27,13 +39,11 @@ export default (Order: Model<OrderDocument>, User: Model<UserDocument>, sns: AWS
             const { access_token } = getToken.data.response;
             const getPaymentData = await Axios.get(`https://api.iamport.kr/payments/${imp_uid}`, { headers: {Authorization: access_token} });
             const paymentData = getPaymentData.data.response;
-
-            const order = await Order.findById(paymentData.merchant_uid);
-            const amountToBePaid = order?.amount;
-
+            const order = await Order.find({ merchant_uid: paymentData.merchant_uid });
+            const amountToBePaid = order[0].amount;
+            
             const { amount, status } = paymentData;
             if(amount === amountToBePaid) {
-              await Order.findByIdAndUpdate(merchant_uid, { $set: paymentData });
               switch(status) {
                 case "paid":
                   res.send({ status: "success", message: "일반 결제 성공"});
@@ -46,20 +56,6 @@ export default (Order: Model<OrderDocument>, User: Model<UserDocument>, sns: AWS
             res.status(400).send(e);
           }
     });
-
-    router.post('/addNewOrder', async(req, res, next) => {
-      let merchant_uid = req.body.merchant_uid;
-      let amount = Number.parseInt(req.body.amount);
-      let orderName = req.body.orderName;
-
-      if (!await Order.findOneAndUpdate({ merchant_uid: merchant_uid }, { amount: amount, orderName: orderName })) {
-          const order = new Order({ merchant_uid : merchant_uid, amount: amount, orderName: orderName });
-          order.save();
-      }
-
-      res.sendStatus(200);
-      return;
-    })
 
     return router;
 }

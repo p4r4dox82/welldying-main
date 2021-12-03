@@ -13,7 +13,7 @@ export interface OrderType {
 };
 
 export const rspSuccess = async(rsp: any) => {
-    let response = await Axios.post(`${apiAddress}/payments/complete`, {
+    let response = await Axios.post(`${apiAddress}/order/payments/complete`, {
         imp_uid: rsp.imp_uid, merchant_uid: rsp.merchant_uid
     }, { withCredentials: true });
     let data = response.data;
@@ -22,8 +22,8 @@ export const rspSuccess = async(rsp: any) => {
 }
 
 export const addNewOrder = async(orderData: OrderType) => {
-    let response = await Axios.post(`${apiAddress}/addNewOrder`, {
-        merchant_uid: orderData.merchant_uid, amount: orderData.amount, orderName: orderData.orderName
+    let response = await Axios.post(`${apiAddress}/order/addNewOrder`, {
+        orderData: orderData
     }, { withCredentials: true });
 
     return response.status === 200;

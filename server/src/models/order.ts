@@ -21,5 +21,6 @@ export const orderSchema = new Schema<OrderDocument>({
     orderCellphone: String,
     zipCode: String,
     fullAddress: String,
-    detailAddress: String
+    detailAddress: String,
+    success: Boolean
 });

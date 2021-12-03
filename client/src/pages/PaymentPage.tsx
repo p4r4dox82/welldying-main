@@ -427,8 +427,8 @@ function PaymentPage({ match }: Props) {
     }, [scroll]);
     React.useEffect(() => {
         window.scrollTo(0, 0)
-        setOrderData({...orderData, merchant_uid: `ORD00${id}-` + new Date().getTime()});
-    }, []);
+        setOrderData({...orderData, merchant_uid: `ORD00${id}-` + new Date().getTime(), amount: productInformation.price});
+    }, [productInformation]);
     React.useEffect(() => {
         if(zipCode !== "" && fullAddress !== "" && agree) {
             setCheckValidate(true);
@@ -441,12 +441,12 @@ function PaymentPage({ match }: Props) {
         IMP.request_pay({
             pg: "html5-inicis",
             pay_method: purchaseMethod?.kgName,
-            merchant_uid: merchant_uid,
+            merchant_uid: orderData.merchant_uid,
             name: productInformation.title,
-            amount: productInformation.price,
-            buyer_name: orderName,
-            buyer_tel: orderCellphone,
-            buyer_email: orderEmail
+            amount: orderData.amount,
+            buyer_name: orderData.orderName,
+            buyer_tel: orderData.orderCellphone,
+            buyer_email: orderData.orderEmail
         }, async (rsp : any) => {
             if(rsp.success) {
                 let data = await rspSuccess(rsp);
@@ -596,7 +596,7 @@ function PaymentPage({ match }: Props) {
                         </div>
                         <button className="purchaseButton" onClick = {checkValidate ? async () => { 
                             if(await addNewOrder(orderData)) {
-                                requestPay();
+                                await requestPay();
                             }
                             else {
 
