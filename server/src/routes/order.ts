@@ -10,15 +10,15 @@ export default (Order: Model<OrderDocument>, User: Model<UserDocument>, sns: AWS
     let router = Router();
 
     const sendSMS = async (message: string, phoneNumber: string) => {
-      await sns.publish({
-          Message: message,
-          PhoneNumber: phoneNumber,
-      }).promise();
-  }
+        await sns.publish({
+            Message: message,
+            PhoneNumber: phoneNumber,
+        }).promise();
+    }
 
     router.post('/payments/complete', async(req, res, next) => {
         try {
-            const { imp_uid, merchant_uid, username, cellphone } = req.body; // req의 body에서 imp_uid, merchant_uid 추출
+            const { imp_uid, merchant_uid } = req.body; // req의 body에서 imp_uid, merchant_uid 추출
             // 액세스 토큰(access token) 발급 받기
             const getToken = await Axios.post('https://api.iamport.kr/users/getToken', {
                 imp_key: "6241629403610731", // REST API 키
@@ -35,12 +35,6 @@ export default (Order: Model<OrderDocument>, User: Model<UserDocument>, sns: AWS
             if(amount === amountToBePaid) {
               await Order.findByIdAndUpdate(merchant_uid, { $set: paymentData });
               switch(status) {
-                case "ready":
-                  const { vbank_num, vbank_date, vbank_name } = paymentData;
-                  await User.findByIdAndUpdate(username, { $set: { vbank_num, vbank_date, vbank_name }});
-                  let data = await sendSMS(`가상계좌 발급이 성공되었습니다. 계죄번호 ${vbank_num} ${vbank_date} ${vbank_name}`, cellphone);
-                  res.send({ status: "vbankIssued", message: "가상계좌 발급 성공" });
-                  break;
                 case "paid":
                   res.send({ status: "success", message: "일반 결제 성공"});
                   break;
@@ -52,6 +46,20 @@ export default (Order: Model<OrderDocument>, User: Model<UserDocument>, sns: AWS
             res.status(400).send(e);
           }
     });
+
+    router.post('/addNewOrder', async(req, res, next) => {
+      let merchant_uid = req.body.merchant_uid;
+      let amount = Number.parseInt(req.body.amount);
+      let orderName = req.body.orderName;
+
+      if (!await Order.findOneAndUpdate({ merchant_uid: merchant_uid }, { amount: amount, orderName: orderName })) {
+          const order = new Order({ merchant_uid : merchant_uid, amount: amount, orderName: orderName });
+          order.save();
+      }
+
+      res.sendStatus(200);
+      return;
+    })
 
     return router;
 }

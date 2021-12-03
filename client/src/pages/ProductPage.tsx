@@ -24,7 +24,7 @@ export let productInformationArray : productInformation[] = [
     {
         subtitle: "함께 그리는 삶의 마침표",
         title: "웰다잉 대화 카드 [함께, 기억]",
-        price: 12900,
+        price: 100,
         imageUri: imageUrl("SellingPage/Product1"),
     },
     {
