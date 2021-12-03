@@ -34,12 +34,6 @@ export let productInformationArray : productInformation[] = [
         price: 20000,
         imageUri: imageUrl("SellingPage/Product2"),
     },
-    {
-        subtitle: "삶의 끝에서 사랑하는 이들에게 전하는 당신의 마지막 메세지",
-        title: "메멘토 인증카드",
-        price: 10900,
-        imageUri: imageUrl("SellingPage/Product3"),
-    },
     
 ]
 
