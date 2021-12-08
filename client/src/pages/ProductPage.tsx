@@ -24,7 +24,7 @@ export let productInformationArray : productInformation[] = [
     {
         subtitle: "함께 그리는 삶의 마침표",
         title: "웰다잉 대화 카드 [함께, 기억]",
-        price: 100,
+        price: 10000,
         imageUri: imageUrl("SellingPage/Product1"),
     },
     {
@@ -93,7 +93,7 @@ function ProductPage({ match }: Props) {
                             return (
                                 <div className="navigationMenuElement" onClick = {() => {
                                     setProductInformationNavigationMenu(key);
-                                    if(key == 0)
+                                    if(key === 0)
                                         moveToProductInformationNavigationRef(0);
                                     else if(key == 3)
                                         moveToProductInformationNavigationRef(1);

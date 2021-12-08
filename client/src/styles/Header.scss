@@ -302,7 +302,7 @@ footer {
         font-family: Noto Sans;
         font-style: normal;
         font-weight: bold;
-        font-size: 12px;
+        font-size: 11px;
         line-height: 16px;
         letter-spacing: 0.05em;
 
@@ -313,22 +313,21 @@ footer {
       div {
           &:not(:last-child)::after {
               content: '|';
-              padding: 0px 17px;
+              padding: 0px 10px;
           }
       }
     }
     div.about_company_container_2 {
       display: flex;
       flex-wrap:wrap;
-      width:650px;
+      width:670px;
       margin-top:10px;
       div.item {
         font-family: Noto Sans;
         font-style: normal;
         font-weight: bold;
-        font-size: 12px;
-         line-height: 16px;
-        letter-spacing: 0.05em;
+        font-size: 11px;
+        line-height: 16px;
 
         color: #FFFFFF;
 
@@ -337,7 +336,7 @@ footer {
       div {
           &:not(:last-child)::after {
               content: '|';
-              padding: 0px 17px;
+              padding: 0px 10px;
           }
       }
     }
