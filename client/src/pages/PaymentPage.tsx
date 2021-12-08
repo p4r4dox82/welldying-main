@@ -603,10 +603,9 @@ function PaymentPage({ match }: Props) {
                                 }
                             } else if(!agree) {
                                 alert("구매 이용 약관 및 개인정보 수집에 동의해주십시오.");
-                            } else if(purchaseMethod === null) {
+                            } else if(purchaseMethod === undefined || purchaseMethod === null) {
                                 alert("결제 방법을 선택해주십시오.");
-                            }
-                            else {
+                            } else {
                                 alert("입력하신 정보가 잘못되었습니다.");
                             }
                         }}>{productInformation.price}원 결제하기</button>

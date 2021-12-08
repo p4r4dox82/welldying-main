@@ -89,31 +89,18 @@ export default (Order: Model<OrderDocument>, User: Model<UserDocument>, sns: AWS
                 break;
               }
           }
-          // const getToken = await Axios.post('https://api.iamport.kr/users/getToken', {
-          //     imp_key: "6241629403610731", // REST API 키
-          //     imp_secret: "0ef47e9e5b67e36d3fa159a12ba8285644dc2c06640f7a131457632cc00df32c647d5adce627c21c"
-          // }, { headers : { "Content-Type": "application/json" }})
-          // const { access_token } = getToken.data.response;
-          // const getPaymentData = await Axios.get(`https://api.iamport.kr/payments/${imp_uid}`, { headers: {Authorization: access_token} });
-          // const paymentData = getPaymentData.data.response;
-          // const order = await Order.findOne({ merchant_uid: paymentData.merchant_uid });
-          // const amountToBePaid = order?.amount;
-          
-          // const { amount, status } = paymentData;
-          // if(amount === amountToBePaid) {
-          //   await Order.findOneAndUpdate({ merchant_uid: paymentData.merchant_uid }, { success: true });
-          //   switch(status) {
-          //     case "paid":
-          //       res.send({ status: "success", message: "일반 결제 성공"});
-          //       break;
-          //   }
-          // } else {
-          //   throw { status: "forgery", message: "위조된 결제시도" };
-          // }
         } catch (e) {
           res.status(400).send(e);
         }
-  });
+    });
+
+    router.get('/iamport-webhook-check/:merchant_uid', async(req, res) => {
+      console.log("asd");
+      const merchant_uid = req.params.merchant_uid;
+      let result = await Order.findOne({ merchant_uid: merchant_uid });
+
+      res.json(result);
+    })
 
     return router;
 }
