@@ -233,7 +233,8 @@ function NoteQuestion(props: Props) {
                 {leftVector}
             </div>
             <div className = 'question_container'>
-                <textarea className = 'answer_area GB px15 line40 op7' value={message} onChange={(e) => {setMessage(checkline(e.target.value)); setCharacternumbers(e.target.value.length);}} />
+                <textarea className = 'answer_area GB px15 line40 op7' value={message} onChange={(e) => {
+                    setMessage(checkline(e.target.value)); setCharacternumbers(e.target.value.length);}} />
                 <div className = 'characternumbers NS px12 bold op6'>
                 {Math.min(550, characternumbers) + ' / 550 자'}
                 </div>
@@ -247,7 +248,7 @@ function NoteQuestion(props: Props) {
                                 <img alt = "" className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (imageUri === '' ? '11px' : '0px')}}/>
                             </div>}
                         </button>
-                        <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
+                        <input type = 'file' onChange={(e) => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
                     </div>
                     {imageUri !== '' && <button className="delete green NS px12 whiteop10" onClick = {() => {
                         setImageUri('');
