@@ -33,89 +33,90 @@ const checkline = (data: string) => {
 }
 
 function NoteQuestion(props: Props) {
-  let question = props.question;
-  let [show_answer, setShow_answer] = React.useState<boolean>(false);
-  let [answer_type, setAnswer_type] = React.useState<string>('');
-
-  let id = React.useMemo(() => Number(question?.id), [question]);
-  let user = useSelector((state: RootReducer) => state.user);
-  let contentid = React.useMemo(() => question?.contents[0], [question]);
-  let [message, setMessage] = React.useState<string>('');
-  let [characternumbers, setCharacternumbers] = React.useState<number>(0);
-  let [imageUri, setImageUri] = React.useState<string>('');
-
-  let [save, setSave] = React.useState<boolean>(false);
-  let [save_success, setSave_success] = React.useState<boolean>(false);
-  let [upload, setUpload] = React.useState<boolean>(false);
-  let [del, setDel] = React.useState<boolean>(false);
-  let [add, setAdd] = React.useState<boolean>(false);
-  let [showcontent, setshowcontent] = React.useState<boolean>(false);
-  let [smallHover, setSmallHover] = React.useState<boolean>((props.type === 'small' ? false : true));
-
-  let [, answers] = usePromise(getAnswers);
-  let [, contents] = usePromise(getContents);
-  let answer = React.useMemo(() => answers?.find((answer) => answer.questionId === id), [answers, id]);
-  let content = React.useMemo(() => contents?.find((content) => content.id === contentid), [contents, contentid]);
-
-  let [booked, setBooked] = React.useState<number>(0);
+    let question = props.question;
+    let [show_answer, setShow_answer] = React.useState<boolean>(false);
+    let [answer_type, setAnswer_type] = React.useState<string>('');
   
-  let [crop, setCrop] = React.useState<{
-    unit: "px" | "%",
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-  }>({
-    unit: "px",
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  });
-
-  React.useEffect(() => {
-    setSmallHover((props.type === 'small' ? false : true));
-  }, [props])
-
-  React.useEffect(() => {
-    if(!answer) return;
-    setMessage(answer.message);
-    setCharacternumbers(answer.message.length);
-    if (answer.imageData.imageUrl !== '')
-        setImageUri(answer.imageData.imageUrl);
-    setCrop({ unit: 'px', x: answer?.imageData.cropX, y: answer?.imageData.cropY, width: 500, height: 300 });
-    setBooked(answer.book);
-  }, [answer]);
-
-  React.useEffect(() => {
-    if(imageUri !== answer?.imageData.imageUrl)
-        setCrop({ ...crop, x: 0, y: 0 });
-  }, [imageUri, crop, answer]);
-
-  let [exceptuser, setExceptUser] = React.useState<string[]>([]);
-
-  React.useEffect(() => {
-    if(!question) return;
-    setExceptUser(question.userdata.exceptuser);
-  }, [question]);
-
-  let input_file = React.useRef<any>(null);
-  let [cropImage, setCropImage] = React.useState<boolean>(false);
-  let handleFileinput  = async (e: any) => {
-    let formData = new FormData();
-    formData.append('image', e.target.files[0]);
-
-    const s3Uri = await uploadImage_formdata(formData);
-    console.log(s3Uri);
-    setImageUri(s3Uri);
-    if(s3Uri === undefined) {
-      setImageUri('');
+    let id = React.useMemo(() => Number(question?.id), [question]);
+    let user = useSelector((state: RootReducer) => state.user);
+    let contentid = React.useMemo(() => question?.contents[0], [question]);
+    let [message, setMessage] = React.useState<string>('');
+    let [characternumbers, setCharacternumbers] = React.useState<number>(0);
+    let [imageUri, setImageUri] = React.useState<string>('');
+  
+    let [save, setSave] = React.useState<boolean>(false);
+    let [save_success, setSave_success] = React.useState<boolean>(false);
+    let [upload, setUpload] = React.useState<boolean>(false);
+    let [del, setDel] = React.useState<boolean>(false);
+    let [add, setAdd] = React.useState<boolean>(false);
+    let [showcontent, setshowcontent] = React.useState<boolean>(false);
+    let [smallHover, setSmallHover] = React.useState<boolean>((props.type === 'small' ? false : true));
+  
+    let [, answers] = usePromise(getAnswers);
+    let [, contents] = usePromise(getContents);
+    let answer = React.useMemo(() => answers?.find((answer) => answer.questionId === id), [answers, id]);
+    let content = React.useMemo(() => contents?.find((content) => content.id === contentid), [contents, contentid]);
+  
+    let [booked, setBooked] = React.useState<number>(0);
+    
+    let [crop, setCrop] = React.useState<{
+      unit: "px" | "%",
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+    }>({
+      unit: "px",
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+    });
+  
+    React.useEffect(() => {
+      setSmallHover((props.type === 'small' ? false : true));
+    }, [props])
+  
+    React.useEffect(() => {
+      if(!answer) return;
+      setMessage(answer.message);
+      setCharacternumbers(answer.message.length);
+      if (answer.imageData.imageUrl !== '')
+          setImageUri(answer.imageData.imageUrl);
+      setCrop({ unit: 'px', x: answer?.imageData.cropX, y: answer?.imageData.cropY, width: 500, height: 300 });
+      setBooked(answer.book);
+    }, [answer]);
+  
+    React.useEffect(() => {
+      if(imageUri !== answer?.imageData.imageUrl)
+          setCrop({ ...crop, x: 0, y: 0 });
+    }, [imageUri]);
+  
+    let [exceptuser, setExceptUser] = React.useState<string[]>([]);
+  
+    React.useEffect(() => {
+      if(!question) return;
+      setExceptUser(question.userdata.exceptuser);
+    }, [question]);
+  
+    let input_file = React.useRef<any>(null);
+    let [state, setState] = React.useState<any>({ image: '', imageLoaded: false });
+    let [cropImage, setCropImage] = React.useState<boolean>(false);
+    let handleFileinput  = async (e: any) => {
+      let formData = new FormData();
+      formData.append('image', e.target.files[0]);
+  
+      const s3Uri = await uploadImage_formdata(formData);
+      console.log(s3Uri);
+      setImageUri(s3Uri);
+      if(s3Uri === undefined) {
+        setImageUri('');
+      }
+      return s3Uri;
     }
-    return s3Uri;
-  }
-  let handleClick = () => {
-    input_file.current.click();
-  };
+    let handleClick = () => {
+      input_file.current.click();
+    };
 
 
   if(!question) return <></>;

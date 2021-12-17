@@ -94,8 +94,13 @@ export default (Order: Model<OrderDocument>, User: Model<UserDocument>, sns: AWS
         }
     });
 
+    router.get('/asd', async (req, res) => {
+      let result = await Order.findOne({ merchant_uid: "ORD001-1639028766155" });
+
+      res.json(result);
+    })
+
     router.get('/iamport-webhook-check/:merchant_uid', async(req, res) => {
-      console.log("asd");
       const merchant_uid = req.params.merchant_uid;
       let result = await Order.findOne({ merchant_uid: merchant_uid });
 

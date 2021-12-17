@@ -48,6 +48,7 @@ import ProductPage from './pages/ProductPage';
 import PaymentPage from './pages/PaymentPage';
 import MyBook from './pages/MyBook';
 import GenerateQRcode from './pages/GenerateQRcode';
+import SaveExcelFile from './pages/SaveExcelFile';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -70,6 +71,7 @@ function App() {
           <Route path='/mypage' component = {MobileMyPage} />
           <Route path='/survey' component = {Survey} />
           <Route path='/book' component = {MobileMementoBook} />
+          <Route path='/mybook' component = {MobileMementoBook} />
           <Route path='/' component={MobileMain} />
         </Switch>
       </BrowserRouter>
@@ -116,6 +118,7 @@ function App() {
         <Route path='/payment/:id' component = {PaymentPage} />
         <Route path='/mybook' component = {MyBook} />
         <Route path='/generateQrcode' component = {GenerateQRcode} />
+        <Route path='/saveExcelFile' component = {SaveExcelFile} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>
