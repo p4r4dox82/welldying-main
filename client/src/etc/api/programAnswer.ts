@@ -14,7 +14,7 @@ export interface programAnswer {
 }
 
 export const getProgramAnswer = async (pid: number) => {
-    let response = await Axios.get(`${apiAddress}/programAnswer/${pid}`, { withCredentials: true });
+    let response = await Axios.get(`${apiAddress}/programAnswer/${pid}`);
 
     return response.data as programAnswer;
 }

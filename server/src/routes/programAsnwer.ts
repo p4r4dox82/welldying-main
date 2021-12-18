@@ -1,11 +1,6 @@
 import { Router } from "express";
 import { Model } from "mongoose";
 import { ProgramAnswerDocument, programAnswerType, answerData } from "../models/programAnswer";
-import { onlyAuthUser } from "./user";
-import markdownPdf from 'markdown-pdf';
-import axios from "axios";
-import fs from 'fs';
-import { mdToPdf } from 'md-to-pdf';
 
 export default (ProgramAnswer: Model<ProgramAnswerDocument>) => {
     let router = Router();
