@@ -1153,7 +1153,8 @@
 }
 .paymentPage .paymentCompleteBlock .buttonContainer {
     width: 678px;
-    display: inline-flex;
+    display: flex;
+    margin-left: calc(50% - 678px/2);
     margin-top: 53px;
     justify-content: space-between;
 }

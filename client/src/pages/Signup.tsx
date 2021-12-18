@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import SignupAgree from '../components/SignupAgree';
 import SignupFill from '../components/SignupFill';
-import { imageUrl } from '../etc/config';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { isMobile } from 'react-device-detect';

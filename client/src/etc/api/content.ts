@@ -1,5 +1,4 @@
 import Axios from "axios";
-import { AcroFormListBox } from "jspdf";
 import { apiAddress } from "../config";
 
 export interface Userdata {

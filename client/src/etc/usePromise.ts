@@ -9,7 +9,7 @@ export default function usePromise<Type>(promiseCreator: () => Promise<Type>, de
     try {
       const result = await promiseCreator();
       setQuestion(result);
-    } catch (error) {
+    } catch (error: any) {
       setError(error);
       console.log('While getting promise: ', promiseCreator);
       console.log('We got an error: ', error);

@@ -8,7 +8,7 @@ import usePromise from '../etc/usePromise';
 import { uploadImage_formdata } from '../etc/api/image';
 import { useSelector } from 'react-redux';
 import { RootReducer } from '../store';
-import { getSection, getSections } from '../etc/api/section';
+import { getSections } from '../etc/api/section';
 import ReactCrop from 'react-image-crop';
 
 interface Props {
@@ -45,7 +45,7 @@ function ContentQuestion (props : Props) {
   let [, sections] = usePromise(getSections);
   let answer = answers?.find((answer) => answer.questionId === content!.question);
   let questionId = React.useMemo(() => content?.question, [content]);
-  let question = React.useMemo(() => questions?.find((question) => question.id === questionId), [id, questions]);
+  let question = React.useMemo(() => questions?.find((question) => question.id === questionId), [questions, questionId]);
   let section = React.useMemo(() => sections?.find((section) => section.questions.includes(id)), [id, sections]);
 
   React.useEffect(() => {
@@ -87,7 +87,6 @@ function ContentQuestion (props : Props) {
   }, [question]);
 
   let input_file = React.useRef<any>(null);
-  let [state, setState] = React.useState<any>({ image: '', imageLoaded: false });
   let [cropImage, setCropImage] = React.useState<boolean>(false);
   let [save_success, setSave_success] = React.useState<boolean>(false);
   let handleFileinput  = async (e: any) => {
@@ -114,8 +113,8 @@ function ContentQuestion (props : Props) {
     <>
       <Link to='/login' style = {{display: 'none'}} ref = {Link_login} />
       <div className = 'content_question'>
-          <img className = 'background' src = {imageUrl('ContentPage/question_background.png')} />
-          <img className = 'memento_colon' src = {imageUrl('memento_colon.png')} />
+          <img alt = "" className = 'background' src = {imageUrl('ContentPage/question_background.png')} />
+          <img alt = "" className = 'memento_colon' src = {imageUrl('memento_colon.png')} />
           <div className = 'question_container'>
               <div className ='question GB px20 line40'>
                 <div>{question?.title.split('\n')[0]}</div>
@@ -131,10 +130,10 @@ function ContentQuestion (props : Props) {
                     <div className = 'fileSelector' style = {{height: (imageUri === '' ? 150 : (400 + 60))}}>
                         <button className = 'image_input' onClick = {() => {handleClick(); setCropImage(true);}} >
                             <div className = 'new_image' style = {{margin: 'auto', width: 400, height: (imageUri === '' ? 150 : 400), overflow: 'hidden'}}>
-                                <img className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{width: (imageUri === '' ? '67px' : '400px'), height: (imageUri === '' ? '67px' : '400px'), objectFit: (imageUri === '' ? 'none' : 'cover')}}/>
+                                <img alt = "" className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{width: (imageUri === '' ? '67px' : '400px'), height: (imageUri === '' ? '67px' : '400px'), objectFit: (imageUri === '' ? 'none' : 'cover')}}/>
                             </div>
                             {false && <div className = 'new_image' style = {{margin: 'auto', width: crop.width, height: (imageUri === '' ? 150 : crop.height), overflow: 'hidden'}}>
-                                <img className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (imageUri === '' ? '11px' : '0px')}}/>
+                                <img alt = "" className = 'new_image' src = {(imageUri === '' ? 'https://memento82.s3.ap-northeast-2.amazonaws.com/image_uploader.png' : imageUri)} style = {{left: -crop.x, top: -crop.y, objectFit: 'none', marginTop: (imageUri === '' ? '11px' : '0px')}}/>
                             </div>}
                         </button>
                         <input type = 'file' onChange={e => {handleFileinput(e)}} style = {{display: 'none'}} ref = {input_file}/>
@@ -177,7 +176,7 @@ function ContentQuestion (props : Props) {
       </div>
       {(false && cropImage) && <div className = 'crop_image_container'>
             <div className = 'imageCrop'>
-                <img className = 'quit_button' src = {imageUrl('NotePage/quit_vector.svg')} onClick = {() => setCropImage(false)}/>
+                <img alt = "" className = 'quit_button' src = {imageUrl('NotePage/quit_vector.svg')} onClick = {() => setCropImage(false)}/>
                 <div className = 'image_container'>
                     <ReactCrop className = 'Crop' src = {(imageUri)} crop = {crop} onChange = {(newCrop) => {
                         let changeCrop = newCrop;

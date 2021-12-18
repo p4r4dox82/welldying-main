@@ -1,9 +1,10 @@
 import React from 'react';
 import DaumPostcode from "react-daum-postcode";
+import { getOrderData, OrderType } from '../etc/api/payment';
 
 interface Props {
-    setFullAddress: any;
-    setZipCode: any;
+    setOrderData: any;
+    orderData: OrderType;
     setSearchPostCode: any;
 }
 
@@ -22,9 +23,8 @@ function PopupPostCode(props: Props) {
           }
           fullAddress += extraAddr !== '' ? ` (${extraAddr})` : '';
         }
-    
-        props.setZipCode(data.zonecode);
-        props.setFullAddress(fullAddress);
+        
+        props.setOrderData({...props.orderData, zipCode: data.zonecode, fullAddress: fullAddress});
         props.setSearchPostCode(false);
       };
  

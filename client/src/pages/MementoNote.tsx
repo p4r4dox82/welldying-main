@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link, match, Redirect } from 'react-router-dom';
+import { match, Redirect } from 'react-router-dom';
 import { RootReducer } from '../store';
 import Header from '../components/Header';
 import NoteLeftBar from '../components/NoteLeftBar';
@@ -9,10 +9,9 @@ import useScroll from '../etc/useScroll';
 import { imageUrl } from '../etc/config';
 
 import { getQuestions, Question } from '../etc/api/question';
-import { getSection, getSections } from '../etc/api/section';
+import { getSections } from '../etc/api/section';
 import { getAnswers } from '../etc/api/answer';
 import usePromise from '../etc/usePromise';
-import { setupMaster } from 'cluster';
 import { blockAlignVector, rowAlignVector } from '../img/Vectors';
 
 interface MatchParams {
@@ -29,7 +28,7 @@ function MementoNote({ match } : Props) {
   let scroll = useScroll();
 
   let user = useSelector((state: RootReducer) => state.user);
-  let [scrollActive, setScrollActive] = React.useState(false);
+  let [, setScrollActive] = React.useState(false);
   let [, questions] = usePromise(getQuestions);
   let [, sections] = usePromise(getSections);
   let [, answers] = usePromise(getAnswers);
@@ -51,7 +50,7 @@ function MementoNote({ match } : Props) {
         else return false;
       })
     );
-  }, [questions, answers, section, update]);
+  }, [questions, answers, section, user]);
 
   let unwritten_questions = React.useMemo(() => {
     return (
@@ -62,7 +61,7 @@ function MementoNote({ match } : Props) {
         else return true;
       })
     );
-  }, [questions, answers, section, update]);
+  }, [questions, answers, section, user]);
 
   let section_questions = React.useMemo(() => {
     return (id === undefined) ? undefined : (
@@ -74,7 +73,7 @@ function MementoNote({ match } : Props) {
           })}
       </>
     );
-  }, [section, answers, questions, block, update]);
+  }, [block, id, written_questions]);
 
   let section_questions_unwritten = React.useMemo(() => {
     return (id === undefined) ? undefined : (
@@ -82,7 +81,7 @@ function MementoNote({ match } : Props) {
           {unwritten_questions?.map((questionId) => {
             let question = questions?.find((question) => question.id === questionId);
             let answer = answers?.find((answer) => answer.questionId === questionId);
-            if (!question || answer) return;
+            if (!question || answer) return<></>;
 
             return (
               <NoteQuestion question = {question} written = {false} type = {'unwritten'} order = {-1}/>
@@ -90,7 +89,7 @@ function MementoNote({ match } : Props) {
           })}
       </>
     );
-  }, [section, answers, questions, update]);
+  }, [answers, questions, id, unwritten_questions]);
 
   let sort_answered = (questionA: Question, questionB: Question) => {
     let answerA = answers?.find((answer) => answer.questionId === questionA.id);
@@ -133,7 +132,7 @@ function MementoNote({ match } : Props) {
                   <div className="blockButton" onClick = {() => setBlock(!block)} style = {{cursor: 'pointer'}}>
                     {block ? rowAlignVector : blockAlignVector}
                   </div>
-                  <img className = 'order_button' src = {imageUrl('ContentPage/order_button.svg')} onClick = {() => setOrderContainer(!orderContainer)} style = {{cursor: 'pointer'}}/>
+                  <img alt = "" className = 'order_button' src = {imageUrl('ContentPage/order_button.svg')} onClick = {() => setOrderContainer(!orderContainer)} style = {{cursor: 'pointer'}}/>
                   {orderContainer && <div className="orderContainer">
                       <div className={"NS px12 bold " + (order !== 1 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered); setUpdate(update + 1); console.log(questions); setOrder(1);}} style = {{cursor: 'pointer'}}>최근 답변순</div>
                       <div className={"NS px12 bold " + (order !== 2 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered_reverse); setUpdate(update + 1); console.log(questions); setOrder(2);}} style = {{cursor: 'pointer'}}>과거 답변순</div>

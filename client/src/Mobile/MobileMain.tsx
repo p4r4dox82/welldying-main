@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { getContents } from '../etc/api/content';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
-import { Colon, halfColon, LeftArrowVector, leftVector, LeftVector2, leftVectorMobile, MainImageVector, MementoBookVector, MementoDotVector, MementoLogo, MementoMakeBookVector, MementoNoteVector, MementoTogetherNoteVector, RightArrowVector, rightVector, RightVector2, rightVectorMobile, toggleVector, UserImage } from '../img/Vectors';
+import { Colon, LeftVector2, leftVectorMobile, MainImageVector, MementoBookVector, MementoDotVector, MementoMakeBookVector, MementoNoteVector, MementoTogetherNoteVector, RightVector2, rightVectorMobile } from '../img/Vectors';
 import MobileNavigation from '../MobileComponents/MobileNavigation';
 import { RootReducer } from '../store';
 import MobileHeader from '../MobileComponents/MobileHeader';
@@ -45,10 +45,8 @@ function MobileMain() {
     }
 
     let [NoteTouchData, setNoteTouchData] = React.useState<touchData>({ initialX: 0, initialY: 0, LRdir: 0, UDdir: 0 });
-    let [NoteTouchDir, setNoteTouchDir] = React.useState<number>(0);
-    let [update, setUpdate] = React.useState<number>(0);
 
-    let dragDirection = (e:any) => {
+    let dragDirection = React.useCallback((e:any) => {
         if(NoteTouchData.initialX !== 0 && NoteTouchData.initialY !== 0) {
             const currentX = e.touches ? e.touches[0].clientX : e.clientX;
             const currentY = e.touches ? e.touches[0].clientY : e.clientY;
@@ -57,7 +55,7 @@ function MobileMain() {
             let diffY = NoteTouchData.initialY - currentY;
             setNoteTouchData({initialX: 0, initialY: 0 , LRdir: (diffX > diffY && diffX > 0) ? Math.max(NoteTouchData.LRdir - 1, -3) : Math.min(NoteTouchData.LRdir + 1, 0), UDdir: (diffY > diffX && diffY > 0) ? Math.max(NoteTouchData.UDdir - 1, -3) : Math.min(NoteTouchData.UDdir + 1, 0)});
         }
-    }
+    }, [NoteTouchData])
     let noteLink = React.useRef<any>(null);
     let noteLinkClick = () => noteLink.current.click();
     let MementoSections = React.useMemo(() => {
@@ -79,7 +77,7 @@ function MobileMain() {
             </div>
             </>
         )
-    }, [NoteTouchData, NoteTouchDir, update]);
+    }, [NoteTouchData, MementoSectionArray, dragDirection]);
 
     //Content Variable
     let [ContentSection, setContentSection] = React.useState<number>(0);
@@ -130,10 +128,8 @@ function MobileMain() {
     let LinkContent = React.useRef<any>(null);
     let LinkNote = React.useRef<any>(null);
     let LinkBook = React.useRef<any>(null);
-    let LinkAboutusClick = () => LinkAboutus.current.click();
     let LinkContentClick = () => LinkContent.current.click();
     let LinkNoteClick = () => LinkNote.current.click();
-    let LinkBookClick = () => LinkBook.current.click();
     let [MainNumber, setMainNumber] = React.useState<number>(0);
     let MainInfo = React.useMemo(() => {
         let result = [];

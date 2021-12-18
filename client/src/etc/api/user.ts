@@ -1,7 +1,7 @@
 import Axios, { AxiosRequestConfig } from "axios";
 import { ShowContentType } from "../../components/SignupFill";
 import store from "../../store";
-import user, { setUser, clearUser } from "../../store/user";
+import { setUser, clearUser } from "../../store/user";
 import { apiAddress } from "../config";
 
 interface UserPost {

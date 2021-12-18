@@ -1,15 +1,13 @@
 import React from 'react';
 import { imageUrl } from '../etc/config';
-import { Link, match, Redirect } from 'react-router-dom';
+import { Link, match } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SubmenuContainer from '../components/SubmenuContainer';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
 import { useSelector } from 'react-redux';
-import { parseDate } from '../etc';
-import { getrevNewses, writeNews } from '../etc/api/news';
-import { useWindowScroll } from 'react-use';
+import { getrevNewses } from '../etc/api/news';
 
 interface MatchParams {
     id: string;
@@ -25,7 +23,6 @@ function News ({ match }: Props) {
   let [search_word, setSearch_word] = React.useState<string>('');
   let [, revnewses] = usePromise(getrevNewses);
   let maxNewsId = React.useMemo(() => revnewses ? Math.max(...revnewses.map(news => news.id)) : 0, [revnewses]);
-  let [error, setError] = React.useState<string>();
   console.log(revnewses?.map((news) => (news?.tag.split('#'))));
 
   let startingid = maxNewsId - 3 * (id - 1);
@@ -43,7 +40,7 @@ function News ({ match }: Props) {
           <div className = 'submenu_container'>
               <SubmenuContainer additionalClass = 'news'/>
               {false && <div className = 'searchContainer'>
-                  <img src = {imageUrl('search_image.png')} />
+                  <img alt = "" src = {imageUrl('search_image.png')} />
                   <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)메멘토 이벤트'/>
               </div>}
           </div>
@@ -59,7 +56,7 @@ function News ({ match }: Props) {
               {listnewses?.map((news, key) => (
                 <>
                     <div className = 'list_content' onClick = {() => window.open((key === 0 ? 'https://www.newswire.co.kr/newsRead.php?no=919731' : 'https://www.sedaily.com/NewsVIew/22L3E5TQVJ'), '_blank')}>
-                        <img className = 'archive' src = {imageUrl(key === 0 ? 'news2.png' : 'news1.png')} style = {{cursor: 'pointer'}}/>
+                        <img alt = "" className = 'archive' src = {imageUrl(key === 0 ? 'news2.png' : 'news1.png')} style = {{cursor: 'pointer'}}/>
                         <div className = 'news_info'>
                             <div className = 'company'>{news?.company}</div>
                             <div className = 'title' style = {{cursor: 'pointer'}}>{news?.title}</div>

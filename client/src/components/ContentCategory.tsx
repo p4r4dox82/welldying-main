@@ -1,6 +1,5 @@
 import React from 'react';
 import { imageUrl } from '../etc/config';
-import { getSections } from '../etc/api/section';
 import usePromise from '../etc/usePromise';
 import { Link } from 'react-router-dom';
 import { getCategorys } from '../etc/api/category';
@@ -10,7 +9,6 @@ interface Props {
 }
 
 function ContentCategory (props : Props) {
-  let [, sections] = usePromise(getSections);
   let [, categorys] = usePromise(getCategorys);
   let [search_word, setSearch_word] = React.useState<string>('');
   let [mouseover, setMouseover] = React.useState<number>(-1);
@@ -19,7 +17,7 @@ function ContentCategory (props : Props) {
   return (
     <>
       <div className = 'block'>
-          <img className = 'background' src = {imageUrl('ContentPage/content_background.png')} style = {{height: '436px', objectFit: 'cover'}}/>
+          <img alt = "" className = 'background' src = {imageUrl('ContentPage/content_background.png')} style = {{height: '436px', objectFit: 'cover'}}/>
           <div className = 'background' style = {{height: '436px'}}/>
           <div className = 'contentcategory'>
               <div className = 'main_title'>
@@ -30,15 +28,15 @@ function ContentCategory (props : Props) {
               메멘토 컨텐츠
               </div>
               {false && <div className = 'searchContainer'>
-                  <img src = {imageUrl('search_image.png')} />
+                  <img alt = "" src = {imageUrl('search_image.png')} />
                   <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)메멘토 이벤트'/>
               </div>}
               <div className = 'category_container'>
                   <div className = 'title'>
                   컨텐츠 카테고리 분류
                   </div>
-                  <Link to={`${prev_page_id}`}><img className = 'left_button' src = {imageUrl('ContentPage/left_button.png')} /></Link>
-                  <Link to={`${next_page_id}`}><img className = 'right_button' src = {imageUrl('ContentPage/right_button.png')} /></Link>
+                  <Link to={`${prev_page_id}`}><img alt = "" className = 'left_button' src = {imageUrl('ContentPage/left_button.png')} /></Link>
+                  <Link to={`${next_page_id}`}><img alt = "" className = 'right_button' src = {imageUrl('ContentPage/right_button.png')} /></Link>
                   <div className = 'vector' />
                   <div className = 'category_container_main'>
                       { categorys?.map((category, key)=> (

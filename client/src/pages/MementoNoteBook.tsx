@@ -8,7 +8,7 @@ import NoteQuestion from '../components/NoteQuestion';
 import useScroll from '../etc/useScroll';
 
 import { getQuestions, Question } from '../etc/api/question';
-import { getSection, getSections } from '../etc/api/section';
+import { getSections } from '../etc/api/section';
 import { getAnswers, addBook } from '../etc/api/answer';
 import { getUsers, setBookName, setUsers, UserGiveInfo } from '../etc/api/user';
 import usePromise from '../etc/usePromise';
@@ -27,7 +27,7 @@ declare global {
   }
 }
 
-const { Kakao, ClipboardJS } = window;
+const { Kakao } = window;
 
 interface MatchParams {
     id: string;
@@ -51,7 +51,7 @@ function MementoNoteBook({ match } : Props) {
   let scroll = useScroll();
 
   let user = useSelector((state: RootReducer) => state.user);
-  let [scrollActive, setScrollActive] = React.useState(false);
+  let [, setScrollActive] = React.useState(false);
   let [, sections] = usePromise(getSections);
   let [, questions] = usePromise(getQuestions);
   let [, answers] = usePromise(getAnswers);
@@ -81,7 +81,7 @@ function MementoNoteBook({ match } : Props) {
     answers?.forEach((answer) => {
       answers_booked.push({ questionId: answer.questionId, book: answer.book });
     })
-  }, [answers]);
+  }, [answers, answers_booked]);
 
   React.useEffect(() => {
     if(!user.user?.bookname) return;
@@ -98,7 +98,7 @@ function MementoNoteBook({ match } : Props) {
         else return true;
       })
     );
-  }, [questions, answers, update]);
+  }, [questions, answers]);
 
   let questions_written = React.useMemo(() => {
     console.log(written_questions);
@@ -111,7 +111,7 @@ function MementoNoteBook({ match } : Props) {
         })}
       </>
     );
-  }, [questions, answers, written_questions, block]);
+  }, [written_questions, block]);
 
   let section_written_questions = React.useMemo(() => {
     return (
@@ -122,7 +122,7 @@ function MementoNoteBook({ match } : Props) {
         else return true;
       })
     );
-  }, [section, questions, answers, update]);
+  }, [section, questions, answers]);
 
   let section_questions_written_added = React.useMemo(() => {
     if(!answers || !answers_booked) {
@@ -131,7 +131,6 @@ function MementoNoteBook({ match } : Props) {
     }
     else return (
       section?.questions?.filter((questionId) => {
-        let question = questions.find((question) => question.id === questionId);
         let answer = answers?.find((answer) => answer.questionId === questionId);
         let answer_booked = answers_booked?.find((answer) => answer?.questionId === questionId);
         if (!answer || answer.book === 0 || answer_booked?.book === 0) {
@@ -142,7 +141,7 @@ function MementoNoteBook({ match } : Props) {
         );
       })
     );
-  }, [section, questions, answers, update, answers_booked])
+  }, [section, answers, answers_booked])
 
   let section_questions_written = React.useMemo(() => {
     return (id === undefined) ? undefined : (
@@ -155,7 +154,7 @@ function MementoNoteBook({ match } : Props) {
           })}
       </>
     );
-  }, [section_written_questions, block]);
+  }, [section_written_questions, block, id, questions]);
 
   let section_written_questions_add = React.useMemo(() => {
     return (
@@ -167,7 +166,7 @@ function MementoNoteBook({ match } : Props) {
         else return true;
       })
     );
-  }, [section_add, questions, answers, update, answers_booked]);
+  }, [section_add, questions, answers, answers_booked]);
 
   let section_questions_add_written = React.useMemo(() => {
     console.log(section_written_questions_add);
@@ -181,7 +180,7 @@ function MementoNoteBook({ match } : Props) {
           })}
       </>
     );
-  }, [section_written_questions_add, block]);
+  }, [section_written_questions_add, id, questions]);
 
   let section_unwritten_questions_add = React.useMemo(() => {
     return (
@@ -192,7 +191,7 @@ function MementoNoteBook({ match } : Props) {
         else return true;
       })
     );
-  }, [section_add, questions, answers, update]);
+  }, [section_add, questions, answers]);
 
   let section_questions_add_unwritten = React.useMemo(() => {
     return (id === undefined) ? undefined : (
@@ -205,7 +204,7 @@ function MementoNoteBook({ match } : Props) {
           })}
       </>
     );
-  }, [section_unwritten_questions_add, block]);
+  }, [section_unwritten_questions_add, id, questions]);
 
   let written_questions_add = React.useMemo(() => {
     if(!answers || !answers_booked) {
@@ -226,7 +225,7 @@ function MementoNoteBook({ match } : Props) {
         })}
       </>
     );
-  }, [questions, answers, update, answers_booked]);
+  }, [questions, answers, answers_booked]);
 
   let written_questions_added = React.useMemo(() => {
     if(!answers || !answers_booked) {
@@ -248,7 +247,7 @@ function MementoNoteBook({ match } : Props) {
     else return (
       questions.filter((question) => section_questions_written_added?.includes(question.id))
     );
-  }, [questions, answers, update, answers_booked, section_questions_written_added, id]);
+  }, [questions, answers, answers_booked, section_questions_written_added, id]);
 
   let empty_section = React.useMemo(() => {
     console.log(section_written_questions_add);
@@ -263,7 +262,7 @@ function MementoNoteBook({ match } : Props) {
         </div>
     </>
     );
-  }, [section_written_questions_add, update, answers_booked]);
+  }, [section_questions_add_unwritten, section_unwritten_questions_add?.length, section_written_questions_add]);
 
   let sort_answered = (questionA: Question, questionB: Question) => {
     let answerA = answers?.find((answer) => answer.questionId === questionA.id);
@@ -303,7 +302,7 @@ function MementoNoteBook({ match } : Props) {
           </div>
       </div>
     );
-  }, [booknameupload, bookname]);
+  }, [booknameupload, bookname, user.user]);
 
   let [addUserGive, setAddUserGive] = React.useState<boolean>(false);
   let [method, setMethod] = React.useState<number>(0);
@@ -360,7 +359,7 @@ Cherish your memories, memento`,
         <>
           <div className="left page" style = {{padding: '20px 20px'}}>
             <div className="imageContainer" style ={{position: 'absolute', top: '20px', paddingBottom: '11px', borderBottom: '1px dashed rgba(147, 156, 151, 1)'}}>
-              <img src={pageanswer?.imageData.imageUrl} alt="" style = {{width: '424px', height: '424px', objectFit: 'cover'}}/>
+              <img alt = "" src={pageanswer?.imageData.imageUrl}  style = {{width: '424px', height: '424px', objectFit: 'cover'}}/>
             </div>
             <div className="questioncontainer">
               <div className="Colon">
@@ -403,7 +402,7 @@ Cherish your memories, memento`,
           </div>
           <div className="right page" style = {{padding: '20px 20px', display: 'flex', flexWrap: 'wrap', alignContent: ''}}>
               <div className="imageContainer" style ={{position: 'absolute', top: '86px', left: '125px'}}>
-                <img src={pageanswer?.imageData.imageUrl} alt="" style = {{width: '216px', height: '216px', objectFit: 'cover'}}/>
+                <img alt = "" src={pageanswer?.imageData.imageUrl} style = {{width: '216px', height: '216px', objectFit: 'cover'}}/>
               </div> 
               <div className="topContainer">
                 <div className="tag GB px9 line25 bold">{section?.tag}</div>
@@ -503,7 +502,7 @@ Cherish your memories, memento`,
           </> 
         )
     }
-  }, [written_questions_added, pageNumber]);
+  }, [written_questions_added, pageNumber, answers, sections]);
 
   let bottomContainer = React.useMemo(() => {
     return (
@@ -559,10 +558,10 @@ Cherish your memories, memento`,
                   </div>
                   <div className = 'book_main'>
                       <div className = 'side_bar_container'>
-                          <img className = 'zoom_button' src = {imageUrl('NotePage/zoom_image.png')} style = {{cursor: 'pointer'}} />
-                          <img className = 'add_button' src = {imageUrl('NotePage/add_image.png')} onClick = {() => {setAddQuestions(true); setUpdate(update + 1);}} style = {{cursor: 'pointer'}}/>
+                          <img alt = "" className = 'zoom_button' src = {imageUrl('NotePage/zoom_image.png')} style = {{cursor: 'pointer'}} />
+                          <img alt = "" className = 'add_button' src = {imageUrl('NotePage/add_image.png')} onClick = {() => {setAddQuestions(true); setUpdate(update + 1);}} style = {{cursor: 'pointer'}}/>
                           <div className = 'title GB px13 line30'>{booknameupload ? booknameupload : ''}</div>
-                          <img className = 'edit_button' style = {{margin: '483px 0px 0px 0px', cursor: 'pointer'}} src = {imageUrl('NotePage/edit_image.png')} />
+                          <img alt = "" className = 'edit_button' style = {{margin: '483px 0px 0px 0px', cursor: 'pointer'}} src = {imageUrl('NotePage/edit_image.png')} />
                       </div>
                       {MementoBookPage}
                   </div>
@@ -572,20 +571,20 @@ Cherish your memories, memento`,
           <div className = 'block note_book_page'>
               <div className = 'submenu_container'>
                   {false && <div className = 'searchContainer'>
-                      <img src = {imageUrl('search_image.png')} />
+                      <img alt = "" src = {imageUrl('search_image.png')} />
                       <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)감동'/>
                   </div>}
                   <div className = 'button_container'>
                       <div className="blockButton" onClick = {() => setBlock(!block)} style = {{cursor: 'pointer'}}>
                         {block ? rowAlignVector : blockAlignVector}
                       </div>
-                      <img className = 'order_button' src = {imageUrl('NotePage/sort_image.png')} onClick = {() => setOrderContainer(!orderContainer)} style = {{cursor: 'pointer'}}/>
+                      <img alt = "" className = 'order_button' src = {imageUrl('NotePage/sort_image.png')} onClick = {() => setOrderContainer(!orderContainer)} style = {{cursor: 'pointer'}}/>
                   {orderContainer && <div className="orderContainer">
                       <div className={"NS px12 bold " + (order !== 1 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered); setUpdate(update + 1); console.log(questions); setOrder(1);}} style = {{cursor: 'pointer'}}>최근 답변순</div>
                       <div className={"NS px12 bold " + (order !== 2 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_answered_reverse); setUpdate(update + 1); console.log(questions); setOrder(2);}} style = {{cursor: 'pointer'}}>과거 답변순</div>
                       <div className={"NS px12 bold " + (order !== 0 ? 'op3' : 'op10')} onClick = {() => {questions = questions.sort(sort_made); setUpdate(update + 1); setOrder(0);}} style = {{cursor: 'pointer'}}>질문 생성일</div>
                   </div>}
-                      <img src = {imageUrl('NotePage/add_image_.png')} onClick = {() => {setAddQuestions(true); window.scrollTo(0, 0);}} style = {{cursor: 'pointer'}}/>
+                      <img alt = "" src = {imageUrl('NotePage/add_image_.png')} onClick = {() => {setAddQuestions(true); window.scrollTo(0, 0);}} style = {{cursor: 'pointer'}}/>
                   </div>
               </div>
               <div className = 'written_question margin_note' style = {{marginTop: '-23px'}}>
@@ -604,7 +603,7 @@ Cherish your memories, memento`,
                         );
                       })}
                   </div>
-                  <img src = {imageUrl('NotePage/quit_vector.svg')} style = {{position: 'absolute', right: '0px', top: '0px'}} onClick = {() => setAddQuestions(false)}/>
+                  <img alt = "" src = {imageUrl('NotePage/quit_vector.svg')} style = {{position: 'absolute', right: '0px', top: '0px'}} onClick = {() => setAddQuestions(false)}/>
                   <div className = 'questions_container' style = {{margin: '20px 0px 0px 0px', gap: '30px'}}>
                       {(addSectionId === 0 ? written_questions_add : section_questions_add_written)}
                   </div>
@@ -671,15 +670,15 @@ Cherish your memories, memento`,
       </div>
       {addUserGive && <div className="addUserGive" style = {{position: 'fixed', width: '100vw', height: '100vh', background: 'rgba(0, 0, 0, 0.6)', zIndex: 200, top: '0px'}}>
           <div className="addUserGiveContainer" style = {{width: '837px', height: 'fit-content', margin: 'calc(50vh - 283px/2) 0px 0px calc(50% - 837px/2)', background: 'rgba(255, 255, 255, 1)', borderRadius: '5px', padding: '36px 0px 38px 55px'}}>
-              <img src = {imageUrl('NotePage/quit_vector.svg')} style = {{position: 'absolute', right: '0px', top: '-30px'}} onClick = {() => setAddUserGive(false)}/>
+              <img alt = "" src = {imageUrl('NotePage/quit_vector.svg')} style = {{position: 'absolute', right: '0px', top: '-30px'}} onClick = {() => setAddUserGive(false)}/>
               <div className="methodContainer NS px12 line25 bold"> 
                   <button className="imagecontainer" style = {{width: '28px', height: '28px', display: 'flex', justifyContent:'center', alignItems: 'center', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', padding: '0px', border: (method === 0 ? '2px solid rgba(99, 111, 104, 0.9)' : ''), boxSizing: 'content-box'}} onClick = {() => setMethod(0)}>{EmailVector}</button>
                   <div className="" style = {{color: (method === 0 ? 'rgba(99, 111, 104, 0.8)' : 'rgba(99, 111, 104, 0.4)')}} onClick = {() => setMethod(0)}>문자 메시지</div>
                   <button className="imagecontainer" style = {{width: '28px', height: '28px', display: 'flex', justifyContent:'center', alignItems: 'center', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', padding: '0px', border: (method === 1 ? '2px solid rgba(99, 111, 104, 0.9)' : ''), boxSizing: 'content-box'}} onClick = {() => setMethod(1)}>
-                    <img src={imageUrl('NotePage/GoogleImage.png')} alt="" className="" />
+                    <img alt = "" src={imageUrl('NotePage/GoogleImage.png')}  className="" />
                   </button>
                   <div className="" style = {{color: (method === 1 ? 'rgba(99, 111, 104, 0.8)' : 'rgba(99, 111, 104, 0.4)')}} onClick = {() => setMethod(1)}>이메일</div>
-                  <button className="imagecontainer" style = {{width: '28px', height: '28px', display: 'flex', justifyContent:'center', alignItems: 'center', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', padding: '0px', border: (method === 2 ? '2px solid rgba(99, 111, 104, 0.9)' : ''), boxSizing: 'content-box'}} onClick = {() => setMethod(2)}><img src={imageUrl('NotePage/KakaoImage.png')} alt="" className="" style = {{top: '1px'}}/></button>
+                  <button className="imagecontainer" style = {{width: '28px', height: '28px', display: 'flex', justifyContent:'center', alignItems: 'center', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', padding: '0px', border: (method === 2 ? '2px solid rgba(99, 111, 104, 0.9)' : ''), boxSizing: 'content-box'}} onClick = {() => setMethod(2)}><img alt = "" src={imageUrl('NotePage/KakaoImage.png')}  className="" style = {{top: '1px'}}/></button>
                   <div className="" style = {{color: (method === 2 ? 'rgba(99, 111, 104, 0.8)' : 'rgba(99, 111, 104, 0.4)')}} onClick = {() => setMethod(2)}>카카오톡</div>
               </div>
               <div className="UserDataContainer NS px12 line25 bold">

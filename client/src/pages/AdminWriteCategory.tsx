@@ -3,9 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link, match, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { getQuestions } from '../etc/api/question';
 import { getContents } from '../etc/api/content';
-import { getSection, writeSection } from '../etc/api/section';
 import { getCategory, writeCategory } from '../etc/api/category';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
@@ -21,8 +19,8 @@ interface Props {
 function AdminWriteSection({ match }: Props) {
     let id = Number.parseInt(match.params.id);
     let user = useSelector((state: RootReducer) => state.user);
-    let [categoryLoading, category] = usePromise(() => getCategory(id));
-    let [allContentsLoading, allContents] = usePromise(() => getContents());
+    let [, category] = usePromise(() => getCategory(id));
+    let [, allContents] = usePromise(() => getContents());
     let [error, setError] = React.useState<string>();
 
     let [title, setTitle] = React.useState<string>('');
@@ -63,7 +61,7 @@ function AdminWriteSection({ match }: Props) {
                 </div>
             );
         })
-    }, [update, allContentsLoading, categoryLoading]);
+    }, [update, allContents, contents]);
 
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
     else if (editDone) return <Redirect to='/admin'/>

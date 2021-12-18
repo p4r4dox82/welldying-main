@@ -1,20 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { verifyPhone, verifyPhoneCheck, checkCellphoneDuplicate } from '../etc/api/user';
-import { imageUrl } from '../etc/config';
+import { verifyPhone, verifyPhoneCheck } from '../etc/api/user';
 import Footer from '../components/Footer';
 import { getUser } from '../etc/api/user';
 import usePromise from '../etc/usePromise';
 import { MementoLogo } from '../img/Vectors';
 import { isMobile } from 'react-device-detect';
 import MobileFooter from '../MobileComponents/MobileFooter';
-
-interface EntryType {
-    name: string;
-    body: JSX.Element;
-    message: string;
-    validate: () => boolean | PromiseLike<boolean>;
-}
 
 function Findid() {
 
@@ -24,35 +16,10 @@ function Findid() {
 
     let [name, setName] = React.useState('');
     let [nameMessage, setNameMessage] = React.useState('');
-    let validateName = () => {
-        if (name.length < 1) {
-            setNameMessage('성명을 입력해주세요.');
-            return false;
-        }
-        if (name.length > 100) {
-            setNameMessage('성명은 100글자 이내로 해 주세요.');
-            return false;
-        }
-        setNameMessage('');
-        return true;
-    }
 
     let [birthYear, setBirthYear] = React.useState(2000);
     let [birthMonth, setBirthMonth] = React.useState(1);
     let [birthDate, setBirthDate] = React.useState(1);
-    let [birthMessage, setBirthMessage] = React.useState('');
-    let validateBirth = () => {
-        if (birthYear === 0 || birthMonth === 0 || birthDate === 0) {
-            setBirthMessage('생년월일을 적어주세요.');
-            return false;
-        }
-        if (birthYear < 1800 || birthYear > (new Date()).getFullYear() || birthMonth < 1 || birthMonth > 12 || birthDate < 1 || birthDate > [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][birthMonth] || (birthMonth === 2 && birthDate === 29 && (birthYear % 4 !== 0 || (birthYear % 100 === 0 && birthYear % 400 !== 0)))) {
-            setBirthMessage('올바른 생년월일을 적어주세요.');
-            return false;
-        }
-        setBirthMessage('');
-        return true;
-    }
 
     let [cellPhoneFront, ] = React.useState('010');
     let [cellphone, setCellphone] = React.useState('');
@@ -79,17 +46,7 @@ function Findid() {
         return true;
     }
 
-    let validateCellPhone = async () => {
-        if (!await checkCellPhone()) return false;
-        if (!phoneVerified) {
-            setCellPhoneMessage('휴대전화를 인증해주세요.');
-            return false;
-        }
-        setCellPhoneMessage('');
-        return true;
-    }
-
-    let [phoneCodeDigest, setPhoneCodeDigest] = React.useState('');
+    let [, setPhoneCodeDigest] = React.useState('');
     let [phoneCode, setPhoneCode] = React.useState<number>();
     let [phoneCodeMessage, setPhoneCodeMessage] = React.useState('');
     let [phoneVerified, setPhoneVerified] = React.useState(false);
@@ -108,15 +65,8 @@ function Findid() {
             return false;
         }
     }
-    let validatePhoneCode = () => {
-        if (!phoneVerified) {
-            setPhoneCodeMessage('인증번호를 입력하고 인증을 눌러주세요.');
-            return false;
-        }
-        return true;
-    }
 
-    let [userLoading, user] = usePromise(() => getUser(cellphone), [cellphone]);
+    let [, user] = usePromise(() => getUser(cellphone), [cellphone]);
     let [error, setError] = React.useState<string>('');
     let [finded, setFinded] = React.useState<boolean>(false);
 

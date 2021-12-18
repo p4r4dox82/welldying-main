@@ -1,5 +1,5 @@
 import React from 'react';
-import { signupText1, signupText2, signupText3, signupText4 } from '../etc/predefinedText';
+import { signupText1, signupText2, signupText4 } from '../etc/predefinedText';
 import { SignupInfo1 } from '../pages/Signup';
 import { isMobile } from 'react-device-detect';
 

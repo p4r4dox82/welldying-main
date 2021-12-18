@@ -5,11 +5,10 @@ import { imageUrl } from '../etc/config';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SubmenuContainer from '../components/SubmenuContainer';
-import QuillToolbar from '../components/QuillToolbar';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
 import { parseDate } from '../etc';
-import { getrevQnas, getQna } from '../etc/api/qna';
+import { getQna } from '../etc/api/qna';
 
 interface MatchParams {
     id: string;
@@ -23,10 +22,7 @@ function ReadQnA({ match }: Props) {
     let id = Number.parseInt(match.params.id);
     let user = useSelector((state: RootReducer) => state.user);
     let [qnaLoading, qna] = usePromise(() => getQna(id));
-    let [, revqnas] = usePromise(getrevQnas);
     let [search_word, setSearch_word] = React.useState<string>('');
-
-    let answerdate_form : number  = qna?.answerdate as number;
 
     if (qnaLoading) return <></>;
     else return (
@@ -36,7 +32,7 @@ function ReadQnA({ match }: Props) {
                 <div className = 'submenu_container'>
                     <SubmenuContainer additionalClass = 'qna'/>
                     {false && <div className = 'searchContainer'>
-                        <img src = {imageUrl('search_image.png')} />
+                        <img alt = "" src = {imageUrl('search_image.png')} />
                         <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)메멘토 이벤트'/>
                     </div>}
                 </div>

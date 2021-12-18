@@ -14,8 +14,6 @@ function ContentSlide () {
   let [slide_number, setSlide_number] = React.useState<number>(0);
   const maxslide_number = 5;
   let start_number = slide_number;
-  let end_number = ((slide_number + 3) <= maxslide_number ? slide_number + 3 : slide_number + 3 - maxslide_number);
-  let new_slide_contents = (end_number > start_number ? contents?.slice(start_number, end_number) : contents?.slice(start_number, maxslide_number).concat(contents?.slice(0, end_number)));
   let slide_contents = React.useMemo(() => SlideContents?.filter((content, key) => key < 5), [SlideContents]);
 
   const slide_dom_left = React.useRef<any>();
@@ -69,7 +67,7 @@ function ContentSlide () {
           <div className = 'contentslide'>
               <div className = 'selector_container'>
                   {[...Array(maxslide_number).keys()].map((i) => (
-                      <img className = {i === start_number ? '' : 'opacity'} src = {imageUrl('ContentPage/selector_select.png')} />
+                      <img alt = "" className = {i === start_number ? '' : 'opacity'} src = {imageUrl('ContentPage/selector_select.png')} />
                   ))}
               </div>
               <div className = 'slide_content_container' onClick = {() => LinkClick()} style = {{cursor: 'pointer'}}>
@@ -79,7 +77,7 @@ function ContentSlide () {
                     return (
                       <div className = {('slide_content absolute' + ((key === slide_number || key === slide_after(slide_number, 1)) ? ' animate' : ''))} ref = {(key === slide_number ? slide_dom_left : (key === slide_after(slide_number, 1) ? slide_dom_right : (key === slide_before(slide_number, 1) ? slide_dom_left_hidden : (key === slide_before(slide_number, 2) ? slide_dom_right_hidden : other_slide_dom))))} style = {{left: ((key === 0 || key === 4) ? '0px' : '1062px'), zIndex: parseInt((slide_number === 4 && key < 3) ? `${-1 - key}` : `${0 - abs(key, slide_number)}`)}}>
                           <div className = 'slide_image'>
-                              <img src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '1032px', height: '458px', objectFit: 'cover', borderRadius: '5px'}} />
+                              <img alt = "" src = {((content.imageData && content.imageData.imageUrl) ? content.imageData.imageUrl : imageUrl('ContentPage/DefaultThumbnail.png'))} style = {{width: '1032px', height: '458px', objectFit: 'cover', borderRadius: '5px'}} />
                           </div>
                           <div className = {'title_background' + ((key === slide_number || key === slide_after(slide_number, 1)) ? ' shadow' : '')} />
                           <div className = 'tag'>
@@ -112,7 +110,7 @@ function ContentSlide () {
                   <div className = 'date'>
                   {'2021.09'}
                   </div>
-                  <img className = 'memento_logo' src = {imageUrl('ContentPage/mainLogo.png')} />
+                  <img alt = "" className = 'memento_logo' src = {imageUrl('ContentPage/mainLogo.png')} />
               </div>
               <button className = 'slide_right_button' onClick = {() => {let new_slide_number = slide_number === 0 ? (maxslide_number - 1) : ((slide_number - 1)%5); setSlide_number(new_slide_number); moveRight(slide_number); console.log(new_slide_number);}}>{rightVector}</button>
               <button className = 'slide_left_button' onClick = {() => {let new_slide_number = (slide_number + 1)%5; setSlide_number(new_slide_number); moveLeft(slide_number); console.log(new_slide_number);}}>{leftVector}</button>

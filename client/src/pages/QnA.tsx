@@ -79,7 +79,7 @@ function QnA ({ match }: Props) {
                     {faq?.title}
                     </div>
                     <div className = 'faq_answerdate'>{parseDate(new Date(faq?.answerdate))}</div>
-                    {selectfaqid === faq.id ? <img className = 'open_close' src = {imageUrl('close_button.png')} onClick = {() => {setSelectfaqid(0);}}/> : <img className = 'open_close' src = {imageUrl( 'open_button.png')} onClick = {() => {let id = faq?.id; setSelectfaqid(id);}} alt = "profile"/>}
+                    {selectfaqid === faq.id ? <img alt = "" className = 'open_close' src = {imageUrl('close_button.png')} onClick = {() => {setSelectfaqid(0);}}/> : <img className = 'open_close' src = {imageUrl( 'open_button.png')} onClick = {() => {let id = faq?.id; setSelectfaqid(id);}} alt = "profile"/>}
                 </div>
                 {(faq?.id === selectfaqid) && <div className = 'list_content clicked auto_height'>
                 <div className = 'A'>A.</div>

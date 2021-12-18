@@ -8,7 +8,7 @@ import useScroll, { useDeltaScroll } from '../etc/useScroll';
 import { RootReducer } from '../store';
 import { isMobile } from 'react-device-detect';
 import { imageUrl } from '../etc/config';
-import { Colon, leftVector, MainImageVector, MementoDotVector, MementoLogo, PlusVector } from '../img/Vectors';
+import { Colon, MainImageVector, MementoDotVector, MementoLogo } from '../img/Vectors';
 
 function Main() {
     let user = useSelector((state: RootReducer) => state.user);
@@ -34,19 +34,18 @@ function Main() {
 
             if (nextScroll >= maxScroll) setReachBottom(true);
         }
-    }, [scroll]);
+    }, [scroll, deltaScroll, reachBottom]);
 
     let [quit, setQuit] = React.useState<boolean>(false);
-    let [quit2, setQuit2] = React.useState<boolean>(false);
     let [mobileMainNumber, setMobileMainNumber] = React.useState<number>(0);
 
-    interface MementoInfo {
+    interface MementoInfoInterface {
         name: string;
         maintext: string;
         subtext: string;
     }
 
-    let MementoInfo: MementoInfo[] = React.useMemo(() => {
+    let MementoInfo: MementoInfoInterface[] = React.useMemo(() => {
         let result = [];
         result.push({
             name: '메멘토 소개',
@@ -82,7 +81,6 @@ function Main() {
     }, []);
 
     let signupLink = React.useRef<any>(null);
-    let SignupLinkClick = () => signupLink.current.click();
 
     let MobileMainContent = React.useMemo(() => {
         if(mobileMainNumber === 5) return <></>;
@@ -124,7 +122,7 @@ function Main() {
             </div>
             </>
         )
-    }, [mobileMainNumber]);
+    }, [mobileMainNumber, MementoInfo]);
 
     if(isMobile) return(
         <div className = 'mobile'>
@@ -165,7 +163,7 @@ function Main() {
             <Header additionalClass='' />
             {!quit && <div className="TopBar white NS px13 bold whiteop10" style = {{width: '100vw', height: '56px', background: 'rgba(191, 196, 193, 1)', display: 'flex', alignItems: 'center'}}>
                 <div style = {{width: '1032px', left: 'calc(50% - 1032px/2)'}}>{'최적화된 서비스를 위하여 크롬(Chrome) 브라우저를 이용해주세요!'}
-                <img src = {imageUrl('NotePage/quit_vector.svg')} style = {{position: 'absolute', right: '0px', top: '0px', width: '12.5px', height: '12.5px', cursor: 'pointer'}} onClick = {() => setQuit(true)}/>
+                <img alt = "" src = {imageUrl('NotePage/quit_vector.svg')} style = {{position: 'absolute', right: '0px', top: '0px', width: '12.5px', height: '12.5px', cursor: 'pointer'}} onClick = {() => setQuit(true)}/>
                 </div>
             </div>}
             <Maincontent/>

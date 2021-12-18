@@ -1,4 +1,3 @@
-import { directive } from '@babel/types';
 import React from 'react';
 import { match } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -25,7 +24,7 @@ export let productInformationArray : productInformation[] = [
     {
         subtitle: "함께 그리는 삶의 마침표",
         title: "웰다잉 대화 카드 [함께, 기억]",
-        price: 12900,
+        price: 10000,
         imageUri: imageUrl("SellingPage/Product1"),
     },
     {
@@ -34,27 +33,26 @@ export let productInformationArray : productInformation[] = [
         price: 20000,
         imageUri: imageUrl("SellingPage/Product2"),
     },
-    {
-        subtitle: "삶의 끝에서 사랑하는 이들에게 전하는 당신의 마지막 메세지",
-        title: "메멘토 인증카드",
-        price: 10900,
-        imageUri: imageUrl("SellingPage/Product3"),
-    },
     
 ]
 
 function ProductPage({ match }: Props) {
     let id = Number.parseInt(match.params.id || '1');
-    let productInformation = React.useMemo(() => productInformationArray[id - 1], [id, productInformationArray]);
+    let productInformation = React.useMemo(() => productInformationArray[id - 1], [id]);
     let [product, setProduct] = React.useState<any>();
     let [productInformationNavigationMenu, setProductInformationNavigationMenu] = React.useState<number>(0);
     let setProductBySelect = (e: any) => {
         setProduct(e.target.value);
     }
     let defaultProduct = "상품을 선택해주세요.";
-    let productName = "웰다잉 대화카드 [함께, 기억]";
     React.useEffect(() => window.scrollTo(0, 0), []);
     React.useEffect(() => setProduct(productInformation.title), [productInformation]);
+    let productInformationNavigation1Ref = React.useRef<HTMLDivElement>(null);
+    let productInformationNavigation4Ref = React.useRef<HTMLDivElement>(null);
+    let productInformationNavigationRefArray = [productInformationNavigation1Ref, productInformationNavigation4Ref];
+    let moveToProductInformationNavigationRef = ( index: number ) => {
+        productInformationNavigationRefArray[index].current?.scrollIntoView({ behavior: "smooth" });
+    }
     return (
         <>
             <div className="productPage">
@@ -93,7 +91,13 @@ function ProductPage({ match }: Props) {
                     <div className="navigationMenu">
                         {productInformationNavigationMenuArray.map((menuName, key) => {
                             return (
-                                <div className="navigationMenuElement" onClick = {() => setProductInformationNavigationMenu(key)}>
+                                <div className="navigationMenuElement" onClick = {() => {
+                                    setProductInformationNavigationMenu(key);
+                                    if(key === 0)
+                                        moveToProductInformationNavigationRef(0);
+                                    else if(key == 3)
+                                        moveToProductInformationNavigationRef(1);
+                                }}>
                                     <div className="name">{menuName}</div>
                                 </div>
                             )
@@ -101,7 +105,9 @@ function ProductPage({ match }: Props) {
                     </div>
                     <div className="selectorVector" style = {{transform: `translateX(${(140 * productInformationNavigationMenu) + 'px'})`}}></div>
                 </div>
-                {productInformationNavigationMenu === 0 && <div className="productInformationBlock">
+                {(productInformationNavigationMenu === 0 || productInformationNavigationMenu === 3) && 
+                <>
+                <div className="productInformationBlock" ref = {productInformationNavigation1Ref}>
                     <div className="productInformationTable">
                         <div className="tableRow">
                             <div className="name">상품상태</div>
@@ -260,7 +266,89 @@ function ProductPage({ match }: Props) {
                             <div>무단 복제 및 판매를 금합니다.</div>
                         </div>
                     </div>
-                </div>}
+                </div>
+                <div className="returnExchangeInformationBlock" ref = {productInformationNavigation4Ref}>
+                    <div className="tableBlock returnExchangeInformation">
+                        <div className="title">반품/교환 정보</div>
+                        <div className="subtitle">*반품 시 먼저 판매자와 연락하셔서 반품사유, 택배사, 배송비, 반품지 주소 등을 협의하신 후 반품상품을 발송해 주시기 바랍니다.</div>
+                        <div className="table">
+                            <div className="tableRow">
+                                <div className="name">판매자 지정 택배사</div>
+                                <div className="detail">우체국 택배</div>
+                            </div>
+                            <div className="tableRow two">
+                                <div className="name">반품 배송비</div>
+                                <div className="detail">무료</div>
+                                <div className="name">교환 배송비</div>
+                                <div className="detail">5,000원</div>
+                            </div>
+                            <div className="tableRow">
+                                <div className="name">반품/교환지 주소</div>
+                                <div className="detail">서울특별시 관악구 봉천동 856-6 BS타워 2층 (우) 08788</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="textBlock returnExchangeStandard">
+                        <div className="title">반품/교환 기준</div>
+                        <div className="textContainer">
+                            <div>구매자 단순 변심으로 인한 반품은 상품 수령 후 7일 이내에 신청하실 수 있습니다.(구매자 반품 배송비 부담) </div>
+                            <div>단, 제품이 표시광고 내용과 다르거나 불량 등 계약과 다르게 이행된 경우는 제품 수령일부터 3개월 이내, 그 사실을 안 날 또는 알 수 있었던 날부터 30일이내에 교환/반품이 가능합니다. </div>
+                            <div>(판매자 반품 배송비 부담)</div>
+                            <div>둘 중 하나 경과 시 반품/교환이 불가합니다.</div>
+
+                            <div style = {{marginTop: '25px'}}>추가적으로 다음의 경우 해당하는 반품/교환은 신청이 불가능할 수 있습니다.</div>
+                            <div className = "dot">반품요청기간이 지난 경우</div>
+                            <div className = "dot">소비자의 책임 있는 사유로 상품 등이 멸실 또는 훼손된 경우 (단, 상품 확인을 위한 포장 훼손 제외)</div>
+                            <div className = "dot">소비자의 책임있는 사유로 포장이 훼손되어 상품 가치가 현저히 상실된 경우 (예: 식품, 화장품, 향수류, 음반 등)</div>
+                            <div className = "dot">소비자의 사용 또는 소비에 의해 상품 등의 가치가 현저히 감소한 경우 (라벨이 떨어진 의류, 또는 태그가 떨어진 명품관 </div>상품인 경우)
+                            <div className = "dot">시간의 경과에 의해 재판매가 곤란할 정도로 상품 등의 가치가 현저히 감소한 경우</div>
+                            <div className = "dot">복제가 가능한 상품 등의 포장을 훼손한 경우(CD/DVD/GAME/도서의 경우 포장 개봉 시)</div>
+                            <div className = "dot">소비자의 주문에 따라 개별적으로 생산되는 상품이 제작에 들어간 경우</div>
+                        </div>
+                    </div>
+                    <div className="tableBlock SellerInformation">
+                        <div className="title">판매자 정보</div>
+                        <div className="table">
+                            <div className="tableRow two">
+                                <div className="name">판매자</div>
+                                <div className="detail">메멘토</div>
+                                <div className="name">상호명/대표자</div>
+                                <div className="detail">메멘토/신동경</div>
+                            </div>
+                            <div className="tableRow two">
+                                <div className="name">사업자구분</div>
+                                <div className="detail">개인사업자</div>
+                                <div className="name">통신판매업신고</div>
+                                <div className="detail">2021-서울관악-2054</div>
+                            </div>
+                            <div className="tableRow">
+                                <div className="name">사업자등록번호</div>
+                                <div className="detail">176-64-00459</div>
+                            </div>
+                            <div className="tableRow">
+                                <div className="name">이메일</div>
+                                <div className="detail">memento.welldying@gmail.com</div>
+                            </div>
+                            <div className="tableRow">
+                                <div className="name">영업소재지</div>
+                                <div className="detail">(08788)  서울특별시 관악구 관악로158 (BS TOWER) 3층 스프링 캠프</div>
+                            </div>
+                            <div className="tableRow">
+                                <div className="name">고객문의 대표번호</div>
+                                <div className="detail">0507-1367-0842</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="textBlock purchaseNotification">
+                        <div className="title">구매시 주의 사항</div>
+                        <div className="textContainer">
+                            <div className = "dot">「전자상거래 등에서의 소비자보호에 관한 법률」에 의한 반품규정이 판매자가 지정한 반품조건보다 우선합니다.</div>
+                            <div className = "dot">미성년자가 물품을 구매하는 경우, 법정대리인이 동의하지 않으면 미성년자 본인 또는 법정대리인이 구매를 취소할 수 있습니다.</div>
+                            <div className = "dot">공산품, 전기용품 등 인증대상 상품을 구매하실 경우 '전기용품 및 생활용품 안전관리법' 등 관련 법률에 따라 허가 받은 상품인지 확인하시기 바랍니다.</div>
+                        </div>
+                    </div>
+                </div>
+                </>}
                 {productInformationNavigationMenu === 3 && <div className="returnExchangeInformationBlock">
                     <div className="tableBlock returnExchangeInformation">
                         <div className="title">반품/교환 정보</div>

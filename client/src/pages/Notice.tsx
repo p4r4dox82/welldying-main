@@ -24,7 +24,7 @@ function Notice ({ match }: Props) {
   let [search_word, setSearch_word] = React.useState<string>('');
   let [, revnotices] = usePromise(getrevNotices);
   let maxNoticeId = React.useMemo(() => revnotices ? Math.max(...revnotices.map(notice => notice.id)) : 0, [revnotices]);
-  let [error, setError] = React.useState<string>();
+  let [, setError] = React.useState<string>();
 
   let startingid = maxNoticeId - 8 * (id - 1);
   let endingid = Math.max(0, maxNoticeId - 8 * id) + 1;

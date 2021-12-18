@@ -7,7 +7,6 @@ import { getSections } from '../etc/api/section';
 import { getQuestions } from '../etc/api/question';
 import { getContents } from '../etc/api/content';
 import { getUsers } from '../etc/api/user';
-import { downloadSubscribers } from '../etc/api/subscriber';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
 import { getCategorys } from '../etc/api/category';
@@ -42,7 +41,7 @@ function Admin() {
                 <Link to={`/admin/section/${id}`}><button> 질문지 수정하기 </button></Link>
                 { section.questions.map((questionId) => {
                     let question = questions?.find((question) => question.id === questionId);
-                    if (!question) return;
+                    if (!question) return<></>;
                     return (
                         <div className='row'>
                             <h2> { `[질문 ID: ${question.id}] ` } { question.title } </h2>
@@ -65,7 +64,7 @@ function Admin() {
                 <Link to={`/admin/category/${id}`}><button> 질문지 수정하기 </button></Link>
                 { category.contents.map((contentId) => {
                     let content = contents?.find((content) => content.id === contentId);
-                    if (!content) return;
+                    if (!content) return <></>;
                     return (
                         <div className='row'>
                             <h2> { `[질문 ID: ${content.id}] ` } { content.title } </h2>
@@ -76,7 +75,7 @@ function Admin() {
                 })}
             </>
         );
-    }, [id, sections, questions]);
+    }, [id, sections, questions, categorys, contents]);
 
     let UsersNumber = React.useMemo(() => {
         return (

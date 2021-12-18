@@ -5,11 +5,9 @@ import { useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { getSections } from '../etc/api/section';
 import { DeathInfo, getUsers, modifyUserInfo, oauthConnect, setUserDeathInfo } from '../etc/api/user';
 import { googleClientId, kakaoJskey } from '../etc/config';
 import usePromise from '../etc/usePromise';
-import useScroll from '../etc/useScroll';
 import { RootReducer } from '../store';
 import MementoBook from '../components/MementoBook';
 
@@ -40,23 +38,20 @@ export let checkBatchim = (word: string) => {
 
 function Mypage() {
     let user = useSelector((state: RootReducer) => state.user);
-    let [accept, setAccept] = React.useState<number>(0);
     let [, AllUsers] = usePromise(getUsers);
-    let [, sections] = usePromise(getSections);
-    let scroll = useScroll();
 
 
     let [editing, setEditing] = React.useState<boolean>(false);
 
     let [oldPassword, setOldPassword] = React.useState('');
-    let [oldPasswordMessage, setOldPasswordMessage] = React.useState('');
-    let validateOldPassword = () => {
+    let [oldPasswordMessage, ] = React.useState('');
+    let validateOldPassword = React.useCallback(() => {
         return true;
-    }
+    }, []);
 
     let [password, setPassword] = React.useState('');
     let [passwordMessage, setPasswordMessage] = React.useState('');
-    let validatePassword = () => {
+    let validatePassword = React.useCallback(() => {
         if (!password) {
             setPasswordMessage('');
             return true;
@@ -72,11 +67,11 @@ function Mypage() {
         }
         setPasswordMessage('');
         return true;
-    }
+    }, [password]);
 
     let [passwordConfirm, setPasswordConfirm] = React.useState('');
     let [passwordConfirmMessage, setPasswordConfirmMessage] = React.useState('');
-    let validatePasswordConfirm = () => {
+    let validatePasswordConfirm = React.useCallback(() => {
         let result = password === passwordConfirm;
 
         if (!result) {
@@ -85,11 +80,11 @@ function Mypage() {
         }
         setPasswordConfirmMessage('');
         return true;
-    }
+    }, [password, passwordConfirm])
 
     let [name, setName] = React.useState('');
     let [nameMessage, setNameMessage] = React.useState('');
-    let validateName = () => {
+    let validateName = React.useCallback(() => {
         if (name.length < 1) {
             setNameMessage('이름을 적어주세요.');
             return false;
@@ -100,13 +95,13 @@ function Mypage() {
         }
         setNameMessage('');
         return true;
-    }
+    }, [name.length])
 
     let [birthYear, setBirthYear] = React.useState(0);
     let [birthMonth, setBirthMonth] = React.useState(0);
     let [birthDate, setBirthDate] = React.useState(0);
     let [birthMessage, setBirthMessage] = React.useState('');
-    let validateBirth = () => {
+    let validateBirth = React.useCallback(() => {
         if (birthYear === 0 || birthMonth === 0 || birthDate === 0) {
             setBirthMessage('생년월일을 적어주세요.');
             return false;
@@ -117,7 +112,7 @@ function Mypage() {
         }
         setBirthMessage('');
         return true;
-    }
+    }, [birthDate, birthMonth, birthYear])
 
     let [sex, setSex] = React.useState<'female' | 'male'>(Math.random() < 0.5 ? 'female' : 'male');
     let [sexMessage, ] = React.useState('');
@@ -127,33 +122,22 @@ function Mypage() {
 
     let [email, setEmail] = React.useState('');
     let [emailMessage, setEmailMessage] = React.useState('');
-    let validateEmail = () => {
+    let validateEmail = React.useCallback(() => {
         if (!email) {
             setEmailMessage('');
             return true;
         }
 
-        const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!regex.test(email)) {
             setEmailMessage('이메일의 형식이 올바르지 않습니다.');
             return false;
         }
         setEmailMessage('');
         return true;
-    }
+    }, [email])
 
     let [imageUri, setImageUri] = React.useState<string>('');
-
-
-    let validateAll = async () => {
-        let result = true;
-
-        for (let { validate } of entries) {
-            if (!await validate()) result = false;
-        }
-
-        return result;
-    }
 
     React.useEffect(() => {
         if(!user || !user.user) return;
@@ -163,7 +147,7 @@ function Mypage() {
         setBirthDate(user.user.birthDate);
         setSex(user.user.sex);
         setEmail(user.user.email);
-    }, []);
+    }, [user]);
 
     let entries = React.useMemo<EntryType[]>(() => {
         return [ {
@@ -238,18 +222,29 @@ function Mypage() {
             validate: validateEmail,
         }];
     }, [birthDate, birthMessage, birthMonth, birthYear, email, emailMessage, name, nameMessage, oldPassword, oldPasswordMessage, validateOldPassword, password, passwordConfirm, passwordConfirmMessage, passwordMessage, sex, sexMessage, validateBirth, validateEmail, validateName, validatePassword, validatePasswordConfirm]);
+    
+    let validateAll = React.useCallback(async () => {
+        let result = true;
+
+        for (let { validate } of entries) {
+            if (!await validate()) result = false;
+        }
+
+        return result;
+    }, [entries])
 
     let [, contents] = usePromise(getContents);
 
     let [agree, setAgree] = React.useState<boolean>(false);
     
-    let answer1Array = ['불교 형식', '기독교 형식', '카톨릭 형식', '전통 장례', '기타'];
-    let answer2Array = ['화장 형식', '매장 형식', '기타'];
-    let answer3Array = ['지인 모두 참석', '가족만 참석', '기타'];
-    let answer4Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
-    let answer5Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
+    
     
     let answerArrays = React.useMemo(() => {
+        let answer1Array = ['불교 형식', '기독교 형식', '카톨릭 형식', '전통 장례', '기타'];
+        let answer2Array = ['화장 형식', '매장 형식', '기타'];
+        let answer3Array = ['지인 모두 참석', '가족만 참석', '기타'];
+        let answer4Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
+        let answer5Array = ['예, 희망합니다.', '아니오, 희망하지 않습니다'];
         let result = [];
         result.push({title: '원하시는 장례 진행 방법이 있나요?', answer: answer1Array});
         result.push({title: '어떤 장법을 원하시나요?', answer: answer2Array});
@@ -262,16 +257,16 @@ function Mypage() {
 
     let [DeathInfo, setDeathInfo] = React.useState<DeathInfo>();
 
-    let isAnswerInArray = (answer: string, array: Array<string>) => {
+    let isAnswerInArray = React.useCallback((answer: string, array: Array<string>) => {
         if(answer === undefined) return false;
         return array.includes(answer);
-    }
+    }, [])
 
-    let editDataOnArrayWithIndex = (array: Array<string>, data: string, index: number) => {
+    let editDataOnArrayWithIndex = React.useCallback((array: Array<string>, data: string, index: number) => {
         let newarray = array;
         newarray[index] = data;
         return newarray;
-    }
+    }, [])
 
     let checkDeathInfoAnswerFilled = (DeathInfo: DeathInfo) => {
         if(DeathInfo.answerArray.length !== 5)
@@ -471,7 +466,7 @@ function Mypage() {
                     </div>
                 )
         }
-    }, [modifynumber, name, sex, birthYear, birthMonth, birthDate, email, oldPassword, password, passwordConfirm]);
+    }, [modifynumber, name, sex, birthYear, birthMonth, birthDate, email, oldPassword, password, passwordConfirm, imageUri, user.user, validateAll]);
     
 
     let ModifyInfo = React.useMemo(() => {
@@ -501,7 +496,7 @@ function Mypage() {
         if(!user.user?.DeathInfo) return;
         setAgree(user.user?.DeathInfo.agree);
         setDeathInfo(user.user?.DeathInfo);
-    }, []);
+    }, [user]);
 
     let LinkNote = React.useRef<any>(null);
     let LinkNoteClick = () => LinkNote.current.click();
@@ -549,7 +544,7 @@ function Mypage() {
                 
             </div>
         );
-    }, [user, AllUsers, accept]);
+    }, [user, AllUsers]);
     
 
     if (!user.loggedIn) return <Redirect to='/login' />; 

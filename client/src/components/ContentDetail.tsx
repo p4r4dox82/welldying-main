@@ -12,7 +12,7 @@ interface Props {
 }
 
 function ContentDetail (props : Props) {
-  let [sectionLoading, section] = usePromise(() => getSection(parseInt(props.additionalClass)));
+  let [, section] = usePromise(() => getSection(parseInt(props.additionalClass)));
 
   let LinkNote = React.useRef<any>(null);
   let LinkNoteClick = () => LinkNote.current.click();
@@ -21,7 +21,7 @@ function ContentDetail (props : Props) {
     <Link to = {'/note/1'} ref = {LinkNote} style = {{display: 'none'}} />
     <div className = 'block'>
           <div className = {'contentdetail' + props.border + props.margin}>
-              <img className = 'memento_colon' src={imageUrl('memento_colon.png')} />
+              <img alt = "" className = 'memento_colon' src={imageUrl('memento_colon.png')} />
               <div className = 'detail'>
                   <div>이야기를 먼저 시청한 후, 이야기마다 쓰여있는 질문에</div>
                   <div>답변을 통하여 나의 유언을 남겨보세요</div>

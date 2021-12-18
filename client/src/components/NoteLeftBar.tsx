@@ -26,7 +26,6 @@ function NoteLeftBar (props: Props) {
         <div className="title NS px12 bold line25">사후 노트 수령인</div>
         <div className="userscontainer">
           {(user && users) && user.user?.UsersInfo.give.map((userinfo) => {
-            let giveuser = users.find((user_) => user_.username === userinfo.username);
             if(userinfo.accept === 0) {
               return (
                 <div className="username NS px12 line30">{userinfo?.name + '(미승인)'}</div>
@@ -35,13 +34,15 @@ function NoteLeftBar (props: Props) {
               return (
                 <div className="username NS px12 line30">{userinfo?.name}</div>
               )
+            } else {
+              return <></>;
             }
           })}
         </div>
         <div className="adduser NS px12 bold line25" onClick = {() => props.setAddUserGive(true)} style = {{cursor: 'pointer'}}>{'+ 추가하기'}</div>
       </div>
     );
-  }, [user, users]);
+  }, [user, users, props]);
 
   let NoteBook = React.useRef<any>(null);
   let NoteBookClick = () => NoteBook.current.click();
@@ -57,7 +58,7 @@ function NoteLeftBar (props: Props) {
                 <div className = 'title NS px12 bold op5'>나의 메멘토 북</div>
                 {(user.user?.bookname && user.user.bookname.length === 1) && <Link to='/notebook/0'><div className = {'note' + (props.book ? ' selected' : '')} /></Link>}
                 <div className = 'add note'>
-                    <img className = 'add_image' src = {imageUrl('ContentPage/add_button.png')} onClick = {() => NoteBookClick()}/>
+                    <img alt = "" className = 'add_image' src = {imageUrl('ContentPage/add_button.png')} onClick = {() => NoteBookClick()}/>
                     {(user.user?.bookname && user.user.bookname.length === 1) && <div className="notopen GB px12 whiteop10" style = {{width: '100%', height: '100%', background: 'rgba(96, 103, 99, 0.8)', boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: '0px', left: '0px', borderRadius: '5px'}}>오픈 준비중</div>}
                 </div>
                 {props.book && UsersGive}

@@ -19,8 +19,8 @@ interface Props {
 function AdminWriteSection({ match }: Props) {
     let id = Number.parseInt(match.params.id);
     let user = useSelector((state: RootReducer) => state.user);
-    let [sectionLoading, section] = usePromise(() => getSection(id));
-    let [allQuestionsLoading, allQuestions] = usePromise(() => getQuestions());
+    let [, section] = usePromise(() => getSection(id));
+    let [, allQuestions] = usePromise(() => getQuestions());
     let [error, setError] = React.useState<string>();
 
     let [title, setTitle] = React.useState<string>('');
@@ -65,7 +65,7 @@ function AdminWriteSection({ match }: Props) {
                 </div>
             );
         })
-    }, [update, allQuestionsLoading, sectionLoading]);
+    }, [update, allQuestions, questions]);
 
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
     else if (editDone) return <Redirect to='/admin'/>

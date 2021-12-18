@@ -5,10 +5,7 @@ import { imageUrl } from '../etc/config';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SubmenuContainer from '../components/SubmenuContainer';
-import { getContent } from '../etc/api/content';
-import { getSections } from '../etc/api/section';
 import { writeNotice } from '../etc/api/notice';
-import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
 
 interface MatchParams {
@@ -44,7 +41,7 @@ const checkline = (data: string) => {
 function WriteNotice({ match }: Props) {
     let id = Number.parseInt(match.params.id);
     let user = useSelector((state: RootReducer) => state.user);
-    let [error, setError] = React.useState<string>();
+    let [, setError] = React.useState<string>();
 
     let [editDone, setEditDone] = React.useState<boolean>(false);
 
@@ -67,7 +64,7 @@ function WriteNotice({ match }: Props) {
                 <div className = 'submenu_container'>
                     <SubmenuContainer additionalClass = 'notice'/>
                     {false && <div className = 'searchContainer'>
-                        <img src = {imageUrl('search_image.png')} />
+                        <img src = {imageUrl('search_image.png')} alt = ""/>
                         <input autoComplete='search_word' onChange={(e) => { setSearch_word(e.target.value) } } value={search_word} placeholder = '예)메멘토 이벤트'/>
                     </div>}
                 </div>

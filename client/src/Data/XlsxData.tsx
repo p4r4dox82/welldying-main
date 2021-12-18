@@ -38,7 +38,7 @@ let readExcelFile = (file: File, callback: WorkBookCallBack) => {
 }
 
 let workbookToJsonArray = (workbook: Xlsx.WorkBook) => {
-    let jArray = new Array();
+    let jArray: Array<any> = [];
     workbook.SheetNames.forEach(function (sheetname) {
         const roa = Xlsx.utils.sheet_to_json(workbook.Sheets[sheetname],{});
         if(roa.length > 0) 

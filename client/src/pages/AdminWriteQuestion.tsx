@@ -1,15 +1,12 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
 import { useSelector } from 'react-redux';
 import { Link, match, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import QuillToolbar from '../components/QuillToolbar';
 import { getQuestion, writeQuestion } from '../etc/api/question';
 import { getContents } from '../etc/api/content';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
-import { getSections } from '../etc/api/section';
 
 interface MatchParams {
     id: string;
@@ -22,12 +19,12 @@ interface Props {
 function AdminWriteQuestion({ match }: Props) {
     let id = Number.parseInt(match.params.id);
     let user = useSelector((state: RootReducer) => state.user);
-    let [questionLoading, question] = usePromise(() => getQuestion(id));
+    let [, question] = usePromise(() => getQuestion(id));
     let [, AllContents] = usePromise(getContents);
     let [error, setError] = React.useState<string>();
 
     let [title, setTitle] = React.useState<string>('');
-    let [type, setType] = React.useState<'question' | 'post'>('question');
+    let [type, ] = React.useState<'question' | 'post'>('question');
     let [message, setMessage] = React.useState<string>('');
     let [placeholder, setPlaceholder] = React.useState<string>('');
     let [contents, setContents] = React.useState<number[]>([]);
@@ -67,7 +64,7 @@ function AdminWriteQuestion({ match }: Props) {
                 </div>
             );
         })
-    }, [update, AllContents, questionLoading]);
+    }, [update, AllContents, contents]);
 
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
     else if (editDone) return <Redirect to='/admin'/>

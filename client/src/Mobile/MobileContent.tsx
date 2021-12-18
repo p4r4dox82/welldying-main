@@ -1,4 +1,3 @@
-import { content } from 'html2canvas/dist/types/css/property-descriptors/content';
 import React from 'react';
 import { match } from "react-router";
 import { Link } from 'react-router-dom';
@@ -6,7 +5,7 @@ import { getCategorys } from '../etc/api/category';
 import { getContents } from '../etc/api/content';
 import { imageUrl } from '../etc/config';
 import usePromise from '../etc/usePromise';
-import { Colon, LeftArrowVector, leftVector, LeftVector2, RightArrowVector, RightVector2 } from '../img/Vectors';
+import { Colon, LeftArrowVector, LeftVector2, RightVector2 } from '../img/Vectors';
 import MobileContentbox from '../MobileComponents/MobileContentbox';
 import MobileHeader from '../MobileComponents/MobileHeader';
 import MobileNavigation from '../MobileComponents/MobileNavigation';
@@ -40,7 +39,7 @@ function MobileContent({ match }: Props) {
     }, []);
     let categoryContents = React.useMemo(() => {
         return allContents?.filter((content) => categoryPopularContentIds[categoryNum - 1].includes(content.id));
-    }, [allContents, categoryNum]);
+    }, [allContents, categoryNum, categoryPopularContentIds]);
     let categoryAllContents = React.useMemo(() => {
         return allContents?.filter((content) => content.category.includes(categoryNum));
     }, [allContents, categoryNum]);

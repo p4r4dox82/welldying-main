@@ -159,3 +159,8 @@ git access tokens - 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
 
 
 2. SSH 인증서 발급받기 (Let's Encrypt)
+
+
+nginx renewal
+
+sudo certbot renew 후 nginx restart

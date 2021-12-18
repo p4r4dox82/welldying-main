@@ -2,13 +2,12 @@ import React from 'react';
 import { match } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import DaumPostcode from 'react-daum-postcode';
 import PopupPostCode from '../components/PopupPostCode';
-import { imageUrl } from '../etc/config';
-import { bigCardVector, cardVector, checkVector, leftVector, naverpayVector, paycoVector, phoneVector } from '../img/Vectors';
+import { bigCardVector, cardVector, checkVector, leftVector, paycoVector, phoneVector } from '../img/Vectors';
 import useScroll from '../etc/useScroll';
 import { Link } from 'react-router-dom';
 import { productInformationArray } from './ProductPage';
+import { addNewOrder, getOrderData, OrderType, rspSuccess } from '../etc/api/payment';
 
 interface MatchParams {
     id?: string;
@@ -18,12 +17,17 @@ interface Props {
     match: match<MatchParams>;
 };
 
-const purchaseMethodArray = [
-    {vector: phoneVector, name: "휴대폰"},
-    {vector: cardVector, name: "카드"},
-    {vector: cardVector, name: "무통장 입금"},
-    {vector: naverpayVector, name: "네이버페이"},
-    {vector: paycoVector, name: "페이코"}
+export interface purchaseMethodInterface {
+    vector: any;
+    name: string;
+    kgName: string;
+}
+
+const purchaseMethodArray: purchaseMethodInterface[] = [
+    {vector: phoneVector, name: "휴대폰", kgName: "phone"},
+    {vector: cardVector, name: "카드", kgName: "card"},
+    {vector: cardVector, name: "무통장 입금", kgName: "trans"},
+    {vector: paycoVector, name: "페이코", kgName: "payco"}
 ];
 
 const agreeText1 = `****개인정보 수집 이용 동의****
@@ -385,33 +389,78 @@ const agreeText2 = `### **구매 이용약관**
 
 [부칙]제1조(시행일) 이 약관은 2021년 7월 1일부터 시행 합니다.`;
 
+declare global {
+    interface Window {
+      IMP: any;
+    }
+}
+
+const { IMP }  = window;
+IMP.init("imp17113033");
+
 function PaymentPage({ match }: Props) {
     let id = Number.parseInt(match.params.id || '1');
-    let productInformation = React.useMemo(() => productInformationArray[id - 1], [id, productInformationArray]);
+    let productInformation = React.useMemo(() => productInformationArray[id - 1], [id]);
     let scroll = useScroll();
-    let [paymentSummaryFixed, setPaymentSummaryFixed] = React.useState<boolean>(false);
+    let [paymentSummaryPositionFixed, setPaymentSumaryPositionFixed] = React.useState<boolean>(false);
+    let [orderData, setOrderData] = React.useState<OrderType>({ merchant_uid: "", amount: 0, productName: "", orderName: "", orderEmail: "", orderCellphone: "", zipCode: "", fullAddress: "", detailAddress: "", success: "false" });
     let [searchPostCode, setSearchPostCode] = React.useState<boolean>(false);
-    let [zipCode, setZipCode] = React.useState<string>('');
-    let [fullAddress, setFullAddress] = React.useState<string>('');
-    let [detailAddress, setDetailAddress] = React.useState<string>('');
-    let [purchaseMethod, setPurchaseMethod] = React.useState<string>("");
+    let [purchaseMethod, setPurchaseMethod] = React.useState<purchaseMethodInterface>();
     let [paymentComplete, setPaymentComplete] = React.useState<boolean>(false);
     let [agreeMore1, setAgreeMore1] = React.useState<boolean>(false);
     let [agreeMore2, setAgreeMore2] = React.useState<boolean>(false);
     let [agreeMore3, setAgreeMore3] = React.useState<boolean>(false);
     let [agree, setAgree] = React.useState<boolean>(false);
-    let [checkValidate, setCheckValidate] = React.useState<boolean>(false);
     React.useEffect(() => {
-        setPaymentSummaryFixed(scroll >= 154);
+        setPaymentSumaryPositionFixed(scroll >= 154);
     }, [scroll]);
-    React.useEffect(() => window.scrollTo(0, 0), []);
     React.useEffect(() => {
-        if(zipCode != "" && fullAddress != "" && agree) {
-            setCheckValidate(true);
-        } else {
-            setCheckValidate(false);
+        window.scrollTo(0, 0)
+        setOrderData({...orderData, merchant_uid: `ORD00${id}-` + new Date().getTime(), amount: productInformation.price, productName: productInformation.title});
+    }, [productInformation]);
+    let checkValidate = () => {
+        for(let [key, value] of Object.entries(orderData)) {
+            if(key === "orderName" || key === "orderEmail" || key === "orderCellphone" || key === "zipCode" || key === "fullAddress") {
+                if(value === "") {
+                    return false;
+                }
+            }
         }
-    }, [zipCode, fullAddress, agree]);
+        return true;
+    }
+
+    const requestPay = () => {
+        IMP.request_pay({
+            pg: "html5-inicis",
+            pay_method: purchaseMethod?.kgName,
+            merchant_uid: orderData.merchant_uid,
+            name: productInformation.title,
+            amount: orderData.amount,
+            buyer_name: orderData.orderName,
+            buyer_tel: orderData.orderCellphone,
+            buyer_email: orderData.orderEmail
+        }, async (rsp : any) => {
+            if(rsp.success) {
+                let data = await rspSuccess(rsp, orderData.orderCellphone, productInformation.title);
+                switch(data.status) {
+                    case "success":
+                        window.scrollTo(0, 0);
+                        setPaymentComplete(true);
+                        break;
+                }
+    
+            } else {
+                let data = await getOrderData(orderData.merchant_uid);
+                if(data && data.success === "webhooksuccess") {
+                    window.scrollTo(0, 0);
+                    setPaymentComplete(true);
+                } else {
+                    alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
+                }
+            }
+        })
+    }
+
     return (
         <>
             <div className="paymentPage">
@@ -426,15 +475,15 @@ function PaymentPage({ match }: Props) {
                             <div className="inputContainer">
                                 <div className="inputElement">
                                     <div className="name">성명</div>
-                                    <input type="text" placeholder = "이름을 입력해주세요."/>
+                                    <input type="text" placeholder = "이름을 입력해주세요." onChange = {(e:any) => setOrderData({...orderData, orderName: e.target.value})} value = {orderData.orderName} />
                                 </div>
                                 <div className="inputElement">
                                     <div className="name">이메일</div>
-                                    <input type="text" className = "midium" placeholder = "이메일을 입력해주세요."/>
+                                    <input type="text" className = "midium" placeholder = "이메일을 입력해주세요." onChange = {(e: any) => setOrderData({...orderData, orderEmail: e.target.value})} value = {orderData.orderEmail} />
                                 </div>
                                 <div className="inputElement">
                                     <div className="name">전화번호</div>
-                                    <input type="text" placeholder = "'-'없이 전화번호를 입력해주세요."/>
+                                    <input type="text" placeholder = "'-'없이 전화번호를 입력해주세요." onChange = {(e: any) => setOrderData({...orderData, orderCellphone: e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')})} value = {orderData.orderCellphone} />
                                 </div>
                             </div>
                         </div>
@@ -460,10 +509,10 @@ function PaymentPage({ match }: Props) {
                                 <div className="inputElement">
                                     <div className="name">주소</div>
                                     <button className="searchPostCode" onClick = {() => setSearchPostCode(true)}>주소찾기</button>
-                                    <input type="text" value = {zipCode}/>
-                                    <input type="text" className = "long" style = {{marginTop: "22px"}} value = {fullAddress}/>
-                                    <input type="text" className = "long" style = {{marginTop: "22px"}} placeholder = "상세 주소를 입력해주세요." onChange = {(e) => setDetailAddress(e.target.value)} value = {detailAddress}/>
-                                    {searchPostCode && <PopupPostCode setFullAddress = {setFullAddress} setZipCode = {setZipCode} setSearchPostCode = {setSearchPostCode}></PopupPostCode>}
+                                    <input type="text" value = {orderData.zipCode}/>
+                                    <input type="text" className = "long" style = {{marginTop: "22px"}} value = {orderData.fullAddress}/>
+                                    <input type="text" className = "long" style = {{marginTop: "22px"}} placeholder = "상세 주소를 입력해주세요." onChange = {(e) => setOrderData({...orderData, detailAddress: e.target.value})} value = {orderData.detailAddress}/>
+                                    {searchPostCode && <PopupPostCode setOrderData = {setOrderData} orderData = {orderData} setSearchPostCode = {setSearchPostCode}></PopupPostCode>}
                                 </div>
                             </div>
                         </div>
@@ -491,7 +540,7 @@ function PaymentPage({ match }: Props) {
                             <div className="purchaseMethodContainer">
                                 {purchaseMethodArray.map((purchaseMethodElement) => {
                                     return (
-                                        <div className={"purchaseMethodElement" + (purchaseMethod === purchaseMethodElement.name ? ' selected' : '')} onClick = {() => setPurchaseMethod(purchaseMethodElement.name)}>
+                                        <div className={"purchaseMethodElement" + (purchaseMethod === purchaseMethodElement ? ' selected' : '')} onClick = {() => setPurchaseMethod(purchaseMethodElement)}>
                                             <div className="icon">{purchaseMethodElement.vector}</div>
                                             <div className="name">{purchaseMethodElement.name}</div>
                                         </div>
@@ -500,7 +549,7 @@ function PaymentPage({ match }: Props) {
                             </div>
                         </div>
                     </div>
-                    <div className={"paymentSummaryBlock" + (paymentSummaryFixed ? ' fixed' : '')}>
+                    <div className={"paymentSummaryBlock" + (paymentSummaryPositionFixed ? ' fixed' : '')}>
                         <div className="title">결재금액</div>
                         <div className="priceList">
                             <div className="priceElement">
@@ -544,7 +593,22 @@ function PaymentPage({ match }: Props) {
                                 <div className="name">본인은 만 14세 이상이며, 주문 내용을 확인하였습니다.</div>
                             </div>
                         </div>
-                        <button className="purchaseButton" onClick = {checkValidate ? () => setPaymentComplete(true) : () => alert("입력하신 정보가 잘못되었습니다.")}>{"12,900"}원 결제하기</button>
+                        <button className="purchaseButton" onClick = {async () => { 
+                            if(checkValidate() && agree) {
+                                if(await addNewOrder(orderData)) {
+                                    await requestPay();
+                                }
+                                else {
+    
+                                }
+                            } else if(!agree) {
+                                alert("구매 이용 약관 및 개인정보 수집에 동의해주십시오.");
+                            } else if(purchaseMethod === undefined || purchaseMethod === null) {
+                                alert("결제 방법을 선택해주십시오.");
+                            } else {
+                                alert("입력하신 정보가 잘못되었습니다.");
+                            }
+                        }}>{productInformation.price}원 결제하기</button>
                     </div>
                 </>}
                 {paymentComplete && <div className = "paymentCompleteBlock">
@@ -564,11 +628,11 @@ function PaymentPage({ match }: Props) {
                             </div>
                             <div className="tableRow">
                                 <div className="name">배송지</div>
-                                <div className="detail">{'(' + zipCode + ')' + fullAddress + " " + detailAddress}</div>
+                                <div className="detail">{'(' + orderData.zipCode + ')' + orderData.fullAddress + " " + orderData.detailAddress}</div>
                             </div>
                             <div className="tableRow">
                                 <div className="name">결제 금액</div>
-                                <div className="detail">12,900원</div>
+                                <div className="detail">{productInformation.price}</div>
                             </div>
                         </div>
                     </div>
