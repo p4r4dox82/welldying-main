@@ -3053,9 +3053,9 @@ color: #7A7978;
     }
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page {
-    padding: 27px 48px 50px 48px;
+    padding: 27px 40px 50px 40px;
     border: 5px;
-    height: 307px;
+    height: 397px;
     background-color: var(--white);
     margin: 0px;
     box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
@@ -3099,11 +3099,14 @@ color: #7A7978;
     color: var(--green);
     opacity: 0.7;
 }
+.Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines {
+    margin-top: 129px;
+}
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines.first {
-    margin-top: 158px;
+    margin-top: 228px;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines.notFirst {
-    margin-top: 59px;
+    margin-top: 149px;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines .answerLine {
     font-family: var(--GB);
@@ -3121,9 +3124,37 @@ color: #7A7978;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .imageContainer {
     position: absolute;
-    width: calc(100% - 48px*2);
+    width: calc(100% - 40px*2);
+    top: 120px;
+    padding: 7px;
+
+    background: #FFFFFF;
+    box-shadow: inset 0px 2px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .imageContainer img {
     width: 100%;
     object-fit: contain;
+}
+.Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines img {
+    width: 100%;
+    object-fit: contain;
+}
+.Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .header {
+    position: absolute;
+    top: 23px;
+    left: 17px;
+    display: flex;
+    font-family: var(--GB);
+    font-size: 6px;
+    line-height: 17px;
+    justify-content: space-between;
+    width: calc(100% - 17px * 2);
+    border-bottom: 0.5px dashed rgba(0, 0, 0, 0.3);
+}
+.Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .header .tag {
+    margin-left: 31px;
+}
+.Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .header .date {
+    margin-right: 20px;
 }

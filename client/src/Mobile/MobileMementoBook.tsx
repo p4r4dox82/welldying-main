@@ -6,6 +6,7 @@ import queryString from 'query-string';
 import { ProgramAnswerData, getProgramAnswer, programAnswer } from '../etc/api/programAnswer';
 import usePromise from '../etc/usePromise';
 import { imageUrl } from '../etc/config';
+import { oneByte } from '../etc';
 
 interface Props {
     location: Location;
@@ -83,34 +84,84 @@ function MobileMementoBook({ location }: Props) {
         }
     }
 
-    const lineLength = 24;
+    let [lineLength, setLineLength] = React.useState<number>(0);
+    React.useEffect(() => {
+        function handleResize() {
+            let textWidth = window.innerWidth - (40 + 24) * 2;
+            setLineLength((textWidth - textWidth%5)/5);
+        }
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    })
+    let getByteOfString = (str: string) => {
+        let byte = 0;
+        for(let i = 0; i < str.length; i++) {
+            if (oneByte.test(str[i])) {
+                byte++;
+            } else {
+                byte = byte+2;
+            }
+        }
+        return byte;
+    }
     let convertAnswertoArray = (answer: string) => {
         let answerArray = [];
         answerArray = answer.split('\n');
         let answerLineArray: string[] = [];
         answerArray.forEach((answerParagraph) => {
-            let stringNumber = 0;
-            while(stringNumber < answerParagraph.length) {
-                answerLineArray.push(answerParagraph.substring(stringNumber, stringNumber + lineLength));
-                stringNumber += lineLength;
+            let sidx = 0;
+            let byte = 0;
+            for(let i = 0; i < answerParagraph.length; i++) {
+                if (oneByte.test(answerParagraph[i])) {
+                    byte++;
+                } else {
+                    byte = byte+2;
+                }
+                if(byte > lineLength) {
+                    answerLineArray.push(answerParagraph.substring(sidx, i));
+                    sidx = i;
+                    i -= 1;
+                    byte = 0;
+                }
             }
+            answerLineArray.push(answerParagraph.substring(sidx, answerParagraph.length));
         })
+        console.log(answerLineArray);
 
         return answerLineArray;
     }
+    let isImage = (answer: string) => {
+        let answerLength = answer.length;
+        let answerRear = answer.slice(answerLength - 3, answerLength);
+        return (answerRear === 'jpg' || answerRear === 'png');
+    }
 
     let firstPage = (answerArray: string[], questionTitle: string, imageUri: string) => {
+        if(isImage(answerArray[0])) {
+            return (
+                <div className="page">
+                    <div className="mementoColon">{Colon}</div>
+                    <div className="questionTitle">{questionTitle}</div>
+                    <div className="answerLines">
+                        <img src={imageUrl(`ProgramBook/${answerArray[0]}`)} alt="" />
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <div className="page">
                 <div className="mementoColon">{Colon}</div>
                 <div className="questionTitle">{questionTitle}</div>
-                <div className="imageContainer">
+                {imageUri && <div className="imageContainer">
                     <img src={imageUrl(`ProgramBook/${imageUri}`)} alt="" />
-                </div>
+                </div>}
                 <div className="answerLines first">
                     {answerArray.map((answerLine, key) => {
+                        console.log(getByteOfString(answerLine));
                         return (
-                            <div className={"answerLine" + (answerLine.length < lineLength ? "" : " notLastLine")}>{answerLine}</div>
+                            <div className={"answerLine" + ((getByteOfString(answerLine) == lineLength || getByteOfString(answerLine) == lineLength - 1) ? " notLastLine" : "")}>{answerLine}</div>
                         )
                     })}
                 </div>
@@ -118,12 +169,30 @@ function MobileMementoBook({ location }: Props) {
         )
     }
     let notFirstPage = (answerArray: string[]) => {
+        if(isImage(answerArray[0])) {
+            return (
+                <div className="page">
+                    <div className="header">
+                        <div className="tag">{"#계획 #버킷리스트"}</div>
+                        <div className="date">{"2021.12.20"}</div>
+                    </div>
+                    <div className="answerLines">
+                        <img src={imageUrl(`ProgramBook/${answerArray[0]}`)} alt="" />
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <div className="page">
+                <div className="header">
+                    <div className="tag">{"#계획 #버킷리스트"}</div>
+                    <div className="date">{"2021.12.20"}</div>
+                </div>
                 <div className="answerLines notFirst">
                     {answerArray.map((answerLine, key) => {
                         return (
-                            <div className={"answerLine" + (answerLine.length < lineLength ? "" : " notLastLine")}>{answerLine}</div>
+                            <div className={"answerLine" + ((getByteOfString(answerLine) == lineLength || getByteOfString(answerLine) == lineLength - 1) ? " notLastLine" : "")}>{answerLine}</div>
                         )
                     })}
                 </div>
@@ -135,6 +204,20 @@ function MobileMementoBook({ location }: Props) {
         let answerLineArray = convertAnswertoArray(answerData.answer);
         let answerPageLineNumberexceptFirstPage = answerLineArray.length - 4;
         let pageNumber = (answerPageLineNumberexceptFirstPage > 0) ? (answerPageLineNumberexceptFirstPage - answerPageLineNumberexceptFirstPage%10)/10 + (answerPageLineNumberexceptFirstPage%10 == 0 ? 0 : 1): 0;
+
+        if(answerData.answer.slice(answerData.answer.length - 3, answerData.answer.length) === 'jpg' || answerData.answer.slice(answerData.answer.length - 3, answerData.answer.length) === 'png') {
+            answerLineArray = answerData.answer.split(',');
+            return (
+                <>
+                    {firstPage([answerLineArray[0]], questionTitle, answerData.imageUri)}
+                    {[...Array(answerLineArray.length -1).keys()].map((key) => {
+                        return (
+                            notFirstPage([answerLineArray[key+1]])
+                        )
+                    })}
+                </>
+            )
+        }
         
         return (
             <>
