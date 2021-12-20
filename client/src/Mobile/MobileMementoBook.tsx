@@ -31,9 +31,6 @@ function MobileMementoBook({ location }: Props) {
     const query = queryString.parse(location.search);
     const pid = Number.parseInt(String(query.pid));
     const [, programAnswer] = usePromise(() => getProgramAnswer(pid));
-    React.useEffect(() => {
-        console.log(programAnswer);
-    }, [programAnswer])
     let [week1Open, setWeek1Open] = React.useState<boolean>(false);
     let [week2Open, setWeek2Open] = React.useState<boolean>(false);
     let [week3Open, setWeek3Open] = React.useState<boolean>(false);
@@ -131,6 +128,7 @@ function MobileMementoBook({ location }: Props) {
         return answerLineArray;
     }
     let isImage = (answer: string) => {
+        if(!answer) return false;
         let answerLength = answer.length;
         let answerRear = answer.slice(answerLength - 3, answerLength);
         return (answerRear === 'jpg' || answerRear === 'png');
@@ -163,7 +161,7 @@ function MobileMementoBook({ location }: Props) {
                 {imageUri && <div className="imageContainer">
                     <img src={imageUrl(`ProgramBook/${imageUri}`)} alt="" />
                 </div>}
-                <div className="answerLines first">
+                <div className={"answerLines" + (imageUri === undefined ? ' notFirst' : ' first')}>
                     <textarea name="" id="" value = {answerLines} disabled></textarea>
                 </div>
             </div>
@@ -234,17 +232,31 @@ function MobileMementoBook({ location }: Props) {
                 </>
             )
         }
+        if(answerData.imageUri === undefined) {
+            return (
+                <>
+                    {firstPage(answerLineArray.slice(0, 10), questionTitle, answerData.imageUri)}
+                    {[...Array(pageNumber).keys()].map((key) => {
+                        return (
+                            notFirstPage(answerLineArray.slice(key * 10 +10, (key+1) * 10 + 10))
+                        )
+                    })}
+                </>
+            )
+        }
         
-        return (
-            <>
-                {firstPage(answerLineArray.slice(0, 4), questionTitle, answerData.imageUri)}
-                {[...Array(pageNumber).keys()].map((key) => {
-                    return (
-                        notFirstPage(answerLineArray.slice(key * 10 + 4, (key+1) * 10 + 4))
-                    )
-                })}
-            </>
-        );
+        else {
+            return (
+                <>
+                    {firstPage(answerLineArray.slice(0, 4), questionTitle, answerData.imageUri)}
+                    {[...Array(pageNumber).keys()].map((key) => {
+                        return (
+                            notFirstPage(answerLineArray.slice(key * 10 + 4, (key+1) * 10 + 4))
+                        )
+                    })}
+                </>
+            );
+        }
     }
 
     let [updateCheckLine, setUpdateCheckLine] = React.useState<string>("");
