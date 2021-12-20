@@ -76,9 +76,6 @@ function SaveExcelFile() {
         }
     }
 
-    let [head, setHead] = React.useState<any>();
-    let [itemList, setItemList] = React.useState<any>(null);
-
     let getCellphoneMidRear = (cellphone: string) => {
         if(!cellphone)
             return "";

@@ -87,8 +87,8 @@ function MobileMementoBook({ location }: Props) {
     let [lineLength, setLineLength] = React.useState<number>(0);
     React.useEffect(() => {
         function handleResize() {
-            let textWidth = window.innerWidth - (40 + 24) * 2;
-            setLineLength((textWidth - textWidth%5)/5);
+            let textWidth = window.innerWidth - (40 + 24 + 5) * 2 - 5;
+            setLineLength(textWidth);
         }
         handleResize();
         window.addEventListener('resize', handleResize);
@@ -105,29 +105,28 @@ function MobileMementoBook({ location }: Props) {
         }
         return byte;
     }
+    let answerLineRef = React.useRef<any>(null);
     let convertAnswertoArray = (answer: string) => {
         let answerArray = [];
         answerArray = answer.split('\n');
+        
         let answerLineArray: string[] = [];
         answerArray.forEach((answerParagraph) => {
             let sidx = 0;
             let byte = 0;
             for(let i = 0; i < answerParagraph.length; i++) {
-                if (oneByte.test(answerParagraph[i])) {
-                    byte++;
-                } else {
-                    byte = byte+2;
+                if(answerLineRef.current.offsetWidth <= lineLength) {
+                    answerLineRef.current.innerText = answerParagraph.slice(sidx, i);
                 }
-                if(byte > lineLength) {
-                    answerLineArray.push(answerParagraph.substring(sidx, i));
-                    sidx = i;
+                if(answerLineRef.current.offsetWidth > lineLength) {
+                    answerLineArray.push(answerLineRef.current.innerText.slice(0,-1));
+                    answerLineRef.current.innerText = "";
                     i -= 1;
-                    byte = 0;
+                    sidx = i;
                 }
             }
             answerLineArray.push(answerParagraph.substring(sidx, answerParagraph.length));
         })
-        console.log(answerLineArray);
 
         return answerLineArray;
     }
@@ -143,11 +142,18 @@ function MobileMementoBook({ location }: Props) {
                 <div className="page">
                     <div className="mementoColon">{Colon}</div>
                     <div className="questionTitle">{questionTitle}</div>
-                    <div className="answerLines">
+                    <div className="answerLines image">
                         <img src={imageUrl(`ProgramBook/${answerArray[0]}`)} alt="" />
                     </div>
                 </div>
             )
+        }
+        let answerLines = "";
+        for(let i = 0; i < answerArray.length; i++) {
+            answerLines += answerArray[i];
+            if(answerArray[i] == "") {
+                answerLines += '\n\n';
+            }
         }
 
         return (
@@ -158,12 +164,7 @@ function MobileMementoBook({ location }: Props) {
                     <img src={imageUrl(`ProgramBook/${imageUri}`)} alt="" />
                 </div>}
                 <div className="answerLines first">
-                    {answerArray.map((answerLine, key) => {
-                        console.log(getByteOfString(answerLine));
-                        return (
-                            <div className={"answerLine" + ((getByteOfString(answerLine) == lineLength || getByteOfString(answerLine) == lineLength - 1) ? " notLastLine" : "")}>{answerLine}</div>
-                        )
-                    })}
+                    <textarea name="" id="" value = {answerLines} disabled></textarea>
                 </div>
             </div>
         )
@@ -176,11 +177,18 @@ function MobileMementoBook({ location }: Props) {
                         <div className="tag">{"#계획 #버킷리스트"}</div>
                         <div className="date">{"2021.12.20"}</div>
                     </div>
-                    <div className="answerLines">
-                        <img src={imageUrl(`ProgramBook/${answerArray[0]}`)} alt="" />
+                    <div className="answerLines image">
+                        <img src={imageUrl(`ProgramBook/${answerArray[0].slice(1)}`)} alt="" />
                     </div>
                 </div>
             )
+        }
+        let answerLines = "";
+        for(let i = 0; i < answerArray.length; i++) {
+            answerLines += answerArray[i];
+            if(answerArray[i] == "") {
+                answerLines += '\n\n';
+            }
         }
 
         return (
@@ -190,11 +198,7 @@ function MobileMementoBook({ location }: Props) {
                     <div className="date">{"2021.12.20"}</div>
                 </div>
                 <div className="answerLines notFirst">
-                    {answerArray.map((answerLine, key) => {
-                        return (
-                            <div className={"answerLine" + ((getByteOfString(answerLine) == lineLength || getByteOfString(answerLine) == lineLength - 1) ? " notLastLine" : "")}>{answerLine}</div>
-                        )
-                    })}
+                    <textarea name="" id="" value = {answerLines} disabled></textarea>
                 </div>
             </div>
         )
@@ -205,7 +209,7 @@ function MobileMementoBook({ location }: Props) {
         let answerPageLineNumberexceptFirstPage = answerLineArray.length - 4;
         let pageNumber = (answerPageLineNumberexceptFirstPage > 0) ? (answerPageLineNumberexceptFirstPage - answerPageLineNumberexceptFirstPage%10)/10 + (answerPageLineNumberexceptFirstPage%10 == 0 ? 0 : 1): 0;
 
-        if(answerData.answer.slice(answerData.answer.length - 3, answerData.answer.length) === 'jpg' || answerData.answer.slice(answerData.answer.length - 3, answerData.answer.length) === 'png') {
+        if(isImage(answerData.answer)) {
             answerLineArray = answerData.answer.split(',');
             return (
                 <>
@@ -213,6 +217,18 @@ function MobileMementoBook({ location }: Props) {
                     {[...Array(answerLineArray.length -1).keys()].map((key) => {
                         return (
                             notFirstPage([answerLineArray[key+1]])
+                        )
+                    })}
+                </>
+            )
+        }
+        if(answerData.imageUri === 'giwa_1-2.jpg') {
+            return (
+                <>
+                    {firstPage([answerData.imageUri], questionTitle, "")}
+                    {[...Array(pageNumber).keys()].map((key) => {
+                        return (
+                            notFirstPage(answerLineArray.slice(key * 10, (key+1) * 10))
                         )
                     })}
                 </>
@@ -231,8 +247,15 @@ function MobileMementoBook({ location }: Props) {
         );
     }
 
+    let [updateCheckLine, setUpdateCheckLine] = React.useState<string>("");
+    React.useEffect(() => {
+
+        console.log(answerLineRef.current.offsetWidth);
+    }, [updateCheckLine]);
+
     if(pid) return (
         <>
+            <div ref = {answerLineRef} className = "answerLineRef"></div>
             <div className="Mobile">
                 <MobileHeader uri = '/book'></MobileHeader>
                 <div className="MobileMementoBook">

@@ -3098,6 +3098,10 @@ color: #7A7978;
     line-height: 17px;
     color: var(--green);
     opacity: 0.7;
+    overflow: visible;
+    height: 300px;
+    text-align: justify;
+    background-color: var(--white);
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines {
     margin-top: 129px;
@@ -3108,7 +3112,19 @@ color: #7A7978;
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines.notFirst {
     margin-top: 149px;
 }
-.Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines .answerLine {
+.Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines.image {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    height: 300px;
+}
+.Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines.image img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+}
+.Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines .answerLine,
+.answerLineRef {
     font-family: var(--GB);
     font-size: 7.5px;
     line-height: 17px;
@@ -3116,6 +3132,12 @@ color: #7A7978;
     opacity: 0.7;
     text-align: justify;
     height: 17px;
+}
+.answerLineRef {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    width: fit-content;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines .answerLine.notLastLine::after {
     content: "";
@@ -3125,7 +3147,7 @@ color: #7A7978;
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .imageContainer {
     position: absolute;
     width: calc(100% - 40px*2);
-    top: 120px;
+    top: 80px;
     padding: 7px;
 
     background: #FFFFFF;
@@ -3134,6 +3156,7 @@ color: #7A7978;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .imageContainer img {
     width: 100%;
+    max-height: 140px;
     object-fit: contain;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines img {
