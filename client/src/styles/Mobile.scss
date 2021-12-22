@@ -3099,9 +3099,17 @@ color: #7A7978;
     color: var(--green);
     opacity: 0.7;
     overflow: visible;
-    height: 300px;
+    height: 250px;
     text-align: justify;
-    background-color: var(--white);
+    background-color: transparent;
+}
+.Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines div {
+    font-family: var(--GB);
+    font-size: 7.5px;
+    line-height: 17px;
+    color: var(--green);
+    opacity: 0.7;
+    text-align:justify;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines {
     margin-top: 129px;
@@ -3110,7 +3118,7 @@ color: #7A7978;
     margin-top: 228px;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines.notFirst {
-    margin-top: 149px;
+    margin-top: 81px;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines.image {
     margin-top: 20px;
@@ -3143,6 +3151,9 @@ color: #7A7978;
     content: "";
     display: inline-block;
     width: 100%;
+}
+.Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .answerLines .answerLine.emptyLine {
+    height: 17px;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .imageContainer {
     position: absolute;
@@ -3180,4 +3191,27 @@ color: #7A7978;
 }
 .Mobile .MobileMementoBook .booksBlock .bookContainer .pageContainer .page .header .date {
     margin-right: 20px;
+}
+.Mobile .goUpButton {
+    z-index: 500;
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    padding: 0px;
+    width: 35px;
+    height: 35px;
+    background-color: var(--white);
+    border-radius: 50%;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+        transform: rotate(90deg);
+        width: 12px;
+        height: 24px;
+        path {
+            stroke-width: 3px;
+        }
+    }
 }
