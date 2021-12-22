@@ -215,7 +215,7 @@ function MyBook({ location }: Props) {
         
     }
 
-    let BookContainerRef = React.useRef<any>(null);
+    let BookContainerRef = React.useRef<any>(<></>);
 
     let bookContainer = React.useMemo(() => {
         return (
@@ -236,8 +236,12 @@ function MyBook({ location }: Props) {
     }, [programAnswer, QuestionInterface]);
 
     React.useEffect(() => {
-        BookContainerRef.current.scrollTo(539*(currentPageNumber - 1), 0);
-    }, [currentPageNumber])
+        if(BookContainerRef) {
+            setInterval(() => {
+                setCurrentPageNumber(Math.ceil(BookContainerRef.current.scrollLeft/539) + 1);
+            }, 100)
+        }
+    }, [])
 
     if(pid) return (
         <>
@@ -287,8 +291,8 @@ function MyBook({ location }: Props) {
                                 <div className="number totalPageNumber">{totalPageNumber}</div>
                             </div>
                             <div className="buttonContainer">
-                                <button className="moveLeft" onClick = {() => setCurrentPageNumber(currentPageNumber === 1 ? 1 : currentPageNumber - 1)}>{leftVector}</button>
-                                <button className="moveRight" onClick = {() => setCurrentPageNumber(currentPageNumber === totalPageNumber ? totalPageNumber : currentPageNumber + 1)}>{rightVector}</button>
+                                <button className="moveLeft" onClick = {() => BookContainerRef.current.scrollTo((currentPageNumber - 2) * 539, 0)}>{leftVector}</button>
+                                <button className="moveRight" onClick = {() => BookContainerRef.current.scrollTo(currentPageNumber * 539, 0)}>{rightVector}</button>
                             </div>
                         </div>
                     </div>
