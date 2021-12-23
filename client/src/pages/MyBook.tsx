@@ -8,6 +8,7 @@ import { imageUrl } from '../etc/config';
 import { isImage, QuestionInterface } from '../Mobile/MobileMementoBook';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import ClipboardJS from 'clipboard';
 
 interface Props {
     location: Location
@@ -301,6 +302,14 @@ function MyBook({ location }: Props) {
         )
     }, []);
 
+    let copyLink = () => {
+        let clipboard = new ClipboardJS('.copyLink');
+
+        clipboard.on('success', function(e) {
+            alert('링크가 복사되었습니다.');
+        })
+    }
+
     if(pid) return (
         <>
             <div ref = {answerLineRef} className = "answerLineRef PC"></div>
@@ -337,7 +346,9 @@ function MyBook({ location }: Props) {
                                 <img src={imageUrl('ionicons.designerpack/download-outline.svg')} alt="" />
                                 pdf 다운로드
                             </button>
-                            <button className="copyLink" data-clipboard-text = {`mymemento.kr/mybook?pid=${pid}`} onClick = {() => alert('링크가 복사되었습니다.')}>링크 복사</button>
+                            <button className="copyLink" data-clipboard-text = {`mymemento.kr/mybook?pid=${pid}`} onClick = {() => {
+                                copyLink();
+                            }}>링크 복사</button>
                         </div>
                         <div className="pageBar">
                             <div className="totalPageBar">

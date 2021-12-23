@@ -10,6 +10,7 @@ import ReactPlayer from 'react-player';
 import { parseDate } from '../etc';
 
 import { BookMarkVector, leftVector, rightVector } from '../img/Vectors';
+import ClipboardJS from 'clipboard';
 
 interface Props {
   additionalClass: string;
@@ -19,7 +20,6 @@ interface Props {
 declare global {
   interface Window {
     Kakao: any;
-    ClipboardJS: any;
   }
 }
 
@@ -90,6 +90,14 @@ function ContentType (props : Props) {
 
 
   let [pagenumber, setPagenumber] = React.useState<number>(0);
+
+  let copyLink = () => {
+    let clipboard = new ClipboardJS('.clipboard_btn');
+
+    clipboard.on('success', function(e) {
+      alert('링크가 복사되었습니다. ');
+    })
+  }
 
   let PageContainer = React.useMemo(() => {
     if(!content) return <></>;
@@ -168,7 +176,7 @@ function ContentType (props : Props) {
                   <img alt = "" src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} style = {{cursor: 'pointer'}} />
                   <div className="shareLink">
                       <input type="text NS px11" value = {`mymemento.kr/contentpage/${id}`} disabled/>
-                      <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} onClick = {() => alert('링크가 복사되었습니다.')}>링크 복사</button>
+                      <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} onClick = {() => copyLink()}>링크 복사</button>
                   </div>
               </div>}
           </div>}
@@ -213,7 +221,7 @@ function ContentType (props : Props) {
                   <img alt = "" src={imageUrl('ContentPage/facebook.png')} onClick = {() => facebookShare()} style = {{cursor: 'pointer'}} />
                   <div className="shareLink">
                       <input type="text NS px11" value = {`mymemento.kr/contentpage/${id}`} disabled/>
-                      <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} onClick = {() => alert('링크가 복사되었습니다.')}>링크 복사</button>
+                      <button className="clipboard_btn copy NS px12 whiteop10" data-clipboard-text = {uri} onClick = {() => copyLink()}>링크 복사</button>
                   </div>
               </div>}
               <div className = 'vector' />
