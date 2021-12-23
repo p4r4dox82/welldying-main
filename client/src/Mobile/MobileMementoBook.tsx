@@ -1,5 +1,5 @@
 import React from 'react';
-import { Colon, expandVector, FlowerVector, leftVector } from '../img/Vectors';
+import { Colon, expandVector, FlowerVector, LeftArrowVector, leftVector } from '../img/Vectors';
 import MobileHeader from '../MobileComponents/MobileHeader';
 import MobileNavigation from '../MobileComponents/MobileNavigation';
 import queryString from 'query-string';
@@ -15,15 +15,18 @@ interface Props {
 export let QuestionInterface = [
     {
         title: "내가 걸어온 길",
-        questions: ["당신의 기억은 어떤 순간들을 담고 있나요?", "당신에게 행복한 기억을 만들어준 사람은 누구인가요?", "당신의 인생은 스스로에게 어떤 의미였나요?"]
+        questions: ["당신의 기억은 어떤 순간들을 담고 있나요?", "당신에게 행복한 기억을 만들어준 사람은 누구인가요?", "당신의 인생은 스스로에게 어떤 의미였나요?"],
+        tag: "#기록 #추억"
     },
     {
         title: "언젠가는 마주할 그 순간",
-        questions: ["마지막 순간에 당신은 어떤 말을 남기고 싶나요?", "장례식, 그리고 그 이후에 가까운 사람들이 당신을 어떻게 추모해주길 바라나요?", "죽음을 떠올리면 어떤 생각과 기분이 드나요?"]
+        questions: ["마지막 순간에 당신은 어떤 말을 남기고 싶나요?", "장례식, 그리고 그 이후에 가까운 사람들이 당신을 어떻게 추모해주길 바라나요?", "죽음을 떠올리면 어떤 생각과 기분이 드나요?"],
+        tag: "#장례 #심적준비"
     },
     {
         title: "내가 걸어갈 길",
-        questions: ["어떤 가치관, 신념, 좌우명을 가지고 살아가고 있나요?", "삶이 끝나기 전, 꼭 하고 싶은 것은 무엇인가요?", "미래의 나에게 편지를 적어봅시다."]
+        questions: ["어떤 가치관, 신념, 좌우명을 가지고 살아가고 있나요?", "삶이 끝나기 전, 꼭 하고 싶은 것은 무엇인가요?", "미래의 나에게 편지를 적어봅시다."],
+        tag: "#현재 #미래"
     }
 ]
 
@@ -182,13 +185,13 @@ function MobileMementoBook({ location }: Props) {
             </div>
         )
     }
-    let notFirstPage = (answerArray: string[]) => {
+    let notFirstPage = (answerArray: string[], tag: string) => {
         if(isImage(answerArray[0])) {
             return (
                 <div className="page">
                     <div className="header">
-                        <div className="tag">{"#계획 #버킷리스트"}</div>
-                        <div className="date">{"2021.12.20"}</div>
+                        <div className="tag">{tag}</div>
+                        <div className="date">{"2021년 11월의 청춘유언"}</div>
                     </div>
                     <div className="answerLines image">
                         <img src={imageUrl(`ProgramBook/${answerArray[0].slice(1)}`)} alt="" />
@@ -207,8 +210,8 @@ function MobileMementoBook({ location }: Props) {
         if(!emptyPage) return (
             <div className="page">
                 <div className="header">
-                    <div className="tag">{"#계획 #버킷리스트"}</div>
-                    <div className="date">{"2021.12.20"}</div>
+                    <div className="tag">{tag}</div>
+                    <div className="date">{"2021년 11월의 청춘유언"}</div>
                 </div>
                 <div className="answerLines notFirst">
                     <div>{answerArray.map((answerLine) => {
@@ -231,7 +234,7 @@ function MobileMementoBook({ location }: Props) {
         )
     }
 
-    let pageComponents = (answerData: ProgramAnswerData, questionTitle: string) => {
+    let pageComponents = (answerData: ProgramAnswerData, questionTitle: string, tag: string) => {
         let answerLineArray = convertAnswertoArray(answerData.answer);
         let answerPageLineNumberexceptFirstPage = answerLineArray.length - 4;
         let pageNumber = (answerPageLineNumberexceptFirstPage > 0) ? (answerPageLineNumberexceptFirstPage - answerPageLineNumberexceptFirstPage%10)/10 + (answerPageLineNumberexceptFirstPage%10 == 0 ? 0 : 1): 0;
@@ -243,7 +246,7 @@ function MobileMementoBook({ location }: Props) {
                     {firstPage([answerLineArray[0]], questionTitle, answerData.imageUri)}
                     {[...Array(answerLineArray.length -1).keys()].map((key) => {
                         return (
-                            notFirstPage([answerLineArray[key+1]])
+                            notFirstPage([answerLineArray[key+1]], tag)
                         )
                     })}
                 </>
@@ -255,7 +258,7 @@ function MobileMementoBook({ location }: Props) {
                     {firstPage([answerData.imageUri], questionTitle, "")}
                     {[...Array(pageNumber).keys()].map((key) => {
                         return (
-                            notFirstPage(answerLineArray.slice(key * 14, (key+1) * 14))
+                            notFirstPage(answerLineArray.slice(key * 14, (key+1) * 14), tag)
                         )
                     })}
                 </>
@@ -267,7 +270,7 @@ function MobileMementoBook({ location }: Props) {
                     {firstPage(answerLineArray.slice(0, 14), questionTitle, answerData.imageUri)}
                     {[...Array(pageNumber).keys()].map((key) => {
                         return (
-                            notFirstPage(answerLineArray.slice(key * 14 + 14, (key+1) * 14 + 14))
+                            notFirstPage(answerLineArray.slice(key * 14 + 14, (key+1) * 14 + 14), tag)
                         )
                     })}
                 </>
@@ -280,7 +283,7 @@ function MobileMementoBook({ location }: Props) {
                     {firstPage(answerLineArray.slice(0, 4), questionTitle, answerData.imageUri)}
                     {[...Array(pageNumber).keys()].map((key) => {
                         return (
-                            notFirstPage(answerLineArray.slice(key * 14 + 4, (key+1) * 14 + 4))
+                            notFirstPage(answerLineArray.slice(key * 14 + 4, (key+1) * 14 + 4), tag)
                         )
                     })}
                 </>
@@ -311,20 +314,22 @@ function MobileMementoBook({ location }: Props) {
                             const week = key + 1;
                             return (
                                 <div className="bookBlock">
-                                    <div className="titleContainer">
+                                    <div className="titleContainer" onClick = {() => {
+                                        setWeekOpen(week, !weekOpen(week));
+                                        window.scrollTo(0, 0);
+                                    }}>
                                         <div className="title">{`${week}주차 : ${questionInterface.title}`}</div>
-                                        <button className="expandButton" onClick = {() => setWeekOpen(week, !weekOpen(week))}>{expandVector}</button>
+                                        <button className={"expandButton" + (weekOpen(week) ? " open" : " close")} >{leftVector}</button>
                                     </div>
                                     <div className="vector"></div>
                                     {weekOpen(week) && 
                                         <>
-                                            <div className="explanationText">확대 버튼 또는 유언을 클릭해서 확대해주세요.</div>
                                             <div className="bookContainer">
                                                 {programAnswer && <div className="pageContainer">
                                                     {programAnswer.answerData.slice(key*3, key*3+3).map((answerData, key) => {
                                                         if(answerData.answer) {
                                                             return (
-                                                                pageComponents(answerData, questionInterface.questions[key])
+                                                                pageComponents(answerData, questionInterface.questions[key], questionInterface.tag)
                                                             )
                                                         }
                                                     })}
@@ -335,10 +340,13 @@ function MobileMementoBook({ location }: Props) {
                                 </div>
                             )
                         })}
-                        <div className="explanationText">확대 버튼 또는 유언을 클릭해서 확대해주세요.</div>
                     </div>
                 </div>
-                <button className="goUpButton" onClick = {() => window.scrollTo(0, 0)}>{leftVector}</button>
+                <button className="goUpButton" onClick = {() => window.scrollTo(0, 0)}>
+                    <div className="border">
+                        {LeftArrowVector}
+                    </div>
+                </button>
                 <MobileNavigation></MobileNavigation>
             </div>
         </>

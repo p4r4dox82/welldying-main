@@ -96,7 +96,7 @@ function SaveExcelFile() {
                 let cellphone = item['휴대폰 번호'];
                 let cellphoneMidRear = getCellphoneMidRear(cellphone);
                 let pid = Number.parseInt(cellphoneMidRear) + 12345678;
-                let programAnswer = {pid: pid, answerData: [{ imageUri: item["1-1 이미지"], answer: item["1-1 글"]}, { imageUri: item["1-2 이미지"], answer: item["1-2 글"]}, { imageUri: item["1-3 이미지"], answer: item["1-3 글"]}, { imageUri: item["2-1 이미지"], answer: item["2-1 글"]}, { imageUri: item["2-2 이미지"], answer: item["2-2 글"]}, { imageUri: item["2-3 이미지"], answer: item["12-3글"]}, { imageUri: item["3-1 이미지"], answer: item["3-1 글"]}, { imageUri: item["3-2 이미지"], answer: item["3-2 글"]}, { imageUri: item["3-3 이미지"], answer: item["3-3 글"]}], name: item["성함"]}
+                let programAnswer = {pid: pid, answerData: [{ imageUri: item["1-1 이미지"], answer: item["1-1 글"]}, { imageUri: item["1-2 이미지"], answer: item["1-2 글"]}, { imageUri: item["1-3 이미지"], answer: item["1-3 글"]}, { imageUri: item["2-1 이미지"], answer: item["2-1 글"]}, { imageUri: item["2-2 이미지"], answer: item["2-2 글"]}, { imageUri: item["2-3 이미지"], answer: item["2-3 글"]}, { imageUri: item["3-1 이미지"], answer: item["3-1 글"]}, { imageUri: item["3-2 이미지"], answer: item["3-2 글"]}, { imageUri: item["3-3 이미지"], answer: item["3-3 글"]}], name: item["성함"]}
                 if(await writeProgramAnswers(programAnswer)) {
                     console.log("success" + index)
                 } else {
