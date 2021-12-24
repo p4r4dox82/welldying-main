@@ -80,7 +80,11 @@ function MyBook({ location }: Props) {
             return (
                 <div className="page" id = "realpage">
                     <div className="mementoColon">{Colon}</div>
-                    <div className="questionTitle">{questionTitle}</div>
+                    <div className="questionTitle">{questionTitle.split("&").map((question) => {
+                        return (
+                            <div>{question}</div>
+                        )
+                    })}</div>
                     {imageUri && <div className="imageContainer">
                         <img src={imageUrl(`ProgramBook/${imageUri}`)} alt="" />
                     </div>}
@@ -227,10 +231,21 @@ function MyBook({ location }: Props) {
     let bookContainer = React.useMemo(() => {
         return (
             <div className="BookContainer" ref = {BookContainerRef}>
+                <div className="page" style = {{padding: "0px", textAlign: "center"}}>
+                    <img src={imageUrl('ProgramBook/cover.png')} alt="" style = {{height: "100%", objectFit: "none"}} />
+                </div>
                 {programAnswer && QuestionInterface.map((questionInterface, key1) => {
                     return (
                         questionInterface.questions.map((question, key2) => {
                             if(programAnswer.answerData[key1 * 3 + key2].answer) {
+                                console.log(pid);
+                                console.log(key1);
+                                if(pid === 75631369 && key1 === 1) {
+                                    console.log('asd');
+                                    return (
+                                        pageComponents(programAnswer.answerData[key1 * 3 + key2], questionInterface.questions[0] + "&" + questionInterface.questions[1] + "&" + questionInterface.questions[2], questionInterface.tag)
+                                    )
+                                }
                                 return(
                                     pageComponents(programAnswer.answerData[key1 * 3 + key2], question, questionInterface.tag)
                                 )
