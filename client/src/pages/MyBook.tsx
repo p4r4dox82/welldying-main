@@ -9,6 +9,7 @@ import { isImage, QuestionInterface } from '../Mobile/MobileMementoBook';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import ClipboardJS from 'clipboard';
+import Draggable from 'react-draggable';
 
 interface Props {
     location: Location
@@ -28,6 +29,7 @@ function MyBook({ location }: Props) {
     let [downloadIng, setDownloadIng] = React.useState<boolean>(false);
     let [downloadStart, setDownloadStart] = React.useState<boolean>(false);
     let [downloadPasswordInput, setDownloadPasswordInput] = React.useState<string>("");
+    let []
     let answerLineRef = React.useRef<any>(null);
 
     React.useEffect(() => {
@@ -310,6 +312,10 @@ function MyBook({ location }: Props) {
         })
     }
 
+    let trackPos = (data) => {
+
+    }
+
     if(pid) return (
         <>
             <div ref = {answerLineRef} className = "answerLineRef PC"></div>
@@ -362,10 +368,12 @@ function MyBook({ location }: Props) {
                                     <div className="line"></div>
                                 </div>
                                 <div className="currentPageDotContainer">
-                                    <div className="currentPageInfo" style={{transform: `translateX(${(currentPageNumber - 1)/(totalPageNumber - 1) * 414}px)`}}>
-                                        <div className="currentPageDot"></div>
-                                        <div className="currentPageNumber">{currentPageNumber}</div>
-                                    </div>
+                                    <Draggable onDrag={(e, data) => trackPos(data)}>
+                                        <div className="currentPageInfo" style={{transform: `translateX(${(currentPageNumber - 1)/(totalPageNumber - 1) * 414}px)`}} >
+                                            <div className="currentPageDot" onDragStart = {() => alert("ASD")}></div>
+                                            <div className="currentPageNumber">{currentPageNumber}</div>
+                                        </div>
+                                    </Draggable>
                                 </div>       
                                 <div className="number totalPageNumber">{totalPageNumber}</div>
                             </div>
