@@ -41,6 +41,7 @@ function MobileMementoBook({ location }: Props) {
     const query = queryString.parse(location.search);
     const pid = Number.parseInt(String(query.pid));
     const [, programAnswer] = usePromise(() => getProgramAnswer(pid));
+    let [enterBook, setEnterBook] = React.useState<boolean>(false);
     let [week1Open, setWeek1Open] = React.useState<boolean>(false);
     let [week2Open, setWeek2Open] = React.useState<boolean>(false);
     let [week3Open, setWeek3Open] = React.useState<boolean>(false);
@@ -98,9 +99,7 @@ function MobileMementoBook({ location }: Props) {
             setLineLength(textWidth);
         }
         handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    })
+    }, [])
     let getByteOfString = (str: string) => {
         let byte = 0;
         for(let i = 0; i < str.length; i++) {
@@ -120,7 +119,6 @@ function MobileMementoBook({ location }: Props) {
         let answerLineArray: string[] = [];
         answerArray.forEach((answerParagraph) => {
             let sidx = 0;
-            let byte = 0;
             for(let i = 0; i < answerParagraph.length; i++) {
                 if(answerLineRef.current.offsetWidth <= lineLength) {
                     answerLineRef.current.innerText = answerParagraph.slice(sidx, i);
@@ -302,7 +300,19 @@ function MobileMementoBook({ location }: Props) {
             <div ref = {answerLineRef} className = "answerLineRef"></div>
             <div className="Mobile">
                 <MobileHeader uri = '/book'></MobileHeader>
-                <div className="MobileMementoBook">
+                {!enterBook && <>
+                    <div className="MobileMementoBookCover">
+                        <div className="cover">
+
+                        </div>
+                        <button className="enterBook" onClick = {() => setEnterBook(true)}>
+                            <div className="border"></div>
+                            입 장 하 기
+                        </button>
+                    </div>
+                </>}
+                {enterBook && <>
+                    <div className="MobileMementoBook">
                     <div className="titleBlock">
                         <div className="borderBox"></div>
                         <div className="title">{'[ 청춘유언 ]'}</div>
@@ -341,12 +351,13 @@ function MobileMementoBook({ location }: Props) {
                             )
                         })}
                     </div>
-                </div>
-                <button className="goUpButton" onClick = {() => window.scrollTo(0, 0)}>
-                    <div className="border">
-                        {LeftArrowVector}
                     </div>
-                </button>
+                    <button className="goUpButton" onClick = {() => window.scrollTo(0, 0)}>
+                        <div className="border">
+                            {LeftArrowVector}
+                        </div>
+                    </button>
+                </>}
                 <MobileNavigation></MobileNavigation>
             </div>
         </>
