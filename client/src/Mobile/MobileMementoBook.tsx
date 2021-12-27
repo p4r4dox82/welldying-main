@@ -1,5 +1,5 @@
 import React from 'react';
-import { Colon, expandVector, FlowerVector, LeftArrowVector, leftVector } from '../img/Vectors';
+import { bookCoverVector, Colon, expandVector, FlowerVector, LeftArrowVector, leftVector, moonVector } from '../img/Vectors';
 import MobileHeader from '../MobileComponents/MobileHeader';
 import MobileNavigation from '../MobileComponents/MobileNavigation';
 import queryString from 'query-string';
@@ -303,7 +303,14 @@ function MobileMementoBook({ location }: Props) {
                 {!enterBook && <>
                     <div className="MobileMementoBookCover">
                         <div className="cover">
-
+                            <div className="line"></div>
+                            <div className="moon">{moonVector}</div>
+                            <div className="bookCover">{bookCoverVector}</div>
+                            <div className="title">{"청춘유언"}</div>
+                            <div className="writer">
+                                :당신의 아름다운 순간을 책에 담다<br/>
+                                {"신민재 지음"}
+                            </div>
                         </div>
                         <button className="enterBook" onClick = {() => setEnterBook(true)}>
                             <div className="border"></div>

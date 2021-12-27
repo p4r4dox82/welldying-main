@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import usePromise from '../etc/usePromise';
 import { getProgramAnswer, ProgramAnswerData } from '../etc/api/programAnswer';
 import Header from '../components/Header';
-import { Colon, leftVector, MementoLogo, PlusVector, rightVector } from '../img/Vectors';
+import { bookCoverVector, Colon, leftVector, MementoLogo, moonVector, PlusVector, rightVector } from '../img/Vectors';
 import { imageUrl } from '../etc/config';
 import { isImage, QuestionInterface } from '../Mobile/MobileMementoBook';
 import html2canvas from 'html2canvas';
@@ -23,13 +23,13 @@ function MyBook({ location }: Props) {
     let [showHeader, setShowHeader] = React.useState<boolean>(false);
     let [currentPageNumber, setCurrentPageNumber] = React.useState<number>(1);
     let [totalPageNumber, setTotalPageNumber] = React.useState<number>(0);
-    let sumToTalPageNumber = 0;
+    let sumToTalPageNumber = 2;
     let [lineLength, setLineLength] = React.useState<number>(0);
     let [downloadStatus, setDownloadStatus] = React.useState<number>(0);
     let [downloadIng, setDownloadIng] = React.useState<boolean>(false);
     let [downloadStart, setDownloadStart] = React.useState<boolean>(false);
     let [downloadPasswordInput, setDownloadPasswordInput] = React.useState<string>("");
-    let []
+    let [barPosition, setBarPosition] = React.useState<number>(0);
     let answerLineRef = React.useRef<any>(null);
 
     React.useEffect(() => {
@@ -233,8 +233,17 @@ function MyBook({ location }: Props) {
     let bookContainer = React.useMemo(() => {
         return (
             <div className="BookContainer" ref = {BookContainerRef}>
-                <div className="page" style = {{padding: "0px", textAlign: "center"}}>
-                    <img src={imageUrl('ProgramBook/cover.png')} alt="" style = {{height: "100%", objectFit: "none"}} />
+                <div className="page cover">
+                    <div className="cover">
+                        <div className="line"></div>
+                        <div className="moon">{moonVector}</div>
+                        <div className="bookCover">{bookCoverVector}</div>
+                        <div className="title">{"청춘유언"}</div>
+                        <div className="writer">
+                            :당신의 아름다운 순간을 책에 담다<br/>
+                            {"신민재 지음"}
+                        </div>
+                    </div>
                 </div>
                 {programAnswer && QuestionInterface.map((questionInterface, key1) => {
                     return (
@@ -255,6 +264,14 @@ function MyBook({ location }: Props) {
                         })
                     )
                 })}
+                <div className="page cover">
+                    <div className="cover last">
+                        <div className="moon">{moonVector}</div>
+                        <div className="writer">
+                            :당신의 아름다운 순간을 책에 담다
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }, [programAnswer, QuestionInterface]);
@@ -327,8 +344,8 @@ function MyBook({ location }: Props) {
         })
     }
 
-    let trackPos = (data) => {
-
+    let trackPos = (data: any) => {
+        setBarPosition(data.x);
     }
 
     if(pid) return (
@@ -383,12 +400,10 @@ function MyBook({ location }: Props) {
                                     <div className="line"></div>
                                 </div>
                                 <div className="currentPageDotContainer">
-                                    <Draggable onDrag={(e, data) => trackPos(data)}>
                                         <div className="currentPageInfo" style={{transform: `translateX(${(currentPageNumber - 1)/(totalPageNumber - 1) * 414}px)`}} >
                                             <div className="currentPageDot" onDragStart = {() => alert("ASD")}></div>
                                             <div className="currentPageNumber">{currentPageNumber}</div>
                                         </div>
-                                    </Draggable>
                                 </div>       
                                 <div className="number totalPageNumber">{totalPageNumber}</div>
                             </div>
