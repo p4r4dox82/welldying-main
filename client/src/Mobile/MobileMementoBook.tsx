@@ -7,6 +7,7 @@ import { ProgramAnswerData, getProgramAnswer, programAnswer } from '../etc/api/p
 import usePromise from '../etc/usePromise';
 import { imageUrl } from '../etc/config';
 import { oneByte } from '../etc';
+import { getTitle } from '../pages/MyBook';
 
 interface Props {
     location: Location;
@@ -301,22 +302,26 @@ function MobileMementoBook({ location }: Props) {
             <div className="Mobile">
                 <MobileHeader uri = '/book'></MobileHeader>
                 {!enterBook && <>
-                    <div className="MobileMementoBookCover">
+                    {programAnswer && <div className="MobileMementoBookCover">
                         <div className="cover">
                             <div className="line"></div>
                             <div className="moon">{moonVector}</div>
                             <div className="bookCover">{bookCoverVector}</div>
-                            <div className="title">{"청춘유언"}</div>
+                            <div className="title">{getTitle(programAnswer.title).map((title) => {
+                                return (
+                                    <div>{title}</div>
+                                )
+                            })}</div>
                             <div className="writer">
                                 :당신의 아름다운 순간을 책에 담다<br/>
-                                {"신민재 지음"}
+                                {`${programAnswer.name} 지음`}
                             </div>
                         </div>
                         <button className="enterBook" onClick = {() => setEnterBook(true)}>
                             <div className="border"></div>
                             입 장 하 기
                         </button>
-                    </div>
+                    </div>}
                 </>}
                 {enterBook && <>
                     <div className="MobileMementoBook">

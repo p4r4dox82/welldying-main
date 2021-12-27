@@ -363,7 +363,7 @@
     left: 0px;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.5);
 }
 .downloadWindow .downloadInformationContainer,
 .downloadWindow .downloadPasswordInputContainer {
@@ -489,6 +489,7 @@
     font-size: 18px;
     line-height: 30px;
     color: var(--whitetext);
+    text-align: right;
 }
 .Background .MyBook .BookContainer .page.cover .cover .writer {
     position: absolute;

@@ -15,6 +15,23 @@ interface Props {
     location: Location
 }
 
+export let getTitle = (title: string) => {
+    if(title === null) {
+    return ["청춘유언"];
+}
+    let newTitle: string[] = ["", ""];
+    let idx = 0;
+    for(let i = 0; i < title.length; i++) {
+        if(title[i] === "\n") {
+            idx += 1;
+        }
+        else {
+            newTitle[idx] += title[i];
+        }
+    }
+    return newTitle;
+}
+
 function MyBook({ location }: Props) {
     const query = queryString.parse(location.search);
     const pid = Number(query.pid);
@@ -233,19 +250,27 @@ function MyBook({ location }: Props) {
     let bookContainer = React.useMemo(() => {
         return (
             <div className="BookContainer" ref = {BookContainerRef}>
+                {programAnswer && 
+                <>
                 <div className="page cover">
                     <div className="cover">
                         <div className="line"></div>
                         <div className="moon">{moonVector}</div>
                         <div className="bookCover">{bookCoverVector}</div>
-                        <div className="title">{"청춘유언"}</div>
+                        <div className="title">
+                        {getTitle(programAnswer.title).map((title: string) => {
+                            return (
+                                <div>{title}</div>
+                            )
+                        })}
+                        </div>
                         <div className="writer">
                             :당신의 아름다운 순간을 책에 담다<br/>
-                            {"신민재 지음"}
+                            {`${programAnswer.name} 지음`}
                         </div>
                     </div>
                 </div>
-                {programAnswer && QuestionInterface.map((questionInterface, key1) => {
+                {QuestionInterface.map((questionInterface, key1) => {
                     return (
                         questionInterface.questions.map((question, key2) => {
                             if(programAnswer.answerData[key1 * 3 + key2].answer) {
@@ -272,6 +297,7 @@ function MyBook({ location }: Props) {
                         </div>
                     </div>
                 </div>
+                </>}
             </div>
         )
     }, [programAnswer, QuestionInterface]);

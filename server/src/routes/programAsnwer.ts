@@ -25,5 +25,17 @@ export default (ProgramAnswer: Model<ProgramAnswerDocument>) => {
         return;
     })
 
+    router.put('/title', async(req, res, next) => {
+        let pid = Number.parseInt(req.body.pid);
+        let title = req.body.title;
+        
+        if(await ProgramAnswer.findOneAndUpdate({ pid: pid }, { $set: { title: title }} )) {
+            res.sendStatus(200);
+        }
+
+        res.sendStatus(400);
+        return;
+    })
+
     return router;
 }

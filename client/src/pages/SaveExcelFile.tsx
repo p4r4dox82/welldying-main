@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Xlsx from 'xlsx';
 import { Link } from 'react-router-dom';
-import { ProgramAnswerData, programAnswer, writeProgramAnswers } from '../etc/api/programAnswer';
+import { ProgramAnswerData, programAnswer, writeProgramAnswers, writeProgramAnswerTitle } from '../etc/api/programAnswer';
 
 interface WorkBookCallBack {
     (workbook: Xlsx.WorkBook) : void;
@@ -55,6 +55,7 @@ let workbookToJsonArray = (workbook: Xlsx.WorkBook) => {
 function SaveExcelFile() {
     let inputFileRef = React.useRef<any>(null);
     let [data, setData] = React.useState<Array<any>>([{데이터레이블: '데이터가 존재하지 않습니다, 엑셀파일을 불러와주세요.'}]);
+    let [uploadTitle, setUploadTitle] = React.useState<boolean>(false);
 
     const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         if(e.target.files?.item(0)) {
@@ -90,15 +91,28 @@ function SaveExcelFile() {
 
     React.useEffect(() => {
         if(!data) return;
-        else{
+        else if(!uploadTitle){
             console.log(data);
             data.forEach(async (item: any, index: number) => {
                 let cellphone = item['휴대폰 번호'];
                 let cellphoneMidRear = getCellphoneMidRear(cellphone);
                 let pid = Number.parseInt(cellphoneMidRear) + 12345678;
-                let programAnswer = {pid: pid, answerData: [{ imageUri: item["1-1 이미지"], answer: item["1-1 글"]}, { imageUri: item["1-2 이미지"], answer: item["1-2 글"]}, { imageUri: item["1-3 이미지"], answer: item["1-3 글"]}, { imageUri: item["2-1 이미지"], answer: item["2-1 글"]}, { imageUri: item["2-2 이미지"], answer: item["2-2 글"]}, { imageUri: item["2-3 이미지"], answer: item["2-3 글"]}, { imageUri: item["3-1 이미지"], answer: item["3-1 글"]}, { imageUri: item["3-2 이미지"], answer: item["3-2 글"]}, { imageUri: item["3-3 이미지"], answer: item["3-3 글"]}], name: item["성함"]}
+                let programAnswer = {pid: pid, answerData: [{ imageUri: item["1-1 이미지"], answer: item["1-1 글"]}, { imageUri: item["1-2 이미지"], answer: item["1-2 글"]}, { imageUri: item["1-3 이미지"], answer: item["1-3 글"]}, { imageUri: item["2-1 이미지"], answer: item["2-1 글"]}, { imageUri: item["2-2 이미지"], answer: item["2-2 글"]}, { imageUri: item["2-3 이미지"], answer: item["2-3 글"]}, { imageUri: item["3-1 이미지"], answer: item["3-1 글"]}, { imageUri: item["3-2 이미지"], answer: item["3-2 글"]}, { imageUri: item["3-3 이미지"], answer: item["3-3 글"]}], name: item["성함"], title: ""}
                 if(await writeProgramAnswers(programAnswer)) {
                     console.log("success" + index)
+                } else {
+                    console.log("fail" + index);
+                }
+            })
+        }
+        else if(uploadTitle) {
+            data.forEach(async (item: any, index: number) => {
+                let cellphone = item['휴대폰 번호'];
+                let cellphoneMidRear = getCellphoneMidRear(cellphone);
+                let pid = Number.parseInt(cellphoneMidRear) + 12345678;
+                let title = item["제목"];
+                if(await writeProgramAnswerTitle(pid, title)) {
+                    console.log("success" + index);
                 } else {
                     console.log("fail" + index);
                 }
@@ -116,6 +130,7 @@ function SaveExcelFile() {
                         clear();
                     }}>Clear</button>
                 </div>
+                <button onClick = {() => setUploadTitle(true)} style = {{color: (uploadTitle ? "rgba(255, 0, 0, 1)" : "rgba(0, 0, 0, 1)")}}>제목 입력</button>
                 <div className="QRCodeBlock">
                     <table>
                         <tbody>
