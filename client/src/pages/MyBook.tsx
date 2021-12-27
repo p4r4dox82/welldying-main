@@ -400,10 +400,15 @@ function MyBook({ location }: Props) {
                                     <div className="line"></div>
                                 </div>
                                 <div className="currentPageDotContainer">
+                                    <Draggable axis = "x" bounds = "parent" onDrag={(e, data) => {
+                                        trackPos(data);
+                                        console.log(barPosition);
+                                    }}>
                                         <div className="currentPageInfo" style={{transform: `translateX(${(currentPageNumber - 1)/(totalPageNumber - 1) * 414}px)`}} >
                                             <div className="currentPageDot" onDragStart = {() => alert("ASD")}></div>
                                             <div className="currentPageNumber">{currentPageNumber}</div>
                                         </div>
+                                    </Draggable>
                                 </div>       
                                 <div className="number totalPageNumber">{totalPageNumber}</div>
                             </div>
