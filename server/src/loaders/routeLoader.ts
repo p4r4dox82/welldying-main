@@ -16,6 +16,10 @@ import orderRouter from '../routes/order';
 import programAnswerRouter from '../routes/programAsnwer';
 import { ModelsType } from './mongooseLoader';
 import { AWSServices } from './awsLoader';
+import communityUserRouter from '../routes/community/communityUser';
+import communityAnswerRouter from '../routes/community/communityAnswer';
+import communityCommentRouter from '../routes/community/communityComment';
+import communityQuestionRouter from '../routes/community/communityQuestion';
 
 export default async (app : Application, models: ModelsType, awsServices: AWSServices) => {
     app.use('/user', userRouter(models.User, awsServices.sns));
@@ -32,6 +36,10 @@ export default async (app : Application, models: ModelsType, awsServices: AWSSer
     app.use('/category', categoryRouter(models.Category));
     app.use('/order', orderRouter(models.Order, models.User, awsServices.sns));
     app.use('/programAnswer', programAnswerRouter(models.ProgramAnswer));
+    app.use('/communityUser', communityUserRouter(models.CommunityUser));
+    app.use('/communityAnswer', communityAnswerRouter(models.CommunityAnswer));
+    app.use('/communityComment', communityCommentRouter(models.CommunityComment));
+    app.use('/communityQuestion', communityQuestionRouter(models.CommunityQuestion));
 
     app.use(errorHandler);
 }

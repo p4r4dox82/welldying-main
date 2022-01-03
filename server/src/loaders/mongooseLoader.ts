@@ -14,6 +14,10 @@ import { commentSchema } from "../models/comment";
 import { categorySchema } from '../models/category';
 import { orderSchema } from "../models/order";
 import { programAnswerSchema } from "../models/programAnswer";
+import { communityUserSchema } from "../models/community/communityUser";
+import { communityAnswerSchema } from "../models/community/communityAnswer";
+import { communityCommentSchema } from "../models/community/communityComment";
+import { communityQuestionSchema } from "../models/community/communityQuestion";
 
 
 
@@ -37,6 +41,10 @@ const f = async (app: Application) => {
         Category: model('category', categorySchema, 'categorys'),
         Order: model('order', orderSchema, 'orders'),
         ProgramAnswer: model('programAnswer', programAnswerSchema, 'programAnswers'),
+        CommunityUser: model('communityUser', communityUserSchema, 'communityUsers'),
+        CommunityAnswer: model('communityAnswer', communityAnswerSchema, 'communityAnswers'),
+        CommunityComment: model('communityComment', communityCommentSchema, 'communityComments'),
+        CommunityQuestion: model('communityQuestion', communityQuestionSchema, 'communityQuestions'),
     }
 }
 

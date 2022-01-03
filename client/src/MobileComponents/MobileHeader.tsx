@@ -16,10 +16,6 @@ function MobileHeader({ uri }: Props) {
     return (
         <>
             <Link to ='/mypage' ref = {linkMyPage} style = {{display: 'none'}} />
-            <Link to ='/mypage' ref = {linkMyPage} style = {{display: 'none'}} />
-            <Link to ='/mypage' ref = {linkMyPage} style = {{display: 'none'}} />
-            <Link to ='/mypage' ref = {linkMyPage} style = {{display: 'none'}} />
-            <Link to ='/mypage' ref = {linkMyPage} style = {{display: 'none'}} />
             <div className={"Header" + (menuActive ? ' active' : '')}>
                 <div className="Topbar">
                     <div className="userimage">{}</div>
@@ -40,7 +36,7 @@ function MobileHeader({ uri }: Props) {
                                     </>}
                                     {!user.loggedIn && <>
                                         <div className="loginMessage">로그인 후 사용해주세요.</div>
-                                        <Link to = {'/login'}><div className="linkLogin">{'로그인하기 >'}</div></Link>
+                                        <Link to = {{pathname : '/login', state: { from: uri }}}><div className="linkLogin">{'로그인하기 >'}</div></Link>
                                     </>}
                                 </div>
                             </div>
