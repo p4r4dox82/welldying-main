@@ -312,7 +312,7 @@ function MobileMementoBook({ location }: Props) {
                                     <div>{title}</div>
                                 )
                             })}</div>
-                            <div className="writer">
+                            <div className={"writer" + (getTitle(programAnswer.title)[1] === "" ? " shortTitle" : "")}>
                                 :당신의 아름다운 순간을 책에 담다<br/>
                                 {`${programAnswer.name} 지음`}
                             </div>

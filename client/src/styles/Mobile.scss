@@ -3273,7 +3273,7 @@ color: #7A7978;
     margin-left: -14px;
     svg {
         width: 100%;
-        height: fit-content;
+        height: auto;
     }
 }
 .Mobile .MobileMementoBookCover .cover .title {
@@ -3297,6 +3297,9 @@ color: #7A7978;
     line-height: 30px;
     color: var(--whitetext);
     text-align: right;
+}
+.Mobile .MobileMementoBookCover .cover .writer.shortTitle {
+    top: calc(32.1% - 30px);
 }
 .Mobile .MobileMementoBookCover .enterBook {
     position: absolute;

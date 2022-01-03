@@ -477,7 +477,7 @@
     margin-left: 0px;
     svg {
         width: 100%;
-        height: fit-content;
+        height: auto;
     }
 }
 .Background .MyBook .BookContainer .page.cover .cover .title {
@@ -501,6 +501,9 @@
     line-height: 30px;
     color: var(--whitetext);
     text-align: right;
+}
+.Background .MyBook .BookContainer .page.cover .cover .writer.shortTitle {
+    top: calc(32.1% - 30px);
 }
 .Background .MyBook .BookContainer .page.cover .cover.last {
     display: flex;
