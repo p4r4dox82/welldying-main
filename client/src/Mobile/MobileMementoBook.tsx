@@ -159,7 +159,11 @@ function MobileMementoBook({ location }: Props) {
         if(!emptyPage) return (
             <div className="page">
                 <div className="mementoColon">{Colon}</div>
-                <div className="questionTitle">{questionTitle}</div>
+                <div className="questionTitle">{questionTitle.split("&").map((question) => {
+                        return (
+                            <div>{question}</div>
+                        )
+                    })}</div>
                 {imageUri && <div className="imageContainer">
                     <img src={imageUrl(`ProgramBook/${imageUri}`)} alt="" />
                 </div>}

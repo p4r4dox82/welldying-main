@@ -17,7 +17,7 @@ interface Props {
 
 export let getTitle = (title: string) => {
     if(title === null) {
-    return ["청춘유언"];
+    return ["청춘유언", ""];
 }
     let newTitle: string[] = ["", ""];
     let idx = 0;
