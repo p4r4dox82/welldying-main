@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { match, Redirect } from 'react-router';
+import { match, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import MementoBook from '../components/MementoBook';

@@ -20,7 +20,7 @@ export interface UserNotice {
 }
 
 export interface CommunityUser {
-    id: string,
+    username: string,
     password: string,
     signIn: boolean,
     userInformation: UserInformation,
@@ -28,14 +28,14 @@ export interface CommunityUser {
     bookmarkedAnswerIds: number[],
     personalTags: string[],
     bookTitles: string[],
-    notices: UserNotice,
+    notices: UserNotice[],
     questionsIds: number[],
 }
 
 export type CommunityUserDocument = Document & CommunityUser;
 
 export const communityUserSchema = new Schema<CommunityUserDocument>({
-    id: String,
+    username: String,
     password: String,
     signIn: Boolean,
     userInformation: { name: String,
@@ -53,10 +53,10 @@ export const communityUserSchema = new Schema<CommunityUserDocument>({
     bookmarkedAnswerIds: [Number],
     personalTags: [String],
     bookTitles: [String],
-    notices: {
+    notices: [{
         date: Number,
         checked: String,
         notice: String,
-    },
+    }],
     questionsIds: [Number],
 });

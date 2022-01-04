@@ -1,3 +1,4 @@
+import { CommunityUser } from "../models/community/communityUser";
 import { UserType } from "../models/user";
 
 interface VerifyPhone {
@@ -10,6 +11,7 @@ declare module 'express-serve-static-core' {
 
     export interface Request {
         user?: UserType;
+        communityUser?: CommunityUser;
         image?: Blob;
     }
 

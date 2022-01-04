@@ -12,7 +12,7 @@ export default (News: Model<NewsDocument>) => {
         res.json(result);
         res.end();
     });
-
+    
     router.get('/rev', async (req, res) => {
         let result = await News.find().sort({'id': 'desc'});
         res.json(result);

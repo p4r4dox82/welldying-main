@@ -2,38 +2,42 @@ import { Schema, Document } from "mongoose";
 
 export interface AnswerData {
     imageUri: string,
-    answer: string
+    answer: string,
+    title: string,
 }
 
 export interface Emotion {
     emotion: string,
-    number: number,
+    usernames: string[]
 }
 
 export interface CommunityAnswer {
     id: number,
-    userId: string,
+    username: string,
     commentIds: number[],
-    updatedDate: string,
+    updatedDate: number,
     answerData: AnswerData,
     emotions: Emotion[],
-    views: number,
+    views: string[],
+    upload: string
 }
 
 export type CommunityAnswerDocument = Document & CommunityAnswer;
 
 export const communityAnswerSchema = new Schema<CommunityAnswerDocument>({
     id: Number,
-    userId: String,
+    username: String,
     commentIds: [Number],
-    updatedDate: String,
+    updatedDate: Number,
     answerData: {
         imageUri: String,
-        answer: String  
+        answer: String,
+        title: String,
     },
     emotions: [{
         emotion: String,
-        number: Number,
+        usernames: [String]
     }],
-    views: Number,
+    views: [String],
+    uplaod: String
 });

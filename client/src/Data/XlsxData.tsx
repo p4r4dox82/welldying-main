@@ -5,17 +5,15 @@ interface WorkBookCallBack {
     (workbook: Xlsx.WorkBook) : void;
 }
 
-let getExtensionOfFilename = (file: File) => {
+export let getExtensionOfFilename = (file: File) => {
     const filename = file.name;
     const _lastDot = filename.lastIndexOf('.');
     const _fileExt = filename.slice(_lastDot).toLowerCase();
-    
-    let result = (_fileExt === '.xlsx') ? true : false;
 
-    return result;
+    return _fileExt;
 }
 
-let fixdata = (data: ArrayBuffer) => {
+export let fixdata = (data: ArrayBuffer) => {
     let arrayBuffer = new Uint8Array(data);
     let array = [];
     for( let i = 0; i < arrayBuffer.byteLength; i++) {
@@ -26,7 +24,7 @@ let fixdata = (data: ArrayBuffer) => {
     return arr;
 }
 
-let readExcelFile = (file: File, callback: WorkBookCallBack) => {
+export let readExcelFile = (file: File, callback: WorkBookCallBack) => {
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);
     reader.onload = function (e: ProgressEvent<FileReader>) {
@@ -37,7 +35,7 @@ let readExcelFile = (file: File, callback: WorkBookCallBack) => {
     }
 }
 
-let workbookToJsonArray = (workbook: Xlsx.WorkBook) => {
+export let workbookToJsonArray = (workbook: Xlsx.WorkBook) => {
     let jArray: Array<any> = [];
     workbook.SheetNames.forEach(function (sheetname) {
         const roa = Xlsx.utils.sheet_to_json(workbook.Sheets[sheetname],{});

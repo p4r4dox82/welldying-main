@@ -19,7 +19,7 @@ export default async (app : express.Application) => {
     const awsServices = await awsLoader(app);
     console.log('Successfully connected to Amazon Web Service!');
 
-    await passportLoader(app, models.User);
+    await passportLoader(app, models.User, models.CommunityUser);
     console.log('Got ready to log in with passport!');
 
     await routeLoader(app, models, awsServices);

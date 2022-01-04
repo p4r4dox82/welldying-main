@@ -1,0 +1,22 @@
+@import '../Consts.scss';
+
+.CommunityAdmin {
+    width: 1032px;
+    margin: auto;
+    min-height: 100vh;
+}
+.CommunityAdmin .userManagementBlock {
+    width: 100%;
+}
+.CommunityAdmin .userManagementBlock .title {
+    font-family: Noto Sans;
+    font-size: 14px;
+    line-height: 30px;
+    color: var(--green);
+}
+.CommunityAdmin .userManagementBlock input {
+    border: none;
+    outline: none;
+    box-shadow: inset 1px 2px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}

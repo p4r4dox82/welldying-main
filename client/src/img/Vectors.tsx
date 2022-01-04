@@ -583,3 +583,38 @@ export const moonVector = (
     </svg>
 
 );
+
+export const noticeVector = (
+    <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14.3333 6.10095C14.3333 4.7481 13.7714 3.45065 12.7712 2.49403C11.771 1.53742 10.4145 1 9 1C7.58551 1 6.22896 1.53742 5.22876 2.49403C4.22857 3.45065 3.66667 4.7481 3.66667 6.10095C3.66667 12.0521 1 13.7524 1 13.7524H17C17 13.7524 14.3333 12.0521 14.3333 6.10095Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M10.538 17.1533C10.3817 17.411 10.1574 17.6249 9.88749 17.7735C9.61761 17.9222 9.31163 18.0005 9.00018 18.0005C8.68873 18.0005 8.38275 17.9222 8.11287 17.7735C7.84299 17.6249 7.61868 17.411 7.4624 17.1533" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);
+
+export const searchVector = (
+    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8.36667 15.7333C12.4352 15.7333 15.7333 12.4352 15.7333 8.36667C15.7333 4.29817 12.4352 1 8.36667 1C4.29817 1 1 4.29817 1 8.36667C1 12.4352 4.29817 15.7333 8.36667 15.7333Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M18.0001 17.9996L14.6001 14.5996" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+);
+
+export const menuVector = (
+    <svg width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18.6666 5.33301H5.18506" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M18.6669 1H1.3335" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M18.6669 9.66699H1.3335" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M18.6666 14H5.18506" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+)
+export const questionVector = (
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.6">
+<path d="M13 24C19.0751 24 24 19.0751 24 13C24 6.92487 19.0751 2 13 2C6.92487 2 2 6.92487 2 13C2 19.0751 6.92487 24 13 24Z" stroke="#303B35" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9.79883 9.69809C10.0574 8.96292 10.5679 8.343 11.2398 7.94813C11.9117 7.55326 12.7016 7.40892 13.4697 7.54067C14.2378 7.67242 14.9345 8.07176 15.4364 8.66797C15.9383 9.26417 16.213 10.0188 16.2118 10.7981C16.2118 12.9981 12.9118 14.0981 12.9118 14.0981" stroke="#303B35" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 18.5H13.0124" stroke="#303B35" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>
+
+)

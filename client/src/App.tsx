@@ -50,6 +50,8 @@ import MyBook from './pages/MyBook';
 import GenerateQRcode from './pages/GenerateQRcode';
 import SaveExcelFile from './pages/SaveExcelFile';
 import CommunityMain from './pages/Community/CommunityMain';
+import CommunityAdmin from './pages/Community/CommunityAdmin';
+import CommunityWriteAnswer from './pages/Community/CommunityWriteAnswer';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -73,6 +75,7 @@ function App() {
           <Route path='/survey' component = {Survey} />
           <Route path='/book' component = {MobileMementoBook} />
           <Route path='/mybook' component = {MobileMementoBook} />
+          <Route path='/community/write/:id' component = {CommunityWriteAnswer} />
           <Route path='/community' component = {CommunityMain} />
           <Route path='/' component={MobileMain} />
         </Switch>
@@ -121,7 +124,7 @@ function App() {
         <Route path='/mybook' component = {MyBook} />
         <Route path='/generateQrcode' component = {GenerateQRcode} />
         <Route path='/saveExcelFile' component = {SaveExcelFile} />
-        <Route path='/community' component = {CommunityMain} />
+        <Route path='/community/admin' component = {CommunityAdmin} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>

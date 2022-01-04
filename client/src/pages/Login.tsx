@@ -9,6 +9,7 @@ import { MementoLogo } from '../img/Vectors';
 import { Match } from '@testing-library/dom';
 import { isMobile } from 'react-device-detect';
 import MobileFooter from '../MobileComponents/MobileFooter';
+import { communityLogin } from '../etc/api/community/communityUser';
 
 interface Props {
     match: Match;

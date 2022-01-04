@@ -71,9 +71,6 @@ export default (User: Model<UserDocument>, sns: AWS.SNS) => {
 
     router.get('/checkpassword', onlyAuthUser, (req, res) => {
         let user: any = req.user;
-        
-        
-
     })
 
     // Sign in
