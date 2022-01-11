@@ -19,6 +19,7 @@ import { AWSServices } from './awsLoader';
 import communityUserRouter from '../routes/community/communityUser';
 import communityAnswerRouter from '../routes/community/communityAnswer';
 import communityCommentRouter from '../routes/community/communityComment';
+import communityRecommentRouter from '../routes/community/communityRecomment';
 import communityQuestionRouter from '../routes/community/communityQuestion';
 
 export default async (app : Application, models: ModelsType, awsServices: AWSServices) => {
@@ -39,6 +40,7 @@ export default async (app : Application, models: ModelsType, awsServices: AWSSer
     app.use('/communityUser', communityUserRouter(models.CommunityUser));
     app.use('/communityAnswer', communityAnswerRouter(models.CommunityAnswer));
     app.use('/communityComment', communityCommentRouter(models.CommunityComment));
+    app.use('/communityRecomment', communityRecommentRouter(models.CommunityRecomment));
     app.use('/communityQuestion', communityQuestionRouter(models.CommunityQuestion));
 
     app.use(errorHandler);

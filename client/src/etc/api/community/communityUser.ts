@@ -99,3 +99,17 @@ export const modifyUserInformation = async(data: any) => {
 
     return response.status === 200;
 }
+
+export const getCommunityUsers = async() => {
+    let response = await Axios.get(`${apiAddress}/communityUser/all`, { withCredentials: true });
+    let data: CommunityUser[] | null = response.data;
+
+    return data;
+}
+
+export const getUserByRearPhoneNumber = async(rearPhoneNumber: number) => {
+    let response = await Axios.get(`${apiAddress}/communityUser/find/${rearPhoneNumber}`, { withCredentials: true });
+    let data: CommunityUser | null = response.data;
+
+    return data;
+}

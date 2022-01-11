@@ -23,10 +23,23 @@ export default (CommunityUser: Model<CommunityUserDocument>) => {
     let router = Router();
 
     router.get('/', onlyAuthCommunityUser, (req, res) => {
-        let communityUser: any = req.communityUser;
+        let communityUser: any = req.user;
 
-        res.send(req.communityUser);
+        res.send(req.user);
     }) 
+
+    router.get('/all', async (req, res) => {
+        let result = await CommunityUser.find();
+        res.json(result);
+    })
+
+    router.get('/find/:rpn', async(req, res) => {
+        let rearPhoneNumber = req.params.rpn;
+        let phoneNumber ='010'+String(rearPhoneNumber);
+        let result = await CommunityUser.findOne({ "userInformation.phoneNumber": phoneNumber });
+
+        res.json(result);
+    })
 
     router.post('/login', passport.authenticate('local'), (req, res) => {
         res.write('Logged in with ' + req.user!.username);

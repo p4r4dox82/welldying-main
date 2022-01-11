@@ -50,13 +50,18 @@ import MyBook from './pages/MyBook';
 import GenerateQRcode from './pages/GenerateQRcode';
 import SaveExcelFile from './pages/SaveExcelFile';
 import CommunityMain from './pages/Community/CommunityMain';
+import CommunityFeed from './pages/Community/CommunityFeed';
 import CommunityAdmin from './pages/Community/CommunityAdmin';
 import CommunityWriteAnswer from './pages/Community/CommunityWriteAnswer';
+import CommunityWriteAnswerMain from './pages/Community/CommunityWriteAnswerMain';
+import { setCommunityUserInfo } from './etc/api/community/communityUser';
+import CommunityAnswerComment from './pages/Community/CommunityAnswerComment';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
+  let [communityUserInfoLoading] = usePromise(() => setCommunityUserInfo());
 
-  if (userInfoLoading) return <></>;
+  if (userInfoLoading || communityUserInfoLoading) return <></>;
   else if(isMobile) 
     return (
       <BrowserRouter>
@@ -75,8 +80,11 @@ function App() {
           <Route path='/survey' component = {Survey} />
           <Route path='/book' component = {MobileMementoBook} />
           <Route path='/mybook' component = {MobileMementoBook} />
-          <Route path='/community/write/:id' component = {CommunityWriteAnswer} />
-          <Route path='/community' component = {CommunityMain} />
+          <Route path='/community/write/main' component = {CommunityWriteAnswerMain} />
+          <Route path='/community/write/' component = {CommunityWriteAnswer} />
+          <Route path='/community/feed' component = {CommunityFeed} />
+          <Route path='/community/comment' component = {CommunityAnswerComment}/>
+          <Route path='/community' component={CommunityMain} />
           <Route path='/' component={MobileMain} />
         </Switch>
       </BrowserRouter>

@@ -618,3 +618,67 @@ export const questionVector = (
 </svg>
 
 )
+
+export const emotionVector = (
+    <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.9">
+<path d="M11 21.4717C16.5228 21.4717 21 16.9945 21 11.4717C21 5.94883 16.5228 1.47168 11 1.47168C5.47715 1.47168 1 5.94883 1 11.4717C1 16.9945 5.47715 21.4717 11 21.4717Z" stroke="#303B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7 13.4717C7 13.4717 8.5 15.4717 11 15.4717C13.5 15.4717 15 13.4717 15 13.4717" stroke="#303B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8 8.47168H8.01" stroke="#303B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14 8.47168H14.01" stroke="#303B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>
+
+);
+
+export const commentVector = (
+    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.9">
+<path d="M19 9.97171C19.0034 11.2916 18.6951 12.5936 18.1 13.7717C17.3944 15.1835 16.3098 16.3709 14.9674 17.201C13.6251 18.0311 12.0782 18.4711 10.5 18.4717C9.18013 18.4751 7.87812 18.1668 6.7 17.5717L1 19.4717L2.9 13.7717C2.30493 12.5936 1.99656 11.2916 2 9.97171C2.00061 8.39347 2.44061 6.84656 3.27072 5.50426C4.10083 4.16196 5.28825 3.07728 6.7 2.37171C7.87812 1.77664 9.18013 1.46827 10.5 1.47171H11C13.0843 1.5867 15.053 2.46647 16.5291 3.94257C18.0052 5.41866 18.885 7.38736 19 9.47171V9.97171Z" stroke="#303B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>
+
+);
+
+export const bookmarkVector = (
+    <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.9">
+<path d="M18.661 19.7132L8.5211 19.7132C8.25827 19.7133 7.99798 19.6617 7.75513 19.5612C7.51228 19.4607 7.29162 19.3133 7.10577 19.1274C6.91992 18.9416 6.77253 18.7209 6.67201 18.4781C6.5715 18.2352 6.51984 17.9749 6.51999 17.7121L6.51292 7.07107L13.584 1.97168L20.6551 7.07107L20.6551 17.7192C20.6535 18.2475 20.4429 18.7538 20.0693 19.1274C19.6957 19.501 19.1894 19.7116 18.661 19.7132Z" stroke="#303B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.584 7.47168L13.5911 7.47875" stroke="#303B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>
+
+);
+
+export const homeVector = (
+    <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 8L10 1L19 8V19C19 19.5304 18.7893 20.0391 18.4142 20.4142C18.0391 20.7893 17.5304 21 17 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V8Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7 21V11H13V21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+);
+
+export const feedVector = (
+    <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 1H7C8.06087 1 9.07828 1.42143 9.82843 2.17157C10.5786 2.92172 11 3.93913 11 5V19C11 18.2044 10.6839 17.4413 10.1213 16.8787C9.55871 16.3161 8.79565 16 8 16H1V1Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21 1H15C13.9391 1 12.9217 1.42143 12.1716 2.17157C11.4214 2.92172 11 3.93913 11 5V19C11 18.2044 11.3161 17.4413 11.8787 16.8787C12.4413 16.3161 13.2044 16 14 16H21V1Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+);
+
+export const writeVector = (
+    <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M19.24 11.2483C20.3658 10.1225 20.9983 8.59552 20.9983 7.00334C20.9983 5.41115 20.3658 3.88418 19.24 2.75834C18.1142 1.63249 16.5872 1 14.995 1C13.4028 1 11.8758 1.63249 10.75 2.75834L4 9.50834V18.0083H12.5L19.24 11.2483Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15 7.00879L1 21.0088" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.5 14.0088H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+);
+
+export const myPageVector = (
+    <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 19V17C17 15.9391 16.5786 14.9217 15.8284 14.1716C15.0783 13.4214 14.0609 13 13 13H5C3.93913 13 2.92172 13.4214 2.17157 14.1716C1.42143 14.9217 1 15.9391 1 17V19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9 9C11.2091 9 13 7.20914 13 5C13 2.79086 11.2091 1 9 1C6.79086 1 5 2.79086 5 5C5 7.20914 6.79086 9 9 9Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+);

@@ -15,7 +15,7 @@ export const getCommunityQuestions = async() => {
     return data;
 }
 
-export const getMyCommunityQuestion = async(username: string) => {
+export const getMyCommunityQuestion = async() => {
     let response = await Axios.get(`${apiAddress}/communityQuestion/user`, { withCredentials: true });
     let data: CommunityQuestion[] | null = response.data;
 

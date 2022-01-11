@@ -6,7 +6,7 @@ const CLEAR_CUSER = 'CLEAR_CUSER' as const;
 export const setCommunityUser = (communityUser: CommunityUser) => {
   return {
     type: SET_CUSER,
-    communityUser,
+    communityUser: communityUser,
   };
 };
 
@@ -36,13 +36,13 @@ export default function communityUser(state = initialState, action : CommunityUs
     case SET_CUSER:
       return {
         ...state,
-        user: action.communityUser,
+        communityUser: action.communityUser,
         loggedIn: true,
       };
     case CLEAR_CUSER:
       return {
         ...state,
-        user: undefined,
+        communityUser: undefined,
         loggedIn: false,
       }
     default:

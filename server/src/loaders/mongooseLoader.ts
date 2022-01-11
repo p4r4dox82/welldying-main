@@ -18,13 +18,15 @@ import { communityUserSchema } from "../models/community/communityUser";
 import { communityAnswerSchema } from "../models/community/communityAnswer";
 import { communityCommentSchema } from "../models/community/communityComment";
 import { communityQuestionSchema } from "../models/community/communityQuestion";
+import { communityRecommentSchema } from "../models/community/communityRecomment";
 
 
 
 const f = async (app: Application) => {
     await mongoose.connect(config.mongodbUri, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true,
     });
 
     return {
@@ -44,6 +46,7 @@ const f = async (app: Application) => {
         CommunityUser: model('communityUser', communityUserSchema, 'communityUsers'),
         CommunityAnswer: model('communityAnswer', communityAnswerSchema, 'communityAnswers'),
         CommunityComment: model('communityComment', communityCommentSchema, 'communityComments'),
+        CommunityRecomment: model('communityRecomment', communityRecommentSchema, 'communityRecomments'),
         CommunityQuestion: model('communityQuestion', communityQuestionSchema, 'communityQuestions'),
     }
 }

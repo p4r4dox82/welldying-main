@@ -14,9 +14,8 @@ export interface Emotion {
 }
 
 export interface CommunityAnswer {
-    id: number,
     username: string,
-    commentIds: number[],
+    questionId: number,
     updatedDate: number,
     answerData: AnswerData,
     emotions: Emotion[],
@@ -38,10 +37,10 @@ export const getMyCommunityAnswer = async(username: string) => {
     return data;
 }
 
-export const getCommunityAnswer = async(id: number) => {
+export const getCommunityAnswer = async(questionId: number) => {
     // if (!store.getState().communityUser.loggedIn) return null;
 
-    let response = await Axios.get(`${apiAddress}/communityAnswer/${id}`, { withCredentials: true });
+    let response = await Axios.get(`${apiAddress}/communityAnswer/${questionId}`, { withCredentials: true });
     let data: CommunityAnswer | null = response.data;
 
     return data;
@@ -50,11 +49,20 @@ export const getCommunityAnswer = async(id: number) => {
     // } else {
     //     return response.data;
     // }
-}  
+}
 
-export const writeCommunityAnswer = async(id: number, username: string, answerData: any, updatedDate: string) => {
+export const getCommunityAnswerByUsernameAndQuestionId = async(username: string, questionId: number) => {
+    let response = await Axios.post(`${apiAddress}/communityAnswer/find/usernameQuestionId`, {
+        username, questionId
+    }, { withCredentials: true });
+    let data: CommunityAnswer | null = response.data;
+
+    return data;
+}
+
+export const writeCommunityAnswer = async(username: string, questionId: number, answerData: any, upload: boolean) => {
     let response = await Axios.put(`${apiAddress}/communityAnswer`, {
-        id, username, answerData, updatedDate
+        username, questionId, answerData, upload
     }, { withCredentials: true })
 
     return response.status === 200;

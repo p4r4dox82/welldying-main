@@ -1,169 +1,203 @@
 @import '../Consts.scss';
 
-:root {
-    --sandoll: sandoll-gothicneo1, sans-serif;
-    --darkgreen: rgba(48, 59, 53, 1);
-}
-
-.Mobile .CommunityMain {
+.CommunityMain {
     width: 100%;
-    min-height: 100vh;
-    background-color: rgba(255, 252, 245, 1);
+    background-color: rgba(255, 254, 250, 1);
+    padding: 22px 20px;
 }
-.Mobile .CommunityMain .writeBlock {
+.CommunityMain .notice {
     width: 100%;
-    min-height: 100px;
+    height: 36px;
+    background-color: rgba(195, 186, 170, 0.3);
+    border-radius: 7px;
 }
-.Mobile .CommunityMain .feedBlock {
-    width: 100%;
-    min-height: 100vh;
-    background: #FFFFFF;
-    box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
-    padding: 20px;
-}
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer {
-    width: 100%;
-    border-bottom: 1px dashed #A1A28D;
-    padding-bottom: 24px;
-}
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .titleContainer {
-    width: 100%;
+.CommunityMain .titleContainer {
+    margin-top: 18px;
+    padding: 15px 9px 12px 9px;
+    border-top: 1px dashed rgba(161, 162, 141, 1);
+    border-bottom: 1px dashed rgba(161, 162, 141, 1);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .titleContainer .title {
+.CommunityMain .titleContainer .title {
     font-family: var(--sandoll);
-    font-size: 15px;
+    color: rgba(103, 116, 109, 1);
+    font-size: 14px;
     font-weight: bold;
-    color: rgba(48, 59, 53, 1);
 }
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .titleContainer .dots {
+.CommunityMain .titleContainer .date {
+    margin-top: 7px;
+    font-family: var(--GB);
+    color: rgba(103, 116, 109, 1);
+    font-size: 11px;
+    font-weight: normal;
+}
+.CommunityMain .titleContainer .dotContainer {
     display: flex;
-    gap: 5px;
+    gap: 3px;
+    .dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: rgba(103, 116, 109, 1);
+    }
 }
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .titleContainer .dots .dot {
-    width: 4px;
-    height: 4px;
-    border-radius: 2px;
-    background-color: rgba(110, 118, 114, 1);
-}
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .questionsContainer {
-    margin-top: 22px;
-    display: flex;
-    gap: 11px;
-}
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .questionsContainer .addQuestion {
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    padding: 0px;
+.CommunityMain .programContainer {
+    margin-top: 20px;
+    border-radius: 10px;
+    width: 100%;
+    min-height: 300px;
     background-color: rgba(103, 116, 109, 1);
-    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
+    padding: 38px 18px 25px 18px;
 }
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .questionsContainer .addQuestion .border {
-    width: calc(100% - 6px);
-    height: calc(100% - 6px);
+.CommunityMain .programContainer .border {
+    width: calc(100% - 4px * 2);
+    height: calc(100% - 4px * 2);
     position: absolute;
-    top: 3px;
-    left: 3px;
-    border-radius: 50%;
-    border: 1px solid #A1A28D;
+    top: 4px;
+    left: 4px;
+    border-radius: 9px;
+    border: 1px solid rgba(161, 162, 141, 1);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .questionsContainer .addQuestion .plusVector {
-    width: 20px;
-    height: 20px;
+.CommunityMain .programContainer .title {
+    font-family: var(--sandoll);
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--white);
+    margin-left: 13px;
+}
+.CommunityMain .programContainer .contentContainer {
+    border-top: 1px dashed rgba(161, 162, 141, 1);
+    border-bottom: 1px dashed rgba(161, 162, 141, 1);
+    padding-top: 22px;
+    padding-bottom: 16px;
+    margin-top: 13px;
+
+}
+.CommunityMain .programContainer .contentContainer .text {
+    padding: 0px 13px;
+    height: fit-content;
+    font-family: var(--sandoll);
+    font-size: 12px;
+    line-height: 25px;
+    color: var(--white);
+    font-weight: normal;
+}
+.CommunityMain .programContainer .contentContainer .vector {
+    width: 230px;
+    margin-left: calc(50% - 230px/2);
+    margin-top: 22px;
+    border-top: 1px dashed rgba(161, 162, 141, 1);
+}
+.CommunityMain .programContainer .contentContainer .questionsSlide {
+    width: 100%;
+    height: 169px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: var(--white);
+    margin-top: 23px;
+    overflow: hidden;
+
+}
+.CommunityMain .programContainer .contentContainer .questionsSlide .border {
+    width: calc(100% - 2px*2);
+    height: calc(100% - 2px*2);
+    border-radius: 9px;
+    border: 1px solid rgba(161, 162, 141, 1);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+}
+.CommunityMain .programContainer .contentContainer .questionsSlide .slide {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+}
+.CommunityMain .programContainer .contentContainer .questionsSlide .slide .question {
+    width: calc(100vw - 38px * 2);
+    text-align: center;
+    padding-top: 25px;
+    flex-shrink: 0;
+}
+.CommunityMain .programContainer .contentContainer .questionsSlide .slide .question .title {
+    font-family: var(--sandoll);
+    font-size: 11px;
+    color: rgba(103, 116, 109, 1);
+}
+.CommunityMain .programContainer .contentContainer .questionsSlide .slide .question .questionText {
+    font-family: var(--GB);
+    font-size: 15px;
+    height: 40px;
+    padding: 0px 60px;
+    margin-top: 16px;
+    color: rgba(103, 116, 109, 1);
+}
+.CommunityMain .programContainer .contentContainer .questionsSlide .slide .question button.writeAnswer {
+    width: calc(100% - 32px*2);
+    height: 42px;
+    background-color: rgba(103, 116, 109, 1);
+    font-family: var(--sandoll);
+    font-size: 12px;
+    color: var(--white);
+    font-weight: normal;
+    margin-top: 17px;
     svg {
-        width: 100%;
-        height: 100%;
+        width: 12px;
+        height: 12px;
+    }
+    .text {
+        margin-left: 10px;
+        padding: 0px;
+    }
+}
+.CommunityMain .programContainer .contentContainer .questionsSlide .buttonContainer {
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    padding: 60px 15px 0px 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.CommunityMain .programContainer .contentContainer .questionsSlide .buttonContainer button {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: rgba(103, 116, 109, 0.1);
+    padding: 0px;
+    svg {
+        transform: scaleX(0.82);
+        width: 7px;
+        height: 13px;
         path {
-            fill: rgba(161, 162, 141, 1);
+            stroke-width: 4px;
+            stroke: rgba(103, 116, 109, 1);
+            opacity: 1;
         }
     }
 }
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .questionsContainer button.newQuestion {
+.CommunityMain .programContainer .contentContainer .questionsSlideBar {
+    margin-top: 19px;
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
+    gap: 9px;
     justify-content: center;
-    padding: 0px;
-    background-color: transparent;
-    border: none;
-    margin: 0px;
-    width: 58px;
 }
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .questionsContainer button.newQuestion .newDot {
-    width: 10px;
-    height: 10px;
+.CommunityMain .programContainer .contentContainer .questionsSlideBar .dot {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background-color: rgba(217, 110, 78, 1);
-    position: absolute;
-    top: -5px;
-    z-index: 1;
+    border: 1px solid var(--white);
+    &.selected {
+        background-color: var(--white);
+    }
 }
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .questionsContainer button.newQuestion .profileImage {
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.1);
-}
-.Mobile .CommunityMain .feedBlock .newQuestionsContainer .questionsContainer button.newQuestion .name {
-    margin-top: 10px;
-    font-family: var(--sandoll);
-    font-size: 10px;
-    color: var(--darkgreen);
-    font-weight: 100;
-}
-.Mobile .CommunityMain .feedBlock .userAnswersContainer {
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
-}
-.Mobile .CommunityMain .feedBlock .userAnswersContainer .userAnswer {
-    width: 100%;
-    padding-top: 27px;
-}
-.Mobile .CommunityMain .feedBlock .userAnswersContainer .userAnswer .headerContainer {
-    width: 100%;
-    height: 47px;
-}
-.Mobile .CommunityMain .feedBlock .userAnswersContainer .userAnswer .headerContainer .profileContainer {
-    height: 100%;
-    display: flex;
-    align-items: center;
-}   
-.Mobile .CommunityMain .feedBlock .userAnswersContainer .userAnswer .headerContainer .profileContainer img.profileImage {
-    width: 47px;
-    height: 47px;
-    border-radius: 50%;
-}
-.Mobile .CommunityMain .feedBlock .userAnswersContainer .userAnswer .headerContainer .profileContainer .textContainer {
-    margin-left: 10px;
-    width: calc(100% - 47px - 50px - 10px);
-}
-.Mobile .CommunityMain .feedBlock .userAnswersContainer .userAnswer .headerContainer .profileContainer .textContainer .nickName {
-    font-family: var(--sandoll);
-    font-size: 12px;
-    font-weight: bold;
-    color: var(--darkgreen);
-}
-.Mobile .CommunityMain .feedBlock .userAnswersContainer .userAnswer .headerContainer .profileContainer .textContainer .tags {
-    font-family: var(--GB);
-    font-size: 11px;
-    font-weight: 100;
-    color: var(--darkgreen);
-    margin-top: 7px;
-}
-.Mobile .CommunityMain .feedBlock .userAnswersContainer .userAnswer .headerContainer .profileContainer .readQuestionContainer {
+.CommunityMain .programContainer .tag {
     text-align: center;
-    width: 50px;
-}
-.Mobile .CommunityMain .feedBlock .userAnswersContainer .userAnswer .headerContainer .profileContainer .readQuestionContainer .title {
-    font-family: var(--sandoll);
-    font-size: 9px;
-    color: rgba(110, 118, 114, 0.6);
-    margin-top: 5px;
+    margin-top: 20px;
+    font-family: var(--GB);
+    font-size: 12px;
+    color: rgba(252, 249, 242, 1);
 }

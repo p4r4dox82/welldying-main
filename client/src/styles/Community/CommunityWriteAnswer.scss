@@ -1,0 +1,168 @@
+@import '../Consts.scss';
+
+.CommunityWriteAnswer {
+    width: 100%;
+    background-color: rgba(255, 252, 245, 1);
+    padding-top: 74px;
+}
+.CommunityWriteAnswer .question {
+    position: absolute;
+    width: calc(100% - 20px * 2);
+    height: 104px;
+    background: #67746D;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    z-index: 1;
+    margin-left: 20px;
+    margin-top: -52px;
+    text-align: center;
+    font-family: var(--GB);
+    font-size: 18px;
+    line-height: 24px;
+    color: rgba(245, 244, 235, 1);
+    display: table;
+}
+.CommunityWriteAnswer .question .text {
+    display: table-cell;
+    vertical-align: middle;
+}
+.CommunityWriteAnswer .writeContainer {
+    width: 100%;
+    min-height: calc(100vh - 196px);
+    background-color: var(--white);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
+    padding-top: 87px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+}
+.CommunityWriteAnswer .writeContainer .menuContainer {
+    display: flex;
+    gap: 8px;
+}
+.CommunityWriteAnswer .writeContainer .menuContainer button.menu {
+    width: 30px;
+    height: 30px;
+    box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    background-color: var(--white);
+    padding: 0px;
+}
+.CommunityWriteAnswer .writeContainer .headerContainer,
+.CommunityWriteAnswer .writeContainer .textContainer {
+    margin: 0px 18px;
+}
+.CommunityWriteAnswer .writeContainer .headerContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 39px;
+    padding-bottom: 19px;
+    border-bottom: 1px dashed #939C97;
+}
+.CommunityWriteAnswer .writeContainer .headerContainer .tag,
+.CommunityWriteAnswer .writeContainer .headerContainer .date {
+    font-family: var(--GB);
+    font-size: 9px;
+    line-height: 25px;
+    color: var(--green);
+    opacity: 0.7;
+}
+.CommunityWriteAnswer .writeContainer .textContainer textarea {
+    outline: none;
+    border: none;
+    resize: none;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    font-family: var(--GB);
+    color: var(--green);
+    opacity: 0.7;
+}
+.CommunityWriteAnswer .writeContainer .textContainer textarea:placeholder {
+    color: var(--green);
+    opacity: 0.3;
+}
+.CommunityWriteAnswer .writeContainer .textContainer textarea.title {
+    font-size: 25px;
+    margin-top: 18px;
+}
+.CommunityWriteAnswer .writeContainer .textContainer textarea.answer {
+    font-size: 10px;
+    margin-top: 56px;
+}
+.CommunityWriteAnswer .writeContainer button.save {
+    padding: 0px;
+    margin: 0px;
+    font-family: var(--sandoll);
+    font-size: 12px;
+    line-height: 25px;
+    color: var(--darkgreen);
+    background-color: transparent;
+}
+
+
+.CommunityWriteAnswerMain {
+    width: 100%;
+    min-height: calc(100vh - 72px);
+    background-color: rgba(255, 252, 245, 1);
+}
+.CommunityWriteAnswerMain .questionContainer {
+    width: 100%;
+    padding-top: 45px;
+    padding-bottom: 59px;
+    text-align: center;
+}
+.CommunityWriteAnswerMain .questionContainer .question {
+    text-align: justify;
+    margin-left: 43px;
+    margin-right: 43px;
+    font-family: var(--sandoll);
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--darkgreen);
+    height: 75px;
+}
+.CommunityWriteAnswerMain .questionContainer button.writeAnswer {
+    margin-top: 63px;
+    width: 243px;
+    height: 36px;
+    background: rgba(195, 186, 170, 0.2);
+    border-radius: 7px;
+    font-family: var(--sandoll);
+    font-size: 15px;
+    color: var(--darkgreen);
+}
+.CommunityWriteAnswerMain .allQuestionsContainer {
+    background-color: var(--white);
+    width: 100%;
+    min-height: 100vh;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
+}
+.CommunityWriteAnswerMain .allQuestionsContainer .allQuestionsList {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    width: calc(100% - 20px*2);
+    gap: 20px;
+    top: -24px;
+}
+.CommunityWriteAnswerMain .allQuestionsContainer .allQuestionsList .question {
+    width: 100%;
+    height: 104px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    background-color: rgba(103, 116, 109, 1);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
+}
+.CommunityWriteAnswerMain .allQuestionsContainer .allQuestionsList .question .text {
+    font-family: var(--GB);
+    color: rgba(245, 244, 235, 1);
+    font-size: 18px;
+}

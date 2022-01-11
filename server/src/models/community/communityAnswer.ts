@@ -12,8 +12,8 @@ export interface Emotion {
 }
 
 export interface CommunityAnswer {
-    id: number,
     username: string,
+    questionId: number,
     commentIds: number[],
     updatedDate: number,
     answerData: AnswerData,
@@ -25,8 +25,8 @@ export interface CommunityAnswer {
 export type CommunityAnswerDocument = Document & CommunityAnswer;
 
 export const communityAnswerSchema = new Schema<CommunityAnswerDocument>({
-    id: Number,
     username: String,
+    questionId: Number,
     commentIds: [Number],
     updatedDate: Number,
     answerData: {
