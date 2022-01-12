@@ -9,6 +9,7 @@ export interface CommunityComment {
     numbering: number,
     comment: string,
     emotions: Emotion[],
+    updatedDate: number;
 }
 
 export const getCommunityComments = async() => {
@@ -33,4 +34,13 @@ export const writeCommunityComment = async(username: string, answerUsername: str
     }, { withCredentials: true });
 
     return response.status === 200;
+}
+
+export const getCommunityCommentsByAnswerDataAndUsername = async(username: string, answerQuestionId: number, answerUsername: string) => {
+    let response = await Axios.post(`${apiAddress}/communityComment/find/answerAndUsername`, {
+        username, answerUsername, answerQuestionId
+    }, { withCredentials: true });
+    let data: CommunityComment[] | null = response.data;
+
+    return data;
 }

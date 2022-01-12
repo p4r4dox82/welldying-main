@@ -19,6 +19,7 @@ export interface CommunityAnswer {
     answerData: AnswerData,
     emotions: Emotion[],
     views: string[],
+    bookmarks: string[],
     upload: string
 }
 
@@ -39,5 +40,6 @@ export const communityAnswerSchema = new Schema<CommunityAnswerDocument>({
         usernames: [String]
     }],
     views: [String],
+    bookmarks: [String],
     uplaod: String
 });

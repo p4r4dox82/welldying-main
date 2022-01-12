@@ -20,6 +20,7 @@ export interface CommunityAnswer {
     answerData: AnswerData,
     emotions: Emotion[],
     views: string[],
+    bookmarks: string[],
     upload: string
 }
 
@@ -64,6 +65,22 @@ export const writeCommunityAnswer = async(username: string, questionId: number, 
     let response = await Axios.put(`${apiAddress}/communityAnswer`, {
         username, questionId, answerData, upload
     }, { withCredentials: true })
+
+    return response.status === 200;
+}
+
+export const modifyCommunityAnswerBookmarks = async(username: string, questionId: number, bookmarks: string[]) => {
+    let response = await Axios.put(`${apiAddress}/communityAnswer/modifyBookmarks`, {
+        username, questionId, bookmarks
+    }, { withCredentials: true });
+
+    return response.status === 200;
+}
+
+export const modifyCommunityAnswerEmotions = async(username: string, questionId: number, emotions: Emotion[]) => {
+    let response = await Axios.put(`${apiAddress}/communityAnswer/modifyEmotions`, {
+        username, questionId, emotions
+    }, { withCredentials: true });
 
     return response.status === 200;
 }

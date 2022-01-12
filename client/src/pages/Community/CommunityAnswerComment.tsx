@@ -6,7 +6,8 @@ import { getUserByRearPhoneNumber } from '../../etc/api/community/communityUser'
 import { getCommunityAnswerByUsernameAndQuestionId } from '../../etc/api/community/communityAnswer';
 import { RootReducer } from '../../store';
 import { useSelector } from 'react-redux';
-import { getCommunityCommentsByAnswerData, writeCommunityComment } from '../../etc/api/community/communityComment';
+import { CommunityComment, getCommunityCommentsByAnswerData, writeCommunityComment } from '../../etc/api/community/communityComment';
+import { parseDate } from '../../etc';
 
 interface Props {
     location: Location;
@@ -19,32 +20,47 @@ function CommunityAnswerComment({ location }: Props) {
     let username = String(query.un);
     let [, answer] = usePromise(() => getCommunityAnswerByUsernameAndQuestionId(username, questionId));
     let [, comments] = usePromise(() => getCommunityCommentsByAnswerData(username, questionId));
+    let [answerComments, setAnswerComments] = React.useState<CommunityComment[]>();
     let [comment, setComment] = React.useState<string>("");
     let [commentNumbering, setCommentNumbering] = React.useState<number>(1);
     React.useEffect(() => {
-        if(!comments || !communityUser) return;
-        let newNumbering = 1;
-        comments.forEach((comment) => {
-            console.log(comment.username);
+        if(!answerComments || !communityUser) return;
+        let newNumbering = 0;
+        answerComments.forEach((comment) => {
             if(comment.username === communityUser.communityUser?.username) {
-                newNumbering++;
+                newNumbering = Math.max(newNumbering, comment.numbering);
             }
         })
-        console.log(newNumbering);
-        setCommentNumbering(newNumbering);
-    }, [comments, communityUser]);
+        setCommentNumbering(newNumbering + 1);
+    }, [answerComments, communityUser]);
+
+    let reloadingComments = async() => {
+        let result: CommunityComment[] | null = await getCommunityCommentsByAnswerData(username, questionId);
+        if(!result) return;
+        setAnswerComments(result);
+        return;
+    }
+
+    React.useEffect(() => {
+        if(!comments) return;
+        setAnswerComments(comments);
+    }, [comments]);
+
+    React.useEffect(() => {
+        console.log(commentNumbering);
+    }, [commentNumbering]);
 
 
     return (
         <>
             <div className="CommunityAnswerComment">
                 <div className="commentsContainer">
-                    {comments?.map((comment) => {
+                    {answerComments?.map((comment) => {
                         return (
                             <div className="commentContainer">
                                 <img src="" alt="" className="profileImage" />
                                 <textarea name="" id="" className="comment" value = {comment.comment}></textarea>
-                                <button className="upload"></button>
+                                <div className="date">{parseDate(new Date(comment.updatedDate))}</div>
                             </div>
                         )
                     })}
@@ -57,6 +73,7 @@ function CommunityAnswerComment({ location }: Props) {
                             alert("저장되었습니다.");
                             setCommentNumbering(commentNumbering + 1);
                             setComment("");
+                            reloadingComments();
                         }
                     }}>게시</button>
                 </div>

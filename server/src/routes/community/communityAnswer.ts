@@ -16,7 +16,7 @@ export default (CommunityAnswer: Model<CommunityAnswerDocument>) => {
         const upload = req.body.upload;
         
         if(!await CommunityAnswer.findOneAndUpdate({ username: username, questionId: questionId }, {$set: { answerData : answerData, updatedDate: updatedDate }})) {
-            const communityAnswer = new CommunityAnswer({ username: username, questionId: questionId, commentsIds: [], updatedDate: updatedDate, answerData: answerData, emotions: [], views: [], upload: (upload ? "save" : "none") });
+            const communityAnswer = new CommunityAnswer({ username: username, questionId: questionId, commentsIds: [], updatedDate: updatedDate, answerData: answerData, emotions: [{ emotion: "like", usernames: [] }], views: [], bookmarks: [], upload: (upload ? "save" : "none") });
             communityAnswer.save();
         }
 
@@ -50,6 +50,26 @@ export default (CommunityAnswer: Model<CommunityAnswerDocument>) => {
         let username = req.body.username;
         let questionId = Number.parseInt(req.body.questionId);
         let result = await CommunityAnswer.findOne({ username: username, questionId: questionId });
+
+        res.json(result);
+    })
+
+    router.put('/modifyBookmarks', onlyAuthCommunityUser, async(req, res) => {
+        let username = req.body.username;
+        let questionId = Number.parseInt(req.body.questionId);
+        let bookmarks = req.body.bookmarks;
+
+        let result = await CommunityAnswer.findOneAndUpdate({ username: username, questionId: questionId }, { $set: { bookmarks: bookmarks } });
+
+        res.json(result);
+    })
+
+    router.put('/modifyEmotions', onlyAuthCommunityUser, async(req, res) => {
+        let username = req.body.username;
+        let questionId = Number.parseInt(req.body.questionId);
+        let emotions = req.body.emotions;
+
+        let result = await CommunityAnswer.findOneAndUpdate({ username: username, questionId: questionId }, { $set: { emotions: emotions } });
 
         res.json(result);
     })

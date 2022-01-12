@@ -8,6 +8,7 @@ export interface CommunityComment {
     numbering: number,
     comment: string,
     emotions: Emotion[],
+    updatedDate: number
 }
 
 export type CommunityCommentDocument = Document & CommunityComment;
@@ -22,4 +23,5 @@ export const communityCommentSchema = new Schema<CommunityCommentDocument>({
         emotion: String,
         usernames: [String]
     },
+    updatedDate: Number
 });

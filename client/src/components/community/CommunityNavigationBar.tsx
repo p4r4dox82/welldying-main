@@ -15,12 +15,13 @@ function CommunityNavigationBar(props: Props) {
 
     return (
         <>
+            <div style = {{height: '50px', width: '100%'}}></div>
             <div className="CommunityNavigationBar">
+                <div className="pageSelected" style = {{transform: `translateX(${pageSelected * (42 + 25)}px)`}}></div>
                 <Link to ="/community/main"><button className="home" onClick = {() => setPageSelected(0)}>{homeVector}</button></Link>
                 <Link to = "/community/feed"><button className="feed" onClick = {() => setPageSelected(1)}>{feedVector}</button></Link>
                 <Link to = "/community/write/main"><button className="write" onClick = {() => setPageSelected(2)}>{writeVector}</button></Link>
                 <button className="myPage" onClick = {() => setPageSelected(3)}>{myPageVector}</button>
-                <div className="pageSelected" style = {{transform: `translateX(${pageSelected * (42 + 25)}px)`}}></div>
             </div>
         </>
     )
