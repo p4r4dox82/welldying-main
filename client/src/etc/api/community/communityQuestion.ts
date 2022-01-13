@@ -6,9 +6,17 @@ export interface CommunityQuestion {
     username: string,
     question: string,
     tag: string,
+    updatedDate: number
 }
 
 export const getCommunityQuestions = async() => {
+    let response = await Axios.get(`${apiAddress}/communityQuestion`, { withCredentials: true });
+    let data: CommunityQuestion[] | null = response.data;
+
+    return data;
+}
+
+export const getCommunityQuestionsRecentOrder = async() => {
     let response = await Axios.get(`${apiAddress}/communityQuestion`, { withCredentials: true });
     let data: CommunityQuestion[] | null = response.data;
 
@@ -36,10 +44,10 @@ export const getCommunityQuestion = async(id: number) => {
     // }
 }  
 
-export const writeCommunityQuestion = async(id: number, username: string, question: string, tag: string) => {
+export const writeCommunityQuestion = async(username: string, question: string, tag: string) => {
     let response = await Axios.put(`${apiAddress}/communityQuestion`, {
-        id, username, question, tag
+        username, question, tag
     }, { withCredentials: true })
 
-    return response.status === 200;
+    return [response.data.status === 200, response.data.id];
 }

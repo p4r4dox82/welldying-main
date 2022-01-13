@@ -5,6 +5,7 @@ export interface CommunityQuestion {
     username: string,
     question: string,
     tag: string,
+    updatedDate: number
 }
 
 export type CommunityQuestionDocument = Document & CommunityQuestion;
@@ -14,4 +15,5 @@ export const communityQuestionSchema = new Schema<CommunityQuestionDocument>({
     username: String,
     question: String,
     tag: String,
+    updatedDate: Number,
 });

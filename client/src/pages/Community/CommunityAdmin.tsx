@@ -89,7 +89,7 @@ function CommunityAdmin() {
                         if(!question || !tag) {
                             alert("질문과 태그 모두 입력해주세요");
                         } else {
-                            if(await writeCommunityQuestion(totalQuestionsNumber + 1, "admin", question, tag)) {
+                            if(await writeCommunityQuestion("admin", question, tag)) {
                                 alert("저장되었습니다");
                                 setQuestion("");
                                 setTag("");
