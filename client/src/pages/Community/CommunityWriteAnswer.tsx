@@ -9,7 +9,8 @@ import queryString from 'query-string';
 import { getCommunityQuestion } from '../../etc/api/community/communityQuestion';
 import { RootReducer } from '../../store';
 import { useSelector } from 'react-redux';
-import { image } from 'html2canvas/dist/types/css/types/image';
+import { PlusVector } from '../../img/Vectors';
+import { uploadImage_formdata } from '../../etc/api/image';
 
 interface Props {
     location: Location;
@@ -25,6 +26,22 @@ function CommunityWriteAnswer({ location }: Props) {
     let [answer, setAnswer] = React.useState<string>("");
     let [imageUri, setImageUri] = React.useState<string>("");
     let [redirectTo, setRedirectTo] = React.useState<string>("");
+
+    let imageInputRef = React.useRef<any>(null);
+    let imageButtonClick = () => imageInputRef.current.click();
+    let uploadImageToS3 = async (e: any) => {
+        let formData = new FormData();
+        formData.append('image', e.target.files[0]);
+
+        const s3Uri = await uploadImage_formdata(formData);
+
+        setImageUri(s3Uri);
+
+        if(s3Uri === undefined) {
+            setImageUri('');
+        }
+        return s3Uri;
+    }
     
 
     React.useEffect(() => {
@@ -53,12 +70,18 @@ function CommunityWriteAnswer({ location }: Props) {
                     <div className="menuContainer">
                         <button className="menu"></button>
                         <button className="menu"></button>
+                        <button className="menu" onClick = {() => imageButtonClick()}>{PlusVector}</button>
                         <button className="menu"></button>
-                        <button className="menu"></button>
+                        <input type="file" className="image" style = {{ display: 'none' }} ref = {imageInputRef} onChange = {(e: any) => {
+                            uploadImageToS3(e);
+                        }} />
                     </div>
                     <div className="headerContainer">
                         <div className="tag">{question?.tag}</div>
                         <div className="date">{"2022.01.10"}</div>
+                    </div>
+                    <div className="imageContainer">
+                        <img src={imageUri} alt="" />
                     </div>
                     <div className="textContainer">
                         <textarea name="" id="" className="title" placeholder='제목을 입력해주세요.' value={title} onChange={(e) => setTitle(e.target.value)}></textarea>
