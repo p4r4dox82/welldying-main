@@ -6,7 +6,7 @@ import CommunityNavigationBar from '../../components/community/CommunityNavigati
 import { parseDate } from '../../etc';
 import { CommunityAnswer, Emotion, getCommunityAnswerByUsernameAndQuestionId, getCommunityAnswers, modifyCommunityAnswerBookmarks, modifyCommunityAnswerEmotions } from '../../etc/api/community/communityAnswer';
 import { getCommunityCommentsByAnswerDataAndUsername, writeCommunityComment } from '../../etc/api/community/communityComment';
-import { CommunityQuestion, getCommunityQuestions } from '../../etc/api/community/communityQuestion';
+import { CommunityQuestion, getCommunityQuestions, getCommunityQuestionsRecentOrder } from '../../etc/api/community/communityQuestion';
 import { CommunityUser, getCommunityUsers } from '../../etc/api/community/communityUser';
 import usePromise from '../../etc/usePromise';
 import { bookmarkVector, commentVector, emotionVector, PlusVector, questionVector } from '../../img/Vectors';
@@ -75,7 +75,9 @@ function CommunityFeedAnswer({ user, answer, question }: FeedAnswerProps) {
                         </div>
                     </div>
                 </div>  
-                <img src="" alt="" className="answerImage" />
+                {answer.answerData.imageUri && <div className="imageContainer">
+                    <img src={answer.answerData.imageUri} alt="" className="answerImage" />
+                </div>}
                 <div className="contentContainer">
                     <div className="title">{answer.answerData.title}</div>
                     <div className="answer">{answer.answerData.answer}</div>
@@ -125,14 +127,7 @@ function CommunityFeed() {
     let communityUser = useSelector((state: RootReducer) => state.communityUser);
     let [, allAnswers] = usePromise(() => getCommunityAnswers());
     let [, allUsers] = usePromise(() => getCommunityUsers());
-    let [, allQuestions] = usePromise(() => getCommunityQuestions());
-    let [update, setUpdate] = React.useState<number>(0);
-
-    let bookmarkVectorComponent = React.useCallback((bookmarked: any) => {
-        return (
-            <div className={"vector" + (bookmarked ? " bookmarked" : "")}>{bookmarkVector}</div>
-        )
-    }, [update])
+    let [, allQuestionsRecentOrder] = usePromise(() =>getCommunityQuestionsRecentOrder());
 
     return (
         <>
@@ -152,21 +147,28 @@ function CommunityFeed() {
                             </div>
                         </div>
                         <div className="questionsContainer">
-                            <button className="addQuestion">
-                                <div className="border"></div>
-                                <div className="plusVector">{PlusVector}</div>
-                            </button>
-                            <button className="newQuestion">
-                                <div className="newDot"></div>
-                                <div className="profileImage"></div>
-                                <div className="name">용훈</div>
-                            </button>
+                            <div className="slide">
+                                <button className="addQuestion">
+                                    <div className="border"></div>
+                                    <div className="plusVector">{PlusVector}</div>
+                                </button>
+                                {allQuestionsRecentOrder?.map((question) => {
+                                    let user = allUsers?.find((user) => user.username === question.username);
+                                    return (
+                                        <button className="newQuestion">
+                                            <div className="newDot"></div>
+                                            <div className="profileImage">{user?.userInformation.profileImageUri}</div>
+                                            <div className="name">{user?.userInformation.name}</div>
+                                        </button>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
                     <div className="userAnswersContainer">
                         {allAnswers?.map((answer) => {
                             let user = allUsers?.find((user) => user.username === answer.username);
-                            let question = allQuestions?.find((question) => question.id === answer.questionId);
+                            let question = allQuestionsRecentOrder?.find((question) => question.id === answer.questionId);
                             if(!user || !question) return <></>;
                             else return (
                                 <CommunityFeedAnswer user = {user} answer = {answer} question = {question}></CommunityFeedAnswer>

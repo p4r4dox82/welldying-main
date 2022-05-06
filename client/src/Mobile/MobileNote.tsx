@@ -25,7 +25,7 @@ function MobileNote() {
 
     React.useEffect(() => {
         window.scrollTo(0, 0);
-    })
+    }, [])
 
     let writtenQuestions = React.useMemo(() => {
         let userAnswers = allAnswers?.filter((answer) => answer.username === user.user?.username);

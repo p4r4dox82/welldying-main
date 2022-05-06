@@ -17,7 +17,7 @@ export const getCommunityQuestions = async() => {
 }
 
 export const getCommunityQuestionsRecentOrder = async() => {
-    let response = await Axios.get(`${apiAddress}/communityQuestion`, { withCredentials: true });
+    let response = await Axios.get(`${apiAddress}/communityQuestion/recent`, { withCredentials: true });
     let data: CommunityQuestion[] | null = response.data;
 
     return data;

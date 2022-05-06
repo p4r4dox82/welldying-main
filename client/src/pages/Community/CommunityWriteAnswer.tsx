@@ -80,9 +80,9 @@ function CommunityWriteAnswer({ location }: Props) {
                         <div className="tag">{question?.tag}</div>
                         <div className="date">{"2022.01.10"}</div>
                     </div>
-                    <div className="imageContainer">
+                    {imageUri && <div className="imageContainer">
                         <img src={imageUri} alt="" />
-                    </div>
+                    </div>}
                     <div className="textContainer">
                         <textarea name="" id="" className="title" placeholder='제목을 입력해주세요.' value={title} onChange={(e) => setTitle(e.target.value)}></textarea>
                         <textarea name="" id="" className="answer" placeholder='내용을 입력해주세요.' value={answer} onChange={(e) => setAnswer(e.target.value)}></textarea>

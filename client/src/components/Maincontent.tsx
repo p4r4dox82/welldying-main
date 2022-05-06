@@ -9,6 +9,7 @@ import { MementoMainVector, MementoNoteVector, MementoBookVector, MementoContent
 import { parseDate } from '../etc';
 import { useSelector } from 'react-redux';
 import { RootReducer } from '../store';
+import axios from 'axios';
 
 function Maincontent() {
     let user = useSelector((state: RootReducer) => state.user);
