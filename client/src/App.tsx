@@ -74,6 +74,7 @@ function App() {
           <Route path='/survey' component = {Survey} />
           <Route path='/book' component = {MobileMementoBook} />
           <Route path='/mybook' component = {MobileMementoBook} />
+          <Route path='/youthTestament' component={YouthTestament} />
           <Route path='/' component={MobileMain} />
         </Switch>
       </BrowserRouter>
@@ -122,7 +123,6 @@ function App() {
         <Route path='/generateQrcode' component = {GenerateQRcode} />
         <Route path='/saveExcelFile' component = {SaveExcelFile} />
         <Route path='/test' component = {Test}/>
-        <Route path='/youthtestment' component={YouthTestament} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>

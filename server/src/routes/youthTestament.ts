@@ -5,6 +5,13 @@ import { YouthTestamentDocument } from "../models/youthTestament";
 export default (YouthTestament: Model<YouthTestamentDocument>) => {
     let router = Router();
 
+    router.get('/:pid', async(req, res) => {
+        let pid = Number.parseInt(req.params.pid);
+
+        let result = await YouthTestament.findOne({ pid: pid });
+        res.json(result);
+    });
+
     router.put('/', async (req, res) => {
         let pid = Number.parseInt(req.body.pid);
         let name = req.body.name;
@@ -21,14 +28,9 @@ export default (YouthTestament: Model<YouthTestamentDocument>) => {
 
         res.sendStatus(200);
         return;
-    })
+    });
 
-    router.get('/:pid', async(req, res) => {
-        let pid = Number.parseInt(req.params.pid);
-
-        let result = await YouthTestament.findOne({ pid: pid });
-        res.json(result);
-    })
+    
 
     return router;
 }
