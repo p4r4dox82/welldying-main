@@ -5,11 +5,6 @@ import { YouthTestamentDocument } from "../models/youthTestament";
 export default (YouthTestament: Model<YouthTestamentDocument>) => {
     let router = Router();
 
-    router.get('/', async(req, res) => {
-        let result = await YouthTestament.findOne({ pid: 12345678 });
-        res.json(result);
-    })
-
     router.get('/:pid', async(req, res) => {
         let pid = Number.parseInt(req.params.pid);
 
