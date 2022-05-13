@@ -10,10 +10,9 @@ export default (ProgramAnswer: Model<ProgramAnswerDocument>) => {
         res.json(result);
     })
 
-    router.get('/:pid', async (req, res) => {
-        const pid = Number.parseInt(req.params.pid);
+    router.get('/', async (req, res) => {
 
-        let result = await ProgramAnswer.findOne({ pid: pid });
+        let result = await ProgramAnswer.findOne({ pid: 105526735 });
         res.json(result);
     });
 
