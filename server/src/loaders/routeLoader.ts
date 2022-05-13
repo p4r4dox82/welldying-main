@@ -14,6 +14,7 @@ import commentRouter from '../routes/comment';
 import categoryRouter from '../routes/category';
 import orderRouter from '../routes/order';
 import programAnswerRouter from '../routes/programAsnwer';
+import youthTestamentRouter from '../routes/youthTestament';
 import { ModelsType } from './mongooseLoader';
 import { AWSServices } from './awsLoader';
 
@@ -32,6 +33,7 @@ export default async (app : Application, models: ModelsType, awsServices: AWSSer
     app.use('/category', categoryRouter(models.Category));
     app.use('/order', orderRouter(models.Order, models.User, awsServices.sns));
     app.use('/programAnswer', programAnswerRouter(models.ProgramAnswer));
+    app.use('/youthTestament', youthTestamentRouter(models.YouthTestament));
 
     app.use(errorHandler);
 }

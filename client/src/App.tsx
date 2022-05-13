@@ -49,6 +49,8 @@ import PaymentPage from './pages/PaymentPage';
 import MyBook from './pages/MyBook';
 import GenerateQRcode from './pages/GenerateQRcode';
 import SaveExcelFile from './pages/SaveExcelFile';
+import Test from './YouthTestament/Test';
+import YouthTestament from './YouthTestament/YouthTestament';
 
 function App() {
   let [userInfoLoading] = usePromise(() => setUserInfo());
@@ -119,6 +121,8 @@ function App() {
         <Route path='/mybook' component = {MyBook} />
         <Route path='/generateQrcode' component = {GenerateQRcode} />
         <Route path='/saveExcelFile' component = {SaveExcelFile} />
+        <Route path='/test' component = {Test}/>
+        <Route path='/youthtestment' component={YouthTestament} />
         <Route path='/' component={Main} />
       </Switch>
     </BrowserRouter>

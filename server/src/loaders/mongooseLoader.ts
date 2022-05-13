@@ -14,6 +14,7 @@ import { commentSchema } from "../models/comment";
 import { categorySchema } from '../models/category';
 import { orderSchema } from "../models/order";
 import { programAnswerSchema } from "../models/programAnswer";
+import { youthTestamentSchema } from "../models/youthTestament";
 
 
 
@@ -37,6 +38,7 @@ const f = async (app: Application) => {
         Category: model('category', categorySchema, 'categorys'),
         Order: model('order', orderSchema, 'orders'),
         ProgramAnswer: model('programAnswer', programAnswerSchema, 'programAnswers'),
+        YouthTestament: model('youthTestament', youthTestamentSchema, 'youthTestaments'),
     }
 }
 

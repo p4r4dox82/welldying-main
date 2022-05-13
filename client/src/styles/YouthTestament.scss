@@ -1,0 +1,158 @@
+@import 'Consts.scss';
+
+.YouthTestament {
+    .Header {
+        z-index: 100;
+        height: 81px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1.5px solid var(--green);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+    .Header .Logo {
+        background-color: transparent;
+        svg {
+            width: 111px;
+            height: 26px;
+            path {
+                fill: var(--green);
+            }
+        }
+    }
+    
+    .BookCover {
+        width: 100vw;
+        height: 125vw;
+    }
+    .BookCover .Background {
+        position: absolute;
+        width: 100%;
+    }
+    .BookCover .Background img {
+        mix-blend-mode: multiply;
+        width: 100%;
+        opacity: 0.3;
+    }
+    .BookCover .BookCoverContainer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .BookCover .BookCoverContainer .title {
+        margin-top: 20%;
+        width: 28px;
+        height: fit-content;
+        border-right: 2px solid var(--green);
+        color: var(--green);
+        font-size: 22px;
+        font-family: var(--GB);
+    }
+    .BookCover .BookCoverContainer .enter {
+        width: 100px;
+        height: 30px;
+        margin-bottom: 80px;
+        border-radius: 5px;
+        background-color: transparent;
+        color: var(--green);
+        border: 1.5px solid var(--green);
+        font-size: 13px;
+    }
+    .BookContent .titleBlock {
+        width: 100%;
+        height: 150px;
+        background-color: var(--green9);
+        padding: 5px 0px;
+        text-align: center;
+    }
+    .BookContent .titleBlock .borderBox {
+        position: absolute;
+        width: 100%;
+        height: calc(150px - 5px*2);
+        border-top: 1px dashed rgba(250, 250, 250, 0.4);
+        border-bottom: 1px dashed rgba(250, 250, 250, 0.4);
+    }
+    .BookContent .titleBlock .title {
+        margin-top: 32px;
+        font-family: var(--GB);
+        font-size: 18px;
+        line-height: 35px;
+        color: var(--whitetext);
+    }
+    .BookContent .titleBlock .subtitle {
+        font-family: var(--GB);
+        font-size: 12px;
+        color: var(--whitetext);
+    }
+    .BookContent .titleBlock .flowerImage {
+        margin-top: 15px;
+    }
+    .BookContent .pageBlock {
+        padding: 20px 24px;
+        padding-bottom: 120px;
+    }
+    .BookContent .pageBlock .weekTitle {
+        padding-bottom: 10px;
+        font-family: var(--GB);
+        font-size: 20px;
+        line-height: 26px;
+        color: var(--green);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .BookContent .pageBlock .border {
+        width: 100vw;
+        left: -24px;
+        border-bottom: 1px dashed var(--green04);
+    }
+    .BookContent .pageBlock .subTitle {
+        margin-top: 12px;
+        font-family: var(--GB);
+        font-size: 18px;
+    }
+    .BookContent .pageBlock .imageContainer {
+        margin-top: 25px;
+        border-radius: 5px;
+        box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        padding: 5px;
+    }
+    .BookContent .pageBlock .imageContainer img {
+        width: 100%;
+    }
+    .BookContent .buttonBlock {
+        width: 100%;
+        position: fixed;
+        bottom: 50px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .BookContent .buttonBlock button {
+        background-color: rgba(255, 255, 255, 0.6);
+        width: 50px;
+        height: 50px;
+        padding: 0px;
+        border-radius: 50%;
+        box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
+    }
+    .BookContent .buttonBlock .pageDisplay {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 30px;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.6);
+        box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
+    }
+    .BookContent .buttonBlock button.transparent {
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
