@@ -5,6 +5,11 @@ import { ProgramAnswerDocument, programAnswerType, answerData } from "../models/
 export default (ProgramAnswer: Model<ProgramAnswerDocument>) => {
     let router = Router();
 
+    router.get('/', async(req, res) => {
+        let result = await ProgramAnswer.findOne({ pid: 105526735 });
+        res.json(result);
+    })
+
     router.get('/:pid', async (req, res) => {
         const pid = Number.parseInt(req.params.pid);
 

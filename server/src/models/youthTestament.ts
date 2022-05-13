@@ -15,5 +15,3 @@ export const youthTestamentSchema = new Schema<YouthTestamentDocument>({
     imageName: [String],
     videoUrl: [String]
 })
-
-youthTestamentSchema.index({pid: true, name: true})
