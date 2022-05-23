@@ -24,15 +24,16 @@
     
     .BookCover {
         width: 100vw;
-        height: 125vw;
+        height: calc(100vh - 81px);
     }
     .BookCover .Background {
         position: absolute;
         width: 100%;
+        height: 100%;
     }
     .BookCover .Background img {
         mix-blend-mode: multiply;
-        width: 100%;
+        height: 100%;
         opacity: 0.3;
     }
     .BookCover .BookCoverContainer {
@@ -114,9 +115,9 @@
         margin-top: 12px;
         font-family: var(--GB);
         font-size: 18px;
+        margin-bottom: 12px;
     }
     .BookContent .pageBlock .imageContainer {
-        margin-top: 25px;
         border-radius: 5px;
         box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.05);
         width: 100%;

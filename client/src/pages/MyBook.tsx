@@ -5,7 +5,7 @@ import { getProgramAnswer, ProgramAnswerData } from '../etc/api/programAnswer';
 import Header from '../components/Header';
 import { bookCoverVector, Colon, leftVector, MementoLogo, moonVector, PlusVector, rightVector } from '../img/Vectors';
 import { imageUrl } from '../etc/config';
-import { isImage, QuestionInterface } from '../Mobile/MobileMementoBook';
+import { isImage, QuestionInterface } from '../MobilePage/MobileMementoBook';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import ClipboardJS from 'clipboard';
