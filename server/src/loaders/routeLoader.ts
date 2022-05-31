@@ -33,7 +33,7 @@ export default async (app : Application, models: ModelsType, awsServices: AWSSer
     app.use('/category', categoryRouter(models.Category));
     app.use('/order', orderRouter(models.Order, models.User, awsServices.sns));
     app.use('/programAnswer', programAnswerRouter(models.ProgramAnswer));
-    app.use('/youthTestament', youthTestamentRouter(models.YouthTestament));
+    app.use('/youthtestament', youthTestamentRouter(models.YouthTestament));
 
     app.use(errorHandler);
 }

@@ -11,20 +11,20 @@ export interface YouthTestamentData {
 }
 
 export const getYouthTestaments = async () => {
-    let response = await Axios.get(`${apiAddress}/youthTestament`);
+    let response = await Axios.get(`${apiAddress}/youthtestament`);
     let data: YouthTestamentData[] = response.data;
 
     return data;
 }
 
 export const getYouthTestament = async (pid: number) => {
-    let response = await Axios.get(`${apiAddress}/youthTestament/${pid}`);
+    let response = await Axios.get(`${apiAddress}/youthtestament/${pid}`);
 
     return response.data as YouthTestamentData;
 }
 
 export const writeYouthTestament = async (pid: number, name: string, week1: string[], week2: string[], week3: string[]) => {
-    let response = await Axios.put(`${apiAddress}/youthTestament`, {
+    let response = await Axios.put(`${apiAddress}/youthtestament`, {
         pid: pid, name: name, week1: week1, week2: week2, week3: week3
     }, { withCredentials: true });
 
