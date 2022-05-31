@@ -125,7 +125,7 @@ serve로 배포하기
 local storage
 session storage
 
-ssh -i memento_welldying.pem ubuntu@ec2-3-38-20-42.ap-northeast-2.compute.amazonaws.com
+ssh -i awsDevProject.pem ubuntu@ec2-3-38-20-42.ap-northeast-2.compute.amazonaws.com
 git token - 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
 mongodb -
 C1iaumVlaIIt2xg5

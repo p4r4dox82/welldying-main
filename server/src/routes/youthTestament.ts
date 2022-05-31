@@ -6,7 +6,9 @@ export default (YouthTestament: Model<YouthTestamentDocument>) => {
     let router = Router();
 
     router.get('/', async(req, res) => {
+        console.log("ASD");
         let result = await YouthTestament.find().sort({'id': 'asc'});
+        console.log(result);
 
         res.json(result);
     });
