@@ -9,7 +9,6 @@ export default (YouthTestament: Model<YouthTestamentDocument>) => {
         let result = await YouthTestament.find().sort({'id': 'asc'});
 
         res.json(result);
-        res.end();
     });
 
     router.get('/:pid', async(req, res) => {
