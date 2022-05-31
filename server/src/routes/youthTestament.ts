@@ -10,7 +10,7 @@ export default (YouthTestament: Model<YouthTestamentDocument>) => {
 
         res.json(result);
         res.end();
-    })
+    });
 
     router.get('/:pid', async(req, res) => {
         let pid = Number.parseInt(req.params.pid);
