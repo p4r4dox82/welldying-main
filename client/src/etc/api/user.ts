@@ -221,6 +221,7 @@ export interface UserData {
     DeathInfo: DeathInfo;
     UsersInfo: { give: UserGiveInfo[], get: UserGiveInfo[] };
     imageUri: string;
+    createdAt: string;
 }
 
 

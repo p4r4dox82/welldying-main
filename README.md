@@ -30,7 +30,7 @@
 
 서버는, 다음 두 서비스와 연결되어 있습니다: mongoDB, AWS (Amazon Web Service). 이 두 서비스와 연결하기 위해 해야 하는 일들은 후술합니다.
 
-# 프로젝트를 실행하기 전
+# 프로젝트를 실행하기 전 ( 필수 )
 
 로컬 환경에서 프로젝트를 설정하려면, 먼저 npm (node.js package manager)과 yarn을 설치해야 합니다. 각각의 설치 방법을 모른다면 검색해보길 바랍니다.
 
@@ -76,7 +76,7 @@ IS_TESTING = 1 (이 줄은 .env.development 파일에만 포함되고 .env.produ
 KEY_ID = AKIA2YJVTTKIJD3UG7MD
 ACCESS_KEY = +VW4OYL+9OGf81nvIu7Uqwy+RcqteBwwBTi3o1kk
 
-# 프로젝트를 실행하려면 ( 제일 상위 폴더에서 사용 )
+# 프로젝트를 실행하려면 ( 터미널 사용 ( terminal.app ) cd 폴더명을 통해 폴더 이동 가능 / 제일 상위 폴더에서 사용, yarn install-all만 진행 )
 
 메인 폴더에서, 다음 커맨드들을 커맨드라인(Console, Terminal 등, VS Code를 이용한다면 간편하게 커맨드라인을 만들 수 있습니다)에 입력할 수 있습니다.
 

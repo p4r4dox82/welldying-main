@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { match, Redirect } from 'react-router';
+import { match, Redirect } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import MementoBook from '../components/MementoBook';
@@ -192,7 +192,7 @@ function ConfirmMementoBook({match} : Props) {
                         <div>3. 추가적인 문의 사항이 있다면 memento.welldying@gmail.com으로 연락주세요!</div>
                     </div>
                     <div className="vector"></div>
-                    <button className="submit NS bold whiteop10 px16" onClick = {() => handleClick()}>{'사망 사실 신고하기>'}</button>
+                    <button className="submit NS bold whiteop10 px16" onClick = {() => window.open('https://forms.gle/anLefdvgBUQfmJrp7', '_blank')}>{'사망 사실 신고하기>'}</button>
                     {DeathInfoContainer}
                     <input type="file" onChange={e => {handleFileinput(e)}} ref = {input_file} style = {{display: 'none'}} />
                 </div>

@@ -10,6 +10,14 @@ import { getUsers } from '../etc/api/user';
 import usePromise from '../etc/usePromise';
 import { RootReducer } from '../store';
 import { getCategorys } from '../etc/api/category';
+import { CSVLink } from 'react-csv';
+
+interface IData {
+    name: string;
+    phoneNumber: string;
+    email: string;
+    signDate: string;
+}
 
 function Admin() {
     let user = useSelector((state: RootReducer) => state.user);
@@ -25,6 +33,14 @@ function Admin() {
     let maxCategoryId = React.useMemo(() => categorys ? Math.max(...categorys.map(category => category.id)) : 0, [categorys]);
 
     let [id, setId] = React.useState<number>(1);
+
+    let [header, setHeader] = React.useState<any>([
+        {label: "이름", key: "name"},
+        {label: "전화번호", key: "phoneNumber"},
+        {label: "이메일", key: "email"},
+        {label: "가입일자", key: "signDate"}
+    ]);
+
 
     let question = React.useMemo(() => {
         let section = sections?.find((section) => section.id === id);
@@ -77,11 +93,26 @@ function Admin() {
         );
     }, [id, sections, questions, categorys, contents]);
 
-    let UsersNumber = React.useMemo(() => {
-        return (
-            <h1>{'총 가입자 수 : ' + AllUsers?.length}</h1>
-        )
-    }, [AllUsers]);
+    let UsersData = React.useMemo(() => {
+        if(AllUsers) {
+            let data: IData[] = [];
+            AllUsers.forEach((userData) => {
+                data.push({ name: userData.name, phoneNumber: userData.cellphone, email: userData.email, signDate: userData.createdAt });
+            })
+            return (
+                <>
+                    <h1>{'총 가입자 수 : ' + AllUsers?.length}</h1>
+                    <h1><button><CSVLink headers = {header} data = {data} filename = {"사용자 데이터.csv"} target = "_blank">{"사용자 데이터 다운로드"}</CSVLink></button></h1>
+                </>
+            )
+        } else  {
+            return (
+                <>
+                
+                </>
+            )
+        }
+    }, [AllUsers, header]);
 
 
     if (!user.loggedIn || user.user?.username !== 'admin') return <Redirect to='/'/>;
@@ -94,7 +125,8 @@ function Admin() {
                         <h1>
                             체크리스트 관리
                         </h1>
-                        {UsersNumber}
+                        {UsersData}
+                        <Link to={`/youthTestamentAdmin`}><button>청춘유언 관리</button></Link>
                         <Link to={`/admin/section/${maxSectionId+1}`}><button> 새 질문지 추가하기 </button></Link>
                         <Link to={`/admin/question/${maxQuestionId+1}`}><button> 새 질문 추가하기 </button></Link>
                         <Link to={`/admin/content/${maxContentId+1}`}><button> 새 컨텐츠 추가하기 </button></Link>

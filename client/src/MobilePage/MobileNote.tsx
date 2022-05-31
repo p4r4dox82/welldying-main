@@ -9,7 +9,7 @@ import { LeftArrowVector, leftVector, rightVector } from '../img/Vectors';
 import { RootReducer } from '../store';
 import MobileHeader from '../MobileComponents/MobileHeader';
 import MobileNoteQuestion from '../MobileComponents/MobileNoteQuestion';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import MobileNavigation from '../MobileComponents/MobileNavigation';
 
 function MobileNote() {

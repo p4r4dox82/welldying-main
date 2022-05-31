@@ -32,7 +32,8 @@ function YouthTestament({ location }: Props) {
     let [, YouthTestamentData] = usePromise(() => getYouthTestament(pid));
     console.log(YouthTestamentData);
     let [bookPage, setBookPage] = React.useState<number>(0);
-    let maxBookPage = 3;
+    let [maxBookPage, setMaxBookPage] = React.useState<number>(0);
+    let [weekList, setWeekList] = React.useState<number[]>([]);
     let weekTitleList = ["1주차 : 내가 걸어온 길", "2주차 : 언젠가 마주할 그 순간", "3주차 : 내가 걸어갈 길"];
     let titleList: ITitle[] = [
         {
@@ -74,6 +75,27 @@ function YouthTestament({ location }: Props) {
     ]
 
     React.useEffect(() => {
+        if(YouthTestamentData) {
+            let _weekList = [];
+            let _maxBookPage = 0;
+            if(YouthTestamentData.week1.length > 1) {
+                _maxBookPage++;
+                _weekList.push(1);
+            }
+            if(YouthTestamentData.week2.length > 1) {
+                _maxBookPage++;
+                _weekList.push(2);
+            }
+            if(YouthTestamentData.week3.length > 1) {
+                _maxBookPage++;
+                _weekList.push(3);
+            }
+            setMaxBookPage(_maxBookPage);
+            setWeekList(_weekList);
+        }
+    }, [YouthTestamentData])
+
+    React.useEffect(() => {
         if(!Kakao.isInitialized())
           Kakao.init(kakaoJskey);
     }, []);
@@ -86,7 +108,7 @@ function YouthTestament({ location }: Props) {
             title: `${YouthTestamentData.name}님이 작성하신 청춘유언이 도착했습니다. 아래 버튼을 눌러 열람해주세요:)`,
             description: ``,
             imageUrl:
-              'https://welldying.s3.ap-northeast-2.amazonaws.com/img/content_small.png',
+              imageUrl("NotePage/BookCoverImage.png"),
             link: {
               mobileWebUrl: `https://mymemento.kr/youthTestament?pid=${pid}`,
               webUrl: `https://mymemento.kr/youthTestament?pid=${pid}`,
@@ -118,20 +140,60 @@ function YouthTestament({ location }: Props) {
         let clickEnterButton = () => {
             setBookPage(1);
         }
+        if(!YouthTestamentData) {
+            return (
+                <>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <div className="BookCover">
+                        <div className="Background">
+                            <img src={imageUrl("NotePage/BookCoverImage.png")} alt="" />
+                        </div>
+                        <div className="BookCoverContainer">
+                            <div className="title">{YouthTestamentData.name}님의 <br/><br/>청춘유언</div>
+                            <button className="enter" onClick = {() => setBookPage(1)}>보러가기</button>
+                        </div>
+                    </div>
+                </>
+            )
+        }
+    }
+
+    let WeekContent = React.useCallback((week: number) => {
+        let weekContent;
+        if(week == 1) {
+            weekContent = YouthTestamentData.week1;
+        }
+        if(week == 2) {
+            weekContent = YouthTestamentData.week2;
+        }
+        if(week == 3) {
+            weekContent = YouthTestamentData.week3;
+        }
         return (
-            <>
-                <div className="BookCover">
-                    <div className="Background">
-                        <img src={imageUrl("NotePage/BookCoverImage.png")} alt="" />
-                    </div>
-                    <div className="BookCoverContainer">
-                        <div className="title">신민재의 <br/><br/>청춘유언</div>
-                        <button className="enter" onClick = {() => setBookPage(1)}>보러가기</button>
-                    </div>
-                </div>
+            <>  
+                {weekContent?.map((content, key) => {
+                    if(key !== 0) {
+                        let contentCode;
+                        if(content.includes(".jpg")) {
+                            contentCode = <img src = {imageUrl(`YouthTestament/${content}`)} alt = ""/>
+                        }
+                        if(content.includes("youtube")) {
+                            contentCode = <ReactPlayer width = {"100%"} height = {'200px'} url = {content} controls></ReactPlayer>
+                        }
+                        return (
+                            <div className="weekContentElement">
+                                {contentCode}
+                            </div>
+                        )
+                    }
+                })}
             </>
         )
-    }
+    }, [YouthTestamentData]);
     
     let BookContent = () => {
         if(!YouthTestamentData) {
@@ -140,24 +202,13 @@ function YouthTestament({ location }: Props) {
                 </>
             )
         }
-        let imageName = YouthTestamentData.imageName;
-        let videoUrl = YouthTestamentData.videoUrl;
         let bookPageDown = () => {
             setBookPage(Math.max(bookPage - 1, 1));
         }
         let bookPageUp = ()  => {
             setBookPage(Math.min(bookPage + 1, maxBookPage));
         }
-        let getPageContent = () => {
-            return (
-                <>  
-                    <div className="subTitle">{titleList[bookPage * 2 - 2].subTitle}</div>
-                    <img src={imageUrl(`YouthTestament/${imageName[bookPage - 1]}`)} alt="" />
-                    <div className="subTitle">{titleList[bookPage * 2 - 1].subTitle}</div>
-                    <ReactPlayer width = {'100%'} height = {'200px'} url = {videoUrl[bookPage - 1]} controls></ReactPlayer>
-                </>
-            )
-        }
+        
         return (
             <>
                 <div className="BookContent">
@@ -169,13 +220,12 @@ function YouthTestament({ location }: Props) {
                     </div>
                     <div className="pageBlock">
                         <div className="weekTitle">
-                            <div style = {{ "display": "inline" }}>{weekTitleList[bookPage - 1]}</div>
+                            <div style = {{ "display": "inline" }}>{weekTitleList[weekList[bookPage - 1] - 1]}</div>
                             <img style = {{ "width": "30px", "height": "30px" }} alt = "" id = 'kakao-link_btn' src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" onClick = {() => kakaoShare()} />
                         </div>
                         <div className="border"></div>
-                        
                         <div className="imageContainer">
-                            {getPageContent()}
+                            {WeekContent(weekList[bookPage - 1])}
                         </div>
                     </div>
                     <div className="buttonBlock">
