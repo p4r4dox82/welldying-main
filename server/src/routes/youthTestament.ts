@@ -5,10 +5,8 @@ import { YouthTestamentDocument } from "../models/youthTestament";
 export default (YouthTestament: Model<YouthTestamentDocument>) => {
     let router = Router();
 
-    router.get('/', async(req, res) => {
-        console.log("ASD");
+    router.get('/all', async(req, res) => {
         let result = await YouthTestament.find().sort({'id': 'asc'});
-        console.log(result);
 
         res.json(result);
     });

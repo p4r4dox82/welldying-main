@@ -11,7 +11,7 @@ export interface YouthTestamentData {
 }
 
 export const getYouthTestaments = async () => {
-    let response = await Axios.get(`${apiAddress}/youthtestament`);
+    let response = await Axios.get(`${apiAddress}/youthtestament/all`);
     let data: YouthTestamentData[] = response.data;
 
     return data;
